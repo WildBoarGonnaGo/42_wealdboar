@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 19:52:36 by lchantel          #+#    #+#             */
-/*   Updated: 2020/06/25 20:23:31 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/06/26 01:54:16 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,10 @@ int		get_next_line(int fd, char **line)
 	{
 		while ((read_byte = read(fd, buff_str, BUFFER_SIZE)) > 0)
 		{
+			buff_str[read_byte] = 0;
 			if ((nl_stat = ft_gnl_seekchar(buff_str, '\n')) ||
 			buff_str[nl_stat] == '\n')
 				buff_str[nl_stat] = 0;
-			else
-				buff_str[read_byte] = 0;
 			*line = ft_gnl_strjoin(*line, buff_str);
 			if (nl_stat || !buff_str[nl_stat])
 				buff_str_rest = ft_gnl_strjoin(buff_str_rest, buff_str + ft_gnl_seekchar(buff_str, 0) + 1);
