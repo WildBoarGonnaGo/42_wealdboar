@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gnl_test_1.c                                       :+:      :+:    :+:   */
+/*   gnl_test_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 22:48:54 by lchantel          #+#    #+#             */
-/*   Updated: 2020/06/25 19:40:46 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/06/25 19:56:19 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ int main(void)
 	int             i;
 	int             j;
 	char    		*line = 0;
-	char			*lineadress[66];
 	
 	j = 1;
+
 	printf("\n==========================================\n");
-	printf("========== TEST 1 : The Alphabet =========\n");
+	printf("========= TEST 2 : Empty Lines ===========\n");
 	printf("==========================================\n\n");
 
-	if (!(fd = open("files/alphabet", O_RDONLY)))
+	if (!(fd = open("files/empty_lines", O_RDONLY)))
 	{
 		printf("\nError in open\n");
 		return (0);
@@ -38,7 +38,7 @@ int main(void)
 	while ((i = get_next_line(fd, &line)) > 0)
 	{
 		printf("|%s\n", line);
-		lineadress[j - 1] = line;
+		free(line);
 		j++;
 		sleep(1);
 	}
@@ -48,12 +48,9 @@ int main(void)
 
 	if (i == -1)
 		printf ("\nError in Fonction - Returned -1\n");
-	else if (j == 66)
+	else if (j == 9)
 		printf("\nRight number of lines\n");
-	else if (j != 66)
+	else if (j != 9)
 		printf("\nNot Good - Wrong Number Of Lines\n");
-	while (--j > 0)
-		free(lineadress[j - 1]);
-	j = 1;
 	return (0);
 }

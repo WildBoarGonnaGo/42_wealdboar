@@ -6,7 +6,7 @@
 /*   By: lchantel <lchantel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/12 18:12:33 by lchantel          #+#    #+#             */
-/*   Updated: 2020/06/24 23:04:02 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/06/25 20:51:12 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,9 @@ int		ft_gnl_read_rest(char **line, char **rest)
 
 	purge_info = NULL;
 	pos = 0;
-	if ((pos = ft_gnl_seekchar(*rest, '\n')))
+	if (!*rest)
+		return (0);
+	if ((pos = ft_gnl_seekchar(*rest, '\n')) || (*(*rest + pos) == '\n'))
 	{
 		*line = ft_gnl_strdup(*rest, pos++);
 		purge_info = *rest;
