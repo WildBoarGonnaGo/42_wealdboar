@@ -6,7 +6,7 @@
 /*   By: lchantel <lchantel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/12 18:12:33 by lchantel          #+#    #+#             */
-/*   Updated: 2020/06/25 20:51:12 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/06/27 13:58:35 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*ft_gnl_strjoin(char *dst, char *src)
 		free(dst);
 	while (pos < src_len)
 		*(join_res + cur++) = *(src + pos++);
-	*(join_res + cur) =  0;
+	*(join_res + cur) = 0;
 	return (join_res);
 }
 
@@ -87,14 +87,14 @@ int		ft_gnl_read_rest(char **line, char **rest)
 	int		pos;
 	char	*purge_info;
 
-	purge_info = NULL;
-	pos = 0;
+	*line = ft_gnl_strdup("", 0);
+	purge_info = *rest;
 	if (!*rest)
 		return (0);
+	free(*line);
 	if ((pos = ft_gnl_seekchar(*rest, '\n')) || (*(*rest + pos) == '\n'))
 	{
 		*line = ft_gnl_strdup(*rest, pos++);
-		purge_info = *rest;
 		*rest = ft_gnl_strdup(*rest + pos, ft_gnl_strlen(*rest + pos));
 		if (purge_info)
 			free(purge_info);
