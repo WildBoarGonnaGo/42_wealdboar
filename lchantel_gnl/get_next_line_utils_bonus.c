@@ -6,11 +6,11 @@
 /*   By: lchantel <lchantel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/12 18:12:33 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/06 05:14:22 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/07/07 01:28:27 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int		ft_gnl_strlen(char *str)
 {
@@ -89,6 +89,8 @@ int		ft_gnl_read_rest(char **line, char **rest)
 
 	if (!(ft_gnl_read_rest_init(line, &purge_info, *rest)))
 		return (0);
+	if (!(*line))
+		return (-1);
 	if ((pos = ft_gnl_seekchar(*rest, '\n')) || (*(*rest + pos) == '\n'))
 	{
 		*line = ft_gnl_strdup(*rest, pos++);
@@ -100,12 +102,5 @@ int		ft_gnl_read_rest(char **line, char **rest)
 		return (1);
 	}
 	else
-	{
-		if (!(*line = ft_gnl_strdup(*rest, ft_gnl_strlen(*rest))))
-			return (-1);
-		if (*rest)
-			free(*rest);
-		*rest = NULL;
-		return (0);
-	}
+		return (ft_next_to_new_buff(line, rest));
 }

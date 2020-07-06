@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 19:54:09 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/06 05:15:57 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/07/06 21:43:04 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@ int		ft_gnl_seekchar(char *str, char c);
 int		ft_gnl_read_rest(char **line, char **rest);
 int		get_next_line(int fd, char **line);
 int		ft_gnl_read_rest_init(char **line, char **purge_info, char *rest);
+int		ft_next_to_new_buff(char **line, char **rest);
 
 #endif

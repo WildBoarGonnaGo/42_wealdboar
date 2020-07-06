@@ -6,7 +6,7 @@
 /*   By: lchantel <lchantel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/12 18:12:33 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/06 05:12:10 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/07/06 21:44:31 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,5 @@ int		ft_gnl_read_rest(char **line, char **rest)
 		return (1);
 	}
 	else
-	{
-		if (!(*line = ft_gnl_strdup(*rest, ft_gnl_strlen(*rest))))
-			return (-1);
-		if (*rest)
-			free(*rest);
-		*rest = NULL;
-		return (0);
-	}
+		return (ft_next_to_new_buff(line, rest));
 }
