@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lchantel <lchantel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/12 18:12:33 by lchantel          #+#    #+#             */
-/*   Updated: 2020/06/27 13:58:35 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/06 05:14:22 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "get_next_line.h"
 
 int		ft_gnl_strlen(char *str)
 {
@@ -87,22 +87,22 @@ int		ft_gnl_read_rest(char **line, char **rest)
 	int		pos;
 	char	*purge_info;
 
-	*line = ft_gnl_strdup("", 0);
-	purge_info = *rest;
-	if (!*rest)
+	if (!(ft_gnl_read_rest_init(line, &purge_info, *rest)))
 		return (0);
-	free(*line);
 	if ((pos = ft_gnl_seekchar(*rest, '\n')) || (*(*rest + pos) == '\n'))
 	{
 		*line = ft_gnl_strdup(*rest, pos++);
 		*rest = ft_gnl_strdup(*rest + pos, ft_gnl_strlen(*rest + pos));
+		if (!*line || !*rest)
+			return (-1);
 		if (purge_info)
 			free(purge_info);
 		return (1);
 	}
 	else
 	{
-		*line = ft_gnl_strdup(*rest, ft_gnl_strlen(*rest));
+		if (!(*line = ft_gnl_strdup(*rest, ft_gnl_strlen(*rest))))
+			return (-1);
 		if (*rest)
 			free(*rest);
 		*rest = NULL;
