@@ -6,7 +6,7 @@
 /*   By: lchantel <lchantel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/12 18:12:33 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/07 01:28:27 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/07 19:09:58 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ char	*ft_gnl_strdup(char *str, int nbytes)
 	len = (ft_gnl_strlen(str) > nbytes) ? nbytes :
 	ft_gnl_strlen(str);
 	if (!(res = (char *)malloc(len + 1)))
+	{
+		ft_mem_reset(&str);
 		return (NULL);
+	}
 	while (++i < len)
 		*(res + i) = *(str + i);
 	*(res + i) = 0;
@@ -43,27 +46,28 @@ char	*ft_gnl_strdup(char *str, int nbytes)
 
 char	*ft_gnl_strjoin(char *dst, char *src)
 {
-	int		dst_len;
-	int		src_len;
+	int		cur_func_info[4];
 	char	*join_res;
-	int		cur;
-	int		pos;
 
-	cur = -1;
-	pos = 0;
+	cur_func_info[0] = -1;
+	cur_func_info[1] = 0;
 	if (!src)
 		return (dst);
-	dst_len = ft_gnl_strlen(dst);
-	src_len = ft_gnl_strlen(src);
-	if (!(join_res = (char *)malloc(dst_len + src_len + 1)))
+	cur_func_info[2] = ft_gnl_strlen(dst);
+	cur_func_info[3] = ft_gnl_strlen(src);
+	if (!(join_res = (char *)malloc(cur_func_info[2]
+	+ cur_func_info[3] + 1)))
+	{
+		ft_mem_reset(&dst);
+		ft_mem_reset(&src);
 		return (NULL);
-	while (++cur < dst_len)
-		*(join_res + cur) = *(dst + cur);
-	if (dst)
-		free(dst);
-	while (pos < src_len)
-		*(join_res + cur++) = *(src + pos++);
-	*(join_res + cur) = 0;
+	}
+	while (++cur_func_info[0] < cur_func_info[2])
+		*(join_res + cur_func_info[0]) = *(dst + cur_func_info[0]);
+	ft_mem_reset(&dst);
+	while (cur_func_info[1] < cur_func_info[3])
+		*(join_res + cur_func_info[0]++) = *(src + cur_func_info[1]++);
+	*(join_res + cur_func_info[0]) = 0;
 	return (join_res);
 }
 

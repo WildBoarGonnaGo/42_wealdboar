@@ -22,9 +22,8 @@ int	main(int argc, char *argv[])
 		if (line)
 			free(line);
 	}
+	ft_mem_reset(&line);
 	printf("%d |%s\n", status, line);
-	if (status >= 0)
-		free(line);
 	if (fd >= 0)
 		close(fd);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 19:52:36 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/07 01:28:11 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/07 19:07:36 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ int		ft_check_fd(int fd, int read_byte[2], char *buff_str_rest, char **line)
 {
 	if (fd < 0 || read_byte[0] < 0 || BUFFER_SIZE <= 0 || read_byte[1] < 0)
 	{
-		if (*line)
-			free(*line);
-		*line = NULL;
+		ft_mem_reset(line);
 		return (-1);
 	}
 	else if (!read_byte[0] && !buff_str_rest)
@@ -48,6 +46,13 @@ int		ft_next_to_new_buff(char **line, char **rest)
 		free(*rest);
 	*rest = NULL;
 	return (0);
+}
+
+void	ft_mem_reset(char **str)
+{
+	if (*str)
+		free(*str);
+	*str = NULL;
 }
 
 int		get_next_line(int fd, char **line)
