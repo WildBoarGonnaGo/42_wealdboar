@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 18:08:49 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/19 18:46:16 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/19 22:32:35 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int 	ft_starfield(char **str, va_list list)
 
 	str_to_purge = *str;
 	if (!(*str = ft_itoa(va_arg(list, int))))
-		return (-1)
+		return (-1);
 	ft_mem_reset((void **)&str_to_purge);
 	return (0);
 }

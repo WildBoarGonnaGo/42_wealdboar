@@ -6,13 +6,13 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 17:50:52 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/19 18:00:31 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/19 22:28:38 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "../include/ft_printf_out.h"
 
-void		ft_stdout_hex(char space_char[3], int space_info[4], char **str_value,
+void		ft_stdout_hex(char space_char[3], int sp_info[4], char **str_value,
 			char **space_info)
 {
 	if (space_char[1] != '-' && sp_info[3] > 0)
@@ -46,6 +46,7 @@ int			ft_hexadec_handle(char **space_info, int value, char space_char[3])
 	sp_info[3] = (sp_info[1] - sp_info[2] > 0) ? sp_info[0] - sp_info[1] : sp_info[0] - sp_info[2];
 	sp_info[3] -= (**(space_info + 1) == 'p') ? 2 : 0;
 	str_value[1] = str_value[0];
+	ft_stdout_hex(space_char, sp_info, str_value, space_info);
 	if (str_value[1] != str_value[0])
 		ft_mem_reset((void **)&str_value[1]);
 	ft_mem_reset((void **)&str_value[0]);
