@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 18:11:59 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/19 23:03:02 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/20 21:40:36 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,23 @@ int 	ft_precis_chars(char *str_handle, char ***space, int *pos, va_list list)
 	{
 		if (*(str_handle + *pos) == '*')
 		{
-			if (ft_starfield(space[2], list) < 0)
+			if (ft_starfield(*space + 2, list) < 0)
 				return (-1);
 			++*pos;
 			break ;
 		}
-		*space[1] = *space[2];
-		if (!(*space[2] = ft_charjoin(*space[2], *(str_handle + *pos))))
+		*(*space + 1) = *(*space + 2);
+		if (!(*(*space + 2) = ft_charjoin(*(*space + 2), *(str_handle + *pos))))
 			return (-1);
-		ft_mem_reset((void **)space[1]);
+		ft_mem_reset((void **)(*space + 1));
 		++*pos;
 	}
-	if (!**space[2])
+	if (!**(*space + 2))
 	{
-		*space[1] = *space[2];
-		if (!(*space[2] = ft_charjoin(*space[2], '0')))
+		*(*space + 1) = *(*space + 2);
+		if (!(*(*space + 2) = ft_charjoin(*(*space + 2), '0')))
 			return (-1);
-		ft_mem_reset((void **)space[1]); 
+		ft_mem_reset((void **)(*space + 1)); 
 	}
 	return (1);
 }
@@ -45,23 +45,23 @@ int		ft_width_chars(char *str_handle, char ***space, int *pos, va_list list)
 	{
 		if (*(str_handle + *pos) == '*')
 		{
-			if (ft_starfield(space[0], list) < 0)
+			if (ft_starfield(*space, list) < 0)
 				return (-1);
-			++pos;
+			++*pos;
 			break ;
 		}
-		*space[1] = *space[0];
-		if (!(*space[0] = ft_charjoin(*space[0], *(str_handle + *pos))))
+		*(*space + 1) = **space;
+		if (!(**space = ft_charjoin(**space, *(str_handle + *pos))))
 			return (-1);
-		ft_mem_reset((void **)space[1]);
+		ft_mem_reset((void **)(*space + 1));
 		++*pos;
 	}
-	if (!**space[0])
+	if (!***space)
 	{
-		*space[1] = *space[0];
-		if (!(*space[0] = ft_charjoin(*space[0], '0')))
+		*(*space + 1) = **space;
+		if (!(**space = ft_charjoin(**space, '0')))
 			return (-1);
-		ft_mem_reset((void **)space[1]);
+		ft_mem_reset((void **)(*space + 1));
 	}
 	return (1);
 }
