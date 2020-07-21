@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 17:42:36 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/22 00:44:59 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/22 01:03:22 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 int			ft_string_handle(char **space_info, char *value, char space_char[3], int *len_res)
 {
-	int		sp_number;
+	int		
+	/*int		sp_number;
 	int		sp_total;
 	int		skip;
-	int		pos;
+	int		pos;*/
 	char	*null_handle;
 
-
+	
 	sp_total = 0;
 	pos = -1;
 	*len_res = 0;
