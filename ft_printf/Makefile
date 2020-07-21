@@ -6,7 +6,7 @@
 #    By: lchantel <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/30 10:53:46 by lchantel          #+#    #+#              #
-#    Updated: 2020/07/19 23:36:47 by lchantel         ###   ########.fr        #
+#    Updated: 2020/07/21 20:12:57 by lchantel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,10 @@ SRC = ./srcs/ft_atoi.c			\
 	./srcs/ft_spec_chars_handle.c	\
 	./srcs/ft_printf_manager.c	\
 	./srcs/ft_print_spaces.c	\
-	./srcs/ft_printf.c	
+	./srcs/ft_printf.c	\
+	./srcs/ft_putchar_fd_len.c	\
+	./srcs/ft_putunbr_fd_len.c	\
+	./srcs/ft_putnbr_fd_len.c	\
 	
 CC			= clang
 WARNS		= -Wall -Wextra -Werror
