@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 16:44:20 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/19 23:27:02 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/20 23:22:29 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ int		ft_integer_handle(char **space_info, int value, char space_char[3]);
 int		ft_string_handle(char **space_info, char *value, char space_char[3]);
 int		ft_char_handle(char **space_info, char value, char space_char[3]);
 int		ft_hexadec_handle(char **space_info, int value, char space_char[3]);
-void	ft_special_chars_1(char *str_handle, char *sign_plus, char *sign_minus, int *pos);
-void	ft_special_chars_2(char *str_handle, char *sign_zero, int *pos);
+void	ft_special_chars(char *str_handle, char *spec_chars, int *pos);
 int		ft_starfield(char **str, va_list list);
 int		ft_printf_manager(char *str_handle, va_list list);
 int		ft_printf(const char *strArg, ...);

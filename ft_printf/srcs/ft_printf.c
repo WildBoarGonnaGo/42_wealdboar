@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 20:14:03 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/19 23:03:32 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/20 23:26:41 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int		ft_printf(const char *strArg, ...)
 
 	unit = 0;
 	count = -1;
+	if (!strArg)
+		return (0);
 	va_start(char_frwrd, strArg);
 	while (*(strArg + (++count)))
 	{

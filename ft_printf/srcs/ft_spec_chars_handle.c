@@ -6,39 +6,30 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 18:08:49 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/19 22:32:35 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/20 23:22:08 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf_out.h"
 
-void	ft_special_chars_1(char *str_handle, char *sign_plus, char *sign_minus, int *pos)
+void	ft_special_chars(char *str_handle, char *spec_chars, int *pos)
 {
-	*sign_plus = 0;
-	*sign_minus = 0;
+	spec_chars[0] = 0;
+	spec_chars[1] = 0;
+	spec_chars[2] = ' ';
 	*pos = 0;
 
 	while (*(str_handle + *pos) == '+' || 
-	*(str_handle + *pos) == '-')
+	*(str_handle + *pos) == '-' || *(str_handle + *pos) == '0')
 	{
-		if (*(str_handle + *pos) == '+' && !*sign_plus) 
-			*sign_plus = '+';
-		if (*(str_handle  + *pos) == '-' && !*sign_minus) 
-			*sign_minus = '-';
+		if (*(str_handle + *pos) == '+' && !spec_chars[0]) 
+			spec_chars[0] = '+';
+		if (*(str_handle  + *pos) == '-' && !spec_chars[1]) 
+			spec_chars[1] = '-';
+		if (*(str_handle + *pos) == '0' && spec_chars[2] == ' ') 
+			spec_chars[2] = '0';
 		++*pos;
 	}
-}
-
-void	ft_special_chars_2(char *str_handle, char *sign_zero, int *pos)
-{
-	*sign_zero = ' ';
-
-	while (*(str_handle + *pos) == '0')
-	{
-		if (*(str_handle + *pos) == '0' && *sign_zero == ' ') 
-			*sign_zero = '0';
-		++*pos;
-	}	
 }
 
 int 	ft_starfield(char **str, va_list list)
