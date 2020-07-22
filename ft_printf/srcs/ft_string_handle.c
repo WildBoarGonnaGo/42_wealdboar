@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 17:42:36 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/22 04:14:05 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/07/22 21:13:30 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@ int			ft_string_handle(char **space_info, char *value, char space_char[3], int *
 	ftstr_info[2] = (!**(space_info + 2)) ? -1 : ft_atoi(*(space_info + 2));
 	ftstr_info[1] = (ftstr_info[2] != -1 && ftstr_info[2] < (int)ft_strlen(addr_process)) 
 	? ftstr_info[0] - ftstr_info[2] : ftstr_info[0] - ft_strlen(addr_process);
-	if (space_char[0] == '+' || space_char[2] == '0')
-		return (-1);
+	ftstr_info[1] += (!ftstr_info[4] && ft_atoi(*(space_info + 2)) > 0 && ftstr_info[2] < 6) ? 1 : 0; 
+	if (space_char[1] == '-' || space_char[2] == '0')
+		space_char[2] = ' ';
 	if (space_char[1] != '-' && ftstr_info[1] > 0)
 		ft_print_spaces(ftstr_info[1], space_char[2], len_res);
-	if (ftstr_info[2] == -1 || ftstr_info[2] > (int)ft_strlen(addr_process))
+	if (ftstr_info[2] == -1 || ftstr_info[2] >= (int)ft_strlen(addr_process))
 	{
 		ft_putstr_fd(addr_process, 1);
 		*len_res += (int)ft_strlen(addr_process);

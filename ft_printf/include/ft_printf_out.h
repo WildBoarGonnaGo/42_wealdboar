@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 16:44:20 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/21 20:44:34 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/22 22:34:43 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ int		ft_printf(const char *strArg, ...);
 void	ft_putchar_fd_len(char c, int fd, int *len);
 void	ft_putnbr_fd_len(int n, int fd, int *len);
 void	ft_putunbr_fd_len(unsigned int num, int fd, int *len);
+void	ft_putstr_fd_len(char *s, int fd, int *len);
 
 #endif

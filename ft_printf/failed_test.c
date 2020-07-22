@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 20:52:51 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/22 05:55:48 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/07/23 00:16:13 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,10 @@ int	main(void)
 	ft_printf("result = %d\n", result);
 	result = printf("tr_printf_%.3d | %.09s|\n", test_num, NULL);
 	printf("result = %d\n", result);
+	result = ft_printf("ft_printf_%.3d | %3.s|\n", ++test_num, NULL);
+	ft_printf("result = %d\n", result);
+	result = printf("tr_printf_%.3d | %3.s|\n", test_num, NULL);
+	printf("result = %d\n", result);
 
 	ft_printf("\n___HEX_EXTRA_TESTS___\n\n");
 	result = ft_printf("ft_printf_%.3d | %.0X|\n", ++test_num ,0);
@@ -114,10 +118,12 @@ int	main(void)
 	result = printf("tr_printf_%.3d | %-5.X|\n", test_num, 0);
 	printf("result = %d\n", result);
 
-
-
-
-
+	result = ft_printf("ft_printf_%.3d | %u|\n", ++test_num, 4294967295);
+	ft_printf("result = %d\n", result);
+	result = printf("ft_printf_%.3d | %ld|\n", ++test_num, 4294967295);
+	ft_printf("result = %d\n", result);
+	//result = printf("tr_printf_%.3d | %2.9p|\n", test_num, 1234);
+	//printf("result = %d\n", result);
 	//result = printf("Hello, %s\n", NULL);
 	//printf("result = %d\n", result);
 	/* result = ft_printf("ft_printf_%.3d | %.03s|\n", ++test_num, s_hidden);
