@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 17:42:36 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/22 01:03:22 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/22 04:14:05 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,36 +14,38 @@
 
 int			ft_string_handle(char **space_info, char *value, char space_char[3], int *len_res)
 {
-	int		
-	/*int		sp_number;
-	int		sp_total;
-	int		skip;
-	int		pos;*/
-	char	*null_handle;
+	int		ftstr_info[5];
+	char	*addr_process;
 
-	
-	sp_total = 0;
-	pos = -1;
+	ftstr_info[4] = (!(addr_process = value)) ? 0 : 1;
+	if (!ftstr_info[4])
+		if (!(addr_process = ft_strdup("(null)")))
+			return (-1);
+	ftstr_info[1] = 0;
+	ftstr_info[3] = -1;
 	*len_res = 0;
-	sp_number = ft_atoi(*space_info);
-	skip = (!**(space_info + 2)) ? -1 : ft_atoi(*(space_info + 2));
-	sp_total = (skip != -1 && skip < (int)ft_strlen(value)) ? sp_number - skip :
-	sp_number - ft_strlen(value);
+	ftstr_info[0] = ft_atoi(*space_info);
+	ftstr_info[2] = (!**(space_info + 2)) ? -1 : ft_atoi(*(space_info + 2));
+	ftstr_info[1] = (ftstr_info[2] != -1 && ftstr_info[2] < (int)ft_strlen(addr_process)) 
+	? ftstr_info[0] - ftstr_info[2] : ftstr_info[0] - ft_strlen(addr_process);
 	if (space_char[0] == '+' || space_char[2] == '0')
 		return (-1);
-	if (space_char[1] != '-' && sp_total > 0)
-		ft_print_spaces(sp_total, space_char[2], len_res);
-	if (skip == -1 || skip > (int)ft_strlen(value))
+	if (space_char[1] != '-' && ftstr_info[1] > 0)
+		ft_print_spaces(ftstr_info[1], space_char[2], len_res);
+	if (ftstr_info[2] == -1 || ftstr_info[2] > (int)ft_strlen(addr_process))
 	{
-		ft_putstr_fd(value, 1);
-		*len_res += (int)ft_strlen(value);
+		ft_putstr_fd(addr_process, 1);
+		*len_res += (int)ft_strlen(addr_process);
 	}
 	else
 	{
-		while (++pos < skip)
-			ft_putchar_fd_len(*(value + pos), 1, len_res);
+		if (ftstr_info[4])
+			while (++ftstr_info[3] < ftstr_info[2])
+				ft_putchar_fd_len(*(addr_process + ftstr_info[3]), 1, len_res);
 	}
-	if (space_char[1] == '-' && sp_total > 0)
-		ft_print_spaces(sp_total, space_char[2], len_res);
+	if (space_char[1] == '-' && ftstr_info[1] > 0)
+		ft_print_spaces(ftstr_info[1], space_char[2], len_res);
+	if (!ftstr_info[4])
+		ft_mem_reset((void **)&addr_process);
 	return (1);
 }
