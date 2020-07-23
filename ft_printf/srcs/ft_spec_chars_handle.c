@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 18:08:49 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/20 23:22:08 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/23 03:41:34 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,27 @@ void	ft_special_chars(char *str_handle, char *spec_chars, int *pos)
 int 	ft_starfield(char **str, va_list list)
 {
 	char	*str_to_purge;
+	int		field_range;
+	int		status;
 
+	status = 0;
+	if ((field_range = va_arg(list, int)) < 0)
+	{
+		field_range *= -1;
+		status = 1;
+	}
 	str_to_purge = *str;
-	if (!(*str = ft_itoa(va_arg(list, int))))
+	if (!(*str = ft_itoa(field_range)))
 		return (-1);
 	ft_mem_reset((void **)&str_to_purge);
+	return (status);
+}
+
+int		ft_str_zerofic(char ***space, int num)
+{
+	*(*space + 1) = *(*space + num);
+	if (!(*(*space + num) = ft_charjoin(*(*space + num), '0')))
+		return (-1);
+	ft_mem_reset((void **)(*space + 1));
 	return (0);
 }

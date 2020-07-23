@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 17:04:29 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/21 23:39:44 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/23 04:56:21 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int		ft_stdout_int(char space_char[3], char **space_info, int value,
 		ft_print_spaces(sp_total_info[0], space_char[2], &len_res);
 	if (space_char[0] == '+' && space_char[2] == ' ' && value > 0)
 		ft_putchar_fd_len('+', 1, &len_res);
-	if (value < 0 && space_char[2] == ' ' && **(space_info + 1) != 'u')
+	if (value < 0 && space_char[2] == ' ' && **(space_info + 1) != 'u' 
+	&& value != FT_INT_MIN)
 		ft_putchar_fd_len('-', 1, &len_res);
 	if ((sp_total_info[3] -= sp_total_info[2]) > 0)
 		ft_print_spaces(sp_total_info[3], '0', &len_res);
@@ -61,6 +62,8 @@ int		ft_stdout_int(char space_char[3], char **space_info, int value,
 	if (sp_total_info[0] > 0 && space_char[1] == '-')
 		ft_print_spaces(sp_total_info[0], space_char[2], &len_res);
 	len_res -= (value < 0 && space_char[2] == ' ') ? 1 : 0;
+	len_res += (value == FT_INT_MIN || (**(space_info + 1) == 'u' 
+	|| (unsigned int)value == FT_UINT_MAX)) ? 1 : 0;
 	return (len_res);
 }
 
@@ -74,7 +77,7 @@ int		ft_integer_handle(char **space_info, int value, char space_char[3], int *le
 	sp_total_info[1] = value;
 	if ((value < 0 && **(space_info + 1) == 'd') || (value < 0 && **(space_info + 1) == 'i'))
 	{
-		if (space_char[2] != ' ')
+		if (space_char[2] != ' ' && value != FT_INT_MIN)
 			ft_putchar_fd('-', 1);	
 		sp_total_info[1] *= -1;
 		sp_total_info[0] = -1;
