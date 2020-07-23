@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 20:30:09 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/20 23:18:19 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/23 20:06:23 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdarg.h>
 # include "./libft.h"
 
-char	*ft_itoa_base(unsigned int num, int base);
+char	*ft_itoa_base(unsigned long long num, int base);
 void	ft_var_putstr_fd(int args, int fd, ...);
 char 	*ft_utoa(unsigned int n);
 void	ft_mem_reset(void **mem_target);

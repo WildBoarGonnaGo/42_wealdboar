@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 18:11:59 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/23 04:00:07 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/07/24 01:21:54 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,17 @@ void	neg_num_manage(char *spec_chars, int neg_num_status[2], char ***space)
 
 	buf = NULL;
 	if (neg_num_status[0])
+	{
 		spec_chars[1] = '-';
+		spec_chars[2] = ' ';
+	}
 	if (neg_num_status[1])
 	{
 		buf = *(*space + 2);
 		*(*space + 2) = ft_strdup("");
 		ft_mem_reset((void **)&buf);
+		if (spec_chars[2] == '0')
+			spec_chars[2] = ' ';
 	}
 }
 

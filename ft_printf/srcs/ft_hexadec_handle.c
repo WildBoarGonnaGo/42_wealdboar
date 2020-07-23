@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 17:50:52 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/22 23:41:41 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/23 20:06:49 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int			ft_hexadec_handle(char **space_info, int value, char space_char[3], int *l
 	sp_info[1] = (!**(space_info + 2) || **(space_info + 2) == '0') ? 0 : ft_atoi(*(space_info + 2));
 	if (**(space_info + 1) != 'p' || (**(space_info + 1) == 'p' && value))
 	{
-		if (!(str_value[0] = ft_itoa_base((unsigned int)value, 16)))
+		if (!(str_value[0] = ft_itoa_base((unsigned long long)value, 16)))
 			return (-1);
 	}
 	else

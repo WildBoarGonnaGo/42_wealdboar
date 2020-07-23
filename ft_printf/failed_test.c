@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 20:52:51 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/23 05:58:22 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/07/23 20:44:08 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,15 @@ int	main(void)
 	ft_printf("result = %d\n", result);
 	ft_printf("result = %d\n");
 
+	//Lalalala, %d%% des gens qui parlent à Ly adorent %s. Ou Presque. %p", 100, "Ly", &r00
+	int r00 = 0;
+	result = ft_printf("Lalalala, %d%% des gens qui parlent à Ly adorent %s. Ou Presque. %p\n", 100, "Ly", &r00);
+	ft_printf("result = %d\n", result);
+	result = printf("Lalalala, %d%% des gens qui parlent à Ly adorent %s. Ou Presque. %p\n", 100, "Ly", &r00);
+	ft_printf("result = %d\n", result);
+	result = ft_printf("%05i\n", 5);
+	ft_printf("%0*d\n", -3, 5);
+	printf("%0*d\n", -3, 5);	
 	//result = printf("tr_printf_%.3d | %2.9p|\n", test_num, 1234);
 	//printf("result = %d\n", result);
 	//result = printf("Hello, %s\n", NULL);

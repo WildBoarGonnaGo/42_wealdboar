@@ -6,11 +6,11 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 20:14:03 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/21 20:49:37 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/23 20:27:25 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/ft_printf_out.h"
+#include "../include/ft_printf_out.h"
 
 void	ft_printf_init(int *printf_info)
 {
