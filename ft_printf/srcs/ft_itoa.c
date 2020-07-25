@@ -6,13 +6,13 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 10:26:53 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/11 20:58:01 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/24 00:00:51 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-static int	ft_getnumsize(long n)
+int			ft_getnumsize(long n)
 {
 	int size;
 

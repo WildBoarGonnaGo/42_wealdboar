@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_spaces.c                                  :+:      :+:    :+:   */
+/*   ft_putnbr_fd_len.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/19 16:52:15 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/21 19:53:46 by lchantel         ###   ########.fr       */
+/*   Created: 2020/07/21 20:05:09 by lchantel          #+#    #+#             */
+/*   Updated: 2020/07/21 21:14:29 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf_out.h"
 
-void	ft_print_spaces(int num_of_spaces, char space_char, int *len)
+void	ft_putnbr_fd_len(int n, int fd, int *len)
 {
-	while (num_of_spaces-- > 0)
+	long int	buf;
+
+	buf = n;
+	if (n < 0)
+	{
+		buf *= -1;
+		ft_putchar_fd('-', fd);
+	}
+	if (buf >= 10)
 	{
 		++*len;
-		ft_putchar_fd(space_char, 1);
+		ft_putnbr_fd_len(buf / 10, fd, len);
 	}
+	ft_putchar_fd(buf % 10 + 48, fd);
 }

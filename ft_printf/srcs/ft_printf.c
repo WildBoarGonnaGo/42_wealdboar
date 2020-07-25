@@ -6,35 +6,43 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 20:14:03 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/20 23:26:41 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/23 20:27:25 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/ft_printf_out.h"
+#include "../include/ft_printf_out.h"
+
+void	ft_printf_init(int *printf_info)
+{
+	printf_info[0] = 0;
+	printf_info[1] = 0;
+	printf_info[2] = 0;
+	printf_info[3] = -1;
+}
 
 int		ft_printf(const char *strArg, ...)
 {
 	va_list	char_frwrd;
-	int		count;
-	int		unit;
+	int		printf_info[4];
 
-	unit = 0;
-	count = -1;
+	ft_printf_init(printf_info);
 	if (!strArg)
 		return (0);
 	va_start(char_frwrd, strArg);
-	while (*(strArg + (++count)))
+	while (*(strArg + (++printf_info[3])))
 	{
-		if (*(strArg + count) != '%')
-			ft_putchar_fd(*(strArg + count), 1);
+		if (*(strArg + printf_info[3]) != '%')
+			ft_putchar_fd_len(*(strArg + printf_info[3]), 1, &printf_info[0]);
 		else
 		{
-			++count;
-			if ((unit = ft_printf_manager((char *)strArg + count, char_frwrd)) < 0)
+			++printf_info[3];
+			if ((printf_info[2] = ft_printf_manager((char *)strArg + printf_info[3], 
+			char_frwrd, &printf_info[1])) < 0)
 				return (-1);
-			count += unit;
+			printf_info[3] += printf_info[2];
+			printf_info[0] += printf_info[1];
 		}
 	}
 	va_end(char_frwrd);
-	return (0);
+	return (printf_info[0]);
 }

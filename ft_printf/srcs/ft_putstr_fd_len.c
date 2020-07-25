@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_spaces.c                                  :+:      :+:    :+:   */
+/*   ft_putstr_fd_len.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/19 16:52:15 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/21 19:53:46 by lchantel         ###   ########.fr       */
+/*   Created: 2020/07/22 21:43:05 by lchantel          #+#    #+#             */
+/*   Updated: 2020/07/22 21:48:16 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf_out.h"
 
-void	ft_print_spaces(int num_of_spaces, char space_char, int *len)
+void	ft_putstr_fd_len(char *s, int fd, int *len)
 {
-	while (num_of_spaces-- > 0)
-	{
-		++*len;
-		ft_putchar_fd(space_char, 1);
-	}
+	if (!s)
+		return ;
+	write(fd, s, ft_strlen(s));
+	*len += ft_strlen(s);
 }
