@@ -6,7 +6,8 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/23 22:13:11 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/24 04:15:45 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/07/25 04:48:37 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/24 01:18:54 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +102,7 @@ int	main(void)
 	printf("result = %d\n", result);
 	result = ft_printf("ft_test %.3d | %2d|\n", ++count, e);
 	ft_printf("result = %d\n", result);
-	result = printf("tr_test %.3d | %2d|\n", ++count, e);
+	result = printf("tr_test %.3d | 2%2d|\n", ++count, e);
 	printf("result = %d\n", result);
 	result = ft_printf("ft_test %.3d | %14d|\n", ++count, e);
 	ft_printf("result = %d\n", result);
@@ -123,6 +124,5 @@ int	main(void)
 	ft_printf("result = %d\n", result);
 	result = printf("tr_test %.3d | %0*.*i|\n", count, 2, 1, 8);
 	printf("result = %d\n", result);
-
 }
 

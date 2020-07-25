@@ -6,7 +6,8 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 17:04:29 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/24 05:12:24 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/07/25 04:47:53 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/24 00:19:44 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +42,6 @@ int		ft_stdout_int(char space_char[3], char **space_info, int value,
 		int sp_total_info[4])
 {
 	int len_res;
-	
 	len_res = 0;
 	if (space_char[0] == '+' && space_char[2] == '0' && value > 0)
 		ft_putchar_fd_len('+', 1, &len_res);

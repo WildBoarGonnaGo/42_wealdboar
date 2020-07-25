@@ -6,7 +6,8 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 18:11:59 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/24 03:48:51 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/07/25 04:40:28 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/24 01:21:54 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +32,9 @@ void	neg_num_manage(char *spec_chars, int neg_num_status[2], char ***space)
 	if ((spec_chars[1] == '-' && spec_chars[2] == '0') || 
 	(**(*space + 2) == '0' && spec_chars[2] == '0'))
 		spec_chars[2] = ' ';
+		if (spec_chars[2] == '0')
+			spec_chars[2] = ' ';
+	}
 }
 
 int 	ft_precis_chars(char *str_handle, char ***space, int *pos, va_list list)
@@ -124,6 +128,7 @@ int		ft_printf_manager(char *str_handle, va_list list, int *len_res)
 	{
 		++pos;
 		//space_char[2] = ' ';
+		space_char[2] = ' ';
 		if ((neg_num[1] = ft_precis_chars(str_handle, &space, &pos, list)) < 0)
 			return (-1);
 	}
