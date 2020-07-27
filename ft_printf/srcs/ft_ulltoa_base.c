@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/27 21:07:11 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/27 21:31:35 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/28 01:17:43 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include <stdlib.h>
 #include "../include/libft_expand.h"
 
-unsigned long long	ft_ull_get_size_base(unsigned long long num, unsigned long long  base)
+unsigned long long	ft_ull_get_size_base(unsigned long long num,
+					unsigned long long base)
 {
 	unsigned long long	size;
 
@@ -32,9 +33,10 @@ char				ull_remind_to_base(unsigned long long val_to_write)
 		return (val_to_write + 'a' - 10);
 }
 
-char				*ft_ulltoa_base(unsigned long long num, unsigned long long base)
+char				*ft_ulltoa_base(unsigned long long num,
+					unsigned long long base)
 {
-	char 					*result;
+	char					*result;
 	unsigned long long		func_info[3];
 
 	func_info[1] = 1;

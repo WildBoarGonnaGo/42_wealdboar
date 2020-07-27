@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 20:30:09 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/27 21:52:19 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/28 01:18:40 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 char	*ft_itoa_base(unsigned int num, int base);
 void	ft_var_putstr_fd(int args, int fd, ...);
-char 	*ft_utoa(unsigned int n);
+char	*ft_utoa(unsigned int n);
 void	ft_mem_reset(void **mem_target);
 void	ft_mem_reset_arg(int num, ...);
 void	ft_putunbr_fd(unsigned int num, int fd);

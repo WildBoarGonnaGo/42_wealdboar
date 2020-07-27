@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 16:24:50 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/19 16:26:10 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/28 01:12:23 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void		ft_var_putstr_fd(int args, int fd, ...)
 {
-	va_list	strArg;
+	va_list	str_arg;
 	char	*str;
 
-	va_start(strArg, fd);
+	va_start(str_arg, fd);
 	while (args-- > 0)
 	{
-		str = va_arg(strArg, char *);
+		str = va_arg(str_arg, char *);
 		ft_putstr_fd(str, fd);
 	}
-	va_end(strArg);
+	va_end(str_arg);
 }

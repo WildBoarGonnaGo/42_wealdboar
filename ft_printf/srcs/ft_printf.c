@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 20:14:03 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/27 22:29:36 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/28 01:09:38 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,24 @@ void	ft_printf_init(int *printf_info)
 	printf_info[3] = -1;
 }
 
-int		ft_printf(const char *strArg, ...)
+int		ft_printf(const char *str_arg, ...)
 {
 	va_list	char_frwrd;
 	int		printf_info[4];
 
 	ft_printf_init(printf_info);
-	if (!strArg)
+	if (!str_arg)
 		return (0);
-	va_start(char_frwrd, strArg);
-	while (*(strArg + (++printf_info[3])))
+	va_start(char_frwrd, str_arg);
+	while (*(str_arg + (++printf_info[3])))
 	{
-		if (*(strArg + printf_info[3]) != '%')
-			ft_putchar_fd_len(*(strArg + printf_info[3]), 1, &printf_info[0]);
+		if (*(str_arg + printf_info[3]) != '%')
+			ft_putchar_fd_len(*(str_arg + printf_info[3]), 1, &printf_info[0]);
 		else
 		{
 			++printf_info[3];
-			if ((printf_info[2] = ft_printf_manager((char *)strArg + printf_info[3], 
-			char_frwrd, &printf_info[1])) < 0)
+			if ((printf_info[2] = ft_printf_manager((char *)str_arg
+			+ printf_info[3], char_frwrd, &printf_info[1])) < 0)
 				return (-1);
 			printf_info[3] += printf_info[2];
 			printf_info[0] += printf_info[1];

@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 18:08:49 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/23 03:41:34 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/07/28 01:14:58 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,20 @@ void	ft_special_chars(char *str_handle, char *spec_chars, int *pos)
 	spec_chars[1] = 0;
 	spec_chars[2] = ' ';
 	*pos = 0;
-
-	while (*(str_handle + *pos) == '+' || 
+	while (*(str_handle + *pos) == '+' ||
 	*(str_handle + *pos) == '-' || *(str_handle + *pos) == '0')
 	{
-		if (*(str_handle + *pos) == '+' && !spec_chars[0]) 
+		if (*(str_handle + *pos) == '+' && !spec_chars[0])
 			spec_chars[0] = '+';
-		if (*(str_handle  + *pos) == '-' && !spec_chars[1]) 
+		if (*(str_handle + *pos) == '-' && !spec_chars[1])
 			spec_chars[1] = '-';
-		if (*(str_handle + *pos) == '0' && spec_chars[2] == ' ') 
+		if (*(str_handle + *pos) == '0' && spec_chars[2] == ' ')
 			spec_chars[2] = '0';
 		++*pos;
 	}
 }
 
-int 	ft_starfield(char **str, va_list list)
+int		ft_starfield(char **str, va_list list)
 {
 	char	*str_to_purge;
 	int		field_range;

@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/27 21:04:39 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/27 21:51:09 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/28 01:15:35 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,6 @@ int		ft_get_size_base(unsigned int num, int base)
 	return (++size);
 }
 
-/*int		ft_get_size_base(unsigned int num, int base)
-{
-	int	size;
-
-	size = 0;
-	while ((num /= base) > 0)
-		++size;
-	return (++size);
-}*/
-
 char	remind_to_base(int val_to_write)
 {
 	if (val_to_write >= 0 && val_to_write < 10)
@@ -44,7 +34,7 @@ char	remind_to_base(int val_to_write)
 
 char	*ft_itoa_base(unsigned int num, int base)
 {
-	char 	*result;
+	char	*result;
 	int		func_info[3];
 
 	func_info[1] = 1;
