@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 17:04:29 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/25 04:47:53 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/27 06:02:24 by lchantel         ###   ########.fr       */
 /*   Updated: 2020/07/24 00:19:44 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -85,7 +85,7 @@ int		ft_integer_handle(char **space_info, int value, char space_char[3], int *le
 	}
 	sp_number = ft_atoi(*space_info);
 	sp_total_info[3] = (!**(space_info + 2)) ? 0 : ft_atoi(*(space_info + 2));
-	str_value = (**(space_info + 1) != 'u') ? ft_itoa(sp_total_info[1]) : ft_utoa((unsigned int)value);
+_	str_value = (**(space_info + 1) != 'u') ? ft_itoa(sp_total_info[1]) : ft_utoa((unsigned int)value);
 	if (!str_value)
 		return (-1);	
 	sp_total_info[2] = ft_strlen(str_value);
