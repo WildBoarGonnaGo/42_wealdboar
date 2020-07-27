@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 18:11:59 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/27 20:43:28 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/27 21:45:48 by lchantel         ###   ########.fr       */
 /*   Updated: 2020/07/24 01:21:54 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -102,7 +102,7 @@ int		ft_data_process(char **space, va_list list, char space_char[3], int *len_re
 	else if (*space[1] == 'c')
 		status = ft_char_handle(space, va_arg(list, int), space_char, len_res);
 	else if (*space[1] == 'p' || *space[1] == 'x' || *space[1] == 'X')
-		status = ft_hexadec_handle(space, va_arg(list, int), space_char, len_res);
+		status = ft_hexadec_handle(space, va_arg(list, unsigned long long), space_char, len_res);
 	else if (*space[1] == '%')
 	{
 		*len_res = 1;

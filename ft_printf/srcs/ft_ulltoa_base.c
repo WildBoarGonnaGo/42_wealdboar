@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa_base.c                                     :+:      :+:    :+:   */
+/*   ft_ulltoa_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/27 21:04:39 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/27 21:51:09 by lchantel         ###   ########.fr       */
+/*   Created: 2020/07/27 21:07:11 by lchantel          #+#    #+#             */
+/*   Updated: 2020/07/27 21:31:35 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include <stdlib.h>
 #include "../include/libft_expand.h"
 
-int		ft_get_size_base(unsigned int num, int base)
+unsigned long long	ft_ull_get_size_base(unsigned long long num, unsigned long long  base)
 {
-	int	size;
+	unsigned long long	size;
 
 	size = 0;
 	while ((num /= base) > 0)
@@ -24,17 +24,7 @@ int		ft_get_size_base(unsigned int num, int base)
 	return (++size);
 }
 
-/*int		ft_get_size_base(unsigned int num, int base)
-{
-	int	size;
-
-	size = 0;
-	while ((num /= base) > 0)
-		++size;
-	return (++size);
-}*/
-
-char	remind_to_base(int val_to_write)
+char				ull_remind_to_base(unsigned long long val_to_write)
 {
 	if (val_to_write >= 0 && val_to_write < 10)
 		return (val_to_write + '0');
@@ -42,15 +32,15 @@ char	remind_to_base(int val_to_write)
 		return (val_to_write + 'a' - 10);
 }
 
-char	*ft_itoa_base(unsigned int num, int base)
+char				*ft_ulltoa_base(unsigned long long num, unsigned long long base)
 {
-	char 	*result;
-	int		func_info[3];
+	char 					*result;
+	unsigned long long		func_info[3];
 
 	func_info[1] = 1;
 	if (!num)
 		return (ft_strdup("0"));
-	func_info[0] = ft_get_size_base(num, base);
+	func_info[0] = ft_ull_get_size_base(num, base);
 	if (!(result = (char *)malloc(func_info[0] + 1)))
 		return (NULL);
 	*(result + func_info[0]) = 0;
@@ -62,7 +52,7 @@ char	*ft_itoa_base(unsigned int num, int base)
 		if (func_info[1] < 0 && !func_info[0])
 			*(result + func_info[0]) = '-';
 		else
-			*(result + func_info[0]) = remind_to_base(func_info[2]);
+			*(result + func_info[0]) = ull_remind_to_base(func_info[2]);
 	}
 	return (result);
 }

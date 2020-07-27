@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 17:50:52 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/27 20:27:40 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/27 21:53:49 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ int			ft_stdout_hex(char space_char[3], int sp_info[4], char **str_value,
 	return (len_res);
 }
 
-int			ft_hexadec_handle(char **space_info, int value, char space_char[3], int *len_res)
+int			ft_hexadec_handle(char **space_info, unsigned long long value, 
+			char space_char[3], int *len_res)
 {
 	int		sp_info[4];
 	char	**str_value;
@@ -49,8 +50,14 @@ int			ft_hexadec_handle(char **space_info, int value, char space_char[3], int *l
 	sp_info[1] = (!**(space_info + 2) || **(space_info + 2) == '0') ? 0 : ft_atoi(*(space_info + 2));
 	if (**(space_info + 1) != 'p' || (**(space_info + 1) == 'p' && value))
 	{
-		if (!(str_value[0] = ft_itoa_base((unsigned long long)value, 16)))
-			return (-1);
+		if (**(space_info + 1) != 'p')
+		{
+			if (!(str_value[0] = ft_itoa_base((unsigned int)value, 16)))
+				return (-1);
+		}
+		else
+			if (!(str_value[0] = ft_ulltoa_base(value, 16)))
+				return (-1);
 	}
 	else
 		if (!(str_value[0] = ft_strdup("(nil)")))

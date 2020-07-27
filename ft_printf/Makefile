@@ -6,7 +6,7 @@
 #    By: lchantel <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/30 10:53:46 by lchantel          #+#    #+#              #
-#    Updated: 2020/07/22 21:45:33 by lchantel         ###   ########.fr        #
+#    Updated: 2020/07/27 21:12:52 by lchantel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,8 @@ SRC = ./srcs/ft_atoi.c			\
 	./srcs/ft_putunbr_fd_len.c	\
 	./srcs/ft_putnbr_fd_len.c	\
 	./srcs/ft_putstr_fd_len.c	\
-	
+	./srcs/ft_ulltoa_base.c		\
+
 CC			= clang
 WARNS		= -Wall -Wextra -Werror
 MAIN_OBJS	= $(SRC:.c=.o)
