@@ -6,8 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 18:11:59 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/27 06:00:50 by lchantel         ###   ########.fr       */
-/*   Updated: 2020/07/25 04:40:28 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/26 08:55:49 by lchantel         ###   ########.fr       */
 /*   Updated: 2020/07/24 01:21:54 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -29,12 +28,6 @@ void	neg_num_manage(char *spec_chars, int neg_num_status[2], char ***space)
 		buf = *(*space + 2);
 		*(*space + 2) = ft_strdup("");
 		ft_mem_reset((void **)&buf);
-	}
-	if ((spec_chars[1] == '-' && spec_chars[2] == '0') || 
-	(**(*space + 2) == '0' && spec_chars[2] == '0'))
-		spec_chars[2] = ' ';
-		if (spec_chars[2] == '0')
-			spec_chars[2] = ' ';
 	}
 	if ((spec_chars[1] == '-' && spec_chars[2] == '0') || 
 	(**(*space + 2) == '0' && spec_chars[2] == '0') ||
@@ -134,7 +127,6 @@ int		ft_printf_manager(char *str_handle, va_list list, int *len_res)
 	{
 		++pos;
 		//space_char[2] = ' ';
-		space_char[2] = ' ';
 		if ((neg_num[1] = ft_precis_chars(str_handle, &space, &pos, list)) < 0)
 			return (-1);
 	}
