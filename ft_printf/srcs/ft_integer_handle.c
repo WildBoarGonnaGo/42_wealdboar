@@ -6,6 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 17:04:29 by lchantel          #+#    #+#             */
+/*   Updated: 2020/07/25 04:47:53 by lchantel         ###   ########.fr       */
 /*   Updated: 2020/07/24 00:19:44 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -41,7 +42,6 @@ int		ft_stdout_int(char space_char[3], char **space_info, int value,
 		int sp_total_info[4])
 {
 	int len_res;
-
 	len_res = 0;
 	if (space_char[0] == '+' && space_char[2] == '0' && value > 0)
 		ft_putchar_fd_len('+', 1, &len_res);
@@ -91,6 +91,16 @@ int		ft_integer_handle(char **space_info, int value, char space_char[3], int *le
 	sp_total_info[2] = ft_strlen(str_value);
 	sp_total_info[0] += ((sp_total_info[3] - sp_total_info[2]) > 0) ? sp_number - sp_total_info[3] 
 	: sp_number - sp_total_info[2];
+	/*if (sp_total_info[3] > sp_total_info[2])
+	{
+		sp_total_info[0] = sp_number - sp_total_info[3];
+		sp_total_info[3] = sp_number - sp_total_info[2] - sp_total_info[3];
+	}
+	else
+	{
+		sp_total_info[0] = sp_number - sp_total_info[2];
+		sp_total_info[3] = 0;
+	}*/
 	sp_total_info[0] += (value || **(space_info + 2) != 48) ? 0 : 1;
  	*len_res = ft_stdout_int(space_char, space_info, value, sp_total_info);
 	ft_mem_reset((void **)&str_value);

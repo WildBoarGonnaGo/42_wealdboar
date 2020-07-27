@@ -6,6 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/23 22:13:11 by lchantel          #+#    #+#             */
+/*   Updated: 2020/07/26 11:04:45 by lchantel         ###   ########.fr       */
 /*   Updated: 2020/07/24 01:18:54 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -101,7 +102,7 @@ int	main(void)
 	printf("result = %d\n", result);
 	result = ft_printf("ft_test %.3d | %2d|\n", ++count, e);
 	ft_printf("result = %d\n", result);
-	result = printf("tr_test %.3d | %2d|\n", ++count, e);
+	result = printf("tr_test %.3d | 2%2d|\n", ++count, e);
 	printf("result = %d\n", result);
 	result = ft_printf("ft_test %.3d | %14d|\n", ++count, e);
 	ft_printf("result = %d\n", result);
@@ -115,5 +116,34 @@ int	main(void)
 	ft_printf("result = %d\n", result);
 	result = printf("tr_test %.3d | %0*.*i|\n", count, 2, -2, 8);
 	printf("result = %d\n", result);
+	result = ft_printf("ft_test %.3d | %0*.*i|\n", ++count, 2, 0, 8);
+	ft_printf("result = %d\n", result);
+	result = printf("tr_test %.3d | %0*.*i|\n", count, 2, 0, 8);
+	printf("result = %d\n", result);
+	result = ft_printf("ft_test %.3d | %0*.*i|\n", ++count, 2, 1, 8);
+	ft_printf("result = %d\n", result);
+	result = printf("tr_test %.3d | %0*.*i|\n", count, 2, 1, 8);
+	printf("result = %d\n", result);
+	result = ft_printf("ft_test %.3d | %02.1i|\n", ++count, 8);
+	ft_printf("result = %d\n", result);
+	result = printf("tr_test %.3d | %02.1i|\n", count, 8);
+	printf("result = %d\n", result);
+	result = ft_printf("ft_test %.3d | %0*.*i|\n", ++count, 2, -1, 8);
+	ft_printf("result = %d\n", result);
+	result = printf("tr_test %.3d | %0*.*i|\n", count, 2, -1, 8);
+	printf("result = %d\n", result);
+	a = -1;
+	while(a < 5) //T257-346
+	{
+		b = -1;
+		while (b < 5)
+		{
+			PRINT(" --- Return : %d\n", PRINT("%*.*u, %*.*x, %*.*X, %*.*u, %*.*x, %*.*X, %*.*u, %*.*x, %*.*X, %*.*u, %*.*x, %*.*X, %*.*u, %*.*x, %*.*X, %*.*u, %*.*x, %*.*X, %*.*u, %*.*x, %*.*X, %*.*u, %*.*x, %*.*X", a, b, i, a, b, i, a, b, i, a, b, j, a, b, j, a, b, j, a, b, k, a, b, k, a, b, k, a, b, l, a, b, l, a, b, l, a, b, m, a, b, m, a, b, m, a, b, c, a, b, c, a, b, c, a, b, d, a, b, d, a, b, d, a, b, e, a, b, e, a, b, e));
+			PRINT(" --- Return : %d\n", PRINT("%0*.*u, %0*.*x, %0*.*X, %0*.*u, %0*.*x, %0*.*X, %0*.*u, %0*.*x, %0*.*X, %0*.*u, %0*.*x, %0*.*X, %0*.*u, %0*.*x, %0*.*X, %0*.*u, %0*.*x, %0*.*X, %0*.*u, %0*.*x, %0*.*X, %0*.*u, %0*.*x, %0*.*X", a, b, i, a, b, i, a, b, i, a, b, j, a, b, j, a, b, j, a, b, k, a, b, k, a, b, k, a, b, l, a, b, l, a, b, l, a, b, m, a, b, m, a, b, m, a, b, c, a, b, c, a, b, c, a, b, d, a, b, d, a, b, d, a, b, e, a, b, e, a, b, e));
+			PRINT(" --- Return : %d\n", PRINT("%-*.*u, %-*.*x, %-*.*X, %-*.*u, %-*.*x, %-*.*X, %-*.*u, %-*.*x, %-*.*X, %-*.*u, %-*.*x, %-*.*X, %-*.*u, %-*.*x, %-*.*X, %-*.*u, %-*.*x, %-*.*X, %-*.*u, %-*.*x, %-*.*X, %-*.*u, %-*.*x, %-*.*X", a, b, i, a, b, i, a, b, i, a, b, j, a, b, j, a, b, j, a, b, k, a, b, k, a, b, k, a, b, l, a, b, l, a, b, l, a, b, m, a, b, m, a, b, m, a, b, c, a, b, c, a, b, c, a, b, d, a, b, d, a, b, d, a, b, e, a, b, e, a, b, e));
+			b++;
+		}
+		a++;
+	}
 }
 
