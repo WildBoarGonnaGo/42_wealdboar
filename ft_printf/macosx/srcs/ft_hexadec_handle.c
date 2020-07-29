@@ -42,8 +42,14 @@ int			space_info_proc(int *sp_info, char **space_info,
 	sp_info[0] = ft_atoi(*space_info);
 	sp_info[1] = (!**(space_info + 2) || **(space_info + 2) == '0')
 	? 0 : ft_atoi(*(space_info + 2));
-	if (!(str_value[0] = ft_itoa_base((unsigned int)value, 16)))
-		return (-1);
+	if (**(space_info + 1) != 'p')
+	{
+		if (!(str_value[0] = ft_itoa_base((unsigned int)value, 16)))
+			return (-1);
+	}
+	else
+		if (!(str_value[0] = ft_ulltoa_base(value, 16)))
+			return (-1);
 	return (1);
 }
 
@@ -62,7 +68,7 @@ int			ft_hexadec_handle(char **space_info, unsigned long long value,
 	? sp_info[0] - sp_info[1] : sp_info[0] - sp_info[2];
 	sp_info[3] -= (**(space_info + 1) == 'p') ? 2 : 0;
 	sp_info[3] += (!value && **(space_info + 2) == '0'
-	&& **(space_info + 1) != 'p') ? 1 : 0;
+	/*&& **(space_info + 1) != 'p'*/) ? 1 : 0;
 	str_value[1] = str_value[0];
 	*len_res = ft_stdout_hex(space_char, sp_info, str_value, space_info);
 	if (str_value[1] != str_value[0])
