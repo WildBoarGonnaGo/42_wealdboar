@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/27 23:19:28 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/29 04:33:15 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/07/29 20:45:18 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,6 @@ int		ft_data_process(char **space, va_list list, char space_char[3],
 		space_char, len_res);
 	else if (*space[1] == '%')
 		ft_prcntchar_process(space, space_char, len_res);
-	/*{
-		*len_res = 1;
-		ft_putchar_fd('%', 1);
-	}*/
 	return (status);
 }
 
@@ -127,7 +123,7 @@ int		ft_printf_manager(char *str_handle, va_list list, int *len_res)
 	space[0] = ft_strdup("");
 	if (!space[0] || !(space[2] = ft_strdup("")))
 		return (-1);
-	ft_special_chars(str_handle, space_char, &pos);
+	ft_special_chars(str_handle, space_char, &pos, neg_num);
 	if ((neg_num[0] = ft_width_chars(str_handle, &space, &pos, list)) < 0)
 		return (-1);
 	if (*(str_handle + pos) == '.')

@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 17:50:52 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/28 00:41:24 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/29 21:11:08 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ int			space_info_proc(int *sp_info, char **space_info,
 			return (-1);
 	}
 	else
+	{
 		if (!(str_value[0] = ft_ulltoa_base(value, 16)))
 			return (-1);
+	}
 	return (1);
 }
 
@@ -61,14 +63,14 @@ int			ft_hexadec_handle(char **space_info, unsigned long long value,
 
 	if (!(str_value = (char **)malloc(sizeof(char *) * 2)))
 		return (-1);
+	str_value[0] = NULL;
 	if (space_info_proc(sp_info, space_info, value, str_value) < 0)
 		return (-1);
 	sp_info[2] = ft_strlen(str_value[0]);
 	sp_info[3] = (sp_info[1] - sp_info[2] > 0)
 	? sp_info[0] - sp_info[1] : sp_info[0] - sp_info[2];
 	sp_info[3] -= (**(space_info + 1) == 'p') ? 2 : 0;
-	sp_info[3] += (!value && **(space_info + 2) == '0'
-	/*&& **(space_info + 1) != 'p'*/) ? 1 : 0;
+	sp_info[3] += (!value && **(space_info + 2) == '0') ? 1 : 0;
 	str_value[1] = str_value[0];
 	*len_res = ft_stdout_hex(space_char, sp_info, str_value, space_info);
 	if (str_value[1] != str_value[0])

@@ -6,18 +6,21 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 18:08:49 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/28 01:14:58 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/29 21:12:49 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf_out.h"
 
-void	ft_special_chars(char *str_handle, char *spec_chars, int *pos)
+void	ft_special_chars(char *str_handle, char *spec_chars,
+		int *pos, int *neg_num)
 {
 	spec_chars[0] = 0;
 	spec_chars[1] = 0;
 	spec_chars[2] = ' ';
 	*pos = 0;
+	neg_num[0] = 0;
+	neg_num[1] = 0;
 	while (*(str_handle + *pos) == '+' ||
 	*(str_handle + *pos) == '-' || *(str_handle + *pos) == '0')
 	{

@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 16:44:20 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/29 04:54:24 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/07/29 21:16:50 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int		ft_char_handle(char **space_info, char value, char space_char[3],
 		int *len_res);
 int		ft_hexadec_handle(char **space_info, unsigned long long value,
 		char space_char[3], int *len_res);
-void	ft_special_chars(char *str_handle, char *spec_chars, int *pos);
+void	ft_special_chars(char *str_handle, char *spec_chars,
+		int *pos, int *neg_num);
 int		ft_starfield(char **str, va_list list);
 int		ft_printf_manager(char *str_handle, va_list list, int *len_res);
 int		ft_printf(const char *str_arg, ...);
@@ -37,8 +38,8 @@ void	ft_putunbr_fd_len(unsigned int num, int fd, int *len);
 void	ft_putstr_fd_len(char *s, int fd, int *len);
 int		ft_str_zerofic(char ***space, int num);
 char	*ft_ulltoa_base(unsigned long long num, int base);
-int		ft_prcntchar_process(char **space_info, char space_char[3], 
+int		ft_prcntchar_process(char **space_info, char space_char[3],
 		int *len_res);
-int	ft_err_handle(const char *src);
+int		ft_err_handle(const char *src);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 17:42:36 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/28 00:32:35 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/29 21:11:59 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		ft_str_info_proc(int *ftstr_info, char *addr_process,
 			int *len_res, char space_char[3])
-{	
+{
 	if (space_char[1] != '-' && ftstr_info[1] > 0)
 		ft_print_spaces(ftstr_info[1], space_char[2], len_res);
 	if (ftstr_info[2] == -1 || ftstr_info[2] >= (int)ft_strlen(addr_process))
@@ -49,7 +49,7 @@ int			ft_string_handle(char **space_info, char *value,
 	ftstr_info[2] = (!**(space_info + 2)) ? -1 : ft_atoi(*(space_info + 2));
 	ftstr_info[1] = (ftstr_info[2] != -1 &&
 	ftstr_info[2] < (int)ft_strlen(addr_process))
-	? ftstr_info[0] - ftstr_info[2] : ftstr_info[0] - ft_strlen(addr_process);	
+	? ftstr_info[0] - ftstr_info[2] : ftstr_info[0] - ft_strlen(addr_process);
 	ft_str_info_proc(ftstr_info, addr_process, len_res, space_char);
 	if (!ftstr_info[4])
 		ft_mem_reset((void **)&addr_process);
