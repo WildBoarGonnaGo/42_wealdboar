@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/27 23:19:28 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/28 01:08:03 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/29 04:33:15 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,11 @@ int		ft_data_process(char **space, va_list list, char space_char[3],
 		status = ft_hexadec_handle(space, va_arg(list, unsigned long long),
 		space_char, len_res);
 	else if (*space[1] == '%')
-	{
+		ft_prcntchar_process(space, space_char, len_res);
+	/*{
 		*len_res = 1;
 		ft_putchar_fd('%', 1);
-	}
+	}*/
 	return (status);
 }
 

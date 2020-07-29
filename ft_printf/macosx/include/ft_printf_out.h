@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 16:44:20 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/28 01:19:26 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/29 04:54:24 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,7 @@ void	ft_putunbr_fd_len(unsigned int num, int fd, int *len);
 void	ft_putstr_fd_len(char *s, int fd, int *len);
 int		ft_str_zerofic(char ***space, int num);
 char	*ft_ulltoa_base(unsigned long long num, int base);
+int		ft_prcntchar_process(char **space_info, char space_char[3], 
+		int *len_res);
 
 #endif
