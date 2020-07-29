@@ -39,5 +39,6 @@ int		ft_str_zerofic(char ***space, int num);
 char	*ft_ulltoa_base(unsigned long long num, int base);
 int		ft_prcntchar_process(char **space_info, char space_char[3], 
 		int *len_res);
+int	ft_err_handle(const char *src);
 
 #endif

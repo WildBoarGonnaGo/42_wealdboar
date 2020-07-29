@@ -37,5 +37,6 @@ void	ft_putunbr_fd_len(unsigned int num, int fd, int *len);
 void	ft_putstr_fd_len(char *s, int fd, int *len);
 int		ft_str_zerofic(char ***space, int num);
 char	*ft_ulltoa_base(unsigned long long num, int base);
+int	ft_err_handle(const char *src);
 
 #endif

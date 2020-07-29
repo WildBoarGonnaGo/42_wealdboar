@@ -26,6 +26,8 @@ int		ft_printf(const char *str_arg, ...)
 	int		printf_info[4];
 
 	ft_printf_init(printf_info);
+	if (!(ft_err_handle(str_arg)))
+		return (-1);
 	if (!str_arg)
 		return (0);
 	va_start(char_frwrd, str_arg);

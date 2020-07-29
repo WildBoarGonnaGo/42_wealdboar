@@ -16,6 +16,7 @@ int	ft_prcntchar_process(char **space_info, char space_char[3], int *len_res)
 {
 	int	space_num;
 
+	*len_res = 0;
 	space_num = ft_atoi(*space_info) - 1;
 	if (space_char[1] != '-' && space_num > 0)
 		ft_print_spaces(space_num, space_char[2], len_res);
