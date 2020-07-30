@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 20:14:03 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/28 01:09:38 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/07/31 00:24:19 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int		ft_printf(const char *str_arg, ...)
 	va_list	char_frwrd;
 	int		printf_info[4];
 
+	if (!(ft_err_handle(str_arg)))
+		return (-1);
 	ft_printf_init(printf_info);
 	if (!str_arg)
 		return (0);
