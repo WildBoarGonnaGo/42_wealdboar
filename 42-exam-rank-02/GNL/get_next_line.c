@@ -6,7 +6,7 @@
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/07 03:37:36 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/08/07 05:49:16 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/08/08 20:11:31 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char 	*ft_strjoin(char *src, char *dst)
 
 int		check_state(int nl_pos)
 {
-	if (nl_pos > 0)
+	if (nl_pos >= 0)
 		return (1);
 	else
 		return (0);
@@ -105,22 +105,30 @@ int		get_next_line(char **line)
 	char		buff[BUFF + 1];
 	int			rpos;
 	int			nlpos;
-	int			eof;
+	char		*rest;
 
-	eof = 0;
-	nlpos = 3;
+	nlpos = 1;
 	if (!(*line = ft_strdup("")))
 		return (-1);
-	while ((rpos = read(0, buff, BUFF)) && nlpos)
+	if (!(rest = ft_strdup("")))
+		return (-1);
+	while ((rpos = read(0, buff, BUFF)) > 0)
 	{
 		if (!buff[rpos])
-			nlpos = 0;	
-		nlpos = (ft_strchr(buff, '\n') && nlpos) ? 1 : 2;
+			nlpos = -1;
+		else	
+			nlpos = ft_strchr(buff, '\n') - buff;
 		buff[rpos] = 0;
-		if (nlpos == 1)
+		if (nlpos > 0)
+		{
 			buff[nlpos] = 0;
+			rest = ft_strjoin(rest, buff + nlpos);
+		}
 		if (!(*line = ft_strjoin(*line, buff)))
 			return (-1);
+		if (nlpos)
+			break ;
 	}
+	ft_memreset((void **)&rest);
 	return (check_state(nlpos));
 }

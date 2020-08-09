@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
+/*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/07 03:42:56 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/08/08 18:43:56 by lchantel         ###   ########.fr       */
+/*   Created: 2020/08/08 18:37:23 by lchantel          #+#    #+#             */
+/*   Updated: 2020/08/08 18:41:40 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "get_next_line.h"
+#include <stdio.h>
 
-# ifndef BUFF
-#  define BUFF 128
-# endif
+int	main(void)
+{
+	char *line;
 
-# include <stdlib.h>
-# include <unistd.h>
-
-int		get_next_line(char **line);
-void	ft_memreset(void **mem);
-
-#endif
+	while (get_next_line(&line))
+	{
+		printf("|%s\n", line);
+		ft_memreset((void **)&line);
+	}
+	printf("|%s\n", line);
+	ft_memreset((void **)&line);
+	return (0);
+}
