@@ -6,11 +6,18 @@
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/07 03:37:36 by wealdboar         #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2020/08/10 18:06:50 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
+=======
+/*   Updated: 2020/08/08 20:11:31 by lchantel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+>>>>>>> 61d00e1c4618fb06660e8e2cb5400b81c99fb3fa
 #include "get_next_line.h"
 
 void	ft_memreset(void **mem)
@@ -47,13 +54,18 @@ char	*ft_strchr(char *str, char c)
 	return (0);
 }
 
+<<<<<<< HEAD
 char	*ft_gnl_strdup(char *str, int nbytes)
+=======
+char	*ft_strdup(char *str)
+>>>>>>> 61d00e1c4618fb06660e8e2cb5400b81c99fb3fa
 {
 	char	*res;
 	int		size;
 	int		pos;
 
 	pos = -1;
+<<<<<<< HEAD
 	res = NULL;
 	if (!str)
 		return (0);
@@ -64,6 +76,14 @@ char	*ft_gnl_strdup(char *str, int nbytes)
 	while (++pos < size)
 		*(res + pos) = *(str + pos);
 	*(res + pos) = 0;
+=======
+	if (!str)
+		return (0);
+	size = ft_strlen(str);
+	if (!(res = (char *)malloc(size + 1)))
+	while (*(str + ++pos))
+		*(res + pos) = *(str + pos);
+>>>>>>> 61d00e1c4618fb06660e8e2cb5400b81c99fb3fa
 	return (res);
 }
 
@@ -97,14 +117,21 @@ char 	*ft_strjoin(char *src, char *dst)
 	return (res);
 }
 
+<<<<<<< HEAD
 int		check_state(int nl_pos, char *rest)
 {
 	if (nl_pos >= 0 || rest)
+=======
+int		check_state(int nl_pos)
+{
+	if (nl_pos >= 0)
+>>>>>>> 61d00e1c4618fb06660e8e2cb5400b81c99fb3fa
 		return (1);
 	else
 		return (0);
 }
 
+<<<<<<< HEAD
 int		_proc_rest(char **rest, char **line)
 {
 	int		pos;
@@ -131,11 +158,14 @@ int		_proc_rest(char **rest, char **line)
 	return (0);
 }
 
+=======
+>>>>>>> 61d00e1c4618fb06660e8e2cb5400b81c99fb3fa
 int		get_next_line(char **line)
 {
 	char		buff[BUFF + 1];
 	int			rpos;
 	int			nlpos;
+<<<<<<< HEAD
 	static char	*rest;
 
 	nlpos = -1;
@@ -161,4 +191,32 @@ int		get_next_line(char **line)
 		}
 	}
 	return (check_state(nlpos, rest));
+=======
+	char		*rest;
+
+	nlpos = 1;
+	if (!(*line = ft_strdup("")))
+		return (-1);
+	if (!(rest = ft_strdup("")))
+		return (-1);
+	while ((rpos = read(0, buff, BUFF)) > 0)
+	{
+		if (!buff[rpos])
+			nlpos = -1;
+		else	
+			nlpos = ft_strchr(buff, '\n') - buff;
+		buff[rpos] = 0;
+		if (nlpos > 0)
+		{
+			buff[nlpos] = 0;
+			rest = ft_strjoin(rest, buff + nlpos);
+		}
+		if (!(*line = ft_strjoin(*line, buff)))
+			return (-1);
+		if (nlpos)
+			break ;
+	}
+	ft_memreset((void **)&rest);
+	return (check_state(nlpos));
+>>>>>>> 61d00e1c4618fb06660e8e2cb5400b81c99fb3fa
 }
