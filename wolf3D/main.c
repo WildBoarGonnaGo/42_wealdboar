@@ -6,7 +6,7 @@
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 03:37:53 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/08/14 05:45:56 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/08/15 17:10:09 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,21 @@
 int	main(int argc, char *argv[])
 {
 	bitmap _obj;
-	//int	a = 0x00FF00;
-	char *str[2];
+	bitmap _blk;
+	bitmap _dist;
+	double	dist = 0.75;
 
+	char 	*str[2];
 	if (argc != 2)
 		return (0);
 	_obj._clrfull = ft_atou_base(argv[1], 16);
 	printf("origin color hex code: %s\n", argv[1]);
 	printf("orgin color dec number: %u\n", _obj._clrfull);
-	_obj = add_shade(0.25, _obj);
-	printf("shaded color dec number: %u\n", _obj._clrfull);
-	str[0] = gethex_impl(_obj._clrfull);
+	_dist = add_shade(dist, _obj);
+	str[0] = gethex_impl(_dist._clrfull);
 	str[1] = str[0];
-	printf("new color hex code: %s", str[0]);
-	//printf("check: %x\n", _obj._clrfull);
-	//printf("check dec: %d\n", a);
+	printf("new color hex code: %s\n", str[0]);	
 	ft_memreset((void **)&str[1]);
+	printf("new color dec number: %d\n", _dist._clrfull);
 	return (0);
 }

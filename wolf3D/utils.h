@@ -6,7 +6,7 @@
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 02:29:12 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/08/14 05:07:51 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/08/15 09:54:14 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int				ft_strlen(char *str);
 void			displ_bits(int val);
 char			*ft_strjoin(char *src, char *dst);
 char			*ft_strdup(char *str);
-int				get_bitnum(int a);
+int				get_bitnum(unsigned int a);
 char			*ft_charjoin(char *str, char c);
 char			*gethex_impl(unsigned int a);
 int				ft_isspace(char c);

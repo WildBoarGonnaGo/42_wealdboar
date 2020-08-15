@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 18:27:58 by lchantel          #+#    #+#             */
-/*   Updated: 2020/08/14 05:04:51 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/08/15 17:03:01 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int 	get_bitmaps(bitmap vals)
 {
-	return ((vals.trnsp << 24 | vals.red << 16 | vals.green << 8 | vals.blue));
+	return ((vals.trnsp | vals.red | vals.green | vals.blue));
 }
 
 int		get_trcode(bitmap vals)
@@ -41,10 +41,13 @@ bitmap	add_shade(double dist, bitmap vals)
 {
 	bitmap	dif;
 
-	dif._clrfull = 0xFFFFFF;
-	dif.red = (get_rcode(vals) | (int)(dist * (get_rcode(dif) - get_rcode(vals))));
-	dif.blue = (get_rcode(vals) | (int)(dist * (get_bcode(dif) - get_bcode(vals))));
-	dif.green = (get_gcode(vals) | (int)(dist * (get_gcode(dif) - get_gcode(vals))));
+	vals.red = get_rcode(vals);
+	vals.green = get_gcode(vals);
+	vals.blue = get_bcode(vals);
+	vals.trnsp = get_trcode(vals);
+	dif.red = (int)((1 - dist) * (vals.red >> 16)) << 16;
+	dif.green = (int)((1 - dist) * (vals.green >> 8)) << 8;
+	dif.blue = (int)((1 -dist) * vals.blue);
 	dif.trnsp = vals.trnsp;
 	dif._clrfull = get_bitmaps(dif);
 	return (dif);

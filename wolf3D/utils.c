@@ -6,7 +6,7 @@
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 02:35:19 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/08/14 05:32:21 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/08/15 10:48:08 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	*ft_strdup(char *str)
 	return (res);
 }
 
-int		get_bitnum(int a)
+int		get_bitnum(unsigned int a)
 {
 	int	size;
 
@@ -128,6 +128,8 @@ char		*gethex_impl(unsigned int a)
 
 	info[0] = 1;
 	info[1] = 0;
+	if (!a)
+		return (ft_strdup("0"));
 	size = get_bitnum(a);
 	info[2] = ((size % 4) > 0);
 	size = (info[2]) ? size / 4 + 1 : size / 4;
