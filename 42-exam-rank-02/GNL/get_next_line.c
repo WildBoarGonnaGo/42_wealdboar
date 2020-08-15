@@ -6,9 +6,11 @@
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/07 03:37:36 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/08/10 20:45:02 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/08/11 02:09:40 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 #include "get_next_line.h"
 
 void	ft_memreset(void **mem)
@@ -95,9 +97,18 @@ char 	*ft_strjoin(char *src, char *dst)
 	return (res);
 }
 
-int		check_state(int nl_pos, char *rest)
+int		check_state(int nl_pos, char **rest/*, char *line*/)
 {
-	if (nl_pos >= 0 || rest)
+	/*int	size[2];
+
+	size[0] = ft_strlen(*rest);
+	size[1] = ft_strlen(line);
+	while (size[0])
+		if (*(line + --size[1]) != *(*rest + --size[0]))
+			continue ;
+	if (*rest && !size[0])
+		ft_memreset((void **)rest);*/
+	if (nl_pos >= 0 || *rest)
 		return (1);
 	else
 		return (0);
@@ -135,28 +146,36 @@ int		get_next_line(char **line)
 	int			rpos;
 	int			nlpos;
 	static char	*rest;
+	int			status;
 
 	nlpos = -1;
+	rpos = 0;
+	status = 0;
 	if (!(_proc_rest(&rest, line)))
 	{
 		while ((rpos = read(0, buff, BUFF)) > 0)
 		{
+			status = 1;
 			buff[rpos] = 0;
 			nlpos = (!(ft_strchr(buff, '\n'))) ? 0 : ft_strchr(buff, '\n') - buff + 1;
 			if (!nlpos && rpos < BUFF)
 				nlpos = -1;
 			if (nlpos > 0)
 				buff[nlpos - 1] = 0;
-			if (buff[nlpos])
+			/*if (buff[nlpos])
 			{
 				ft_memreset((void **)&rest);
 				rest = ft_gnl_strdup(buff + nlpos, ft_strlen(buff + nlpos));
-			}
+			}*/
+			ft_memreset((void **)&rest);
+			rest = ft_gnl_strdup(buff + nlpos, ft_strlen(buff + nlpos));
 			if (!(*line = ft_strjoin(*line, buff)))
 				return (-1);
 			if (nlpos)
 				break ;
 		}
 	}
-	return (check_state(nlpos, rest));
+	if (rpos < BUFF  && status)
+		ft_memreset((void **)&rest);
+	return (check_state(nlpos, &rest/*, *line*/));
 }

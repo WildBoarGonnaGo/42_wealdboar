@@ -6,18 +6,11 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 18:27:58 by lchantel          #+#    #+#             */
-/*   Updated: 2020/08/10 19:24:11 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/08/14 05:04:51 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-typedef struct	colors
-{
-	int	trnsp;
-	int	red;
-	int	green;
-	int	blue;
-	int	_clrfull;
-}				bitmap;
+#include "colors.h"
 
 int 	get_bitmaps(bitmap vals)
 {
@@ -44,4 +37,15 @@ int		get_bcode(bitmap vals)
 	return(vals._clrfull & 0xFF);
 }
 
-int		add_shade(bitmap vals, )
+bitmap	add_shade(double dist, bitmap vals)
+{
+	bitmap	dif;
+
+	dif._clrfull = 0xFFFFFF;
+	dif.red = (get_rcode(vals) | (int)(dist * (get_rcode(dif) - get_rcode(vals))));
+	dif.blue = (get_rcode(vals) | (int)(dist * (get_bcode(dif) - get_bcode(vals))));
+	dif.green = (get_gcode(vals) | (int)(dist * (get_gcode(dif) - get_gcode(vals))));
+	dif.trnsp = vals.trnsp;
+	dif._clrfull = get_bitmaps(dif);
+	return (dif);
+}

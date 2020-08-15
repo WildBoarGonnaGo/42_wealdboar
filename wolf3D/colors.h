@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   colors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/07 03:42:56 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/08/10 03:58:45 by wealdboar        ###   ########.fr       */
+/*   Created: 2020/08/14 03:30:25 by wealdboar         #+#    #+#             */
+/*   Updated: 2020/08/14 04:56:30 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef COLORS_H
+# define COLORS_H
 
-# ifndef BUFF
-#  define BUFF 32
-# endif
+typedef struct			colors
+{
+	int					trnsp;
+	int					red;
+	int					green;
+	int					blue;
+	unsigned int		_clrfull;
+}						bitmap;
 
-# include <stdlib.h>
-# include <unistd.h>
-
-int		get_next_line(char **line);
-void	ft_memreset(void **mem);
+int		get_bitmaps(bitmap vals);
+int		get_trcode(bitmap vals);
+int		get_rcode(bitmap vals);
+int		get_gcode(bitmap vals);
+int		get_bcode(bitmap vals);
+bitmap	add_shade(double dist, bitmap vals);
 
 #endif
