@@ -6,7 +6,7 @@
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 05:42:43 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/08/20 05:46:28 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/08/21 05:43:57 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ typedef	struct	geom_0
 	int			y_end;
 	int			x_roll;
 	int			y_roll;
+	double		dl;
+	double		l;
+	double		dx;
+	double		dy;
 	double 		alpha;
 }				_line;
 
@@ -79,17 +83,20 @@ void			_mlx_pixel_put(img_info *stdput, int x, int y, unsigned int color)
 void			line_output(img_info *line_img, _line trgt, unsigned int color)
 {
 	int pyx;
-	int	dst;
 
 	pyx = 0;
-	//trgt.alpha = (trgt.x_end == trgt.x_strt) ? M_PI / 2 : atan((trgt.y_end - trgt.y_strt) / (trgt.x_end - trgt.x_strt));
+	trgt.alpha = (trgt.x_end == trgt.x_strt) ? M_PI / 2 :
+	atan2((double)(trgt.y_end - trgt.y_strt) , (double)(trgt.x_end - trgt.x_strt));
+	trgt.l = sqrt(pow((trgt.y_end - trgt.y_strt), 2) + pow((trgt.x_end - trgt.x_strt), 2));
 	trgt.x_roll = trgt.x_strt;
 	trgt.y_roll = trgt.y_strt;
-	dst = (trgt.x_end == trgt.x_strt) ? abs(trgt.y_end - trgt.y_strt) : abs(trgt.x_end - trgt.x_strt);
-	while (dst--)
+	while (trgt.dl <= trgt.l)
 	{
 		trgt.x_strt = trgt.x_roll + pyx * cos(trgt.alpha);
 		trgt.y_strt = trgt.y_roll + (pyx++) * sin(trgt.alpha);
+		trgt.dx = trgt.x_strt - trgt.x_roll;
+		trgt.dy = trgt.y_strt - trgt.y_roll;
+		trgt.dl = sqrt(pow(trgt.dx, 2) + pow(trgt.dy, 2));
 		line_img->addr = mlx_get_data_addr(line_img->img, &line_img->bits_per_pixel, &line_img->line_size, &line_img->endian); 
 		_mlx_pixel_put(line_img, trgt.x_strt, trgt.y_strt, color);
 	}
@@ -138,6 +145,14 @@ void			rect_output(img_info* rect, _rect trgt, unsigned int color)
 	}
 }
 
+void			line_init(_line *init, int x_0, int y_0, int x_1, int y_1)
+{
+	init->x_strt = x_0;
+	init->y_strt = y_0;
+	init->x_end = x_1;
+	init->y_end = y_1;
+}
+
 void			poly_init( _poly *init, int s_wid, int edge_num, int cent_xy[2])
 {
 	init->x_cntr = cent_xy[0];
@@ -155,14 +170,13 @@ void			poly_output(img_info *poly_img, _poly trgt, unsigned int color,
 
 	alpha_init = M_PI * alpha_init / 180;
 	trgt.alpha_init = alpha_init - trgt.alpha / 2;
-
 	while (trgt.edge_num--)
 	{
    		epoly.x_strt = trgt.x_cntr + trgt.out_crcl_r * cos(trgt.alpha_init);
-		epoly.y_strt = trgt.x_cntr + trgt.out_crcl_r * sin(trgt.alpha_init);
+		epoly.y_strt = trgt.y_cntr + trgt.out_crcl_r * sin(trgt.alpha_init);
 		trgt.alpha_init += trgt.alpha;
 		epoly.x_end = trgt.x_cntr + trgt.out_crcl_r * cos(trgt.alpha_init);
-		epoly.y_end = trgt.x_cntr + trgt.out_crcl_r * sin(trgt.alpha_init);
+		epoly.y_end = trgt.y_cntr + trgt.out_crcl_r * sin(trgt.alpha_init);
 		line_output(poly_img, epoly, color);
 	}
 }
@@ -184,17 +198,21 @@ int				main(void)
 	img_info	crcl;
 	img_info	rect;
 	img_info	poly_1;
+	img_info	poly_2;
  	bitmap		clr_0;
 	bitmap		clr_1;
 	bitmap		clr_2;
+	bitmap		clr_3;
 	_crcl		fig_0;
 	_rect		fig_1;
 	_poly		fig_2;
+	_line		fig_3;
 	int			cent_xy[2] = {200, 150};
 
 	set_color(&clr_0, 131, 192, 244, 24);
 	set_color(&clr_1, 142, 91, 210, 210);
 	set_color(&clr_2, 155, 94, 162, 236);
+	set_color(&clr_3, 110, 222, 60, 12);
 	fig_0.radius = 100;
 	fig_0.x_strt = 200;
 	fig_0.y_strt = 150;
@@ -208,12 +226,20 @@ int				main(void)
 	crcl.img = mlx_new_image(_xorg, 400, 300);
 	rect.img = mlx_new_image(_xorg, 400, 300);
 	poly_1.img = mlx_new_image(_xorg, 400, 300);
-	poly_init(&fig_2, 100, 3, cent_xy);
+	poly_2.img = mlx_new_image(_xorg, 400, 300);
+	poly_init(&fig_2, 50, 3, cent_xy);
+	line_init(&fig_3, 198, 152, 202, 148);
 	crcl_output(&crcl, fig_0, clr_0._clrfull);
 	rect_output(&rect, fig_1, clr_1._clrfull);
-	poly_output(&poly_1, fig_2, clr_2._clrfull, 0);
+	poly_output(&poly_1, fig_2, clr_2._clrfull, 210);
+	line_output(&poly_1, fig_3, clr_2._clrfull);
+	line_init(&fig_3, 198, 148, 202, 152);
+	line_output(&poly_1, fig_3, clr_2._clrfull);
+	poly_init(&fig_2, 75, 5, cent_xy);
+	poly_output(&poly_2, fig_2, clr_3._clrfull, 0);
 	mlx_put_image_to_window(_xorg, win_x, crcl.img, 0, 0);
 	mlx_put_image_to_window(_xorg, win_x, rect.img, 400, 0);
 	mlx_put_image_to_window(_xorg, win_x, poly_1.img, 0, 300);
+	mlx_put_image_to_window(_xorg, win_x, poly_2.img, 400, 300);
 	mlx_loop(_xorg);
 }
