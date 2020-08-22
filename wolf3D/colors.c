@@ -6,11 +6,22 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 18:27:58 by lchantel          #+#    #+#             */
-/*   Updated: 2020/08/15 17:03:01 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/08/22 11:41:17 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "colors.h"
+
+void			set_color(bitmap *clr, int trnsp, int red,
+				int green, int blue)
+{
+	clr->trnsp = trnsp << 24;
+	clr->red = red << 16;
+	clr->green = green << 8;
+	clr->blue = blue;
+	clr->_clrfull = get_bitmaps(*clr);
+}
+
 
 int 	get_bitmaps(bitmap vals)
 {

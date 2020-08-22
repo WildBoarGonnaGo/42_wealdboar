@@ -6,7 +6,7 @@
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 02:46:55 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/08/17 03:50:20 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/08/22 11:45:56 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void			my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
+
 }
 
 int	main(void)
