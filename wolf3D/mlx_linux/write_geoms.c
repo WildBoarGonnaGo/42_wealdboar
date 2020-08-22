@@ -6,7 +6,7 @@
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 05:42:43 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/08/21 05:43:57 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/08/22 00:38:05 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,13 @@ void			line_output(img_info *line_img, _line trgt, unsigned int color)
 	pyx = 0;
 	trgt.alpha = (trgt.x_end == trgt.x_strt) ? M_PI / 2 :
 	atan2((double)(trgt.y_end - trgt.y_strt) , (double)(trgt.x_end - trgt.x_strt));
+	if (trgt.alpha == M_PI / 2 && trgt.y_end < trgt.y_strt)
+	{
+		  pyx = trgt.y_end;
+		  trgt.y_end = trgt.y_strt;
+		  trgt.y_strt = pyx;
+		  pyx = 0;
+	}
 	trgt.l = sqrt(pow((trgt.y_end - trgt.y_strt), 2) + pow((trgt.x_end - trgt.x_strt), 2));
 	trgt.x_roll = trgt.x_strt;
 	trgt.y_roll = trgt.y_strt;
@@ -235,7 +242,7 @@ int				main(void)
 	line_output(&poly_1, fig_3, clr_2._clrfull);
 	line_init(&fig_3, 198, 148, 202, 152);
 	line_output(&poly_1, fig_3, clr_2._clrfull);
-	poly_init(&fig_2, 75, 5, cent_xy);
+	poly_init(&fig_2, 90, 5, cent_xy);
 	poly_output(&poly_2, fig_2, clr_3._clrfull, 0);
 	mlx_put_image_to_window(_xorg, win_x, crcl.img, 0, 0);
 	mlx_put_image_to_window(_xorg, win_x, rect.img, 400, 0);
