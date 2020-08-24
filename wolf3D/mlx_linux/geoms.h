@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 23:15:34 by lchantel          #+#    #+#             */
-/*   Updated: 2020/08/22 00:30:59 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/08/22 11:33:45 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,17 @@ typedef struct	geom_3
 	double		alpha;
 	double		alpha_init;
 }				_poly;
+
+typedef struct	geom_4
+{
+	int			x_cntr;
+	int			y_cntr;
+	int			radius;
+	int			x_roll;
+	int			y_roll;
+	double		alpha_init;
+	double		alpha_out;
+}				_arc;
 
 typedef struct	bit_struct
 {

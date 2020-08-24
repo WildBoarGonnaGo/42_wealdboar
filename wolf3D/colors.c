@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 18:27:58 by lchantel          #+#    #+#             */
-/*   Updated: 2020/08/22 11:41:17 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/08/23 16:06:37 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,16 @@ bitmap	add_shade(double dist, bitmap vals)
 	dif.trnsp = vals.trnsp;
 	dif._clrfull = get_bitmaps(dif);
 	return (dif);
+}
+
+bitmap			set_color(int trnsp, int red, int green, int blue)
+{
+	bitmap clr;
+
+	clr.trnsp = trnsp << 24;
+	clr.red = red << 16;
+	clr.green = green << 8;
+	clr.blue = blue;
+	clr._clrfull = get_bitmaps(*clr);
+	return (clr);
 }
