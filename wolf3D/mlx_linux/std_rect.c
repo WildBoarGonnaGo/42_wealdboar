@@ -6,11 +6,11 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 23:21:54 by lchantel          #+#    #+#             */
-/*   Updated: 2020/08/21 23:22:47 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/08/24 21:47:46 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "geoms.h"
+#include <geoms.h>
 
 void			rect_output(img_info* rect, _rect trgt, unsigned int color)
 {

@@ -6,11 +6,11 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 23:27:32 by lchantel          #+#    #+#             */
-/*   Updated: 2020/08/21 23:27:53 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/08/24 21:59:53 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "geoms.h"
+#include <geoms.h>
 
 void			crcl_output(img_info *crcl, _crcl trgt, unsigned int color)
 {

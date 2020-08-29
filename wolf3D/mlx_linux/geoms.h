@@ -6,12 +6,16 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 23:15:34 by lchantel          #+#    #+#             */
-/*   Updated: 2020/08/22 11:33:45 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/08/24 22:16:47 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GEOMS_H
 # define GEOMS_H
+
+#include <mlx.h>
+#include <math.h>
+#include <stdlib.h>
 
 typedef	struct	geom_0
 {
@@ -88,7 +92,7 @@ void			crcl_output(img_info *crcl, _crcl trgt, unsigned int color);
 void			poly_init( _poly *init, int s_wid, int edge_num, int cent_xy[2]);
 void			poly_output(img_info *poly_img, _poly trgt, unsigned int color, 
 				double alpha_init);
-void			arc_init(arc *trgt, int iarc_info[3], double darc_info[2]);
+void			arc_init(_arc *trgt, int iarc_info[3], double darc_info[2]);
 void			arc_output(img_info *arc, _arc trgt, unsigned int color);
 
 #endif

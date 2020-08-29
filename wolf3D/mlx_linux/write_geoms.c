@@ -6,7 +6,7 @@
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 05:42:43 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/08/22 00:38:05 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/08/24 22:15:43 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ void			poly_output(img_info *poly_img, _poly trgt, unsigned int color,
 	}
 }
 
-void			set_color(bitmap *clr, int trnsp, int red,
+/*void			set_color(bitmap *clr, int trnsp, int red,
 				int green, int blue)
 {
 	clr->trnsp = trnsp << 24;
@@ -196,7 +196,7 @@ void			set_color(bitmap *clr, int trnsp, int red,
 	clr->green = green << 8;
 	clr->blue = blue;
 	clr->_clrfull = get_bitmaps(*clr);
-}
+}*/
 
 int				main(void)
 {

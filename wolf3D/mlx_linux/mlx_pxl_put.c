@@ -6,11 +6,11 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 23:20:45 by lchantel          #+#    #+#             */
-/*   Updated: 2020/08/21 23:23:18 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/08/24 21:59:48 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "geoms.h"
+#include <geoms.h>
 
 void			_mlx_pixel_put(img_info *stdput, int x, int y, unsigned int color)
 {

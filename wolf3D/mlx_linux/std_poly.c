@@ -6,11 +6,11 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 00:17:55 by lchantel          #+#    #+#             */
-/*   Updated: 2020/08/22 00:19:21 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/08/24 21:47:36 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "geoms.h"
+#include <geoms.h>
 
 void			poly_init( _poly *init, int s_wid, int edge_num, int cent_xy[2])
 {

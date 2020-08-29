@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/23 15:56:01 by lchantel          #+#    #+#             */
-/*   Updated: 2020/08/23 17:47:24 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/08/25 00:45:32 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@
  * purple: #8F00FF
  * */
 
-#include <mlx.h>
-#include "geoms.h"
+#include <geoms.h>
 #include "../colors.h"
 
 typedef struct	geom_5
@@ -44,14 +43,32 @@ _rainbow		rainbow_init(int xcntr, int ycntr, int l_radius, int b_radius)
 	return (init);
 }
 
-void			draw_rainbow(_rainbow trgt, img_info *img, unsigned int *colors)
+void			draw_rainbow(_rainbow trgt, img_info *img, bitmap *colors)
 {
 	double	dlt_rnbow;
+	double	buf;
 	int		count;
+	_arc	draw;
+	int		iarc_info[3];
+	double	darc_info[2];
 
-	count = 0;
+	count = 7;
 	dlt_rnbow = (trgt.b_radius - trgt.l_radius) / 7;
-	
+	buf = dlt_rnbow;
+	while (count--)
+	{
+		while (dlt_rnbow-- > 0)
+		{
+			darc_info[0] = 180;
+			darc_info[1] = 180;
+			iarc_info[0] = trgt.x_cntr;
+			iarc_info[1] = trgt.y_cntr;
+			iarc_info[2] = trgt.l_radius++;
+			arc_init(&draw, iarc_info, darc_info);
+			arc_output(img, draw, colors[count]._clrfull);
+		}
+		dlt_rnbow = buf;
+	}
 }
 
 int				main(void)
@@ -60,7 +77,7 @@ int				main(void)
 	void		*winx;
 	img_info	rainbow;
 	bitmap		_clrs_rain[7];
-	_rainbow	rainbow;
+	_rainbow	obj;
 	
 	_clrs_rain[0]._clrfull = 0xFF0000;
 	_clrs_rain[1]._clrfull = 0xFF7F00;
@@ -70,7 +87,10 @@ int				main(void)
 	_clrs_rain[5]._clrfull = 0x4B0082;
 	_clrs_rain[6]._clrfull = 0x8F00FF;
 	_xorg = mlx_init();
-	win_x = mlx_new_window(_xorg, 800, 600, "Rainbow");
+	winx = mlx_new_window(_xorg, 800, 600, "Rainbow");
 	rainbow.img = mlx_new_image(_xorg, 800, 600);
-
+	obj = rainbow_init(400, 200, 140, 210);
+	draw_rainbow(obj, &rainbow, _clrs_rain);
+	mlx_put_image_to_window(_xorg, winx, rainbow.img, 0, 0);
+	mlx_loop(_xorg);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/07 03:37:36 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/08/11 02:09:40 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/08/28 02:01:46 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,15 +99,6 @@ char 	*ft_strjoin(char *src, char *dst)
 
 int		check_state(int nl_pos, char **rest/*, char *line*/)
 {
-	/*int	size[2];
-
-	size[0] = ft_strlen(*rest);
-	size[1] = ft_strlen(line);
-	while (size[0])
-		if (*(line + --size[1]) != *(*rest + --size[0]))
-			continue ;
-	if (*rest && !size[0])
-		ft_memreset((void **)rest);*/
 	if (nl_pos >= 0 || *rest)
 		return (1);
 	else
@@ -162,11 +153,6 @@ int		get_next_line(char **line)
 				nlpos = -1;
 			if (nlpos > 0)
 				buff[nlpos - 1] = 0;
-			/*if (buff[nlpos])
-			{
-				ft_memreset((void **)&rest);
-				rest = ft_gnl_strdup(buff + nlpos, ft_strlen(buff + nlpos));
-			}*/
 			ft_memreset((void **)&rest);
 			rest = ft_gnl_strdup(buff + nlpos, ft_strlen(buff + nlpos));
 			if (!(*line = ft_strjoin(*line, buff)))
@@ -177,5 +163,5 @@ int		get_next_line(char **line)
 	}
 	if (rpos < BUFF  && status)
 		ft_memreset((void **)&rest);
-	return (check_state(nlpos, &rest/*, *line*/));
+	return (check_state(nlpos, &rest));
 }

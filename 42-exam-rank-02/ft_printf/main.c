@@ -6,7 +6,7 @@
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/12 23:58:19 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/08/13 05:07:36 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/08/27 23:55:33 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ int	main(void)
 	ft_printf("ft_test %0.3d | res = %d_\n", seq, res);
 	res = printf("tr_test %0.3d | Hello, %s_\n", seq, str);
 	printf("tr_test %0.3d | res = %d_\n", seq++, res);
-	res = ft_printf("ft_test %0.3d | Hello, %.4s_\n", seq, str);
+	res = ft_printf("ft_test %0.3d | Hello, %.3s_\n", seq, str);
 	ft_printf("ft_test %0.3d | res = %d_\n", seq, res);
-	res = printf("tr_test %0.3d | Hello, %.4s_\n", seq, str);
+	res = printf("tr_test %0.3d | Hello, %.3s_\n", seq, str);
 	printf("tr_test %0.3d | res = %d_\n", seq++, res);
 	res = ft_printf("ft_test %0.3d | Hello, %5.4s_\n", seq, str);
 	ft_printf("ft_test %0.3d | res = %d_\n", seq, res);

@@ -6,11 +6,11 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 23:19:19 by lchantel          #+#    #+#             */
-/*   Updated: 2020/08/22 00:16:55 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/08/24 21:47:25 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "geoms.h"
+#include <geoms.h>
 
 void			line_init(_line *init, int x_0, int y_0, int x_1, int y_1)
 {
