@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 23:15:34 by lchantel          #+#    #+#             */
-/*   Updated: 2020/08/24 22:16:47 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/09/02 04:34:41 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,28 @@ typedef struct	geom_3
 
 typedef struct	geom_4
 {
-	int			x_cntr;
-	int			y_cntr;
-	int			radius;
-	int			x_roll;
-	int			y_roll;
+	double		x_cntr;
+	double		y_cntr;
+	double		radius;
+	double		x_roll;
+	double		y_roll;
 	double		alpha_init;
 	double		alpha_out;
 }				_arc;
+
+typedef struct	geom_5
+{
+	double		x_cntr;
+	double		y_cntr;
+	double		l_radius;
+	double		b_radius;
+	double		ell_r;
+	double		x_roll;
+	double		y_roll;
+	double		alpha_init;
+	double		alpha_out;
+	double		slope;
+}				_ellipse;
 
 typedef struct	bit_struct
 {
@@ -92,7 +106,11 @@ void			crcl_output(img_info *crcl, _crcl trgt, unsigned int color);
 void			poly_init( _poly *init, int s_wid, int edge_num, int cent_xy[2]);
 void			poly_output(img_info *poly_img, _poly trgt, unsigned int color, 
 				double alpha_init);
-void			arc_init(_arc *trgt, int iarc_info[3], double darc_info[2]);
+void			arc_init(_arc *init, double xc, double yc, double radius,
+				double alpha_strt, double alpha_end);
 void			arc_output(img_info *arc, _arc trgt, unsigned int color);
+void			ellipse_init(_ellipse *init, double alpha_strt, double alpha_arc,
+				double l_radius, double b_radius, double xc, double yc, double slope);
+void			std_ellipse_arc(img_info *ellipse, _ellipse trgt, unsigned int color);
 
 #endif

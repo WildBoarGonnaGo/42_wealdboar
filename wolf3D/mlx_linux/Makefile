@@ -6,18 +6,19 @@
 #    By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/24 04:55:09 by wealdboar         #+#    #+#              #
-#    Updated: 2020/08/24 21:45:44 by wealdboar        ###   ########.fr        #
+#    Updated: 2020/09/01 03:17:03 by wealdboar        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 LIB = libgeoms.a
 
-SRC =	mlx_pxl_put.c	\
-	 	std_arc.c		\
-		std_crcl.c		\
-		std_line.c		\
-		std_poly.c		\
-		std_rect.c		\
+SRC =	mlx_pxl_put.c		\
+	 	std_arc.c			\
+		std_crcl.c			\
+		std_line.c			\
+		std_poly.c			\
+		std_rect.c			\
+		std_ellipse_arc.c	
 
 CC = clang
 WARNS = -Wall -Wextra -Werror
