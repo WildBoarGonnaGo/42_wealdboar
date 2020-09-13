@@ -6,7 +6,7 @@
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/01 03:37:03 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/09/03 00:51:00 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/09/02 05:57:59 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,17 @@ void	scale_frog(img_info *img, double scale)
 	ellipse_init	(&el_tool, -53.902, 107.804, scale * 7.271, scale * 10.388, 
 					frog_pos[0] + scale * 31.355, frog_pos[1] + 0, 0);
 	std_ellipse_arc	(img, el_tool, clr_tool._clrfull);
-	ellipse_init	(&el_tool, -64.657, 134.397, scale * 5.377, scale * 7.191, 
+	ellipse_init	(&el_tool, -69.657, 134.397, scale * 5.377, scale * 7.191, 
 					frog_pos[0] + scale * 30.475, frog_pos[1] + scale * 7.554, 51.995);
 	std_ellipse_arc	(img, el_tool, clr_tool._clrfull);
 	ellipse_init	(&el_tool, -64.74, 134.397, scale * 5.377, scale * 7.191, 
 					frog_pos[0] + scale * 30.475, frog_pos[1] - scale * 7.554, -51.995);
 	std_ellipse_arc	(img, el_tool, clr_tool._clrfull);
-	arc_init		(&arc_tool, frog_pos[0] + scale * 31.926, frog_pos[1] + scale * 9.296, scale * 4.059, -19.001, 155.505);
+	arc_init		(&arc_tool, frog_pos[0] +  scale * 31.926, frog_pos[1] + scale * 9.296, scale * 4.059, -19.001, 142.505);
 	arc_output		(img, arc_tool, clr_tool._clrfull);
-	arc_init		(&arc_tool, frog_pos[0] + scale * 31.926, frog_pos[1] - scale * 9.296, scale * 4.059, -136.504, 155.505);
+	arc_init		(&arc_tool, frog_pos[0] +  scale * 31.926, frog_pos[1] - scale * 9.296, scale * 4.059, -123.504, 142.505);
 	arc_output		(img, arc_tool, clr_tool._clrfull);
-	arc_init		(&arc_tool, frog_pos[0] + scale * 33.269, frog_pos[1] + scale * 11.51, scale * 1.612, -242.102, 242.286);
+	arc_init		(&arc_tool, frog_pos[0] +  scale * 33.269, frog_pos[1] + scale * 11.51, scale * 1.612, -242.102, 242.286);
 	arc_output		(img, arc_tool, clr_tool._clrfull);
-	arc_init		(&arc_tool, frog_pos[0] + scale * 33.269, frog_pos[1] - scale * 11.51, scale * 1.612, -0.185, 242.286);
-	arc_output		(img, arc_tool, clr_tool._clrfull);
-	arc_init		(&arc_tool, frog_pos[0] + scale * 31.591, frog_pos[1] + scale * 8.743, scale * 4.296, 40.011, 37.506);
-	arc_output		(img, arc_tool, clr_tool._clrfull);
-	arc_init		(&arc_tool, frog_pos[0] + scale * 31.591, frog_pos[1] - scale * 8.743, scale * 4.296, -77.5175, 37.506);
-	arc_output		(img, arc_tool, clr_tool._clrfull);
-	arc_init		(&arc_tool, frog_pos[0] + scale * 33.353, frog_pos[1] + scale * 11.649, scale * 4.395, 174.265, 128.999);
-	arc_output		(img, arc_tool, clr_tool._clrfull);
-	arc_init		(&arc_tool, frog_pos[0] + scale * 33.353, frog_pos[1] - scale * 11.649, scale * 4.395, -303.264, 128.999);
-	arc_output		(img, arc_tool, clr_tool._clrfull);
+
 }
