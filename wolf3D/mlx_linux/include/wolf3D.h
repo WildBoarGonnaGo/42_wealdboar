@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 01:37:56 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/09/12 16:23:51 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/09/14 22:45:34 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ typedef struct  data
     int         width;
     int         height;
     int         resolution;
-    int         flr_color;
-    int         ceil_color;
+    bitmap		flr_color;
+    bitmap		ceil_color;
     int         map_stat;
 	int			**map_grid;
     int         pos;
@@ -40,7 +40,7 @@ typedef struct  data
     char        *ea_txtr_path;
     char        *s_txtr_path;
     char        **color;
-    char        **map;
+    int			**map;
 }               map_conf;
 
 void            memreset(void **mem);

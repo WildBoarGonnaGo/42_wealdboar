@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 18:27:58 by lchantel          #+#    #+#             */
-/*   Updated: 2020/09/10 03:11:53 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/09/14 22:32:32 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,17 @@ int 	get_bitmaps(bitmap vals)
 
 int		get_trcode(bitmap vals)
 {
-	return (vals._clrfull & (0xFF << 24));
+	return ((vals._clrfull >> 24) & 0xFF);
 }
 
 int		get_rcode(bitmap vals)
 {
-	return (vals._clrfull & (0xFF << 16));
+	return ((vals._clrfull >> 16) & 0xFF);
 }
 
 int		get_gcode(bitmap vals)
 {
-	return (vals._clrfull & (0xFF << 8));
+	return ((vals._clrfull >> 8) & 0xFF);
 }
 
 int		get_bcode(bitmap vals)
@@ -56,8 +56,8 @@ bitmap	add_shade(double dist, bitmap vals)
 	vals.green = get_gcode(vals);
 	vals.blue = get_bcode(vals);
 	vals.trnsp = get_trcode(vals);
-	dif.red = (int)((1 - dist) * (vals.red >> 16)) << 16;
-	dif.green = (int)((1 - dist) * (vals.green >> 8)) << 8;
+	dif.red = (int)((1 - dist) * vals.red) << 16;
+	dif.green = (int)((1 - dist) * vals.green) << 8;
 	dif.blue = (int)((1 -dist) * vals.blue);
 	dif.trnsp = vals.trnsp;
 	dif._clrfull = get_bitmaps(dif);

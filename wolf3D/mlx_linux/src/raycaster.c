@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/12 10:36:26 by lchantel          #+#    #+#             */
-/*   Updated: 2020/09/14 00:21:08 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/09/16 05:19:40 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
     int         width;
     int         height;
     int         resolution;
-    int         flr_color;
-    int         ceil_color;
+    bitmap      flr_color;
+    bitmap		ceil_color;
     int         map_stat;
 	int			**map_grid;
     int         pos[2];
@@ -31,7 +31,7 @@
     char        *ea_txtr_path;
     char        *s_txtr_path;
     char        **color;
-    char        **map;
+    int			**map;
 }               map_conf;
 
  * */
@@ -39,13 +39,18 @@
 #include "../include/wolf3D"
 #include <math.h>
 #include <mlx.h>
+#include <geoms.h>
+#include "../include/colors.h"
 
-#define FOV	66 * M_PI / 360
+#define	DELTA_ANGL 0.5 * M_PI / 180
+#define	WALK_DIST 0.1
 
 typedef struct	mlx_struct
 {
 	void		*xorg;
 	void		*winx;
+	void		*rel_img;
+	void		*old_img;
 	int			left;
 	int			right;
 	int			frwrd;
@@ -56,16 +61,26 @@ typedef struct	mlx_struct
 
 typedef struct	instruments
 {
-	int 		map_pos[2];
-	double		plane_vctr[2];
-	double		init_dir[2];
-	double		pos[2];
-	double		proj_vect[2];
-	double		xrender;
-	double		trvl_bound[2];
-	double		trvl_through[2];
-	double		raylen;
-	double		hit_detect;
+	int				map_pos[2];
+	double			plane_vctr[2];
+	double			init_dir[2];
+	double			proj_vect[2];
+	double			xrender;
+	double			trvl_bound[2];
+	double			trvl_through[2];
+	double			raylen;
+	int				hit_detect;
+	int				grid_step[2];
+	/*info about what side of the wall was hit: NS (North-South) or EW (East-West)*/
+	int				what_size;
+	/*perpendicular distance to the wall, depending on the hit direction*/	
+	double			wall_dist;
+	int				wall_height;
+	int				wall_ceil;
+	int				wall_floor;
+	int				x_stripe;
+	bitmap			clr_wall_draw;
+	bitmap			clr_general;
 }				raycast;
 
 raycast			render_frame(map_conf info)
@@ -78,13 +93,49 @@ raycast			render_frame(map_conf info)
 	cur_frame.plane_vctr[1] = 0.66;
 	cur_frame.init_dir[0] = info.player_dir[0];
 	cur_frame.init_dir[1] = info.player_dir[1];
+	cur_frame.xrender = 0;
+
+	return (cur_frame);
 }
 
 /*RAYCASTING ALGORITHM*/
 
-void			render_scene(raycast render_tools, obj_gl _config, 
-				map_conf _info, unsigned int wall_color)
+int				turn_sight(int keycode, raycast *scene_chng, map_conf *plstat)
 {
+	double	old_vect[2];
+	double	old_plane[2];
+
+	old_vect[0] = scene_chng->player_dir[0];
+	old_vect[1] = scene_chng->player_dir[1];
+	old_plane[0] = scene_chng->plane_vctr[0];
+	old_plane[1] = scene_chng->plane_vctr[1];
+	if (keycode == "w" || keycode = "W")
+	{
+		plstat->pos[0] += (!plstat->map[(int)floor(plstat->pos[0] + WALK_DIST * 
+		scene_chng->proj_vect[0])][(int)floor(plstat->pos[1])]) ? WALK_DIST * scene_chng->proj_vect[0] : 0;
+		plstat->pos[1] += (!plstat->map[(int)floor(plstat->pos[0])][(int)floor(plstat->pos[1] 
+		+ WALK_DIST * scene_chng.proj_vect[1])]) ? WALK_DIST * scene_chng->proj_vect[1] : 0;
+	}
+	if (keycode == "s" || keycode == "S")
+	{
+		plstat->pos[0] -= (!plstat->map[(int)floor(plstat->pos[0] - WALK_DIST * 
+		scene_chng->proj_vect[0])][(int)floor(plstat->pos[1])]) ? WALK_DIST * scene_chng->proj_vect[0] : 0;
+		plstat->pos[1] -= (!plstat->map[(int)floor(plstat->pos[0])][(int)floor(plstat->pos[1] 
+		- WALK_DIST * scene_chng.proj_vect[1])]) ? WALK_DIST * scene_chng->proj_vect[1] : 0;
+	}
+	if (keycode == "a" || keycode == "A")
+	{
+		scene_chng->player_dir[0] = 
+	}
+}
+
+int				render_scene(raycast render_tools, obj_gl *_config, 
+				map_conf _info)
+{
+	_line	vert_draw;
+
+	_config->rel_img = mlx_new_image(obj_gl->xorg, _info.width, _info.heigth);
+	memreset(&_config->old_img);
 	while (render_tools.xrender < _info.width)
 	{
 		/*calculate ray position and direction
@@ -103,7 +154,6 @@ void			render_scene(raycast render_tools, obj_gl _config,
 		render_tools.map_pos[0] = (int)_info.pos[0];
 		render_tools.map_pos[1] = (int)_info.pos[1];
 		
-		
 		/*x and y projecton of vectors from one side of box to another*/
 		render_tools.raylen = sqrt(pow(render_tools.proj_vect[0], 2) + pow(render_tools.proj_vect[1], 2));
 		render_tools.trvl_through[0] = abs(render_tools.raylen / render_tools.proj_vect[0]);
@@ -111,9 +161,78 @@ void			render_scene(raycast render_tools, obj_gl _config,
 		/*hit_detect - was wall hit
 		 trvl_bound[0] - x projection of ray to box boundary
 		 trvl_bound[1] - y projection of ray to box boundary*/
-		render_tool.hit_detect = 0;
-		if ()
-	}	
+		render_tools.hit_detect = 0;
+		render_tools.map_pos[0] = (int)_info.pos[0];
+		render_tools.map_pos[1] = (int)_info.pos[1];
+		if (render_tools.proj_vect[0] < 0)
+		{
+			render_tools.grid_step[0] = -1;
+			render_tools.trvl_bound[0] = render_tools.trvl_through[0] * (_info.pos[0] - render_tools.map_pos[0]);
+		}
+		else
+		{
+			render_tools.grid_step[0] = 1;
+			render_tools.trvl_bound[0] = render_tools.trvl_through[0] * (1 -info.pos[0] + render_tools.map_pos[0]);
+		}
+		if (render_tools.proj_vect[1] < 0)
+		{
+			render_tools.grid_step[1] = -1;
+			render_tools.trvl_bound[1] = render_tools.trvl_through[1] * (_info.pos[1] - render_tools.map_pos[1]);
+		}
+		else
+		{
+			render_tools.grid_step[1] = 1;
+			render_tools.trvl_bound[1] = render_tools.trvl_through[1] * (1 -info.pos[1] + render_tools.map_pos[1]);
+		}
+		/*Perform DDA*/
+		while (!render_tools.hit_detect)
+		{
+			if (abs(render_tools.trvl_bound[0]) < abs(render_tools.trvl_bound[1]))
+			{
+				render_tools.trvl_bound[0] += render_tools.trvl_through[0];
+				render_tools.map_pos[0] += render_tools.grid_step[0];
+				render_tools.what_size = 0;
+			}
+			else
+			{
+				render_tools.trvl_bound[1] += render_tools.trvl_through[1];
+				render_tools.map_pos[1] += render_tools.grid_step[1];
+				render_tools.what_size = 1;
+			}
+			/*Check if ray has hit the wall*/
+			render_tools.hit_detect = (_info.map[render_tools.map_pos[0]][render_tools[map_pos[1]]]) ? 1 : 0
+		}
+		/*calculate the distance projected in camera direction*/
+		if (!render_tools.what_size)
+			render_tools.wall_dist = (render_tools.map_pos[0] - _info.pos[0] + 
+			(1 - render_tools.grid_step[0]) / 2) / render_tools.proj_vect[0];
+		else
+			render_tools.wall_dist = (render_tools.map_pos[1] - _info.pos[1] + 
+			(1 - render_tools.grid_step[1]) / 2) / render_tools.proj_vect[1];
+		/*height of the wall to draw*/
+		render_tools.wall_height = (int)_info.height / render_tools.wall_dist;
+		render_tools.wall_ceil = ((_info.height / 2 - render_tools.wall_height / 2) < 0) ?
+		0 : _info.height / 2 - render_tools.wall_height / 2;
+		render_tools.wall_floor = ((_info.height / 2 + render_tools.wall_height / 2) > _info.height) ?
+		_info.height : _info.height / 2 + render_tools.wall_height / 2;
+		render_tools.clr_wall_draw = (!render_tools.what_size) ? render_tools.clr_general : add_shade(0.5, render_tools.clr_general);
+		/*
+		 void			line_init(_line *init, int x_0, int y_0, int x_1, int y_1)
+		{
+			init->x_strt = x_0;
+			init->y_strt = y_0;
+			init->x_end = x_1;
+			init->y_end = y_1;
+		}
+
+		void			line_output(img_info *line_img, _line trgt, unsigned int color)
+		 * */
+		line_init(&vert_draw, render_tools.xrender, render_tools.wall_ceil,
+		render_tools.xrender, render_tools.clr_wall_draw._clrfull);
+		line_output(&_config->rel_img, vert_draw, render_tools.clr_wall_draw._clrfull);
+	}
+	config->old_img = config->rel_img;
+	return (1);
 }
 
 int	main(void)
@@ -125,9 +244,9 @@ int	main(void)
 
 	pos[0] = 0;
 	pos[1] = -1;
-	/*length of screen*/
-	test_map.width = 640;
 	/*width of screen*/
+	test_map.width = 640;
+	/*height of screen*/
 	test_map.height = 480;
 	/*pos[0] - x position of player
 	 *pos[1] - y position of player*/
@@ -143,7 +262,7 @@ int	main(void)
 	 * player_dir[1] - y-map direction;
 	 * */
 	scene_rndr.xorg = mlx_init();
-
+	scene_rndr.winx = mlx_new_window(scene_rndr.xorg, test_map.width, test_map.height, "Maze Raycaster");
 	/*MAP INIZIALIZATION*/
 
 	test.map = (int **)malloc(sizeof(int *) * test_map.map_size[0]);
