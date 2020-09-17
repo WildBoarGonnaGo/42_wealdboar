@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/12 10:36:26 by lchantel          #+#    #+#             */
-/*   Updated: 2020/09/16 05:19:40 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/09/17 05:18:26 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@
 #include <geoms.h>
 #include "../include/colors.h"
 
-#define	DELTA_ANGL 0.5 * M_PI / 180
-#define	WALK_DIST 0.1
-
+#define	DELTA_ANGL 0.1 * M_PI / 180
+#define	WALK_DIST 0.05
+#define ESC 27
 typedef struct	mlx_struct
 {
 	void		*xorg;
@@ -79,6 +79,7 @@ typedef struct	instruments
 	int				wall_ceil;
 	int				wall_floor;
 	int				x_stripe;
+	double			angl;
 	bitmap			clr_wall_draw;
 	bitmap			clr_general;
 }				raycast;
@@ -100,15 +101,15 @@ raycast			render_frame(map_conf info)
 
 /*RAYCASTING ALGORITHM*/
 
-int				turn_sight(int keycode, raycast *scene_chng, map_conf *plstat)
+int				turn_sight(int keycode, raycast *scene_chng, map_conf *plstat, obj_gl *winexec)
 {
-	double	old_vect[2];
-	double	old_plane[2];
+	double	old_vect_x;
+	double	old_plane_x;
+	int		i;
 
-	old_vect[0] = scene_chng->player_dir[0];
-	old_vect[1] = scene_chng->player_dir[1];
-	old_plane[0] = scene_chng->plane_vctr[0];
-	old_plane[1] = scene_chng->plane_vctr[1];
+	i = 0;
+	old_vect_x = scene_chng->player_dir[0];
+	old_plane_x = scene_chng->plane_vctr[0];
 	if (keycode == "w" || keycode = "W")
 	{
 		plstat->pos[0] += (!plstat->map[(int)floor(plstat->pos[0] + WALK_DIST * 
@@ -116,16 +117,38 @@ int				turn_sight(int keycode, raycast *scene_chng, map_conf *plstat)
 		plstat->pos[1] += (!plstat->map[(int)floor(plstat->pos[0])][(int)floor(plstat->pos[1] 
 		+ WALK_DIST * scene_chng.proj_vect[1])]) ? WALK_DIST * scene_chng->proj_vect[1] : 0;
 	}
-	if (keycode == "s" || keycode == "S")
+	else if (keycode == "s" || keycode == "S")
 	{
 		plstat->pos[0] -= (!plstat->map[(int)floor(plstat->pos[0] - WALK_DIST * 
 		scene_chng->proj_vect[0])][(int)floor(plstat->pos[1])]) ? WALK_DIST * scene_chng->proj_vect[0] : 0;
 		plstat->pos[1] -= (!plstat->map[(int)floor(plstat->pos[0])][(int)floor(plstat->pos[1] 
 		- WALK_DIST * scene_chng.proj_vect[1])]) ? WALK_DIST * scene_chng->proj_vect[1] : 0;
 	}
-	if (keycode == "a" || keycode == "A")
+	else if (keycode == "a" || keycode == "A")
 	{
-		scene_chng->player_dir[0] = 
+		scene_chng->player_dir[0] = scene_chng->player_dir[0] * cos(DELTA_ANGL) - scene_chng->player_dir[1] * sin(DELTA_ANGL);
+		scene_chng->player_dir[1] = old_vect_x * sin(DELTA_ANGL) + scene_chng->player_dir[1] * cos(DELTA_ANGL);
+		scene_chng->plane_vctr[0] = scene_chng->plane_vctr[0] * cos(DELTA_ANGL) - scene_chng->plane_vctr[1] * sin(DELTA_ANGL);
+		scene_chng->plane_vctr[1] = old_plane_x * sin(DELTA_ANGL) + scene_chng->plane_vctr[1] * cos(DELTA_ANGL);
+	}
+	else if (keycode == "d" || keycode == "D")
+	{
+		scene_chng->player_dir[0] = scene_chng->player_dir[0] * cos(-DELTA_ANGL) - scene_chng->player_dir[1] * sin(-DELTA_ANGL);
+		scene_chng->player_dir[1] = old_vect_x * sin(-DELTA_ANGL) + scene_chng->player_dir[1] * cos(-DELTA_ANGL);
+		scene_chng->plane_vctr[0] = scene_chng->plane_vctr[0] * cos(-DELTA_ANGL) - scene_chng->plane_vctr[1] * sin(-DELTA_ANGL);
+		scene_chng->plane_vctr[1] = old_plane_x * sin(-DELTA_ANGL) + scene_chng->plane_vctr[1] * cos(-DELTA_ANGL);
+	}
+	else if (keycode == ESC)
+	{
+		mlx_clear_window(winexec->xorg, winexec->winx)
+		mlx_destroy_image(winexec->winx, winexec->rel_img);
+		//mlx_destroy_image
+		memreset(winexec->old_img);
+		while (i < plstat->map_size[0])
+			memreset(*(plstat->map + i));
+		memreset(plstat->map);
+		
+		return (0);
 	}
 }
 
@@ -135,6 +158,8 @@ int				render_scene(raycast render_tools, obj_gl *_config,
 	_line	vert_draw;
 
 	_config->rel_img = mlx_new_image(obj_gl->xorg, _info.width, _info.heigth);
+	mlx_clear_window(_config->xorg, _config->winx);
+	//mlx_destroy_image(_config->xorg, _config->old_img);
 	memreset(&_config->old_img);
 	while (render_tools.xrender < _info.width)
 	{
@@ -231,6 +256,7 @@ int				render_scene(raycast render_tools, obj_gl *_config,
 		render_tools.xrender, render_tools.clr_wall_draw._clrfull);
 		line_output(&_config->rel_img, vert_draw, render_tools.clr_wall_draw._clrfull);
 	}
+	mlx_put_image_to_window(_config->xorg, )
 	config->old_img = config->rel_img;
 	return (1);
 }
@@ -283,7 +309,5 @@ int	main(void)
 				1 : 0;
 		pos[1] = -1;
 	}
-
-	/*RAYCASTING ALGORITHM*/
 	
 }
