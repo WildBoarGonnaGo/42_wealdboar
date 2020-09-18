@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 18:27:58 by lchantel          #+#    #+#             */
-/*   Updated: 2020/09/18 03:45:54 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/09/18 06:15:53 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ bitmap	add_shade(double dist, bitmap vals)
 	dif.red = (int)((1 - dist) * vals.red) << 16;
 	dif.green = (int)((1 - dist) * vals.green) << 8;
 	dif.blue = (int)((1 -dist) * vals.blue);
-	dif.trnsp = vals.trnsp;
+	dif.trnsp = (int)((1 - dist) * vals.trnsp) << 24;
 	dif._clrfull = get_bitmaps(dif);
 	return (dif);
 }

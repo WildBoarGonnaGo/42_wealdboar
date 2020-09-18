@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/12 10:36:26 by lchantel          #+#    #+#             */
-/*   Updated: 2020/09/18 04:39:28 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/09/18 06:15:14 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,10 @@ typedef struct	mlx_struct
 	void		*old_img;
 }				obj_gl;
 
-typedef struct	instruments
+typedef struct		instruments
 {
 	void			*xorg;
 	void			*winx;
-	void			*rel_img;
-	void			*old_img;
 	int				pos[2];
 	int				map_pos[2];
 	int				map_size[2];
@@ -84,7 +82,8 @@ typedef struct	instruments
 	int				state;
 	bitmap			clr_wall_draw;
 	bitmap			clr_general;
-}				raycast;
+	img_info		img_rndr;
+}					raycast;
 
 void    memreset(void **mem)
 {
@@ -142,6 +141,7 @@ int				move_sight(int keycode, raycast *scene_chng)
 		scene_chng->pos[1] += (!scene_chng->map[(int)floor(scene_chng->pos[0])][(int)floor(scene_chng->pos[1] 
 		+ WALK_DIST * scene_chng->proj_vect[1])]) ? WALK_DIST * scene_chng->proj_vect[1] : 0;
 		scene_chng->state = 1;
+		printf("%d\n", keycode);
 	}
 	else if (keycode == 's' || keycode == 'S')
 	{
@@ -150,6 +150,7 @@ int				move_sight(int keycode, raycast *scene_chng)
 		scene_chng->pos[1] -= (!scene_chng->map[(int)floor(scene_chng->pos[0])][(int)floor(scene_chng->pos[1] 
 		- WALK_DIST * scene_chng->proj_vect[1])]) ? WALK_DIST * scene_chng->proj_vect[1] : 0;
 		scene_chng->state = 1;
+		printf("%d\n", keycode);
 	}
 	else if (keycode == 'a' || keycode == 'A')
 	{
@@ -158,6 +159,7 @@ int				move_sight(int keycode, raycast *scene_chng)
 		scene_chng->plane_vctr[0] = scene_chng->plane_vctr[0] * cos(DELTA_ANGL) - scene_chng->plane_vctr[1] * sin(DELTA_ANGL);
 		scene_chng->plane_vctr[1] = old_plane_x * sin(DELTA_ANGL) + scene_chng->plane_vctr[1] * cos(DELTA_ANGL);
 		scene_chng->state = 1;
+		printf("%d\n", keycode);
 	}
 	else if (keycode == 'd' || keycode == 'D')
 	{
@@ -166,33 +168,47 @@ int				move_sight(int keycode, raycast *scene_chng)
 		scene_chng->plane_vctr[0] = scene_chng->plane_vctr[0] * cos(-DELTA_ANGL) - scene_chng->plane_vctr[1] * sin(-DELTA_ANGL);
 		scene_chng->plane_vctr[1] = old_plane_x * sin(-DELTA_ANGL) + scene_chng->plane_vctr[1] * cos(-DELTA_ANGL);
 		scene_chng->state = 1;
+		printf("%d\n", keycode);
 	}
 	else if (keycode == ESC)
 	{
 		mlx_clear_window(scene_chng->xorg, scene_chng->winx);
-		mlx_destroy_image(scene_chng->winx, scene_chng->rel_img);
+		mlx_destroy_image(scene_chng->winx, scene_chng->img_rndr.img);
 		//mlx_destroy_image
-		memreset(scene_chng->old_img);
 		while (i < scene_chng->map_size[0])
 			memreset((void **)*(scene_chng->map + i));
 		memreset((void **)scene_chng->map);
 		mlx_destroy_window(scene_chng->xorg, scene_chng->winx);
 		return (0);
 	}
+	printf("%d\n", keycode);
 	return (1);
 }
+
+/*
+ *typedef struct	bit_struct
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_size;
+	int		endian;
+}				img_info;
+
+ * */
 
 int				render_scene(raycast *render_tools)
 {
 	_line	vert_draw;
 	int		x;
-
-	render_tools->rel_img = mlx_new_image(render_tools->xorg, render_tools->width, render_tools->height);
+	
+	if (render_tools->img_rndr.img)
+		mlx_destroy_image(render_tools->xorg, render_tools->img_rndr.img);
+	render_tools->img_rndr.img = mlx_new_image(render_tools->xorg, render_tools->width, render_tools->height);
 	mlx_clear_window(render_tools->xorg, render_tools->winx);
 	//mlx_destroy_image(_config->xorg, _config->old_img);
-	memreset(&render_tools->old_img);
-	x = 0;
-	while (x < render_tools->width)
+	x = -1;
+	while (++x < render_tools->width)
 	{
 		/*calculate ray position and direction
 		x coordinate in camera space
@@ -200,7 +216,7 @@ int				render_scene(raycast *render_tools)
 		proj_vect[0] - x projection of result vector
 		proj_vect[1] - y projection of result vecto*/
 		
-		render_tools->xrender = 2 * render_tools->xrender / (double)render_tools->width - 1;
+		render_tools->xrender = 2 * x / (double)render_tools->width - 1;
 		render_tools->proj_vect[0] = render_tools->player_dir[0] + render_tools->xrender * render_tools->plane_vctr[0];
 		render_tools->proj_vect[1] = render_tools->player_dir[1] + render_tools->xrender * render_tools->plane_vctr[1];
 
@@ -211,8 +227,8 @@ int				render_scene(raycast *render_tools)
 		render_tools->map_pos[1] = (int)floor(render_tools->pos[1]);
 		
 		/*x and y projecton of vectors from one side of box to another*/
-		render_tools->trvl_through[0] = (!render_tools->proj_vect[0]) ? 0 : fabs(1 / render_tools->proj_vect[0]);
-		render_tools->trvl_through[1] = (!render_tools->proj_vect[1]) ? 0 : fabs(1 / render_tools->proj_vect[1]);
+		render_tools->trvl_through[0] = (!render_tools->proj_vect[1]) ? 0 : fabs(1 / render_tools->proj_vect[0]);
+		render_tools->trvl_through[1] = (!render_tools->proj_vect[0]) ? 0 : fabs(1 / render_tools->proj_vect[1]);
 		/*hit_detect - was wall hit
 		 trvl_bound[0] - x projection of ray to box boundary
 		 trvl_bound[1] - y projection of ray to box boundary*/
@@ -280,11 +296,10 @@ int				render_scene(raycast *render_tools)
 
 		void			line_output(img_info *line_img, _line trgt, unsigned int color)
 		 * */
-		line_init(&vert_draw, x, render_tools->wall_ceil, x, render_tools->wall_height);
-		line_output(render_tools->rel_img, vert_draw, render_tools->clr_wall_draw._clrfull);
+		line_init(&vert_draw, x, render_tools->wall_ceil, x, render_tools->wall_floor);
+		line_output(&render_tools->img_rndr, vert_draw, render_tools->clr_wall_draw._clrfull);
 	}
-	mlx_put_image_to_window(render_tools->xorg, render_tools->winx, render_tools->rel_img, 0, 0);
-	render_tools->old_img = render_tools->rel_img;
+	mlx_put_image_to_window(render_tools->xorg, render_tools->winx, render_tools->img_rndr.img, 0, 0);
 	render_tools->state = 0;
 	return (1);
 }
@@ -304,8 +319,8 @@ int	main(void)
 	scene_rndr.height = 480;
 	/*pos[0] - x position of player
 	 *pos[1] - y position of player*/
-	scene_rndr.pos[0] = 8;
-	scene_rndr.pos[1] = 7;
+	scene_rndr.pos[0] = 12;
+	scene_rndr.pos[1] = 2;
 	/* map_size[0] - x size of map
 	 * map_size[1] - y size of map
 	 * */
@@ -319,8 +334,8 @@ int	main(void)
 	scene_rndr.player_dir[1] = 0;
 	scene_rndr.plane_vctr[0] = 0;
 	scene_rndr.plane_vctr[1] = 0.66;
-	scene_rndr.old_img = NULL;
-	scene_rndr.rel_img = NULL;
+	scene_rndr.img_rndr.img = NULL;
+	scene_rndr.img_rndr.addr = NULL;
 	scene_rndr.xorg = mlx_init();
 	scene_rndr.winx = mlx_new_window(scene_rndr.xorg, scene_rndr.width, scene_rndr.height, "Maze Raycaster");
 	/*MAP INIZIALIZATION*/
@@ -347,8 +362,7 @@ int	main(void)
 	scene_rndr.map_size[1] = test_map.map_size[1];
 	//print_matrix(scene_rndr);
 	set_color(&scene_rndr.clr_general, 128, 47, 225, 185);
-	if (!mlx_key_hook(scene_rndr.xorg, move_sight, &scene_rndr))
-		exit(0);
+	mlx_key_hook(scene_rndr.xorg, move_sight, &scene_rndr);
 	//if (scene_rndr.state)
 	mlx_loop_hook(scene_rndr.xorg, render_scene, &scene_rndr);
 	mlx_loop(scene_rndr.xorg);
