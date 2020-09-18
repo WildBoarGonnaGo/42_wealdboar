@@ -6,14 +6,14 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 18:27:58 by lchantel          #+#    #+#             */
-/*   Updated: 2020/09/14 22:32:32 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/09/18 03:45:54 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/colors.h"
 
-void			set_color(bitmap *clr, int trnsp, int red,
-				int green, int blue)
+void			set_color(bitmap *clr, unsigned long trnsp, unsigned long red,
+				unsigned long green, unsigned long blue)
 {
 	clr->trnsp = trnsp << 24;
 	clr->red = red << 16;

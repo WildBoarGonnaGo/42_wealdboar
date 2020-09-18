@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 01:37:56 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/09/14 22:45:34 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/09/17 05:33:51 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ typedef struct  data
     bitmap		ceil_color;
     int         map_stat;
 	int			**map_grid;
-    int         pos;
 	int         pos[2];
 	int			map_size[2];
 	double		player_dir[2];
