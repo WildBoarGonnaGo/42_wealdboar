@@ -6,14 +6,14 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 00:34:39 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/09/11 05:42:36 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/09/24 05:34:19 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/get_next_line.h"
 #include "../include/wolf3d.h"
 
-int	str_ansys(char **str, int max_pos)
+/*int	str_ansys(char **str, int max_pos)
 {
 	int	i;
 	int	pos;
@@ -44,7 +44,7 @@ int	map_ansys(map_conf *obj)
 
 	indx = 0;
 	while (indx )	
-}
+}*/
 
 int main(int argc, char *argv[])
 {

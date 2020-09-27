@@ -6,33 +6,9 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/12 10:36:26 by lchantel          #+#    #+#             */
-/*   Updated: 2020/09/20 08:22:01 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/09/24 20:41:06 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
- typedef struct  data
-{
-    int         file_dscrptr;
-    int         width;
-    int         height;
-    bitmap      flr_color;
-    bitmap		ceil_color;
-    int         map_stat;
-	int			**map_grid;
-    int         pos[2];
-	int			map_size[2];
-	double		player_dir[2];
-    char        **info_handle;
-    char        *no_txtr_path;
-    char        *so_txtr_path;
-    char        *we_txtr_path;
-    char        *ea_txtr_path;
-    char        *s_txtr_path;
-    char        **color;
-}               map_conf;
-
- * */
 
 #include <math.h>
 #include <mlx.h>
@@ -47,7 +23,6 @@
 #define KEY_PRESS_EVENT 1L<<0
 #define KEY_PRESS_IDENT 2
 
-
 typedef struct	mlx_struct
 {
 	void		*xorg;
@@ -58,34 +33,40 @@ typedef struct	mlx_struct
 
 typedef struct		instruments
 {
-	void			*xorg;
-	void			*winx;
-	double			pos[2];
-	int				map_pos[2];
-	int				map_size[2];
-	double			plane_vctr[2];
-	double			player_dir[2];
-	double			proj_vect[2];
-	double			xrender;
-	double			trvl_bound[2];
-	double			trvl_through[2];
-	int				hit_detect;
-	int				grid_step[2];
-	int				height;
-	int				width;
+	void				*xorg;
+	void				*winx;
+	double				pos[2];
+	int					map_pos[2];
+	int					map_size[2];
+	double				plane_vctr[2];
+	double				player_dir[2];
+	double				proj_vect[2];
+	double				xrender;
+	double				trvl_bound[2];
+	double				trvl_through[2];
+	double				strafe[2];
+	double				xrender_pos;
+	double				text_render_step;
+	double				yinit_render_pos;
+	int					bmp_text_pos[2];
+	int					hit_detect;
+	int					grid_step[2];
+	int					height;
+	int					width;
 	/*info about what side of the wall was hit: NS (North-South) or EW (East-West)*/
-	int				what_size;
+	int					what_size;
 	/*perpendicular distance to the wall, depending on the hit direction*/	
-	double			wall_dist;
-	int				wall_height;
-	int				wall_ceil;
-	int				wall_floor;
-	int				x_stripe;
-	int				**map;
-	int				state;
-	bitmap			clr_wall_draw;
-	bitmap			clr_general;
-	img_info		img_rndr;
+	double				wall_dist;
+	int					wall_height;
+	int					wall_ceil;
+	int					wall_floor;
+	int					x_stripe;
+	int					**map;
+	int					state;
+	bitmap				clr_wall_draw;
+	bitmap				clr_general;
+	img_info			img_rndr;
+	bitmap_pic_info		texture;
 }					raycast;
 
 void    memreset(void **mem)
@@ -200,16 +181,44 @@ int				move_sight(int keycode, raycast *scene_chng)
 
  * */
 
+/*
+typedef struct		sign_info
+{
+	unsigned short	fd;
+	unsigned short	indx;
+	unsigned short	frmt_signature; //115
+	unsigned int	file_size;
+	unsigned short	reserve_1;
+	unsigned short	reserve_2;
+	unsigned int	pyxel_pos_offset;
+	unsigned int	struct_size;
+	unsigned int	width;
+	unsigned int	height;
+	unsigned short	plane;
+	unsigned short	bites_per_pixel;
+	unsigned int	comress;
+	unsigned int	size_image;
+	unsigned int	xpix_per_meter;
+	unsigned int	ypix_per_meter;
+	unsigned int	clr_table;
+	unsigned int	clr_sockets;
+	unsigned int	padded_row;
+	unsigned int	unpadded_row;
+	unsigned int	img_size;	
+	unsigned char	*pyxel_map;
+}					bitmap_pic_info;
+*/
+
 int				render_scene(raycast *render_tools)
 {
-	_line	vert_draw;
+	//_line	vert_draw;
 	int		x;
-	
-	if (render_tools->img_rndr.img)
-		mlx_destroy_image(render_tools->xorg, render_tools->img_rndr.img);
+		
 	render_tools->img_rndr.img = mlx_new_image(render_tools->xorg, render_tools->width, render_tools->height);
+	render_tools->img_rndr.addr = mlx_get_data_addr(render_tools->img_rndr.img,
+	&render_tools->img_rndr.bits_per_pixel, &render_tools->img_rndr.line_size, 
+	&render_tools->img_rndr.endian); 
 	mlx_clear_window(render_tools->xorg, render_tools->winx);
-	//mlx_destroy_image(_config->xorg, _config->old_img);
 	x = -1;
 	while (++x < render_tools->width)
 	{
@@ -287,30 +296,52 @@ int				render_scene(raycast *render_tools)
 		0 : render_tools->height / 2 - render_tools->wall_height / 2;
 		render_tools->wall_floor = ((render_tools->height / 2 + render_tools->wall_height / 2) > render_tools->height) ?
 		render_tools->height : render_tools->height / 2 + render_tools->wall_height / 2;
-		render_tools->clr_wall_draw = (!render_tools->what_size) ? render_tools->clr_general : add_shade(0.5, render_tools->clr_general);
-		/*
-		 void			line_init(_line *init, int x_0, int y_0, int x_1, int y_1)
+		/*render_tools->xrender_pos represents the exact value where the wall was hit*/
+		render_tools->xrender_pos = (!render_tools->what_size) ? render_tools->pos[1] + render_tools->wall_dist
+		* render_tools->proj_vect[1] : render_tools->pos[0] + render_tools->wall_dist * render_tools->proj_vect[0];
+		/*Let's calculate the ratio position about the init texture bmp coordinates {0, 0}*/
+		render_tools->xrender_pos -= floor(render_tools->xrender_pos);
+		/*render_tools->bmp_text_pos[0] - relative bmp texture x-coordinate
+		  render_tools->bmp_text_pos[1] - relative bmp texture y-coordinate
+		 Let's calculate these coordinates*/
+		render_tools->bmp_text_pos[0] = (render_tools->xrender_pos * render_tools->texture.width);
+		/*There are some unique situation, when texture coordinates need to be corrected, due the 
+		 opposite walls must be mirrored*/
+		if ((!render_tools->what_size && render_tools->proj_vect[0] > 0) || 
+		(render_tools->what_size == 1 && render_tools->proj_vect[1] < 0))
+			render_tools->bmp_text_pos[0] = render_tools->texture.width - 1 - render_tools->bmp_text_pos[0];
+		/*render_tools->text_render_step - texture step to draw certain pixel, depending on ratio below*/
+		render_tools->text_render_step = (double)render_tools->texture.height / render_tools->wall_height;
+		/*Now let's find out what pixel to draw we need to start. That's why we need render_tools->bmp_text_pos[1]*/
+		render_tools->yinit_render_pos = (render_tools->wall_ceil - (render_tools->height /2
+		- render_tools->wall_height/2)) * render_tools->text_render_step;
+		while (render_tools->wall_ceil < render_tools->wall_floor)
 		{
-			init->x_strt = x_0;
-			init->y_strt = y_0;
-			init->x_end = x_1;
-			init->y_end = y_1;
+			render_tools->bmp_text_pos[1] = (int)render_tools->yinit_render_pos & (render_tools->texture.height - 1);
+			render_tools->clr_general._clrfull = *(unsigned int *)(render_tools->texture.pyxel_map
+			+ render_tools->bmp_text_pos[1] * render_tools->texture.unpadded_row
+			+ render_tools->bmp_text_pos[0] * render_tools->texture.bites_per_pixel / 8);
+			render_tools->clr_wall_draw = (!render_tools->what_size) ? render_tools->clr_general :
+			add_shade(0.5, render_tools->clr_general);
+			*(unsigned int *)(render_tools->img_rndr.addr + (render_tools->wall_ceil++)
+			* render_tools->img_rndr.line_size + x * render_tools->img_rndr.bits_per_pixel / 8)
+			= render_tools->clr_wall_draw._clrfull;
+			render_tools->yinit_render_pos += render_tools->text_render_step;
 		}
-
-		void			line_output(img_info *line_img, _line trgt, unsigned int color)
-		 * */
-		line_init(&vert_draw, x, render_tools->wall_ceil, x, render_tools->wall_floor);
-		line_output(&render_tools->img_rndr, vert_draw, render_tools->clr_wall_draw._clrfull);
+		//line_init(&vert_draw, x, render_tools->wall_ceil, x, render_tools->wall_floor);
+		//line_output(&render_tools->img_rndr, vert_draw, render_tools->clr_wall_draw._clrfull);
 	}
 	mlx_put_image_to_window(render_tools->xorg, render_tools->winx, render_tools->img_rndr.img, 0, 0);
+	if (render_tools->img_rndr.img)
+		mlx_destroy_image(render_tools->xorg, render_tools->img_rndr.img);
 	render_tools->state = 0;
 	return (1);
 }
 
 int	main(void)
 {
-	map_conf	test_map;
-	raycast		scene_rndr;
+	map_conf			test_map;
+	raycast				scene_rndr;
 	int			pos[2];
 
 	pos[0] = 0;
@@ -342,7 +373,7 @@ int	main(void)
 	scene_rndr.xorg = mlx_init();
 	scene_rndr.winx = mlx_new_window(scene_rndr.xorg, scene_rndr.width, scene_rndr.height, "Maze Raycaster");
 	/*MAP INIZIALIZATION*/
-
+	read_bitmap_file("/home/lchantel/texture_pack/wall_text_10_512.bmp", &scene_rndr.texture);
 	scene_rndr.map = (int **)malloc(sizeof(int *) * test_map.map_size[0]);
 	while (pos[0] < test_map.map_size[0])
 		*(scene_rndr.map + pos[0]++) = (int *)malloc(sizeof(int) * test_map.map_size[1]);
