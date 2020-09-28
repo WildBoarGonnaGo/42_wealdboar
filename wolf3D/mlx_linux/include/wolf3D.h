@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 01:37:56 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/09/17 05:33:51 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/09/27 16:02:06 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <stdio.h>
+# include "../include/colors.h"
+# include <math.h>
 
 typedef struct  data
 {
@@ -29,7 +31,7 @@ typedef struct  data
     bitmap		ceil_color;
     int         map_stat;
 	int			**map_grid;
-	int         pos[2];
+	int         slot;
 	int			map_size[2];
 	double		player_dir[2];
     char        **info_handle;
@@ -39,7 +41,7 @@ typedef struct  data
     char        *ea_txtr_path;
     char        *s_txtr_path;
     char        **color;
-    int			**map;
+    char		**map;
 }               map_conf;
 
 void            memreset(void **mem);

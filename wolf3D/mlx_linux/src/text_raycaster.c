@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/12 10:36:26 by lchantel          #+#    #+#             */
-/*   Updated: 2020/09/24 20:41:06 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/09/27 10:03:41 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -394,14 +394,7 @@ int	main(void)
 	}
 	scene_rndr.map_size[0] = test_map.map_size[0];
 	scene_rndr.map_size[1] = test_map.map_size[1];
-	//print_matrix(scene_rndr);
 	set_color(&scene_rndr.clr_general, 128, 47, 225, 185);
-	//mlx_key_hook(scene_rndr.winx, move_sight, &scene_rndr);
-	//if (scene_rndr.state)
-	/*
-	#define KEY_PRESS_EVENT 1L<<0
-	#define KEY_PRESS_IDENT 2
-	 * */
 	mlx_hook(scene_rndr.winx, 2, 1L<<0, move_sight, &scene_rndr);
 	mlx_loop_hook(scene_rndr.xorg, render_scene, &scene_rndr);
 	
