@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 23:24:18 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/09/27 16:01:01 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/09/29 05:48:24 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ map_conf        map_init_input(char *path)
             fl_color.green = ft_atoi(*(cub_stat.color + 1));
             fl_color.blue = ft_atoi(*(cub_stat.color + 2));
             set_color(&fl_color, 0, fl_color.red, fl_color.green, fl_color.blue);
-			cub_stat.flr_color._clrfull = fl_color._clrfull;
+			cub_stat.flr_color = fl_color;
             strcolor_reset(&cub_stat);
         }
         else if (!ft_strncmp("C", *cub_stat.info_handle, 1))
@@ -174,7 +174,7 @@ map_conf        map_init_input(char *path)
             cl_color.green = ft_atoi(*(cub_stat.color + 1));
             cl_color.blue = ft_atoi(*(cub_stat.color + 2));
             set_color(&cl_color, 0, cl_color.red, cl_color.green, cl_color.blue);
-			cub_stat.ceil_color._clrfull = cl_color._clrfull; 
+			cub_stat.ceil_color = cl_color; 
             strcolor_reset(&cub_stat);
         }
         else if (!**cub_stat.info_handle)
@@ -192,8 +192,6 @@ map_conf        map_init_input(char *path)
         }
         memreset((void **)&line);
     }
-	cub_stat.map = (char **)memrealloc(cub_stat.map, sizeof(char *) * cub_stat.slot, sizeof(char *));
-	*(cub_stat.map + cub_stat.slot++ )= ft_strdup(line);
 	memreset((void **)cub_stat.info_handle);
 	memreset((void **)&line);
     return (cub_stat);

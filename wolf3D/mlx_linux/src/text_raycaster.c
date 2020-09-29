@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/12 10:36:26 by lchantel          #+#    #+#             */
-/*   Updated: 2020/09/27 10:03:41 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/09/29 05:30:19 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct		instruments
 	int					wall_floor;
 	int					x_stripe;
 	int					**map;
-	int					state;
+	int					texture_bit;
 	bitmap				clr_wall_draw;
 	bitmap				clr_general;
 	img_info			img_rndr;
@@ -338,7 +338,7 @@ int				render_scene(raycast *render_tools)
 	return (1);
 }
 
-int	main(void)
+int	main(int argc, char *argv[])
 {
 	map_conf			test_map;
 	raycast				scene_rndr;
@@ -347,23 +347,7 @@ int	main(void)
 	pos[0] = 0;
 	pos[1] = -1;
 	 
-	/*width of screen*/
-	scene_rndr.width = 1024;
-	/*height of screen*/
-	scene_rndr.height = 768;
-	/*pos[0] - x position of player
-	 *pos[1] - y position of player*/
-	scene_rndr.pos[0] = 12;
-	scene_rndr.pos[1] = 2;
-	/* map_size[0] - x size of map
-	 * map_size[1] - y size of map
-	 * */
-	test_map.map_size[0] = 15;
-	test_map.map_size[1] = 15;
-	/*
-	 * player_dir[0] - x-map direction;
-	 * player_dir[1] - y-map direction;
-	 * */
+	
 	scene_rndr.player_dir[0] = 1;
 	scene_rndr.player_dir[1] = 0;
 	scene_rndr.plane_vctr[0] = 0;
