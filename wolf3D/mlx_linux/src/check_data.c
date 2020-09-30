@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 00:34:39 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/09/29 05:39:48 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/09/29 23:16:01 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ void						calc_map_size(map_conf *obj)
 			obj->map_size[1] = (int)ft_strlen(*(obj->map + i));
 }
 
-void						impostor_map(map_conf *obj)
+int							impostor_map(map_conf *obj)
 {
 	int	pos[2];
 	
@@ -231,20 +231,25 @@ void						impostor_map(map_conf *obj)
 					obj->player_dir[0] = -1;
 					obj->player_dir[1] = -FOV_PROJ_LEN;
 				}
-				else
+				else if (*(*(obj->map + pos[0]) + pos[1]) == 'E')
 				{
 					obj->player_dir[0] = 1;
 					obj->player_dir[1] = FOV_PROJ_LEN;
 				}
+				if (!obj->player_dir[0])
+					return (0);
 				*(*(obj->map_grid + pos[0]) + pos[1]) = 4;
 			}
-			else if (*(*(obj->map + pos[0]) + pos[1]) == '1' || *(*(obj->map + pos[0]) + pos[1]) == '2')
+			else if (*(*(obj->map + pos[0]) + pos[1]) == '1')
 				*(*(obj->map_grid + pos[0]) + pos[1]) = 1;
+			else if (*(*(obj->map + pos[0]) + pos[1]) == '2')
+				*(*(obj->map_grid + pos[0]) + pos[1]) = 2;
 			else 
 				*(*(obj->map_grid + pos[0]) + pos[1]) = 0;	
 		}
 		pos[1] = -1;
 	}
+	return (1);
 }
 
 /*int 	main(int argc, char *argv[])

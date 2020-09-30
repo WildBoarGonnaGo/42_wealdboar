@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/12 10:36:26 by lchantel          #+#    #+#             */
-/*   Updated: 2020/09/29 05:30:19 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/09/30 05:37:51 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -338,16 +338,40 @@ int				render_scene(raycast *render_tools)
 	return (1);
 }
 
-int	main(int argc, char *argv[])
+raycast	**init_render_tools(map_conf)
 {
-	map_conf			test_map;
+	raycast	**obj_gl;
+
+	obj_gl = (raycast **)malloc(sizeof(raycast *) * 4);
+	
+}
+
+int		main(int argc, char *argv[])
+{
+	map_conf			cub_file_info;
 	raycast				scene_rndr;
 	int			pos[2];
 
+	if (argc != 2)
+	{
+		perror("Error\n");
+		return (0);
+	}
+	if (!(cub_file_info = map_init_input(argv[1])))
+	{
+		perror("Error\n");
+		return (0);
+	}
+	calc_map_size(&cub_file_info);	
+	impostor_map(&cub_file_info);
+	if (!map_ansys(cub_file_info))
+	{
+		perror("Error\n");
+		return (-1);
+	}
+
 	pos[0] = 0;
 	pos[1] = -1;
-	 
-	
 	scene_rndr.player_dir[0] = 1;
 	scene_rndr.player_dir[1] = 0;
 	scene_rndr.plane_vctr[0] = 0;
@@ -359,7 +383,7 @@ int	main(int argc, char *argv[])
 	/*MAP INIZIALIZATION*/
 	read_bitmap_file("/home/lchantel/texture_pack/wall_text_10_512.bmp", &scene_rndr.texture);
 	scene_rndr.map = (int **)malloc(sizeof(int *) * test_map.map_size[0]);
-	while (pos[0] < test_map.map_size[0])
+	/*while (pos[0] < test_map.map_size[0])
 		*(scene_rndr.map + pos[0]++) = (int *)malloc(sizeof(int) * test_map.map_size[1]);
 	pos[0] = -1;
 	while (++pos[0] < test_map.map_size[0])
@@ -375,7 +399,7 @@ int	main(int argc, char *argv[])
 				*(*(scene_rndr.map + pos[0]) + pos[1]) = (!pos[1] || pos[1] == 14) ? 
 				1 : 0;
 		pos[1] = -1;
-	}
+	}*/
 	scene_rndr.map_size[0] = test_map.map_size[0];
 	scene_rndr.map_size[1] = test_map.map_size[1];
 	set_color(&scene_rndr.clr_general, 128, 47, 225, 185);
