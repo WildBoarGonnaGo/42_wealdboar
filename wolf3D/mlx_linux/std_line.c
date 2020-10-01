@@ -6,18 +6,22 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 23:19:19 by lchantel          #+#    #+#             */
-/*   Updated: 2020/08/24 21:47:25 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/10/02 00:28:44 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <geoms.h>
 
-void			line_init(_line *init, int x_0, int y_0, int x_1, int y_1)
+_line			line_init(int x_0, int y_0, int x_1, int y_1)
 {
-	init->x_strt = x_0;
-	init->y_strt = y_0;
-	init->x_end = x_1;
-	init->y_end = y_1;
+	_line	init;
+
+	init.x_strt = x_0;
+	init.y_strt = y_0;
+	init.x_end = x_1;
+	init.y_end = y_1;
+
+	return (init)
 }
 
 void			line_output(img_info *line_img, _line trgt, unsigned int color)
@@ -25,15 +29,15 @@ void			line_output(img_info *line_img, _line trgt, unsigned int color)
 	int pyx;
 
 	pyx = 0;
-	trgt.alpha = (trgt.x_end == trgt.x_strt) ? M_PI / 2 :
+	trgt.alpha = (trgt.x_end == trgt.x_strt) ? M_PI / 2 + (trgt.y_end < trgt.y_strt) :
 	atan2((double)(trgt.y_end - trgt.y_strt) , (double)(trgt.x_end - trgt.x_strt));
-	if (trgt.alpha == M_PI / 2 && trgt.y_end < trgt.y_strt)
+	/*if (trgt.alpha == M_PI / 2 && trgt.y_end < trgt.y_strt)
 	{
 		  pyx = trgt.y_end;
 		  trgt.y_end = trgt.y_strt;
 		  trgt.y_strt = pyx;
 		  pyx = 0;
-	}
+	}*/
 	trgt.l = sqrt(pow((trgt.y_end - trgt.y_strt), 2) + pow((trgt.x_end - trgt.x_strt), 2));
 	trgt.x_roll = trgt.x_strt;
 	trgt.y_roll = trgt.y_strt;

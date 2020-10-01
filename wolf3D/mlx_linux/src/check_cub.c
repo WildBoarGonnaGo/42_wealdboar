@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 23:24:18 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/09/29 05:48:24 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/10/02 00:06:30 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ map_conf        map_init_input(char *path)
             if (check_filepath(*(cub_stat.info_handle + 1)))
 			{
 				cub_stat.map_stat |= (1 << 3);
-                cub_stat.we_txtr_path = ft_strdup(*(cub_stat.info_handle + 1));
+                cub_stat.ea_txtr_path = ft_strdup(*(cub_stat.info_handle + 1));
 			}
         }
         else if (!ft_strncmp("S", *cub_stat.info_handle, 1))
@@ -154,7 +154,7 @@ map_conf        map_init_input(char *path)
             if (check_filepath(*(cub_stat.info_handle + 1)))
 			{
 				cub_stat.map_stat |= (1 << 4);
-				cub_stat.we_txtr_path = ft_strdup(*(cub_stat.info_handle + 1));
+				cub_stat.itm_txtr_path = ft_strdup(*(cub_stat.info_handle + 1));
 			}
         }
         else if (!ft_strncmp("F", *cub_stat.info_handle, 1))

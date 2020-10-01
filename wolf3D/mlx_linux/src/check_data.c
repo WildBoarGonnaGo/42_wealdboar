@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 00:34:39 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/09/29 23:16:01 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/09/30 05:59:48 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,23 +218,31 @@ int							impostor_map(map_conf *obj)
 				obj->player_pos[1] = pos[1];
 				if (*(*(obj->map + pos[0]) + pos[1]) == 'N')
 				{
-					obj->player_dir[0] = FOV_PROJ_LEN;
+					obj->player_dir[0] = 0;
 					obj->player_dir[1] = -1;
+					obj->plane_direct[0] = FOV_PROJ_LEN;
+					obj->plane_direct[1] = 0;	
 				}
 				else if (*(*(obj->map + pos[0]) + pos[1]) == 'S')
 				{
-					obj->player_dir[0] = -FOV_PROJ_LEN;
+					obj->player_dir[0] = 0;
 					obj->player_dir[1] = 1;
+					obj->plane_dir[0] = FOV_PROJ_LEN;
+					obj->plane_dir[1] = 0;
 				}
 				else if (*(*(obj->map + pos[0]) + pos[1]) == 'W')
 				{
 					obj->player_dir[0] = -1;
-					obj->player_dir[1] = -FOV_PROJ_LEN;
+					obj->player_dir[1] = 0;
+					obj->plane_direct[0] = 0;
+					obj->plane_direct[1] = FOB_PROJ_LEN;
 				}
 				else if (*(*(obj->map + pos[0]) + pos[1]) == 'E')
 				{
 					obj->player_dir[0] = 1;
-					obj->player_dir[1] = FOV_PROJ_LEN;
+					obj->player_dir[1] = 0;
+					obj->plane_direct[0] = 0;
+					obj->plane_direct[1] = FOB_PROJ_LEN;
 				}
 				if (!obj->player_dir[0])
 					return (0);

@@ -6,7 +6,7 @@
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 04:33:33 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/09/24 03:10:12 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/09/30 06:10:45 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	read_bitmap_file(char *filename, bitmap_pic_info *img_info)
 
 	img_info->indx = 0;
 	if ((img_info->fd = open(filename, O_RDONLY)) < 0)
-		return (-1);
+		return (0);
 	read(img_info->fd, &pos, 10);
 	read(img_info->fd, &img_info->pyxel_pos_offset, 4);
 	read(img_info->fd, &img_info->struct_size, 4);
@@ -44,5 +44,5 @@ int	read_bitmap_file(char *filename, bitmap_pic_info *img_info)
 		++img_info->indx;
 	}
 	close(img_info->fd);
-	return (0);
+	return (1);
 }

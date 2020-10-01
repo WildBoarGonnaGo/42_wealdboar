@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/12 10:36:26 by lchantel          #+#    #+#             */
-/*   Updated: 2020/09/30 05:37:51 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/02 00:07:41 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,44 +31,6 @@ typedef struct	mlx_struct
 	void		*old_img;
 }				obj_gl;
 
-typedef struct		instruments
-{
-	void				*xorg;
-	void				*winx;
-	double				pos[2];
-	int					map_pos[2];
-	int					map_size[2];
-	double				plane_vctr[2];
-	double				player_dir[2];
-	double				proj_vect[2];
-	double				xrender;
-	double				trvl_bound[2];
-	double				trvl_through[2];
-	double				strafe[2];
-	double				xrender_pos;
-	double				text_render_step;
-	double				yinit_render_pos;
-	int					bmp_text_pos[2];
-	int					hit_detect;
-	int					grid_step[2];
-	int					height;
-	int					width;
-	/*info about what side of the wall was hit: NS (North-South) or EW (East-West)*/
-	int					what_size;
-	/*perpendicular distance to the wall, depending on the hit direction*/	
-	double				wall_dist;
-	int					wall_height;
-	int					wall_ceil;
-	int					wall_floor;
-	int					x_stripe;
-	int					**map;
-	int					texture_bit;
-	bitmap				clr_wall_draw;
-	bitmap				clr_general;
-	img_info			img_rndr;
-	bitmap_pic_info		texture;
-}					raycast;
-
 void    memreset(void **mem)
 {
     if (*mem)
@@ -92,20 +54,6 @@ void	print_matrix(raycast obj_gl)
 		j = -1;
 	}
 }
-/*raycast			render_frame_init(map_conf info)
-{
-	raycast	cur_frame;
-
-	cur_frame.cur_pos[0] = info.pos[0];
-	cur_frame.cur_pos[1] = info.pos[1];
-	cur_frame.plane_vctr[0] = 0;
-	cur_frame.plane_vctr[1] = 0.66;
-	cur_frame.player_dir[0] = 1;
-	cur_frame.player_dir[1] = 0;
-	cur_frame.xrender = 0;
-	
-	return (cur_frame);
-}*/
 
 /*RAYCASTING ALGORITHM*/
 
@@ -170,7 +118,7 @@ int				move_sight(int keycode, raycast *scene_chng)
 }
 
 /*
- *typedef struct	bit_struct
+*typedef struct	bit_struct
 {
 	void	*img;
 	char	*addr;
@@ -338,12 +286,63 @@ int				render_scene(raycast *render_tools)
 	return (1);
 }
 
-raycast	**init_render_tools(map_conf)
+/*
+ typedef struct			instruments
 {
-	raycast	**obj_gl;
+	void				*xorg;
+	void				*winx;
+	double				pos[2];
+	int					map_pos[2];
+	int					map_size[2];
+	double				plane_vctr[2];
+	double				player_dir[2];
+	double				proj_vect[2];
+	double				xrender;
+	double				trvl_bound[2];
+	double				trvl_through[2];
+	double				strafe[2];
+	double				xrender_pos;
+	double				text_render_step;
+	double				yinit_render_pos;
+	int					bmp_text_pos[2];
+	int					hit_detect;
+	int					grid_step[2];
+	int					height;
+	int					width;
+	int					what_size;	
+	double				wall_dist;
+	int					wall_height;
+	int					wall_ceil;
+	int					wall_floor;
+	int					x_stripe;
+	int					**map;
+	int					texture_bit;
+	bitmap				clr_wall_draw;
+	bitmap				clr_general;
+	img_info			img_rndr;
+	bitmap_pic_info		texture;
+}						raycast;
+ * */
 
-	obj_gl = (raycast **)malloc(sizeof(raycast *) * 4);
-	
+void	init_render_tools(map_conf src, raycast *dst)
+{
+	dst->pos[0] = src.player_pos[0];
+	dst->pos[1] = src.player_dos[1];
+	dst->player_dir[0] = src.player_dir[0];
+	dst->player_dir[1] = src.player_dir[1];
+	dst->plane_vctr[0] = src.plane_direct[0];
+	dst->plane_vctr[1] = src.plane_direct[1];
+	dst->map_size[0] = src.map_size[0];
+	dst->map_size[1] = src.map_size[1];
+	dst->map = src.map_grid;
+	dst->img_rndr.winx = NULL;
+	dst->img_rndr.xorg = NULL;
+	read_bitmap_file(src.no_txtr_path, &dst->north_txtr);
+	read_bitmap_file(src.so_txtr_path, &dst->south_txtr);
+	read_bitmap_file(src.ea_txtr_path, &dst->east_txtr);
+	read_bitmap_file(src.we_txtr_path, &dst->west_txtr);
+	dst->clr_floor = src.fl_color;
+	dst->clr_ceil = src.cl_color;	
 }
 
 int		main(int argc, char *argv[])
@@ -369,7 +368,7 @@ int		main(int argc, char *argv[])
 		perror("Error\n");
 		return (-1);
 	}
-
+		
 	pos[0] = 0;
 	pos[1] = -1;
 	scene_rndr.player_dir[0] = 1;
