@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 00:34:39 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/09/30 05:59:48 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/10/04 20:14:52 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,9 +202,10 @@ void						calc_map_size(map_conf *obj)
 int							impostor_map(map_conf *obj)
 {
 	int	pos[2];
-	
+
+	obj->item_count = 0;	
 	pos[0] = -1;
-	pos[1] = -1;
+	pos[1] = -1;	
 	obj->map_grid = (int **)malloc(sizeof(int *) * obj->map_size[0]);
 	while (++pos[0] < obj->map_size[0])
 	{
@@ -251,7 +252,14 @@ int							impostor_map(map_conf *obj)
 			else if (*(*(obj->map + pos[0]) + pos[1]) == '1')
 				*(*(obj->map_grid + pos[0]) + pos[1]) = 1;
 			else if (*(*(obj->map + pos[0]) + pos[1]) == '2')
+			{
+				/*void    *memrealloc(void *mem, int oldsize, int addbyte)*/
+				obj->item_pos = (double **)memrealloc(obj->item_pos, sizeof(double *) * obj->item_count, sizeof(double *));
+				*(obj->item_pos + obj->item_count) = (double *)malloc(sizeof(double * 3));
+				**(obj->item_pos + obj->item_count) = (double)pos[0] + 0.5;
+				*(*(obj->item_pos + obj->item_count++) + 1) = (double)pos[1] + 0.5;
 				*(*(obj->map_grid + pos[0]) + pos[1]) = 2;
+			}
 			else 
 				*(*(obj->map_grid + pos[0]) + pos[1]) = 0;	
 		}

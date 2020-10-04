@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 01:37:56 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/02 00:08:49 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/04 22:27:56 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ typedef struct  data
 	int         slot;
 	int			map_size[2];
 	int			player_pos[2];
+	int			item_count;
 	double		player_dir[2];
-	double		plane_direct[2]
+	double		plane_direct[2];
+	double		**item_pos;
 	char        **info_handle;
     char        *no_txtr_path;
     char        *so_txtr_path;
@@ -76,19 +78,29 @@ typedef struct			instruments
 	double				xrender_pos;
 	double				text_render_step;
 	double				yinit_render_pos;
-	int					bmp_text_pos[2];
+	double				*item_pos;
+	double				item_count;
+	double				new_cs_pos[2];
+	double				*z_buffer_tank;
+	int					pxl_itm_xpos;
+	int					xrender_itm_strt;
+	int					xrender_itm_end;
 	int					hit_detect;
+	int					bmp_text_pos[2];
 	int					grid_step[2];
 	int					height;
 	int					width;
-	int					what_size;	
+	int					what_size;
+	int					item_found;
+	double				item_pos[2];	
 	double				wall_dist;
+	double				item_rel_pos[2];
 	int					wall_height;
 	int					wall_ceil;
 	int					wall_floor;
 	int					x_stripe;
 	int					**map;
-	int					texture_bit;
+	int					txtr_itm_wratio;
 	bitmap				clr_wall_draw;
 	bitmap				clr_general;
 	bitmap				clr_floor;

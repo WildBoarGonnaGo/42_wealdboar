@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 23:24:18 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/02 00:06:30 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/03 12:53:33 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ map_conf        map_init_input(char *path)
         else
         {
             cub_stat.map = (char **)memrealloc(cub_stat.map, sizeof(char *) * cub_stat.slot, sizeof(char *));
-            *(cub_stat.map + cub_stat.slot++ )= ft_strdup(line);
+            *(cub_stat.map + cub_stat.slot++) = ft_strdup(line);
 			memreset((void **)cub_stat.info_handle);	
         }
         memreset((void **)&line);

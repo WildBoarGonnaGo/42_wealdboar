@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/12 10:36:26 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/02 00:07:41 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/05 01:09:50 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@
 #define KEY_PRESS_EVENT 1L<<0
 #define KEY_PRESS_IDENT 2
 
-typedef struct	mlx_struct
+/*typedef struct	mlx_struct
 {
 	void		*xorg;
 	void		*winx;
 	void		*rel_img;
 	void		*old_img;
-}				obj_gl;
+}*/				obj_gl;
 
 void    memreset(void **mem)
 {
@@ -157,6 +157,108 @@ typedef struct		sign_info
 }					bitmap_pic_info;
 */
 
+/*
+	_line			line_init(int x_0, int y_0, int x_1, int y_1);
+	void			line_output(img_info *line_img, _line trgt, unsigned int color);
+ * */
+
+void			draw_skyline(int x, raycast obj_gl)
+{
+	_line	skyline;
+
+	skyline = line_init(x, 0, x, (int)(obj_gl.height / 2 - 1));
+	line_output(obj_gl.img_rndr, skyline, obj_gl.clr_ceil._clrfull);
+	skyline = line_init(x, (int)(obj_gl.height / 2), x, obj_gl.height - 1);
+	line_output(obj_gl.img_rndr, skyline, obj_gl.clr_ceil._clrfull);
+}	
+
+void			insertion_sort(raycast *obj_gl)
+{
+	double	key[3];
+	int		i;
+	int		j;
+
+	i = -1;
+	while (++indx < obj_gl->item_count)
+		obj_gl->item_pos[i][2] = pow(obj_gl->item_pos[i][0] - obj_gl->pos[0], 2)
+		+ pow(obj_gl->item_pos[i][1] - obj_gl->pos[1], 2);
+	i = -1;
+	while (++i < obj_gl->item_pos)
+	{
+		key[0] = obj_gl->item_pos[i][0];
+		key[1] = obj_gl->item_pos[i][1];
+		key[2] = obj_gl->item_pos[i][2];
+		j = i;
+		while (--j >= 0 && obj_gl->item_pos[j][2] > key)
+		{
+			obj_gl->item_pos[j + 1][0] = obj_gl->item_pos[j][0];
+			obj_gl->item_pos[j + 1][1] = obj_gl->item_pos[j][1];
+			obj_gl->item_pos[j + 1][2] = obj_gl->item_pos[j][2];
+		}
+		obj_gl->item_pos[j + 1][0] = key[0];
+		obj_gl->item_pos[j + 1][1] = key[1];
+		obj_gl->item_pos[j + 1][2] = key[2];
+	}
+}
+
+void			draw_item_text(int x, raycast *obj_gl)
+{
+	int		i;
+	double	trans_factor;
+	double	old_value;
+
+	i = -1;
+	insertion_sort(obj_gl);
+	trans_factor = 1 / (obj_gl->player_dir[1] * obj_gl->plane_vctr[0]
+	- obj_gl->player_dir[0] * obj_gl->plane_vctr[1]);
+	while (++i < obj_gl->item_count)
+	{	
+		obj_gl->new_cs_pos[0] = obj_gl->item_pos[i][0] - obj_gl->pos[0];
+		obj_gl->new_cs_pos[1] = obj_gl->item_pos[i][1] - obj_gl.pos[1];
+		old_value = obj_gl->new_cs_pos[0];
+		obj_gl->new_cs_pos[0] = trans_factor * (obj_gl.new_cs_pos[0] * obj_gl.player_dir[1]
+		- obj_gl->new_cs_pos[1] * obj_gl.player_dir[0]);
+		obj_gl->new_cs_pos[1] = trans_factor * (-old_value * obj_gl.plane_vctr[1]
+		+ obj_gl->new_cs_pos[1] * obj_gl.plane_vctr[0]);
+		obj_gl->pxl_itm_xpos = (int)(obj_gl.width * (1 + obj_gl.new_cs_pos[0] / obj_gl.new_cs_pos[1]) / 2);
+		obj_gl.wall_height = (int)abs(obj_gl.height / obj_gl.new_cs_pos[1]);
+		obj_gl.wall_ceil = (((obj_gl.height - obj_gl.wall_height) / 2) < 0) ? 0 :
+		(obj_gl.height - obj_gl.wall_height) / 2;
+		obj_gl.wall_floor = (((obj_gl.height + obj_gl.wall_height) / 2) > obj_gl.height - 1)
+		? obj_gl.height - 1: (obj_gl.height + obj_gl.wall_height) / 2; 
+		obj_gl.txtr_itm_wratio = obj_gl.wall_height;
+		obj_gl.xrender_itm_strt = (((obj_gl.pxl_itm_xpos - obj_gl.txtr_itm_wratio) / 2) < 0) ? 0 :
+		(obj_gl.pxl_itm_xpos - obj_gl.txtr_itm_wratio) / 2;
+		obj_gl.xrender_itm_end = (((obj_gl.pxl_itm_xpos + obj_gl.txtr_itm_wratio) / 2)
+		> obj_gl.width - 1) ? obj_gl.width - 1 : (obj_gl.height + obj_gl.wall_height) / 2;
+		obj_gl.x_stripe = obj_gl.xrender_itm_strt;
+		obj_gl.text_render_step = (double)obj_gl.item_txtr.height / obj_gl.wall_height;
+		obj_gl.yinit_render_pos = (obj_gl.wall_ceil - ((obj_gl.height - obj_gl.wall_height) / 2))
+		old_value = obj_gl.yinit_render_pos;
+		* obj_gl.text_render_step;
+		while (obj_gl.x_stripe < obj_gl.xrender_itm_end)
+		{
+			obj_gl.xrender = (obj_gl.x_stripe - ((obj_gl.pxl_itm_xpos - obj_gl.txtr_itm_wratio) / 2))
+			* obj_gl.item_txtr.width / obj_gl.txtr_itm_wratio;
+			obj_gl.bmp_text_pos[0] = (int)xrender & (obj_gl.item_txtr.width - 1);
+			if (obj_gl.new_cs_pos[1] > 0 && x_stripe > 0 && x_stripe < obj_gl.width
+			&& obj_gl.z_buffer_tank[x_stripe] > obj_gl.new_cs_pos[1])
+				while (obj_gl.wall_ceil < obj_gl.wall_floor)
+				{
+					obj_gl.bmp_text_pos[1] = (int)obj_gl.yinit_render_pos & (obj_gl.item_txtr.height - 1);
+					obj_gl.clr_general._clrfull = *(unsigned int *)(obj_gl.item_txtr.pyxel_map + 
+					obj_gl.item_txtr.unpadded_row * obj_gl.bmp_text_pos[1] +
+					obj_gl.bmp_text_pos[0] * obj_gl.item_txtr.bites_per_pixel / 8);
+					*(unsigned int *)(obj_gl.img_info.addr + (obj_gl.wall_ceil++) * obj_gl.img_info.line_size + 
+					obj_gl.x_stripe * obj_gl.img_info.bits_per_pixel / 8) = obj_gl.clr_general._clrfull;
+					obj_gl.yinit_render_pos += obj_gl.text_render_step;
+				}
+			++obj_gl.x_stripe;
+			obj_gl.yinit_render_pos = old_value;
+		}
+	}
+}
+
 int				render_scene(raycast *render_tools)
 {
 	//_line	vert_draw;
@@ -170,6 +272,8 @@ int				render_scene(raycast *render_tools)
 	x = -1;
 	while (++x < render_tools->width)
 	{
+		/*at first draw skyline*/
+		draw_skyline(x, *render_tools);
 		/*calculate ray position and direction
 		x coordinate in camera space
 		xrender - x-coordinate in camera space
@@ -228,6 +332,14 @@ int				render_scene(raycast *render_tools)
 				render_tools->map_pos[1] += render_tools->grid_step[1];
 				render_tools->what_size = 1;
 			}
+			/*Check if there is an item*/
+			if (render_tools->map[render_tools->map_pos[0]][render_tools->map_pos[1]] == 2
+			&& !render_tools->item_found)
+			{
+				render_tools->item_found = 1;
+				render_tools->item_pos[0] = render_tools->map_pos[0];
+				render_tools->item_pos[1] = render_tools->map_pos[1];
+			}
 			/*Check if ray has hit the wall*/
 			render_tools->hit_detect = (render_tools->map[render_tools->map_pos[0]][render_tools->map_pos[1]]) ? 1 : 0;
 		}
@@ -276,9 +388,11 @@ int				render_scene(raycast *render_tools)
 			= render_tools->clr_wall_draw._clrfull;
 			render_tools->yinit_render_pos += render_tools->text_render_step;
 		}
+		dst->z_buffer_tank[x] = render_tools->wall_dist;
 		//line_init(&vert_draw, x, render_tools->wall_ceil, x, render_tools->wall_floor);
 		//line_output(&render_tools->img_rndr, vert_draw, render_tools->clr_wall_draw._clrfull);
 	}
+
 	mlx_put_image_to_window(render_tools->xorg, render_tools->winx, render_tools->img_rndr.img, 0, 0);
 	if (render_tools->img_rndr.img)
 		mlx_destroy_image(render_tools->xorg, render_tools->img_rndr.img);
@@ -286,46 +400,10 @@ int				render_scene(raycast *render_tools)
 	return (1);
 }
 
-/*
- typedef struct			instruments
-{
-	void				*xorg;
-	void				*winx;
-	double				pos[2];
-	int					map_pos[2];
-	int					map_size[2];
-	double				plane_vctr[2];
-	double				player_dir[2];
-	double				proj_vect[2];
-	double				xrender;
-	double				trvl_bound[2];
-	double				trvl_through[2];
-	double				strafe[2];
-	double				xrender_pos;
-	double				text_render_step;
-	double				yinit_render_pos;
-	int					bmp_text_pos[2];
-	int					hit_detect;
-	int					grid_step[2];
-	int					height;
-	int					width;
-	int					what_size;	
-	double				wall_dist;
-	int					wall_height;
-	int					wall_ceil;
-	int					wall_floor;
-	int					x_stripe;
-	int					**map;
-	int					texture_bit;
-	bitmap				clr_wall_draw;
-	bitmap				clr_general;
-	img_info			img_rndr;
-	bitmap_pic_info		texture;
-}						raycast;
- * */
-
 void	init_render_tools(map_conf src, raycast *dst)
 {
+	dst->width = src.width;
+	dst->height = src.height;
 	dst->pos[0] = src.player_pos[0];
 	dst->pos[1] = src.player_dos[1];
 	dst->player_dir[0] = src.player_dir[0];
@@ -341,8 +419,12 @@ void	init_render_tools(map_conf src, raycast *dst)
 	read_bitmap_file(src.so_txtr_path, &dst->south_txtr);
 	read_bitmap_file(src.ea_txtr_path, &dst->east_txtr);
 	read_bitmap_file(src.we_txtr_path, &dst->west_txtr);
+	read_bitmap_file(src.itm_txtr_path, &dst->item_txtr);
 	dst->clr_floor = src.fl_color;
-	dst->clr_ceil = src.cl_color;	
+	dst->clr_ceil = src.cl_color;
+	dst->item_count = src.item_count;
+	dst->item_pos = src.item_pos;
+	dst->z_buffer_tank = (double *)malloc(sizeof(double) * dst->width);
 }
 
 int		main(int argc, char *argv[])
