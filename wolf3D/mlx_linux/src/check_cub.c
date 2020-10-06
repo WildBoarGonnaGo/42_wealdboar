@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 23:24:18 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/03 12:53:33 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/05 03:05:11 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void            map_stat_init(map_conf *init)
     init->so_txtr_path = NULL;
     init->we_txtr_path = NULL;
     init->ea_txtr_path = NULL;
-    init->s_txtr_path = NULL;
+    init->itm_txtr_path = NULL;
     init->color = NULL;
     init->map = NULL;
 	init->map_grid = NULL;

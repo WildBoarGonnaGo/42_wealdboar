@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/12 10:36:26 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/05 01:09:50 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/06 02:15:30 by wealdboar        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 	void		*winx;
 	void		*rel_img;
 	void		*old_img;
-}*/				obj_gl;
+}				obj_gl;*/
 
 void    memreset(void **mem)
 {
@@ -59,13 +59,6 @@ void	print_matrix(raycast obj_gl)
 
 int				move_sight(int keycode, raycast *scene_chng)
 {
-	double	old_vect_x;
-	double	old_plane_x;
-	int		i;
-
-	i = 0;
-	old_vect_x = scene_chng->player_dir[0];
-	old_plane_x = scene_chng->plane_vctr[0];
 	if (keycode == 'w' || keycode == 'W')
 	{
 		scene_chng->pos[0] += (!scene_chng->map[(int)floor(scene_chng->pos[0] + WALK_DIST * 
@@ -73,7 +66,6 @@ int				move_sight(int keycode, raycast *scene_chng)
 		scene_chng->pos[1] += (!scene_chng->map[(int)floor(scene_chng->pos[0])][(int)floor(scene_chng->pos[1] 
 		+ WALK_DIST * scene_chng->player_dir[1])]) ? WALK_DIST * scene_chng->player_dir[1] : 0;
 		scene_chng->state = 1;
-		//printf("%d\n", keycode);
 	}
 	else if (keycode == 's' || keycode == 'S')
 	{
@@ -82,9 +74,8 @@ int				move_sight(int keycode, raycast *scene_chng)
 		scene_chng->pos[1] -= (!scene_chng->map[(int)floor(scene_chng->pos[0])][(int)floor(scene_chng->pos[1] 
 		- WALK_DIST * scene_chng->player_dir[1])]) ? WALK_DIST * scene_chng->player_dir[1] : 0;
 		scene_chng->state = 1;
-		//printf("%d\n", keycode);
 	}
-	else if (keycode == 'a' || keycode == 'A')
+	/*else if (keycode == 'a' || keycode == 'A')
 	{
 		scene_chng->player_dir[0] = scene_chng->player_dir[0] * cos(-DELTA_ANGL) - scene_chng->player_dir[1] * sin(-DELTA_ANGL);
 		scene_chng->player_dir[1] = old_vect_x * sin(-DELTA_ANGL) + scene_chng->player_dir[1] * cos(-DELTA_ANGL);
@@ -112,8 +103,44 @@ int				move_sight(int keycode, raycast *scene_chng)
 		memreset((void **)scene_chng->map);
 		mlx_destroy_window(scene_chng->xorg, scene_chng->winx);
 		exit(0);
+	}*/
+	return (1);
+}
+
+int				turn_sight(int keycode, raycast *scene_chng)
+{
+	double	old_vect_x;
+	double	old_plane_x;
+
+	old_vect_x = scene_chng->player_dir[0];
+	old_plane_x = scene_chng->plane_vctr[0];
+	if (keycode == 'a' || keycode == 'A')
+	{
+		scene_chng->player_dir[0] = scene_chng->player_dir[0] * cos(-DELTA_ANGL) - scene_chng->player_dir[1] * sin(-DELTA_ANGL);
+		scene_chng->player_dir[1] = old_vect_x * sin(-DELTA_ANGL) + scene_chng->player_dir[1] * cos(-DELTA_ANGL);
+		scene_chng->plane_vctr[0] = scene_chng->plane_vctr[0] * cos(-DELTA_ANGL) - scene_chng->plane_vctr[1] * sin(-DELTA_ANGL);
+		scene_chng->plane_vctr[1] = old_plane_x * sin(-DELTA_ANGL) + scene_chng->plane_vctr[1] * cos(-DELTA_ANGL);
+		scene_chng->state = 1;
 	}
-	printf("%d\n", keycode);
+	else if (keycode == 'd' || keycode == 'D')
+	{
+		scene_chng->player_dir[0] = scene_chng->player_dir[0] * cos(DELTA_ANGL) - scene_chng->player_dir[1] * sin(DELTA_ANGL);
+		scene_chng->player_dir[1] = old_vect_x * sin(DELTA_ANGL) + scene_chng->player_dir[1] * cos(DELTA_ANGL);
+		scene_chng->plane_vctr[0] = scene_chng->plane_vctr[0] * cos(DELTA_ANGL) - scene_chng->plane_vctr[1] * sin(DELTA_ANGL);
+		scene_chng->plane_vctr[1] = old_plane_x * sin(DELTA_ANGL) + scene_chng->plane_vctr[1] * cos(DELTA_ANGL);
+		scene_chng->state = 1;
+	}
+	/*else if (keycode == ESC)
+	{
+		mlx_clear_window(scene_chng->xorg, scene_chng->winx);
+		mlx_destroy_image(scene_chng->winx, scene_chng->img_rndr.img);
+		//mlx_destroy_image
+		while (i < scene_chng->map_size[0])
+			memreset((void **)*(scene_chng->map + i));
+		memreset((void **)scene_chng->map);
+		mlx_destroy_window(scene_chng->xorg, scene_chng->winx);
+		exit(0);
+	}*/
 	return (1);
 }
 
@@ -201,7 +228,7 @@ void			insertion_sort(raycast *obj_gl)
 	}
 }
 
-void			draw_item_text(int x, raycast *obj_gl)
+void			draw_item_text(raycast *obj_gl)
 {
 	int		i;
 	double	trans_factor;
@@ -214,47 +241,47 @@ void			draw_item_text(int x, raycast *obj_gl)
 	while (++i < obj_gl->item_count)
 	{	
 		obj_gl->new_cs_pos[0] = obj_gl->item_pos[i][0] - obj_gl->pos[0];
-		obj_gl->new_cs_pos[1] = obj_gl->item_pos[i][1] - obj_gl.pos[1];
+		obj_gl->new_cs_pos[1] = obj_gl->item_pos[i][1] - obj_gl->pos[1];
 		old_value = obj_gl->new_cs_pos[0];
-		obj_gl->new_cs_pos[0] = trans_factor * (obj_gl.new_cs_pos[0] * obj_gl.player_dir[1]
-		- obj_gl->new_cs_pos[1] * obj_gl.player_dir[0]);
-		obj_gl->new_cs_pos[1] = trans_factor * (-old_value * obj_gl.plane_vctr[1]
-		+ obj_gl->new_cs_pos[1] * obj_gl.plane_vctr[0]);
-		obj_gl->pxl_itm_xpos = (int)(obj_gl.width * (1 + obj_gl.new_cs_pos[0] / obj_gl.new_cs_pos[1]) / 2);
-		obj_gl.wall_height = (int)abs(obj_gl.height / obj_gl.new_cs_pos[1]);
-		obj_gl.wall_ceil = (((obj_gl.height - obj_gl.wall_height) / 2) < 0) ? 0 :
-		(obj_gl.height - obj_gl.wall_height) / 2;
-		obj_gl.wall_floor = (((obj_gl.height + obj_gl.wall_height) / 2) > obj_gl.height - 1)
-		? obj_gl.height - 1: (obj_gl.height + obj_gl.wall_height) / 2; 
-		obj_gl.txtr_itm_wratio = obj_gl.wall_height;
-		obj_gl.xrender_itm_strt = (((obj_gl.pxl_itm_xpos - obj_gl.txtr_itm_wratio) / 2) < 0) ? 0 :
-		(obj_gl.pxl_itm_xpos - obj_gl.txtr_itm_wratio) / 2;
-		obj_gl.xrender_itm_end = (((obj_gl.pxl_itm_xpos + obj_gl.txtr_itm_wratio) / 2)
-		> obj_gl.width - 1) ? obj_gl.width - 1 : (obj_gl.height + obj_gl.wall_height) / 2;
-		obj_gl.x_stripe = obj_gl.xrender_itm_strt;
-		obj_gl.text_render_step = (double)obj_gl.item_txtr.height / obj_gl.wall_height;
-		obj_gl.yinit_render_pos = (obj_gl.wall_ceil - ((obj_gl.height - obj_gl.wall_height) / 2))
-		old_value = obj_gl.yinit_render_pos;
-		* obj_gl.text_render_step;
-		while (obj_gl.x_stripe < obj_gl.xrender_itm_end)
+		obj_gl->new_cs_pos[0] = trans_factor * (obj_gl->new_cs_pos[0] * obj_gl->player_dir[1]
+		- obj_gl->new_cs_pos[1] * obj_gl->player_dir[0]);
+		obj_gl->new_cs_pos[1] = trans_factor * (-old_value * obj_gl->plane_vctr[1]
+		+ obj_gl->new_cs_pos[1] * obj_gl->plane_vctr[0]);
+		obj_gl->pxl_itm_xpos = (int)(obj_gl->width * (1 + obj_gl->new_cs_pos[0] / obj_gl->new_cs_pos[1]) / 2);
+		obj_gl->wall_height = (int)abs(obj_gl->height / obj_gl->new_cs_pos[1]);
+		obj_gl->wall_ceil = (((obj_gl->height - obj_gl->wall_height) / 2) < 0) ? 0 :
+		(obj_gl->height - obj_gl->wall_height) / 2;
+		obj_gl->wall_floor = (((obj_gl->height + obj_gl->wall_height) / 2) > obj_gl->height - 1)
+		? obj_gl->height - 1 : (obj_gl->height + obj_gl->wall_height) / 2; 
+		obj_gl->txtr_itm_wratio = obj_gl->wall_height;
+		obj_gl->xrender_itm_strt = ((obj_gl->pxl_itm_xpos - obj_gl->txtr_itm_wratio / 2) < 0) ? 0 :
+		obj_gl->pxl_itm_xpos - obj_gl->txtr_itm_wratio / 2;
+		obj_gl->xrender_itm_end = ((obj_gl->pxl_itm_xpos + obj_gl->txtr_itm_wratio / 2)
+		> obj_gl->width - 1) ? obj_gl->width - 1 : obj_gl->height + obj_gl->wall_height / 2;
+		obj_gl->x_stripe = obj_gl->xrender_itm_strt;
+		obj_gl->text_render_step = (double)obj_gl->item_txtr.height / obj_gl->wall_height;
+		obj_gl->yinit_render_pos = (obj_gl->wall_ceil - ((obj_gl->height - obj_gl->wall_height) / 2))
+		* obj_gl->text_render_step;
+		old_value = obj_gl->yinit_render_pos;
+		while (obj_gl->x_stripe < obj_gl->xrender_itm_end)
 		{
-			obj_gl.xrender = (obj_gl.x_stripe - ((obj_gl.pxl_itm_xpos - obj_gl.txtr_itm_wratio) / 2))
-			* obj_gl.item_txtr.width / obj_gl.txtr_itm_wratio;
-			obj_gl.bmp_text_pos[0] = (int)xrender & (obj_gl.item_txtr.width - 1);
-			if (obj_gl.new_cs_pos[1] > 0 && x_stripe > 0 && x_stripe < obj_gl.width
-			&& obj_gl.z_buffer_tank[x_stripe] > obj_gl.new_cs_pos[1])
-				while (obj_gl.wall_ceil < obj_gl.wall_floor)
+			obj_gl->xrender = (obj_gl->x_stripe - (obj_gl->pxl_itm_xpos - obj_gl->txtr_itm_wratio / 2))
+			* obj_gl->item_txtr.width / obj_gl->txtr_itm_wratio;
+			obj_gl->bmp_text_pos[0] = (int)obj_gl->xrender & (obj_gl->item_txtr.width - 1);
+			if (obj_gl->new_cs_pos[1] > 0 && obj_gl->x_stripe > 0 && 
+			obj_gl->x_stripe < obj_gl.width && obj_gl->z_buffer_tank[x_stripe] > obj_gl->new_cs_pos[1])
+				while (obj_gl->wall_ceil < obj_gl->wall_floor)
 				{
-					obj_gl.bmp_text_pos[1] = (int)obj_gl.yinit_render_pos & (obj_gl.item_txtr.height - 1);
-					obj_gl.clr_general._clrfull = *(unsigned int *)(obj_gl.item_txtr.pyxel_map + 
-					obj_gl.item_txtr.unpadded_row * obj_gl.bmp_text_pos[1] +
-					obj_gl.bmp_text_pos[0] * obj_gl.item_txtr.bites_per_pixel / 8);
-					*(unsigned int *)(obj_gl.img_info.addr + (obj_gl.wall_ceil++) * obj_gl.img_info.line_size + 
-					obj_gl.x_stripe * obj_gl.img_info.bits_per_pixel / 8) = obj_gl.clr_general._clrfull;
-					obj_gl.yinit_render_pos += obj_gl.text_render_step;
+					obj_gl->bmp_text_pos[1] = (int)obj_gl->yinit_render_pos & (obj_gl.item_txtr.height - 1);
+					obj_gl->clr_general._clrfull = *(unsigned int *)(obj_gl->item_txtr.pyxel_map + 
+					obj_gl->item_txtr.unpadded_row * obj_gl->bmp_text_pos[1] +
+					obj_gl->bmp_text_pos[0] * obj_gl->item_txtr.bites_per_pixel / 8);
+					*(unsigned int *)(obj_gl->img_info.addr + (obj_gl->wall_ceil++) * obj_gl->img_info.line_size + 
+					obj_gl->x_stripe * obj_gl->img_info.bits_per_pixel / 8) = obj_gl->clr_general._clrfull;
+					obj_gl->yinit_render_pos += obj_gl->text_render_step;
 				}
-			++obj_gl.x_stripe;
-			obj_gl.yinit_render_pos = old_value;
+			++obj_gl->x_stripe;
+			obj_gl->yinit_render_pos = old_value;
 		}
 	}
 }
@@ -392,7 +419,7 @@ int				render_scene(raycast *render_tools)
 		//line_init(&vert_draw, x, render_tools->wall_ceil, x, render_tools->wall_floor);
 		//line_output(&render_tools->img_rndr, vert_draw, render_tools->clr_wall_draw._clrfull);
 	}
-
+	draw_item_text(render_tools);
 	mlx_put_image_to_window(render_tools->xorg, render_tools->winx, render_tools->img_rndr.img, 0, 0);
 	if (render_tools->img_rndr.img)
 		mlx_destroy_image(render_tools->xorg, render_tools->img_rndr.img);
