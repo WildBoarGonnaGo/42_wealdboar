@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 01:37:56 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/04 22:27:56 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/06 21:51:46 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,17 @@
 
 # define STRT_DIR 2 * M_PI
 # define FOV_PROJ_LEN 0.6494075931975106
-
+# define DELTA_ANGL 0.5 * M_PI / 180
+# define WALK_DIST 0.04
+# define ESC 65307
+# define LEFT_ARROW 65361
+# define RIGHT_ARRROW 65363
 
 typedef struct  data
 {
     int         file_dscrptr;
     int         width;
     int         height;
-    int         resolution;
     bitmap		fl_color;
     bitmap		cl_color;
     int         map_stat;

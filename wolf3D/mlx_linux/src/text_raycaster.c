@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/12 10:36:26 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/06 02:15:30 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/10/06 22:39:18 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,6 @@
 #include "../include/colors.h"
 #include "../include/wolf3D.h"
 #include <stdio.h>
-
-#define	DELTA_ANGL 0.5 * M_PI / 180
-#define	WALK_DIST 0.04
-#define ESC 65307
-#define KEY_PRESS_EVENT 1L<<0
-#define KEY_PRESS_IDENT 2
 
 /*typedef struct	mlx_struct
 {
@@ -57,7 +51,7 @@ void	print_matrix(raycast obj_gl)
 
 /*RAYCASTING ALGORITHM*/
 
-int				move_sight(int keycode, raycast *scene_chng)
+int				move_straight(int keycode, raycast *scene_chng)
 {
 	if (keycode == 'w' || keycode == 'W')
 	{
@@ -107,6 +101,41 @@ int				move_sight(int keycode, raycast *scene_chng)
 	return (1);
 }
 
+int				move_strafe(int keycode, raycast *scene_chng)
+{
+	if (keycode == 'd' || keycode == 'D')
+	{
+		scene_chng->pos[0] += (!scene_chng->map[(int)floor(scene_chng->pos[0] + WALK_DIST * 
+		scene_chng->player_dir[1])][(int)floor(scene_chng->pos[1])]) ? WALK_DIST * scene_chng->player_dir[1] : 0;
+		scene_chng->pos[1] += (!scene_chng->map[(int)floor(scene_chng->pos[0])][(int)floor(scene_chng->pos[1] 
+		+ WALK_DIST * scene_chng->player_dir[0])]) ? WALK_DIST * scene_chng->player_dir[0] : 0;
+		scene_chng->state = 1;
+	}
+	else if (keycode == 'a' || keycode == 'A')
+	{
+		scene_chng->pos[0] -= (!scene_chng->map[(int)floor(scene_chng->pos[0] - WALK_DIST * 
+		scene_chng->player_dir[1])][(int)floor(scene_chng->pos[1])]) ? WALK_DIST * scene_chng->player_dir[1] : 0;
+		scene_chng->pos[1] -= (!scene_chng->map[(int)floor(scene_chng->pos[0])][(int)floor(scene_chng->pos[1] 
+		- WALK_DIST * scene_chng->player_dir[0])]) ? WALK_DIST * scene_chng->player_dir[0] : 0;
+		scene_chng->state = 1;
+	}
+}
+
+int				game_exit(int keycode, *raycast)
+{
+	if (keycode == ESC)
+	{
+		mlx_clear_window(scene_chng->xorg, scene_chng->winx);
+		mlx_destroy_image(scene_chng->winx, scene_chng->img_rndr.img);
+		while (i < scene_chng->map_size[0])
+			memreset((void **)&(scene_chng->map + i));
+		memreset((void **)scene_chng->map);
+		mlx_destroy_window(scene_chng->xorg, scene_chng->winx);
+		exit(0);
+	}
+	return (1);
+}
+
 int				turn_sight(int keycode, raycast *scene_chng)
 {
 	double	old_vect_x;
@@ -114,7 +143,7 @@ int				turn_sight(int keycode, raycast *scene_chng)
 
 	old_vect_x = scene_chng->player_dir[0];
 	old_plane_x = scene_chng->plane_vctr[0];
-	if (keycode == 'a' || keycode == 'A')
+	if (keycode == LEFT_ARROW)
 	{
 		scene_chng->player_dir[0] = scene_chng->player_dir[0] * cos(-DELTA_ANGL) - scene_chng->player_dir[1] * sin(-DELTA_ANGL);
 		scene_chng->player_dir[1] = old_vect_x * sin(-DELTA_ANGL) + scene_chng->player_dir[1] * cos(-DELTA_ANGL);
@@ -122,7 +151,7 @@ int				turn_sight(int keycode, raycast *scene_chng)
 		scene_chng->plane_vctr[1] = old_plane_x * sin(-DELTA_ANGL) + scene_chng->plane_vctr[1] * cos(-DELTA_ANGL);
 		scene_chng->state = 1;
 	}
-	else if (keycode == 'd' || keycode == 'D')
+	else if (keycode == RIGHT_ARRROW)
 	{
 		scene_chng->player_dir[0] = scene_chng->player_dir[0] * cos(DELTA_ANGL) - scene_chng->player_dir[1] * sin(DELTA_ANGL);
 		scene_chng->player_dir[1] = old_vect_x * sin(DELTA_ANGL) + scene_chng->player_dir[1] * cos(DELTA_ANGL);
@@ -130,17 +159,6 @@ int				turn_sight(int keycode, raycast *scene_chng)
 		scene_chng->plane_vctr[1] = old_plane_x * sin(DELTA_ANGL) + scene_chng->plane_vctr[1] * cos(DELTA_ANGL);
 		scene_chng->state = 1;
 	}
-	/*else if (keycode == ESC)
-	{
-		mlx_clear_window(scene_chng->xorg, scene_chng->winx);
-		mlx_destroy_image(scene_chng->winx, scene_chng->img_rndr.img);
-		//mlx_destroy_image
-		while (i < scene_chng->map_size[0])
-			memreset((void **)*(scene_chng->map + i));
-		memreset((void **)scene_chng->map);
-		mlx_destroy_window(scene_chng->xorg, scene_chng->winx);
-		exit(0);
-	}*/
 	return (1);
 }
 
@@ -460,11 +478,13 @@ int		main(int argc, char *argv[])
 	raycast				scene_rndr;
 	int			pos[2];
 
+
 	if (argc != 2)
 	{
 		perror("Error\n");
 		return (0);
 	}
+	map_stat_init(&cub_file_info);
 	if (!(cub_file_info = map_init_input(argv[1])))
 	{
 		perror("Error\n");
@@ -477,42 +497,16 @@ int		main(int argc, char *argv[])
 		perror("Error\n");
 		return (-1);
 	}
-		
-	pos[0] = 0;
-	pos[1] = -1;
-	scene_rndr.player_dir[0] = 1;
-	scene_rndr.player_dir[1] = 0;
-	scene_rndr.plane_vctr[0] = 0;
-	scene_rndr.plane_vctr[1] = 0.66;
-	scene_rndr.img_rndr.img = NULL;
-	scene_rndr.img_rndr.addr = NULL;
 	scene_rndr.xorg = mlx_init();
 	scene_rndr.winx = mlx_new_window(scene_rndr.xorg, scene_rndr.width, scene_rndr.height, "Maze Raycaster");
 	/*MAP INIZIALIZATION*/
-	read_bitmap_file("/home/lchantel/texture_pack/wall_text_10_512.bmp", &scene_rndr.texture);
-	scene_rndr.map = (int **)malloc(sizeof(int *) * test_map.map_size[0]);
-	/*while (pos[0] < test_map.map_size[0])
-		*(scene_rndr.map + pos[0]++) = (int *)malloc(sizeof(int) * test_map.map_size[1]);
-	pos[0] = -1;
-	while (++pos[0] < test_map.map_size[0])
-	{
-		if (!pos[0] || pos[0] == test_map.map_size[0] - 1)
-		{
-			while (++pos[1] < test_map.map_size[1])
-				*(*(scene_rndr.map + pos[0]) + pos[1]) = 1;
-			pos[1] = -1;
-			continue ;
-		}
-		while (++pos[1] < test_map.map_size[1])
-				*(*(scene_rndr.map + pos[0]) + pos[1]) = (!pos[1] || pos[1] == 14) ? 
-				1 : 0;
-		pos[1] = -1;
-	}*/
+	init_render_tools(cub_file_info, &scene_rndr);
 	scene_rndr.map_size[0] = test_map.map_size[0];
 	scene_rndr.map_size[1] = test_map.map_size[1];
-	set_color(&scene_rndr.clr_general, 128, 47, 225, 185);
-	mlx_hook(scene_rndr.winx, 2, 1L<<0, move_sight, &scene_rndr);
+	mlx_hook(scene_rndr.winx, 2, 1L<<0, move_straight, &scene_rndr);
+	mlx_hook(scene_rndr.winx, 2, 1L<<0, move_strafe, &scene_rndr);
+	mlx_hook(scene_rndr.winx, 2, 1L<<0, turn_sight, &scene_rndr);
+	mlx_hook(scene_rndr.winx, 2, 1L<<0, game_exit, &scene_rndr);
 	mlx_loop_hook(scene_rndr.xorg, render_scene, &scene_rndr);
-	
 	mlx_loop(scene_rndr.xorg);
 }

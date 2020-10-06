@@ -1,6 +1,11 @@
 R 800 600
-F 220,100,0
-C 225,30,0
+NO ../texture_pack/wall_text_9_512.bmp
+SO ../texture_pack/wall_text_11_512.bmp
+EA ../texture_pack/wall_text_10_512.bmp
+WE ../texture_pack/wall_text_12_512.bmp
+S ../texture_pack/terminal_frame_1024x512.bmp
+F 49,83,78
+C 65,82,50
 
         1111111111111111111111111
         1000000000110000000000001

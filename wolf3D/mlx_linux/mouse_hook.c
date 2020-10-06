@@ -6,7 +6,7 @@
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 05:32:08 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/06 05:59:38 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/10/06 20:59:12 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ int				get_mpos(int button, int x, int y/*, _glxinfo *obj*/)
 	exit(0);*/
 }
 
+int				get_key(int	key)
+{
+	return (printf("key code: %d\n", key));
+}
+
 int				enter_window()
 {
 	return(printf("Enetered window\n"));
@@ -61,7 +66,7 @@ int				main(void)
 	mlx_mouse_hook(obj.winx, get_mpos, &obj);
 	mlx_hook(obj.winx, 7, 1L<<4, enter_window, &obj);
 	mlx_hook(obj.winx, 8, 1L<<5, leave_window, &obj);	
-	//mlx_key_hook(obj.winx, close_window, &obj);
+	mlx_key_hook(obj.winx, get_key, &obj);
 	mlx_hook(obj.winx, 17, 1Lu<<17u, close_window, &obj);
 	mlx_loop(obj.xorg);	
 }

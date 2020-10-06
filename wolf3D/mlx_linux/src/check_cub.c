@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 23:24:18 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/05 03:05:11 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/10/06 22:02:56 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,17 @@ void            map_stat_init(map_conf *init)
     init->file_dscrptr = 0;
     init->width = 0;
     init->height = 0;
-    init->resolution = 0;
-    init->flr_color._clrfull = 0;
-    init->ceil_color._clrfull = 0;
+    init->fl_color._clrfull = 0;
+    init->cl_color._clrfull = 0;
     init->map_stat = 0;
     init->slot = 0;
     init->info_handle = NULL;
+	init->player_pos[0] = 0;
+	init->player_pos[1] = 0;
+	init->player_dir[0] = 0;
+	init->player_dir[1] = 0;
+	init->plane_direct[0] = 0;
+	init->plane_direct[1] = 0;
     init->no_txtr_path = NULL;
     init->so_txtr_path = NULL;
     init->we_txtr_path = NULL;
