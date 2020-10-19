@@ -6,13 +6,13 @@
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 03:30:25 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/09/24 03:36:12 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/10/18 21:27:30 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COLORS_H
 # define COLORS_H
-# define BITMAP_PIC_SIGNATURE 0x424D
+# define BITMAP_PIC_SIGNATURE "BM"
 # define BITMAP_PIX_PIC_OFFSET 0x0A
 
 #include <unistd.h>
@@ -21,20 +21,20 @@
 #include <sys/stat.h>
 #include <stdlib.h>
 
-typedef struct			colors
+typedef struct		s_bitmap
 {
-	unsigned long		trnsp;
-	unsigned long		red;
-	unsigned long		green;
-	unsigned long		blue;
-	unsigned long		_clrfull;
-}						bitmap;
+	unsigned long	trnsp;
+	unsigned long	red;
+	unsigned long	green;
+	unsigned long	blue;
+	unsigned long	clrfull;
+}					t_bitmap;
 
-typedef struct		sign_info
+typedef struct		s_bitmap_pic_info
 {
 	unsigned short	fd;
 	unsigned short	indx;
-	unsigned short	frmt_signature; //115
+	char			frmt_signature[2];
 	unsigned int	file_size;
 	unsigned short	reserve_1;
 	unsigned short	reserve_2;
@@ -50,21 +50,26 @@ typedef struct		sign_info
 	unsigned int	ypix_per_meter;
 	unsigned int	clr_table;
 	unsigned int	clr_sockets;
+	unsigned int	red_chnl;
+	unsigned int	green_chnl;
+	unsigned int	blue_chnl;
+	unsigned int	alpha_chnl;
+	unsigned int	cstype;
 	unsigned int	padded_row;
 	unsigned int	unpadded_row;
 	unsigned int	img_size;	
 	unsigned char	*pyxel_map;
-}					bitmap_pic_info;
+}					t_bitmap_pic_info;
 
 
-int		get_bitmaps(bitmap vals);
-int		get_trcode(bitmap vals);
-int		get_rcode(bitmap vals);
-int		get_gcode(bitmap vals);
-int		get_bcode(bitmap vals);
-bitmap	add_shade(double dist, bitmap vals);
-void	set_color(bitmap *clr, unsigned long trnsp, unsigned long red,
-		unsigned long green, unsigned long blue);
-int		read_bitmap_file(char *filename, bitmap_pic_info *img_info);
+int					get_bitmaps(t_bitmap vals);
+int					get_trcode(t_bitmap vals);
+int					get_rcode(t_bitmap vals);
+int					get_gcode(t_bitmap vals);
+int					get_bcode(t_bitmap vals);
+t_bitmap			add_shade(double dist, t_bitmap vals);
+t_bitmap			set_color(unsigned long trnsp, unsigned long red,
+					unsigned long green, unsigned long blue);
+int					read_bitmap_file(char *filename, t_bitmap_pic_info *img_info);
 
 #endif

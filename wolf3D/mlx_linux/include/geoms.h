@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 23:15:34 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/02 00:09:28 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/16 14:50:07 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,27 +90,27 @@ typedef struct	geom_5
 	double		slope;
 }				_ellipse;
 
-typedef struct	bit_struct
+typedef struct	s_img_info
 {
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_size;
 	int		endian;
-}				img_info;
+}				t_img_info;
 
-void			_mlx_pixel_put(img_info *stdput, int x, int y, unsigned int color);
+void			_mlx_pixel_put(t_img_info *stdput, int x, int y, unsigned int color);
 _line			line_init(int x_0, int y_0, int x_1, int y_1);
-void			line_output(img_info *line_img, _line trgt, unsigned int color);
-void			crcl_output(img_info *crcl, _crcl trgt, unsigned int color);
-void			poly_init( _poly *init, int s_wid, int edge_num, int cent_xy[2]);
-void			poly_output(img_info *poly_img, _poly trgt, unsigned int color, 
+void			line_output(t_img_info *line_img, _line trgt, unsigned int color);
+void			crcl_output(t_img_info *crcl, _crcl trgt, unsigned int color);
+void			poly_init(_poly *init, int s_wid, int edge_num, int cent_xy[2]);
+void			poly_output(t_img_info *poly_img, _poly trgt, unsigned int color, 
 				double alpha_init);
 void			arc_init(_arc *init, double xc, double yc, double radius,
 				double alpha_strt, double alpha_end);
-void			arc_output(img_info *arc, _arc trgt, unsigned int color);
+void			arc_output(t_img_info *arc, _arc trgt, unsigned int color);
 void			ellipse_init(_ellipse *init, double alpha_strt, double alpha_arc,
 				double l_radius, double b_radius, double xc, double yc, double slope);
-void			std_ellipse_arc(img_info *ellipse, _ellipse trgt, unsigned int color);
+void			std_ellipse_arc(t_img_info *ellipse, _ellipse trgt, unsigned int color);
 
 #endif

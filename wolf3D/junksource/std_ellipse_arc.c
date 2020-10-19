@@ -6,7 +6,7 @@
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/30 23:17:19 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/09/02 04:15:57 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/10/16 14:34:00 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void		ellipse_init(_ellipse *init, double alpha_strt, double alpha_arc,
 	init->slope = slope * M_PI / 180;
 }
 
-void		std_ellipse_arc(img_info *ellipse, _ellipse trgt, unsigned int color)
+void		std_ellipse_arc(t_img_info *ellipse, _ellipse trgt, unsigned int color)
 {
 	double	dalpha;
 	double	dr;

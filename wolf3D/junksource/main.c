@@ -6,31 +6,18 @@
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/31 03:05:23 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/09/02 05:59:29 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/10/18 21:28:53 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "geoms.h"
-#include "../colors.h"
-
-void	scale_frog(img_info *img, double scale);
+#include "./include/maze3d.h"
 
 int	main(void)
 {
-	void		*xorg;
-	void		*winx;
-	//_ellipse	fig;
-	img_info	fig_info;
-	//bitmap		color;
-
-	xorg = mlx_init();
-	winx = mlx_new_window(xorg, 800, 600, "ellipse test");
-	/*ellipse_init(&fig, 0, 360.0, 100, 175, 400, 300, 45);
-	set_color(&color, 159, 109, 254, 84);
-	fig_info.img = mlx_new_image(xorg, 800, 600);
-	std_ellipse_arc(&fig_info, fig, color._clrfull);*/
-	fig_info.img = mlx_new_image(xorg, 800, 600);
-	scale_frog(&fig_info, 8);
-	mlx_put_image_to_window(xorg, winx, fig_info.img, 0, 0);
-	mlx_loop(xorg);
+	//t_bitmap_pic_info	pic_1;
+	t_bitmap_pic_info	pic_2;
+	/*int		read_bitmap_file(char *filename, bitmap_pic_info *img_info);*/
+	//read_bitmap_file("./frst_screen.bmp", &pic_1);
+	read_bitmap_file("/home/lchantel/Desktop/frst_screen_0.bmp", &pic_2);
+	return (0);
 }

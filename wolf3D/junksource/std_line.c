@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 23:19:19 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/02 03:33:18 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/10/16 14:33:19 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ _line			line_init(int x_0, int y_0, int x_1, int y_1)
 	return (init);
 }
 
-void			line_output(img_info *line_img, _line trgt, unsigned int color)
+void			line_output(t_img_info *line_img, _line trgt, unsigned int color)
 {
 	int pyx;
 
 	pyx = 0;
-	trgt.alpha = (trgt.x_end == trgt.x_strt) ? M_PI / 2 + (trgt.y_end < trgt.y_strt) :
+	trgt.alpha = (trgt.x_end == trgt.x_strt) ? M_PI / 2 + (trgt.y_end < trgt.y_strt) * M_PI :
 	atan2((double)(trgt.y_end - trgt.y_strt) , (double)(trgt.x_end - trgt.x_strt));
 	/*if (trgt.alpha == M_PI / 2 && trgt.y_end < trgt.y_strt)
 	{

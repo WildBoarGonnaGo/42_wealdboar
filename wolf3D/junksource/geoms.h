@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 23:15:34 by lchantel          #+#    #+#             */
-/*   Updated: 2020/09/02 04:34:41 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/10/02 00:09:28 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ typedef struct	bit_struct
 }				img_info;
 
 void			_mlx_pixel_put(img_info *stdput, int x, int y, unsigned int color);
-void			line_init(_line *init, int x_0, int y_0, int x_1, int y_1);
+_line			line_init(int x_0, int y_0, int x_1, int y_1);
 void			line_output(img_info *line_img, _line trgt, unsigned int color);
 void			crcl_output(img_info *crcl, _crcl trgt, unsigned int color);
 void			poly_init( _poly *init, int s_wid, int edge_num, int cent_xy[2]);

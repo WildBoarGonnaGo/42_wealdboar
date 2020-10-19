@@ -6,13 +6,13 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 23:27:32 by lchantel          #+#    #+#             */
-/*   Updated: 2020/08/24 21:59:53 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/10/16 14:33:42 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <geoms.h>
 
-void			crcl_output(img_info *crcl, _crcl trgt, unsigned int color)
+void			crcl_output(t_img_info *crcl, _crcl trgt, unsigned int color)
 {
 	if (trgt.alpha != 360)
 	{
