@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/17 07:57:43 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/17 17:51:29 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/20 11:13:52 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ int				render_scene(t_raycast *render_tools)
 	draw_item_text(render_tools);
 	if (render_tools->save_option)
 		return (save_state(render_tools));
-	mlx_put_image_to_window(render_tools->xorg, render_tools->winx, render_tools->img_rndr.img, 0, 0);
+	mlx_put_image_to_window(render_tools->xorg, render_tools->winx,
+	render_tools->img_rndr.img, 0, 0);
 	if (render_tools->img_rndr.img)
 		mlx_destroy_image(render_tools->xorg, render_tools->img_rndr.img);
 	return (1);

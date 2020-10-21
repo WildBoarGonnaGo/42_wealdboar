@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 00:34:39 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/19 12:12:44 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/21 15:57:41 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,19 @@ void	ns_case(t_map_conf *obj, int dir_factor)
 
 void	new_item(t_map_conf *obj, int *pos)
 {
-	obj->item_pos = (double **)memrealloc(obj->item_pos, sizeof(double *) * obj->item_count, sizeof(double *));
+	int	i;
+
+	i = -1;
+	if (!(obj->item_pos = (double **)memrealloc(obj->item_pos, sizeof(double *)
+	* obj->item_count, sizeof(double *))))
+	{
+		map_conf_reset(obj);
+		while (++i < obj->item_count)
+			memreset((void **)(obj->item_pos + i));
+		memreset((void **)&obj->item_pos);
+		ft_putstr_fd("Error.\nDynamic memory allocation error.\n", 2);
+		exit (1);
+	}
 	*(obj->item_pos + obj->item_count) = (double *)malloc(sizeof(double) * 3);
 	**(obj->item_pos + obj->item_count) = (double)pos[0] + 0.5;
 	*(*(obj->item_pos + obj->item_count++) + 1) = (double)pos[1] + 0.5;

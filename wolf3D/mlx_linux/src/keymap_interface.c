@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/15 16:52:13 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/16 22:54:25 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/21 07:45:35 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,10 @@ void			player_turn(t_raycast *scene_chng, int dir_factor)
 
 void			esc_pgrm_exit(t_raycast *scene_chng)
 {
-		int	i;
-
-		mlx_clear_window(scene_chng->xorg, scene_chng->winx);
-		mlx_destroy_window(scene_chng->xorg, scene_chng->winx);
-		i = -1;	
-		while (++i < scene_chng->map_size[0])
-			memreset((void **)&(*(scene_chng->map + i)));
-		memreset((void **)scene_chng->map);
-		memreset((void **)&scene_chng->z_buffer_tank);
-		exit(0);
+	mlx_clear_window(scene_chng->xorg, scene_chng->winx);
+	mlx_destroy_window(scene_chng->xorg, scene_chng->winx);
+	raycast_exit_proc_fin(scene_chng);
+	exit(0);
 }
 
 int				keymap_interface(int keycode, t_raycast *scene_chng)

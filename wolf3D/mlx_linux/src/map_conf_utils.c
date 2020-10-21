@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 07:21:15 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/18 08:47:03 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/21 16:00:21 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,15 @@ int             check_filepath(char *path)
 {
     int fd;
 
-    if ((fd = open(path, O_RDONLY)) < 0)
+    if ((fd = open(path, O_RDWR)) < 0)
     {
-		perror("Error\n");
-        perror(strerror(errno));
-        exit(0);
+		ft_putstr_fd("Error.\nThere is no such file, or it's directory.\n", 2);
+        return (0);
     }
     if (close(fd) < 0)
     {
-		perror("Error\n");
-        perror(strerror(errno));
-        exit(0);
+		ft_putstr_fd("Error.\nFile stream shutdown error.\n", 2);
+        return (0);
     }
     return (1);
 }

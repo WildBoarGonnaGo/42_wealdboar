@@ -6,7 +6,7 @@
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 03:30:25 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/18 21:27:30 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/20 18:52:56 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,5 @@ int					get_bcode(t_bitmap vals);
 t_bitmap			add_shade(double dist, t_bitmap vals);
 t_bitmap			set_color(unsigned long trnsp, unsigned long red,
 					unsigned long green, unsigned long blue);
-int					read_bitmap_file(char *filename, t_bitmap_pic_info *img_info);
 
 #endif

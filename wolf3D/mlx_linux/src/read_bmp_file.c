@@ -6,11 +6,12 @@
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 04:33:33 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/19 15:32:16 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/21 08:04:36 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/colors.h"
+#include "../include/maze3d.h"
 
 void	read_bmp_data(t_bitmap_pic_info *img_info)
 {
@@ -33,18 +34,21 @@ void	read_bmp_data(t_bitmap_pic_info *img_info)
 	read(img_info->fd, &img_info->clr_sockets, 4);
 }
 
-int	read_bitmap_file(char *filename, t_bitmap_pic_info *img_info)
+int	read_bitmap_file(char *filename, t_bitmap_pic_info *img_info,
+	t_map_conf *cub_stat, t_raycast *obj_gl)
 {
 	char			pos[2048];
 
 	img_info->indx = 0;
+	check_bmp_ext(filename, obj_gl, cub_stat);
 	if ((img_info->fd = open(filename, O_RDONLY)) < 0)
 		return (0);
 	read_bmp_data(img_info);
 	img_info->padded_row = (unsigned int)(img_info->width +
 	((4 - img_info->width % 4) & 0x3)) * img_info->bites_per_pixel / 8;
 	img_info->unpadded_row = img_info->width * img_info->bites_per_pixel / 8;
-	img_info->pyxel_map = (unsigned char *)malloc(img_info->size_image);
+	if (!(img_info->pyxel_map = (unsigned char *)malloc(img_info->size_image)))
+		return (0);
 	while (img_info->indx < img_info->height)
 	{
 		read(img_info->fd, img_info->pyxel_map + (img_info->height - img_info->indx - 1)
