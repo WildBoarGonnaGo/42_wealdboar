@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 00:34:39 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/22 01:15:48 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/23 01:55:39 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	map_trans_process(t_map_conf *obj, int *pos)
 		*(*(obj->map_grid + pos[0]) + pos[1]) = 1;
 	else if (*(*(obj->map + pos[0]) + (obj->map_size[1] - 1 - pos[1])) == '2')
 		new_item(obj, pos);
-	else
+	else if (*(*))
 		*(*(obj->map_grid + pos[0]) + pos[1]) = 0;
 }
 

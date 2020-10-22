@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 08:16:11 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/22 02:20:27 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/23 00:59:53 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ int		write_bmp_file(char *filename, t_raycast obj_gl)
 	pos[1] = -1;
 	color = 0;
 	bmp.indx = 0;
-	if ((bmp.fd = open(filename, O_RDWR | O_TRUNC |
-	O_CREAT, S_IREAD | S_IRGRP | S_IROTH)) < 0)
+	if ((bmp.fd = open(filename, O_TRUNC |
+	O_CREAT | O_RDWR, S_IRWXU | S_IRGRP | S_IROTH)) < 0)
 		return (-1);
 	write_bmp_init(&bmp, obj_gl);
 	write(bmp.fd, &bmp.frmt_signature[0], 1);

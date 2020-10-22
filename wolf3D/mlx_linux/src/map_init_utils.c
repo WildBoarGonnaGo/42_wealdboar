@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 18:16:33 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/22 01:53:23 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/23 01:32:11 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void			check_if_texture_ex(char *filepath, char **texture,
 			memreset((void **)&cub_stat->info_handle);
 			memreset((void **)&cub_stat->arr_purge);
 			ft_putstr_fd("Error.\nDynamic memory allocation error.\n", 2);
+			close(cub_stat->file_dscrptr);
 			exit(-1);
 		}
 		cub_stat->map_stat |= (1 << offset);
@@ -42,14 +43,16 @@ void			color_define(t_map_conf *cub_stat, t_bitmap *color,
 	i = -1;
 	if (!(cub_stat->color = ft_split(*(cub_stat->info_handle + 1), ',')))
 		color_split_error(cub_stat);
-	if ((cub_stat->arr_size = check_arr_size(cub_stat->info_handle)) < 2)
+	if ((cub_stat->arr_size = check_arr_size(cub_stat->info_handle)) < 2
+	|| !*cub_stat->color || !*(cub_stat->color + 1) || !*(cub_stat->color + 2))
 	{
 		memreset((void **)&cub_stat->arr_purge);
 		while (++i < cub_stat->arr_size)
 			memreset((void **)(cub_stat->info_handle + i));
 		memreset((void **)&cub_stat->info_handle);
-		ft_putstr_fd("Error.\nNot enough color-chanels data", 2);
-		ft_putstr_fd("to compute further.\n", 2);
+		map_conf_reset(cub_stat);
+		ft_putstr_fd("Error.\nNot enough, or wrong ", 2);
+		ft_putstr_fd("color-chanels data to compute further.\n", 2);
 		exit(-1);
 	}
 	color->red = ft_atoi(*(cub_stat->color));
@@ -64,7 +67,9 @@ void			color_define(t_map_conf *cub_stat, t_bitmap *color,
 void			line_def(char *line, t_map_conf *cub_stat)
 {
 	cub_stat->info_handle = ft_split(line, ' ');
-	if (!*cub_stat->info_handle)
+	if (!*line)
+		memreset((void **)&cub_stat->info_handle);
+	if (!cub_stat->info_handle)
 	{
 		if (!(cub_stat->info_handle = (char **)malloc(sizeof(char *))))
 		{

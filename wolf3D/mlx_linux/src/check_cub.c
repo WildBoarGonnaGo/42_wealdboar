@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 23:24:18 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/22 00:46:24 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/22 23:14:17 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ void			def_map_stats(t_map_conf *cub_stat, char *line,
 		color_define(cub_stat, fl_color, &cub_stat->flr_color, 5);
 	else if (!ft_strncmp("C", *cub_stat->info_handle, 1))
 		color_define(cub_stat, cl_color, &cub_stat->ceil_color, 6);
-	else if (!**cub_stat->info_handle)
-		line_info_reset(cub_stat);
 	else
 		map_build(cub_stat, line);
 }
@@ -82,7 +80,7 @@ t_map_conf		map_init_input(char *path)
 		def_map_stats(&cub_stat, line, &cl_color, &fl_color);
 		cub_stat_clean(&cub_stat);
 	}
-	cub_stat_clean(&cub_stat);
+	memreset((void **)&line);
 	if (!err_check_input(cub_stat))
 	{
 		map_conf_reset(&cub_stat);

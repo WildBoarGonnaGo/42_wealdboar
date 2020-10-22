@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/17 18:49:31 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/22 01:57:31 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/22 19:50:18 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	cub_stat_clean(t_map_conf *cub_stat)
 	cub_stat->arr_size = check_arr_size(cub_stat->info_handle);
 	while (++i < cub_stat->arr_size)
 		memreset((void **)(cub_stat->info_handle + i));
+	memreset((void **)cub_stat->info_handle);
 	memreset((void **)&cub_stat->info_handle);
 }
 
