@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/17 08:03:51 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/19 17:52:20 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/22 02:12:14 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void			draw_skyline(int x, t_raycast obj_gl)
 	line_output(&obj_gl.img_rndr, skyline, obj_gl.clr_ceil.clrfull);
 	skyline = line_init(x, (int)(obj_gl.height / 2), x, obj_gl.height - 1);
 	line_output(&obj_gl.img_rndr, skyline, obj_gl.clr_floor.clrfull);
-}	
+}
 
 void			insertion_sort(t_raycast *obj_gl)
 {
@@ -54,7 +54,7 @@ void			insertion_sort(t_raycast *obj_gl)
 void			init_rndr_vars(int x, t_raycast *render_tools)
 {
 	render_tools->xrender = 2 * x / (double)render_tools->width - 1;
-	render_tools->proj_vect[0] = render_tools->player_dir[0] + 
+	render_tools->proj_vect[0] = render_tools->player_dir[0] +
 	render_tools->xrender * render_tools->plane_vctr[0];
 	render_tools->proj_vect[1] = render_tools->player_dir[1]
 	+ render_tools->xrender * render_tools->plane_vctr[1];
@@ -79,7 +79,7 @@ void			dir_define(t_raycast *render_tools)
 	{
 		render_tools->grid_step[0] = 1;
 		render_tools->trvl_bound[0] = render_tools->trvl_through[0]
-		* (1 -render_tools->pos[0] + render_tools->map_pos[0]);
+		* (1 - render_tools->pos[0] + render_tools->map_pos[0]);
 	}
 	if (render_tools->proj_vect[1] < 0)
 	{
@@ -91,7 +91,7 @@ void			dir_define(t_raycast *render_tools)
 	{
 		render_tools->grid_step[1] = 1;
 		render_tools->trvl_bound[1] = render_tools->trvl_through[1]
-		* (1 -render_tools->pos[1] + render_tools->map_pos[1]);
+		* (1 - render_tools->pos[1] + render_tools->map_pos[1]);
 	}
 }
 

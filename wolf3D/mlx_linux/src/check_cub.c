@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 23:24:18 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/21 15:42:19 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/22 00:46:24 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void			resolution_def(t_map_conf *cub_stat)
 			memreset((void **)(cub_stat->info_handle + i));
 		memreset((void **)&cub_stat->info_handle);
 		memreset((void **)&cub_stat->arr_purge);
-		ft_putstr_fd("Error.\nNot enough resolution data to compute further.\n", 2);
+		ft_putstr_fd("Error.\nNot enough resolution data", 2);
+		ft_putstr_fd("to compute further.\n", 2);
 		exit(-1);
 	}
 	cub_stat->width = ft_atoi(*(cub_stat->info_handle + 1));
@@ -65,28 +66,28 @@ void			def_map_stats(t_map_conf *cub_stat, char *line,
 
 t_map_conf		map_init_input(char *path)
 {
-	char        *line;
+	char		*line;
 	t_map_conf	cub_stat;
 	t_bitmap	cl_color;
 	t_bitmap	fl_color;
 
 	map_stat_init(&cub_stat, &cl_color, &fl_color);
 	check_cub_ext(path);
-    check_filepath(path);
-    cub_stat.file_dscrptr = open(path, O_RDONLY);
+	check_filepath(path);
+	cub_stat.file_dscrptr = open(path, O_RDONLY);
 	while ((get_next_line(cub_stat.file_dscrptr, &line)) > 0)
-    {
+	{
 		line_def(line, &cub_stat);
 		cub_stat.arr_purge = line;
 		def_map_stats(&cub_stat, line, &cl_color, &fl_color);
 		cub_stat_clean(&cub_stat);
-    }
+	}
 	cub_stat_clean(&cub_stat);
 	if (!err_check_input(cub_stat))
 	{
 		map_conf_reset(&cub_stat);
-		exit (-1);
+		exit(-1);
 	}
 	close(cub_stat.file_dscrptr);
-    return (cub_stat);
+	return (cub_stat);
 }

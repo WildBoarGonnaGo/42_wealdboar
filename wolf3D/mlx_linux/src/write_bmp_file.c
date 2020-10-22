@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 08:16:11 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/19 15:42:18 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/22 02:20:27 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	write_bmp_init(t_bitmap_pic_info *bmp, t_raycast obj_gl)
 	bmp->frmt_signature[1] = 'M';
 	bmp->padded_row = (int)((obj_gl.width + ((4 - obj_gl.width % 4) & 0x3))
 	* bmp->bites_per_pixel / 8);
-	bmp->unpadded_row = (int)(obj_gl.width * bmp->bites_per_pixel / 8);	
+	bmp->unpadded_row = (int)(obj_gl.width * bmp->bites_per_pixel / 8);
 	bmp->file_size = bmp->pyxel_pos_offset + bmp->padded_row * bmp->height;
 	bmp->size_image = bmp->unpadded_row * bmp->height;
 }
@@ -79,8 +79,9 @@ void	write_img_data(t_raycast obj_gl, int *pos,
 	{
 		while (++pos[1] < (int)bmp.width)
 		{
-			color = *(unsigned int *)(obj_gl.img_rndr.addr + obj_gl.img_rndr.line_size
-			* (bmp.height - 1 - pos[0]) + pos[1] * obj_gl.img_rndr.bits_per_pixel / 8);
+			color = *(unsigned int *)(obj_gl.img_rndr.addr
+			+ obj_gl.img_rndr.line_size * (bmp.height - 1 - pos[0])
+			+ pos[1] * obj_gl.img_rndr.bits_per_pixel / 8);
 			write(bmp.fd, &color, (int)(bmp.bites_per_pixel / 8));
 		}
 		write(bmp.fd, &empty, bmp.padded_row - bmp.unpadded_row);
@@ -100,12 +101,13 @@ int		write_bmp_file(char *filename, t_raycast obj_gl)
 	pos[1] = -1;
 	color = 0;
 	bmp.indx = 0;
-	if ((bmp.fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 666)) < 0)
+	if ((bmp.fd = open(filename, O_RDWR | O_TRUNC |
+	O_CREAT, S_IREAD | S_IRGRP | S_IROTH)) < 0)
 		return (-1);
 	write_bmp_init(&bmp, obj_gl);
 	write(bmp.fd, &bmp.frmt_signature[0], 1);
 	write(bmp.fd, &bmp.frmt_signature[1], 1);
-	write_data(bmp);	
+	write_data(bmp);
 	write_img_data(obj_gl, pos, bmp, color);
 	close(bmp.fd);
 	return (1);

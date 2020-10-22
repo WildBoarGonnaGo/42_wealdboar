@@ -6,7 +6,7 @@
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 03:30:25 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/20 18:52:56 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/22 09:48:32 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 # define BITMAP_PIC_SIGNATURE "BM"
 # define BITMAP_PIX_PIC_OFFSET 0x0A
 
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <stdlib.h>
 
 typedef struct		s_bitmap
 {
@@ -57,10 +57,9 @@ typedef struct		s_bitmap_pic_info
 	unsigned int	cstype;
 	unsigned int	padded_row;
 	unsigned int	unpadded_row;
-	unsigned int	img_size;	
+	unsigned int	img_size;
 	unsigned char	*pyxel_map;
 }					t_bitmap_pic_info;
-
 
 int					get_bitmaps(t_bitmap vals);
 int					get_trcode(t_bitmap vals);

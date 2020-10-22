@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/15 16:52:13 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/21 07:45:35 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/22 01:46:34 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 
 void			player_move(t_raycast *scene_chng, int dir_factor)
 {
-	scene_chng->pos[0] += (!scene_chng->map[(int)floor(scene_chng->pos[0] + WALK_DIST * 
-	scene_chng->player_dir[0] * dir_factor)][(int)floor(scene_chng->pos[1])]) ?
+	scene_chng->pos[0] += (!scene_chng->map[(int)floor(
+	scene_chng->pos[0] + WALK_DIST * scene_chng->player_dir[0]
+	* dir_factor)][(int)floor(scene_chng->pos[1])]) ?
 	WALK_DIST * scene_chng->player_dir[0] * dir_factor : 0;
 	scene_chng->pos[1] += (!scene_chng->map[(int)floor(scene_chng->pos[0])][
-	(int)floor(scene_chng->pos[1] + WALK_DIST * scene_chng->player_dir[1] * dir_factor)]) ?
-	WALK_DIST * scene_chng->player_dir[1] * dir_factor : 0;
+	(int)floor(scene_chng->pos[1] + WALK_DIST * scene_chng->player_dir[1]
+	* dir_factor)]) ? WALK_DIST * scene_chng->player_dir[1] * dir_factor : 0;
 }
 
 void			player_strafe(t_raycast *scene_chng, int dir_factor)
@@ -29,9 +30,10 @@ void			player_strafe(t_raycast *scene_chng, int dir_factor)
 
 	strafe_dir[0] = -scene_chng->player_dir[1] * sin(M_PI / 2);
 	strafe_dir[1] = scene_chng->player_dir[0] * sin(M_PI / 2);
-	scene_chng->pos[0] += (!scene_chng->map[(int)floor(scene_chng->pos[0] + WALK_DIST * 
-	strafe_dir[0] * dir_factor)][(int)floor(scene_chng->pos[1])]) ?
-	WALK_DIST * strafe_dir[0] * dir_factor : 0;
+	scene_chng->pos[0] += (!scene_chng->map[(int)floor(scene_chng->pos[0]
+	+ WALK_DIST * strafe_dir[0] * dir_factor)][
+	(int)floor(scene_chng->pos[1])]) ? WALK_DIST * strafe_dir[0]
+	* dir_factor : 0;
 	scene_chng->pos[1] += (!scene_chng->map[(int)floor(scene_chng->pos[0])][
 	(int)floor(scene_chng->pos[1] + WALK_DIST * strafe_dir[1] * dir_factor)])
 	? WALK_DIST * strafe_dir[1] * dir_factor : 0;
@@ -44,12 +46,14 @@ void			player_turn(t_raycast *scene_chng, int dir_factor)
 
 	old_vect_x = scene_chng->player_dir[0];
 	old_plane_x = scene_chng->plane_vctr[0];
-	scene_chng->player_dir[0] = scene_chng->player_dir[0] * cos(dir_factor * DELTA_ANGL)
-	- scene_chng->player_dir[1] * sin(dir_factor * DELTA_ANGL);
+	scene_chng->player_dir[0] = scene_chng->player_dir[0]
+	* cos(dir_factor * DELTA_ANGL) - scene_chng->player_dir[1]
+	* sin(dir_factor * DELTA_ANGL);
 	scene_chng->player_dir[1] = old_vect_x * sin(dir_factor * DELTA_ANGL)
 	+ scene_chng->player_dir[1] * cos(dir_factor * DELTA_ANGL);
-	scene_chng->plane_vctr[0] = scene_chng->plane_vctr[0] * cos(dir_factor * DELTA_ANGL)
-	- scene_chng->plane_vctr[1] * sin(dir_factor * DELTA_ANGL);
+	scene_chng->plane_vctr[0] = scene_chng->plane_vctr[0]
+	* cos(dir_factor * DELTA_ANGL) - scene_chng->plane_vctr[1]
+	* sin(dir_factor * DELTA_ANGL);
 	scene_chng->plane_vctr[1] = old_plane_x * sin(dir_factor * DELTA_ANGL)
 	+ scene_chng->plane_vctr[1] * cos(dir_factor * DELTA_ANGL);
 }

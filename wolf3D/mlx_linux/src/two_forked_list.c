@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 08:59:43 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/19 09:55:20 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/22 17:49:37 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_route_pass			*add_frwrd(t_route_pass *cur_list, int x, int y)
 	obj_frwrd->dir = STRT_DIR;
 	obj_frwrd->next = NULL;
 	obj_frwrd->prev = cur_list;
+	obj_frwrd->prev->next = obj_frwrd;
 	return (obj_frwrd);
 }
 
@@ -48,7 +49,7 @@ void					purge_list(t_route_pass *init)
 	while (roll)
 	{
 		purge = roll;
-		roll = roll->next;
+		roll = roll->next;	
 		memreset((void **)&purge);
 	}
 }

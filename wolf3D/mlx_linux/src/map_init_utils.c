@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 18:16:33 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/21 22:54:00 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/22 01:53:23 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void			check_if_texture_ex(char *filepath, char **texture,
 			memreset((void **)&cub_stat->info_handle);
 			memreset((void **)&cub_stat->arr_purge);
 			ft_putstr_fd("Error.\nDynamic memory allocation error.\n", 2);
-			exit (-1);
+			exit(-1);
 		}
 		cub_stat->map_stat |= (1 << offset);
 	}
@@ -48,8 +48,9 @@ void			color_define(t_map_conf *cub_stat, t_bitmap *color,
 		while (++i < cub_stat->arr_size)
 			memreset((void **)(cub_stat->info_handle + i));
 		memreset((void **)&cub_stat->info_handle);
-		ft_putstr_fd("Error.\nNot enough color-chanels data to compute further.\n", 2);
-		exit (-1);
+		ft_putstr_fd("Error.\nNot enough color-chanels data", 2);
+		ft_putstr_fd("to compute further.\n", 2);
+		exit(-1);
 	}
 	color->red = ft_atoi(*(cub_stat->color));
 	color->green = ft_atoi(*(cub_stat->color + 1));
@@ -62,21 +63,21 @@ void			color_define(t_map_conf *cub_stat, t_bitmap *color,
 
 void			line_def(char *line, t_map_conf *cub_stat)
 {
-	cub_stat->info_handle = ft_split(line, ' ');	
+	cub_stat->info_handle = ft_split(line, ' ');
 	if (!*cub_stat->info_handle)
 	{
 		if (!(cub_stat->info_handle = (char **)malloc(sizeof(char *))))
 		{
 			memreset((void **)&cub_stat->arr_purge);
 			ft_putstr_fd("Error.\nDynamic memory allocation error.\n", 2);
-			exit (-1);
+			exit(-1);
 		}
 		if (!(*cub_stat->info_handle = ft_strdup("")))
 		{
 			memreset((void **)&cub_stat->arr_purge);
 			memreset((void **)&cub_stat->info_handle);
 			ft_putstr_fd("Error.\nDynamic memory allocation error.\n", 2);
-			exit (-1);
+			exit(-1);
 		}
 	}
 }

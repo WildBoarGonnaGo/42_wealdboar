@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 01:37:56 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/21 20:28:19 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/22 09:52:26 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef	struct			s_line
 	double		l;
 	double		dx;
 	double		dy;
-	double 		alpha;
+	double		alpha;
 }						t_line;
 
 typedef struct			s_img_info
@@ -166,8 +166,8 @@ void					ray_strike(t_raycast *render_tools);
 int						save_state(t_raycast *render_tools);
 int						render_scene(t_raycast *render_tools);
 void					init_render_tools(t_map_conf *src, t_raycast *dst);
-int             		check_filepath(char *path);
-void            		map_stat_init(t_map_conf *init, t_bitmap *cl_color,
+int						check_filepath(char *path);
+void					map_stat_init(t_map_conf *init, t_bitmap *cl_color,
 						t_bitmap *fl_color);
 void					strcolor_reset(t_map_conf *init);
 void					check_if_texture_ex(char *filepath, char **texture,
@@ -181,7 +181,7 @@ void					imp_map_info_reset(t_map_conf *obj);
 void					opengl_pixel_put(t_img_info *stdput, int x,
 						int y, unsigned int color);
 t_line					line_init(int x_0, int y_0, int x_1, int y_1);
-void					line_output(t_img_info *line_img, t_line trgt, 
+void					line_output(t_img_info *line_img, t_line trgt,
 						unsigned int color);
 int						err_check_input(t_map_conf obj);
 int						check_arr_size(char **arr);
@@ -189,12 +189,18 @@ void					color_split_error(t_map_conf *cub_stat);
 void					map_build_error(t_map_conf *cub_stat);
 void					cub_stat_clean(t_map_conf *cub_stat);
 void					map_conf_reset(t_map_conf *cub_stat);
-void					raycast_memalloc_err(t_raycast *obj_gl, t_map_conf *obj);
-void					raycast_exit_proc_mid(t_raycast *obj_gl, t_map_conf *obj);
+void					raycast_memalloc_err(t_raycast *obj_gl,
+						t_map_conf *obj);
+void					raycast_exit_proc_mid(t_raycast *obj_gl,
+						t_map_conf *obj);
 void					raycast_exit_proc_fin(t_raycast *obj_gl);
-int						read_bitmap_file(char *filename, t_bitmap_pic_info *img_info,
+int						read_bitmap_file(char *filename,
+						t_bitmap_pic_info *img_info,
 						t_map_conf *cub_stat, t_raycast *obj_gl);
 void					check_cub_ext(char *filename);
-void					check_bmp_ext(char *filename, t_raycast *obj_gl, t_map_conf *cub_stat);
+void					check_bmp_ext(char *filename, t_raycast *obj_gl,
+						t_map_conf *cub_stat);
+void					item_vars_base(t_raycast *obj_gl, double trans_factor,
+						int i, double *old_value);
 
 #endif

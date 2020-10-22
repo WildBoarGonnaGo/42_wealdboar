@@ -6,13 +6,13 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 21:33:37 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/21 15:48:00 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/22 01:43:11 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/maze3d.h"
 
-int	check_arr_size(char **arr)
+int		check_arr_size(char **arr)
 {
 	int	size;
 
@@ -38,7 +38,7 @@ void	color_split_error(t_map_conf *cub_stat)
 		memreset((void **)(cub_stat->info_handle + i));
 	memreset((void **)&cub_stat->info_handle);
 	ft_putstr_fd("Error.\nDynamic memory allocation error.\n", 2);
-	exit(1);	
+	exit(1);
 }
 
 void	map_build_error(t_map_conf *cub_stat)

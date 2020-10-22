@@ -6,13 +6,13 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 08:56:41 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/19 09:46:27 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/22 01:17:03 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/colors.h"
 
-int 		get_bitmaps(t_bitmap vals)
+int			get_bitmaps(t_bitmap vals)
 {
 	return ((vals.trnsp | vals.red | vals.green | vals.blue));
 }
@@ -34,5 +34,5 @@ int			get_gcode(t_bitmap vals)
 
 int			get_bcode(t_bitmap vals)
 {
-	return(vals.clrfull & 0xFF);
+	return (vals.clrfull & 0xFF);
 }

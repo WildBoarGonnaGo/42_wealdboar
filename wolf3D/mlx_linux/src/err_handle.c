@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 18:43:55 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/21 19:30:38 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/22 01:42:21 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	check_textures(t_map_conf obj, int *if_error)
 	{
 		ft_putstr_fd("Error.\nEast wall texture path is not found.\n", 2);
 		*if_error = 0;
-	}	
+	}
 	return (1);
 }
 
@@ -68,6 +68,6 @@ int	err_check_input(t_map_conf obj)
 
 	if_error = 1;
 	check_textures(obj, &if_error);
-	check_colors(obj, &if_error);	
+	check_colors(obj, &if_error);
 	return (if_error);
 }

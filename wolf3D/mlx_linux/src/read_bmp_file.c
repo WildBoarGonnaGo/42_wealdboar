@@ -6,7 +6,7 @@
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 04:33:33 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/21 08:04:36 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/22 02:01:04 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	read_bmp_data(t_bitmap_pic_info *img_info)
 	read(img_info->fd, &img_info->clr_sockets, 4);
 }
 
-int	read_bitmap_file(char *filename, t_bitmap_pic_info *img_info,
-	t_map_conf *cub_stat, t_raycast *obj_gl)
+int		read_bitmap_file(char *filename, t_bitmap_pic_info *img_info,
+		t_map_conf *cub_stat, t_raycast *obj_gl)
 {
 	char			pos[2048];
 
@@ -51,8 +51,8 @@ int	read_bitmap_file(char *filename, t_bitmap_pic_info *img_info,
 		return (0);
 	while (img_info->indx < img_info->height)
 	{
-		read(img_info->fd, img_info->pyxel_map + (img_info->height - img_info->indx - 1)
-		* img_info->unpadded_row, img_info->unpadded_row);
+		read(img_info->fd, img_info->pyxel_map + (img_info->height
+		- img_info->indx - 1) * img_info->unpadded_row, img_info->unpadded_row);
 		read(img_info->fd, &pos, img_info->padded_row - img_info->unpadded_row);
 		++img_info->indx;
 	}
