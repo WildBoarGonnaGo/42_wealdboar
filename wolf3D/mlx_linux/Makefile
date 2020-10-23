@@ -6,7 +6,7 @@
 #    By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/24 04:55:09 by wealdboar         #+#    #+#              #
-#    Updated: 2020/10/23 15:25:43 by lchantel         ###   ########.fr        #
+#    Updated: 2020/10/23 16:16:46 by lchantel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,8 +48,10 @@ WARNS = -Wall -Wextra -Werror -g
 OBJ = $(SRC:.c=.o)
 RES_CONFIG = res_config.txt
 
-$(LIB): $(OBJ)
+$(LIB): $(OBJ)	
 	@echo "Every funtion is compile proved ..."
+	@echo "Building libft static library ..."
+	@cd ./src/libft/ && make all
 	@ar rcs $(LIB) $(OBJ)
 	@echo "All functions added to static lib ..."
 	@echo "Making program executable ..."
@@ -66,11 +68,17 @@ all: $(LIB)
 clean:
 	@echo "removing all binaries ..."
 	@rm -rf $(OBJ)
+	@echo "removing all libft binaries"
+	@cd ./src/libft/ && make clean
 
 fclean: clean
 	@echo "removing static library ..."
 	@rm -rf $(LIB)
 	@rm -rf $(EXEC_FILE)
+	@echo "removing libft static library ..."
+	@cd ./src/libft/ && make fclean
+	@echo "removing display resolution configuration file ..."
+	@rm -rf $(RES_CONFIG)
 
 re: fclean all
 

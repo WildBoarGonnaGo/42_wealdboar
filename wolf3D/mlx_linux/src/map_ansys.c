@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 09:19:47 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/23 12:51:23 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/23 17:50:09 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int		ansys_cases(t_map_conf *obj, t_route_pass **init,
 	&& !(*cur)->dir)
 		minesweep_back(&obj, cur);
 	else if (!(obj->map_grid[obj->player_pos[0] + dir[0]]
-	[obj->player_pos[1] + dir[1]]))
+	[obj->player_pos[1] + dir[1]]) ||obj->map_grid[obj->player_pos[0] + dir[0]]
+	[obj->player_pos[1] + dir[1]] == 2)
 		minesweep_frwrd(&obj, cur, dir);
 	else
 	{

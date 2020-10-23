@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 08:59:43 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/22 17:49:37 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/23 16:32:47 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void					purge_list(t_route_pass *init)
 	while (roll)
 	{
 		purge = roll;
-		roll = roll->next;	
+		roll = roll->next;
 		memreset((void **)&purge);
 	}
 }

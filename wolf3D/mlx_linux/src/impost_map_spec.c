@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/23 02:06:26 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/23 12:50:59 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/23 16:32:34 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,5 @@ void	player_pos_ansys(int *pos, t_map_conf *obj)
 	else if (*(*(obj->map + pos[0]) + (obj->map_size[1]
 	- 1 - pos[1])) == 'S')
 		ns_case(obj, 1);
-	*(*(obj->map_grid + pos[0]) + pos[1]) = 0;	
+	*(*(obj->map_grid + pos[0]) + pos[1]) = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 01:37:56 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/23 15:38:33 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/23 16:20:23 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 # define STRT_DIR 2 * M_PI
 # define FOV_PROJ_LEN 0.6494075931975106
-# define DELTA_ANGL 0.6 * M_PI / 180
+# define DELTA_ANGL 0.75 * M_PI / 180
 # define WALK_DIST 0.025
 # define ESC 65307
 # define LEFT_ARROW 65361

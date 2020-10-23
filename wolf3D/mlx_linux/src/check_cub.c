@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 23:24:18 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/23 15:36:25 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/23 16:33:09 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_map_conf		map_init_input(char *path, int *max_res)
 	t_bitmap	cl_color;
 	t_bitmap	fl_color;
 
-	map_stat_init(&cub_stat, &cl_color, &fl_color, max_res);	
+	map_stat_init(&cub_stat, &cl_color, &fl_color, max_res);
 	if (!check_filepath(path))
 		path_exit();
 	check_cub_ext(path);
