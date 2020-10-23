@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 00:34:39 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/23 01:55:39 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/23 10:24:26 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,28 +55,17 @@ void	map_trans_process(t_map_conf *obj, int *pos)
 {
 	if (ft_strchr("NSWE", *(*(obj->map + pos[0]) + (obj->map_size[1] - 1
 	- pos[1]))) && *(*(obj->map + pos[0]) + (obj->map_size[1] - 1 - pos[1])))
-	{
-		obj->player_pos[0] = pos[0];
-		obj->player_pos[1] = pos[1];
-		if (*(*(obj->map + pos[0]) + (obj->map_size[1] - 1 - pos[1])) == 'E')
-			ew_case(obj, -1);
-		else if (*(*(obj->map + pos[0]) + (obj->map_size[1]
-		- 1 - pos[1])) == 'W')
-			ew_case(obj, 1);
-		else if (*(*(obj->map + pos[0]) + (obj->map_size[1]
-		- 1 - pos[1])) == 'N')
-			ns_case(obj, -1);
-		else if (*(*(obj->map + pos[0]) + (obj->map_size[1]
-		- 1 - pos[1])) == 'S')
-			ns_case(obj, 1);
-		*(*(obj->map_grid + pos[0]) + pos[1]) = 0;
-	}
+		player_pos_ansys(pos, obj);
 	else if (*(*(obj->map + pos[0]) + (obj->map_size[1] - 1 - pos[1])) == '1')
 		*(*(obj->map_grid + pos[0]) + pos[1]) = 1;
 	else if (*(*(obj->map + pos[0]) + (obj->map_size[1] - 1 - pos[1])) == '2')
 		new_item(obj, pos);
-	else if (*(*))
+	else if (*(*(obj->map + pos[0]) + (obj->map_size[1] - 1 - pos[1])) == '0' ||
+	*(*(obj->map + pos[0]) + (obj->map_size[1] - 1 - pos[1])) == ' ' ||
+	!*(*(obj->map + pos[0]) + (obj->map_size[1] - 1 - pos[1])))
 		*(*(obj->map_grid + pos[0]) + pos[1]) = 0;
+	else
+		err_invalid_char(obj, pos);
 }
 
 int		impostor_map(t_map_conf *obj)
@@ -84,6 +73,7 @@ int		impostor_map(t_map_conf *obj)
 	int	pos[2];
 
 	obj->item_count = 0;
+	obj->player_indx = 0;
 	pos[0] = -1;
 	pos[1] = -1;
 	obj->map_grid = (int **)malloc(sizeof(int *) * obj->map_size[0]);
@@ -95,5 +85,7 @@ int		impostor_map(t_map_conf *obj)
 			map_trans_process(obj, pos);
 		pos[1] = -1;
 	}
+	if (!obj->player_indx)
+		err_invalid_player(obj, pos);
 	return (1);
 }

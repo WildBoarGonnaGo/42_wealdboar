@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 01:37:56 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/22 09:52:26 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/23 10:22:22 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef	struct			s_map_conf
 	int			map_size[2];
 	int			player_pos[2];
 	int			item_count;
+	int			player_indx;
 	double		player_dir[2];
 	double		plane_direct[2];
 	double		**item_pos;
@@ -202,5 +203,11 @@ void					check_bmp_ext(char *filename, t_raycast *obj_gl,
 						t_map_conf *cub_stat);
 void					item_vars_base(t_raycast *obj_gl, double trans_factor,
 						int i, double *old_value);
+void					ew_case(t_map_conf *obj, int dir_factor);
+void					ns_case(t_map_conf *obj, int dir_factor);
+void					map_grid_reset(t_map_conf *obj, int *pos);
+void					err_invalid_char(t_map_conf *obj, int *pos);
+void					player_pos_ansys(int *pos, t_map_conf *obj);
+void					err_invalid_player(t_map_conf *obj, int *pos);
 
 #endif

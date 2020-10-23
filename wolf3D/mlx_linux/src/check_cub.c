@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 23:24:18 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/22 23:14:17 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/23 09:49:48 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void			def_map_stats(t_map_conf *cub_stat, char *line,
 		color_define(cub_stat, fl_color, &cub_stat->flr_color, 5);
 	else if (!ft_strncmp("C", *cub_stat->info_handle, 1))
 		color_define(cub_stat, cl_color, &cub_stat->ceil_color, 6);
+	else if (!**cub_stat->info_handle)
+		return ;
 	else
 		map_build(cub_stat, line);
 }

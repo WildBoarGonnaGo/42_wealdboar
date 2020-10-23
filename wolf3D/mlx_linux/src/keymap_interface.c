@@ -6,12 +6,11 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/15 16:52:13 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/22 01:46:34 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/23 08:53:31 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/maze3d.h"
-#include <stdio.h>
 
 void			player_move(t_raycast *scene_chng, int dir_factor)
 {

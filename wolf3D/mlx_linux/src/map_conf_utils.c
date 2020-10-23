@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 07:21:15 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/22 01:51:20 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/23 02:16:50 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	stats_zero(t_map_conf *init)
 	init->map_size[1] = 0;
 	init->plane_direct[0] = 0;
 	init->plane_direct[1] = 0;
+	init->player_indx = 0;
 }
 
 void	map_stat_init(t_map_conf *init, t_bitmap *cl_color,
