@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/17 07:57:43 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/22 02:10:22 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/24 00:58:58 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,8 @@ int				render_scene(t_raycast *render_tools)
 	render_tools->img_rndr.addr = mlx_get_data_addr(render_tools->img_rndr.img,
 	&render_tools->img_rndr.bits_per_pixel, &render_tools->img_rndr.line_size,
 	&render_tools->img_rndr.endian);
-	mlx_clear_window(render_tools->xorg, render_tools->winx);
+	if (!render_tools->save_option)
+		mlx_clear_window(render_tools->xorg, render_tools->winx);
 	x = -1;
 	while (++x < render_tools->width)
 		full_render_cycle(x, render_tools);

@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 01:37:56 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/23 16:20:23 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/24 01:10:18 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,5 +210,6 @@ void					player_pos_ansys(int *pos, t_map_conf *obj);
 void					err_invalid_player(t_map_conf *obj, int *pos);
 void					path_exit(void);
 void					max_res_config(t_map_conf *obj);
+void					save_option_true(t_raycast *scene_rndr);
 
 #endif

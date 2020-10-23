@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/12 10:36:26 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/23 18:53:02 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/24 01:11:13 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,12 @@ void	info_handle(t_map_conf *cub_file_info, t_raycast *scene_rndr)
 	impostor_map(cub_file_info);
 	init_render_tools(cub_file_info, scene_rndr);
 	scene_rndr->xorg = mlx_init();
-	scene_rndr->winx = mlx_new_window(scene_rndr->xorg, scene_rndr->width,
-	scene_rndr->height, "cub3d");
+}
+
+int		close_window(t_raycast *scene_rndr)
+{
+	raycast_exit_proc_fin(scene_rndr);
+	exit(0);
 }
 
 int		main(int argc, char *argv[])
@@ -66,15 +70,14 @@ int		main(int argc, char *argv[])
 	if (argc == 3)
 	{
 		if (!(ft_strncmp("--save", argv[2], 6)))
-		{
-			scene_rndr.save_option = 1;
-			render_scene(&scene_rndr);
-			exit(0);
-		}
+			save_option_true(&scene_rndr);
 		else
 			argc_err(&scene_rndr);
 	}
+	scene_rndr.winx = mlx_new_window(scene_rndr.xorg, scene_rndr.width,
+	scene_rndr.height, "cub3d");
 	mlx_hook(scene_rndr.winx, 2, 1L << 0, keymap_interface, &scene_rndr);
 	mlx_loop_hook(scene_rndr.xorg, render_scene, &scene_rndr);
+	mlx_hook(scene_rndr.winx, 17, 0, close_window, &scene_rndr);
 	mlx_loop(scene_rndr.xorg);
 }
