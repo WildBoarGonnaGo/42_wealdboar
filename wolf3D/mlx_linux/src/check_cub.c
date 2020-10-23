@@ -6,13 +6,19 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 23:24:18 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/23 09:49:48 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/23 15:36:25 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/get_next_line_bonus.h"
 #include "../include/colors.h"
 #include "../include/maze3d.h"
+
+void			path_exit(void)
+{
+	ft_putstr_fd("Error.\nNo such file or it's directory.\n", 2);
+	exit(-1);
+}
 
 void			resolution_def(t_map_conf *cub_stat)
 {
@@ -31,6 +37,10 @@ void			resolution_def(t_map_conf *cub_stat)
 	}
 	cub_stat->width = ft_atoi(*(cub_stat->info_handle + 1));
 	cub_stat->height = ft_atoi(*(cub_stat->info_handle + 2));
+	if (cub_stat->width > cub_stat->max_res[0])
+		cub_stat->width = cub_stat->max_res[0];
+	if (cub_stat->height > cub_stat->max_res[1])
+		cub_stat->height = cub_stat->max_res[1];
 	cub_stat->map_stat |= (1 << 7);
 }
 
@@ -64,16 +74,17 @@ void			def_map_stats(t_map_conf *cub_stat, char *line,
 		map_build(cub_stat, line);
 }
 
-t_map_conf		map_init_input(char *path)
+t_map_conf		map_init_input(char *path, int *max_res)
 {
 	char		*line;
 	t_map_conf	cub_stat;
 	t_bitmap	cl_color;
 	t_bitmap	fl_color;
 
-	map_stat_init(&cub_stat, &cl_color, &fl_color);
+	map_stat_init(&cub_stat, &cl_color, &fl_color, max_res);	
+	if (!check_filepath(path))
+		path_exit();
 	check_cub_ext(path);
-	check_filepath(path);
 	cub_stat.file_dscrptr = open(path, O_RDONLY);
 	while ((get_next_line(cub_stat.file_dscrptr, &line)) > 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 11:05:54 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/21 21:02:38 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/23 12:56:58 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	raycast_memalloc_err(t_raycast *obj_gl, t_map_conf *obj)
 		memreset((void **)(obj_gl->map + i));
 	memreset((void **)&obj_gl->map);
 	map_conf_reset(obj);
-	perror("Error.\nDynamic memory allocation error.\n");
+	ft_putstr_fd("Error.\nDynamic memory allocation error.\n", 2);
 	exit(1);
 }
 

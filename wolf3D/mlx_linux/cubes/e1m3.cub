@@ -1,9 +1,9 @@
 R 1024 768
-NO ../texture_pack/wall_text_9_512.bmp
-SO ../texture_pack/wall_text_6_512.bmp
-EA ../texture_pack/wall_text_10_512.bmp
-WE ../texture_pack/wall_text_5_512.bmp
-S ../texture_pack/terminal_frame_1024x512_2.bmp
+NO ./texture_pack/wall_text_9_512.bmp
+SO ./texture_pack/wall_text_6_512.bmp
+EA ./texture_pack/wall_text_10_512.bmp
+WE ./texture_pack/wall_text_5_512.bmp
+S ./texture_pack/terminal_frame_1024x512_2.bmp
 F 15,17,19
 C 23,29,32
 

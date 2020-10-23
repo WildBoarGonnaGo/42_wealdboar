@@ -6,32 +6,56 @@
 #    By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/24 04:55:09 by wealdboar         #+#    #+#              #
-#    Updated: 2020/09/01 03:17:03 by wealdboar        ###   ########.fr        #
+#    Updated: 2020/10/23 15:25:43 by lchantel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-LIB = libgeoms.a
+LIB = ./libc/libmaze3d.a
+EXEC_FILE = cub3d
 
-SRC =	mlx_pxl_put.c		\
-	 	std_arc.c			\
-		std_crcl.c			\
-		std_line.c			\
-		std_poly.c			\
-		std_rect.c			\
-		std_ellipse_arc.c	
+SRC =	./src/check_cub.c					\
+	 	./src/check_data.c					\
+		./src/check_file_ext.c				\
+		./src/color_utils.c					\
+		./src/colors.c						\
+		./src/draw_item.c					\
+		./src/err_handle.c					\
+		./src/err_utils.c					\
+		./src/get_next_line_bonus.c			\
+		./src/get_next_line_utils_bonus.c	\
+		./src/impost_map_spec.c				\
+		./src/item_vars_base.c				\
+		./src/keymap_interface.c			\
+		./src/map_ansys.c					\
+		./src/map_conf_utils.c				\
+		./src/map_init_utils.c				\
+		./src/map_trans_utils.c				\
+		./src/mem_utils.c					\
+		./src/mlx_pxl_put.c					\
+		./src/raycast_exit_proc.c			\
+		./src/raycast_vars_init.c			\
+		./src/read_bmp_file.c				\
+		./src/render_scene.c				\
+		./src/render_utils.c				\
+		./src/save_state.c					\
+		./src/std_line.c					\
+		./src/two_forked_list.c				\
+		./src/write_bmp_file.c				\
+		./src/max_res_config.c				\
 
 CC = clang
-WARNS = -Wall -Wextra -Werror
+WARNS = -Wall -Wextra -Werror -g
 OBJ = $(SRC:.c=.o)
-SRCP = /usr/local/wealdboar/src/
-INCLUDEP = /usr/local/wealdboar/include/
-LIBP = /usr/local/wealdboar/lib/
-HEADER = geoms.h
+RES_CONFIG = res_config.txt
 
 $(LIB): $(OBJ)
 	@echo "Every funtion is compile proved ..."
 	@ar rcs $(LIB) $(OBJ)
-	@echo  "All functions added to static lib ..."
+	@echo "All functions added to static lib ..."
+	@echo "Making program executable ..."
+	@echo "Creating display resolution configuration file ..."
+	@xrandr | awk 'FNR == 3 {print $1}' > $(RES_CONFIG)
+	@$(CC) $(WARNS) ./main.c -o $(EXEC_FILE) -lX11 -lXext -lm -L./libc/ -lmaze3d -lmlx -lft
 
 $(OBJ): %.o :%.c
 	@echo "check $< to be right"
@@ -46,6 +70,7 @@ clean:
 fclean: clean
 	@echo "removing static library ..."
 	@rm -rf $(LIB)
+	@rm -rf $(EXEC_FILE)
 
 re: fclean all
 

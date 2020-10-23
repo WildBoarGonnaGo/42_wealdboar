@@ -6,11 +6,11 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 17:07:47 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/21 15:46:38 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/23 12:46:25 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/maze3d.h"
+#include "./include/maze3d.h"
 
 void	check_cub_ext(char *filename)
 {

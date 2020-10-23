@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 07:21:15 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/23 02:16:50 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/23 15:37:24 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,9 @@ int		check_filepath(char *path)
 	int fd;
 
 	if ((fd = open(path, O_RDWR)) < 0)
-	{
-		ft_putstr_fd("Error.\nThere is no such file, or it's directory.\n", 2);
 		return (0);
-	}
 	if (close(fd) < 0)
-	{
-		ft_putstr_fd("Error.\nFile stream shutdown error.\n", 2);
 		return (0);
-	}
 	return (1);
 }
 
@@ -51,7 +45,7 @@ void	stats_zero(t_map_conf *init)
 }
 
 void	map_stat_init(t_map_conf *init, t_bitmap *cl_color,
-		t_bitmap *fl_color)
+		t_bitmap *fl_color, int *max)
 {
 	stats_zero(init);
 	init->no_txtr_path = NULL;
@@ -64,6 +58,8 @@ void	map_stat_init(t_map_conf *init, t_bitmap *cl_color,
 	init->map_grid = NULL;
 	init->item_pos = NULL;
 	init->map_stat = 0;
+	init->max_res[0] = max[0];
+	init->max_res[1] = max[1];
 	cl_color->clrfull = 0;
 	fl_color->clrfull = 0;
 }

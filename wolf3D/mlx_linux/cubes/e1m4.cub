@@ -1,9 +1,9 @@
-R 1024 768
-NO ../texture_pack/wall_text_9_512.bmp
-SO ../texture_pack/wall_text_10_512.bmp
-EA ../texture_pack/wall_text_5_512.bmp
-WE ../texture_pack/wall_text_6_512.bmp
-S ../texture_pack/terminal_frame_1024x512_2.bmp
+R 2000 1500
+NO ./texture_pack/wall_text_9_512.bmp
+SO ./texture_pack/wall_text_10_512.bmp
+EA ./texture_pack/wall_text_5_512.bmp
+WE ./texture_pack/wall_text_6_512.bmp
+S ./texture_pack/terminal_frame_1024x512_2.bmp
 C 15,17,20
 F 23,29,32
 
@@ -17,5 +17,5 @@ F 23,29,32
 100000000000001
 100000000000001
 100000000000001
-1000000E0000001
+1000000N0000001
 111111111111111

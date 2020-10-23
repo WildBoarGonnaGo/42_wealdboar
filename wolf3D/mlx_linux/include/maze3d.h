@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 01:37:56 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/23 10:22:22 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/23 15:38:33 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@
 # include <string.h>
 # include <libft.h>
 # include <fcntl.h>
-# include <errno.h>
-# include <stdio.h>
-# include <mlx.h>
+# include "mlx.h"
 # include "colors.h"
-# include <libft.h>
+# include "libft.h"
 # include <math.h>
 
 # define STRT_DIR 2 * M_PI
@@ -67,6 +65,7 @@ typedef	struct			s_map_conf
 	int			**map_grid;
 	int			slot;
 	int			map_size[2];
+	int			max_res[2];
 	int			player_pos[2];
 	int			item_count;
 	int			player_indx;
@@ -148,7 +147,7 @@ typedef struct			s_raycast
 void					memreset(void **mem);
 void					*memrealloc(void *mem, int oldsize, int addbyte);
 int						check_filepath(char *path);
-t_map_conf				map_init_input(char *path);
+t_map_conf				map_init_input(char *path, int *max_res);
 t_route_pass			*create_list(int x, int y);
 t_route_pass			*add_frwrd(t_route_pass *cur_list, int x, int y);
 int						data_exist(t_route_pass *init, int x, int y);
@@ -169,7 +168,7 @@ int						render_scene(t_raycast *render_tools);
 void					init_render_tools(t_map_conf *src, t_raycast *dst);
 int						check_filepath(char *path);
 void					map_stat_init(t_map_conf *init, t_bitmap *cl_color,
-						t_bitmap *fl_color);
+						t_bitmap *fl_color, int *max);
 void					strcolor_reset(t_map_conf *init);
 void					check_if_texture_ex(char *filepath, char **texture,
 						t_map_conf *cub_stat, int offset);
@@ -209,5 +208,7 @@ void					map_grid_reset(t_map_conf *obj, int *pos);
 void					err_invalid_char(t_map_conf *obj, int *pos);
 void					player_pos_ansys(int *pos, t_map_conf *obj);
 void					err_invalid_player(t_map_conf *obj, int *pos);
+void					path_exit(void);
+void					max_res_config(t_map_conf *obj);
 
 #endif

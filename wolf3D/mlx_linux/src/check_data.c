@@ -6,13 +6,13 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 00:34:39 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/23 10:24:26 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/23 12:54:45 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/get_next_line.h"
+#include "../include/get_next_line_bonus.h"
 #include "../include/maze3d.h"
-#include <libft.h>
+#include "../include/libft.h"
 
 void	ew_case(t_map_conf *obj, int dir_factor)
 {

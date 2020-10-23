@@ -1,19 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycaster.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/12 10:36:26 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/22 17:18:44 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/23 15:51:16 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
-#include <mlx.h>
-#include "../include/colors.h"
-#include "../include/maze3d.h"
+#include "./include/maze3d.h"
 
 void	purge_impostor_map(t_map_conf *obj)
 {
@@ -23,6 +20,10 @@ void	purge_impostor_map(t_map_conf *obj)
 	while (++i < obj->map_size[0])
 		memreset((void **)(obj->map_grid + i));
 	memreset((void **)&obj->map_grid);
+	i = -1;
+	while (++i < obj->item_count)
+		memreset((void **)(obj->item_pos + i));
+	memreset((void **)&obj->item_pos);
 }
 
 void	info_handle(t_map_conf *cub_file_info, t_raycast *scene_rndr)
@@ -52,7 +53,8 @@ int		main(int argc, char *argv[])
 		ft_putstr_fd("Error.\nWrong number of arguments.\n", 2);
 		exit(-1);
 	}
-	cub_file_info = map_init_input(argv[1]);
+	max_res_config(&cub_file_info);
+	cub_file_info = map_init_input(argv[1], cub_file_info.max_res);
 	info_handle(&cub_file_info, &scene_rndr);
 	if (argc == 3)
 	{

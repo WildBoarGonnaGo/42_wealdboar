@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/17 14:07:24 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/22 00:43:57 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/23 13:36:42 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int				save_state(t_raycast *render_tools)
 {
 	mlx_put_image_to_window(render_tools->xorg, render_tools->winx,
 	render_tools->img_rndr.img, 0, 0);
-	write_bmp_file("../deepthought.bmp", *render_tools);
+	write_bmp_file("./deepthought.bmp", *render_tools);
 	mlx_clear_window(render_tools->xorg, render_tools->winx);
 	if (render_tools->img_rndr.img)
 		mlx_destroy_image(render_tools->xorg, render_tools->img_rndr.img);
