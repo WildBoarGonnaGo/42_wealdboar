@@ -6,7 +6,7 @@
 /*   By: wealdboar <wealdboar@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 23:24:18 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/23 16:33:09 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/27 21:57:59 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void			resolution_def(t_map_conf *cub_stat)
 			memreset((void **)(cub_stat->info_handle + i));
 		memreset((void **)&cub_stat->info_handle);
 		memreset((void **)&cub_stat->arr_purge);
-		ft_putstr_fd("Error.\nNot enough resolution data", 2);
+		ft_putstr_fd("Error.\nNot enough resolution data ", 2);
 		ft_putstr_fd("to compute further.\n", 2);
 		exit(-1);
 	}
@@ -69,7 +69,13 @@ void			def_map_stats(t_map_conf *cub_stat, char *line,
 	else if (!ft_strncmp("C", *cub_stat->info_handle, 1))
 		color_define(cub_stat, cl_color, &cub_stat->ceil_color, 6);
 	else if (!**cub_stat->info_handle)
-		return ;
+	{
+		if (((cub_stat->map_stat >> 8) & 1))
+		{
+			ft_putstr_fd("Error.\nEmpty string within the map.\n", 2);
+			exit(-1);
+		}
+	}
 	else
 		map_build(cub_stat, line);
 }

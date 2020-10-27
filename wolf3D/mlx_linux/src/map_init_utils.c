@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 18:16:33 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/23 12:51:34 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/10/27 21:57:40 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ void			line_def(char *line, t_map_conf *cub_stat)
 
 void			map_build(t_map_conf *cub_stat, char *line)
 {
+	if (!((cub_stat->map_stat >> 8) & 1))
+		cub_stat->map_stat |= (1 << 8);
 	if (!(cub_stat->map = (char **)memrealloc(cub_stat->map, sizeof(char *)
 	* cub_stat->slot, sizeof(char *))))
 		map_build_error(cub_stat);
