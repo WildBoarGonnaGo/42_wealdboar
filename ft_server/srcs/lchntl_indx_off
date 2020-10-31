@@ -1,0 +1,25 @@
+server
+{
+	listen 80 default_server;
+	listen [::]:80 default_server;
+	server_name localhost;
+	return 301 https://$host$request_uri;
+}
+server
+{
+	listen 443 ssl default_server;
+	listen [::]:443 ssl default_server;
+	ssl on;
+	ssl_certificate /etc/ssl/certs/lchantel.crt;
+	ssl_certificate_key /etc/ssl/private/lchantel.key;
+	root /var/www/html;
+	server_name localhost;
+	index index.php index.htm index.html;
+	location / {
+		try_files $uri $uri/ =404;
+	}
+	location ~ \.php$ {
+		include snippets/fastcgi-php.conf;
+		fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+	}
+}

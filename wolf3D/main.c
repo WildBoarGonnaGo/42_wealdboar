@@ -3,35 +3,81 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
+/*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/14 03:37:53 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/08/15 17:14:13 by lchantel         ###   ########.fr       */
+/*   Created: 2020/09/12 10:36:26 by lchantel          #+#    #+#             */
+/*   Updated: 2020/10/24 01:11:13 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "colors.h"
-#include "utils.h"
-#include <stdio.h>
+#include "./include/maze3d.h"
 
-int	main(int argc, char *argv[])
+void	argc_err(t_raycast *scene_rndr)
 {
-	bitmap _obj;
-	bitmap _blk;
-	bitmap _dist;
-	double	dist = 0.75;
+	raycast_exit_proc_fin(scene_rndr);
+	ft_putstr_fd("Error.\nWrong 3-rd argv argument.\n", 2);
+	exit(-1);
+}
 
-	char 	*str[2];
-	if (argc != 2)
-		return (0);
-	_obj._clrfull = ft_atou_base(argv[1], 16);
-	printf("origin color hex code: %s\n", argv[1]);
-	printf("orgin color dec number: %u\n", _obj._clrfull);
-	_dist = add_shade(dist, _obj);
-	str[0] = gethex_impl(_dist._clrfull);
-	str[1] = str[0];
-	printf("new color hex code: %s\n", str[0]);	
-	ft_memreset((void **)&str[1]);
-	printf("new color dec number: %d\n", _dist._clrfull);
-	return (0);
+void	purge_impostor_map(t_map_conf *obj)
+{
+	int	i;
+
+	i = -1;
+	while (++i < obj->map_size[0])
+		memreset((void **)(obj->map_grid + i));
+	memreset((void **)&obj->map_grid);
+	i = -1;
+	while (++i < obj->item_count)
+		memreset((void **)(obj->item_pos + i));
+	memreset((void **)&obj->item_pos);
+}
+
+void	info_handle(t_map_conf *cub_file_info, t_raycast *scene_rndr)
+{
+	calc_map_size(cub_file_info);
+	impostor_map(cub_file_info);
+	if (!map_ansys(*cub_file_info))
+	{
+		ft_putstr_fd("Error.\nInvalid map to work with.\n", 2);
+		exit(-1);
+	}
+	purge_impostor_map(cub_file_info);
+	impostor_map(cub_file_info);
+	init_render_tools(cub_file_info, scene_rndr);
+	scene_rndr->xorg = mlx_init();
+}
+
+int		close_window(t_raycast *scene_rndr)
+{
+	raycast_exit_proc_fin(scene_rndr);
+	exit(0);
+}
+
+int		main(int argc, char *argv[])
+{
+	t_map_conf	cub_file_info;
+	t_raycast	scene_rndr;
+
+	if (argc < 2 || argc > 3)
+	{
+		ft_putstr_fd("Error.\nWrong number of arguments.\n", 2);
+		exit(-1);
+	}
+	max_res_config(&cub_file_info);
+	cub_file_info = map_init_input(argv[1], cub_file_info.max_res);
+	info_handle(&cub_file_info, &scene_rndr);
+	if (argc == 3)
+	{
+		if (!(ft_strncmp("--save", argv[2], 6)))
+			save_option_true(&scene_rndr);
+		else
+			argc_err(&scene_rndr);
+	}
+	scene_rndr.winx = mlx_new_window(scene_rndr.xorg, scene_rndr.width,
+	scene_rndr.height, "cub3d");
+	mlx_hook(scene_rndr.winx, 2, 1L << 0, keymap_interface, &scene_rndr);
+	mlx_loop_hook(scene_rndr.xorg, render_scene, &scene_rndr);
+	mlx_hook(scene_rndr.winx, 17, 0, close_window, &scene_rndr);
+	mlx_loop(scene_rndr.xorg);
 }
