@@ -6,11 +6,12 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/12 10:36:26 by lchantel          #+#    #+#             */
-/*   Updated: 2020/10/24 01:11:13 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/11/02 22:48:31 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/maze3d.h"
+#include <stdio.h>
 
 void	argc_err(t_raycast *scene_rndr)
 {
@@ -50,6 +51,7 @@ void	info_handle(t_map_conf *cub_file_info, t_raycast *scene_rndr)
 
 int		close_window(t_raycast *scene_rndr)
 {
+	printf("Jump Flag\n");
 	raycast_exit_proc_fin(scene_rndr);
 	exit(0);
 }
