@@ -15,3 +15,9 @@
 <https://vk.com/doc-42890483_447409543?hash=6c43a3e632f899e2fc>
 + Столяров касательно NASM (pdf)
 <http://www.stolyarov.info/books/pdf/nasm_unix.pdf>
++ Таблицы системных вызовов для различных архитектур
+<https://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md>
++ NASM: operation size not specified issue
+<https://stackoverflow.com/questions/38297648/error-operation-size-not-specified-nasm>
++ Debugging assembly with gdb
+<https://ncona.com/2019/12/debugging-assembly-with-gdb/>
