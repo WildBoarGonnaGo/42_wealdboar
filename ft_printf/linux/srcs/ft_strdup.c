@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 04:15:33 by lchantel          #+#    #+#             */
-/*   Updated: 2020/07/11 21:09:03 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/11/12 16:40:21 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strdup(const char *s)
 
 	len = ft_strlen(s) + 1;
 	if (!(str = (char *)malloc(len)))
-		return (NULL);
+		return (null);
 	ft_strlcpy(str, s, len);
 	return (str);
 }
