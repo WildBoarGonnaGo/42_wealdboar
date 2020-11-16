@@ -51,7 +51,7 @@ int		is_str_valid(char *str, char *base)
 	return (1);
 }
 
-int		seek_pos(char c, char *base)
+int		seek_pos(char *str, char *base)
 {
 	int	i;
 
@@ -59,7 +59,7 @@ int		seek_pos(char c, char *base)
 	while (*base)
 	{
 		++i;
-		if (*base == c)
+		if (*base == *str)
 			return (i);
 		++base;
 	}
@@ -81,8 +81,11 @@ int 	ft_atoi_base(char *str, char *base)
 	while (*str > 8 && *str < 14)
 		++str;
 	if (*str == '+' || *str == '-')
+	{
 		if (*str == '-')
 			sign = -1;
+		++str;
+	}
 	number = 0;
 	num_base = ft_strlen(base);
 	while (*str)

@@ -23,3 +23,5 @@
 <https://ncona.com/2019/12/debugging-assembly-with-gdb/>
 + Таблица системных вызовов для языка ассемблер
 <https://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md#x86_64-64_bit>
++ Работа с .bss и .data
+<http://courses.ics.hawaii.edu/ReviewICS312/morea/X86NASM/ics312_nasm_data_bss.pdf>

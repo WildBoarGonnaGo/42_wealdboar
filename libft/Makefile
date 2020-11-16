@@ -6,7 +6,7 @@
 #    By: lchantel <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/30 10:53:46 by lchantel          #+#    #+#              #
-#    Updated: 2020/05/17 19:18:58 by lchantel         ###   ########.fr        #
+#    Updated: 2020/11/16 23:37:54 by lchantel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ SRC = ft_atoi.c			\
 	ft_substr.c			\
 	ft_tolower.c		\
 	ft_toupper.c		\
-	ft_calloc.c			\
+3	ft_calloc.c			\
 	ft_lstnew.c			\
 	ft_lstadd_front.c	\
 	ft_lstsize.c		\

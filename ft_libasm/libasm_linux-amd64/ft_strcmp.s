@@ -2,22 +2,26 @@ global ft_strcmp
 
 section	.text
 ft_strcmp:
-	mov		rax, 0
-cmp:	
+	xor		rax, rax
+	cmp 	rdi, 0
+	jz		.exproc
+	cmp		rsi, 0
+	jz		.exproc
+.cmp:	
 	add		al, byte [rdi]
 	sub		al, byte [rsi]
 	cmp		al, 0
-	jge		posit
+	jge		.posit
 	sub		rax, 256
-posit:
+.posit:
 	cmp		byte [rsi], 0
-	je		exproc
+	je		.exproc
 	cmp		byte [rdi], 0
-	je		exproc
+	je		.exproc
 	cmp		rax, 0
-	jne		exproc
+	jne		.exproc
 	inc		rdi
 	inc		rsi
-	jmp		cmp
-exproc:
+	jmp		.cmp
+.exproc:
 	ret

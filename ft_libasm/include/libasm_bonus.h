@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libasm.h                                           :+:      :+:    :+:   */
+/*   libasm_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 23:32:11 by lchantel          #+#    #+#             */
-/*   Updated: 2020/11/16 22:42:25 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/11/16 22:28:08 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ char					*ft_strcpy(char *dst, char *src);
 int						ft_strcmp(const char *s1, const char *s2);
 char					*ft_strdup(const char *s);
 ssize_t					ft_write(int fd, const void *buf, size_t count);
-ssize_t					ft_read(int fd, const void *buf, size_t count);
+int						ft_atoi_base(char *str, char *base);
+void					ft_list_push_front(t_list **begin_list, void *data);
+int						ft_list_size(t_list *begin_list);
 
 #endif
