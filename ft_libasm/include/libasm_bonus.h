@@ -6,12 +6,12 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 23:32:11 by lchantel          #+#    #+#             */
-/*   Updated: 2020/11/17 22:02:43 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/11/18 00:26:43 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBASM_H
-# define LIBASM_H
+#ifndef LIBASM_BONUS_H
+# define LIBASM_BONUS_H
 
 # include <stdio.h>
 # include <stdlib.h>
