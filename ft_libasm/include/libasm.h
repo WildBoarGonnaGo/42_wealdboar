@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 23:32:11 by lchantel          #+#    #+#             */
-/*   Updated: 2020/11/16 22:42:25 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/11/17 22:30:46 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,6 @@
 # include <string.h>
 # include <errno.h>
 # include <unistd.h>
-
-typedef struct			s_list
-{
-	void				*data;
-	struct s_list		*next;
-}						t_list;
 
 void					ft_putchar(char c);
 int						ft_strlen(char *str);

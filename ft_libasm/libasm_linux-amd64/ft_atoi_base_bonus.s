@@ -116,6 +116,11 @@ section .text
 
 ft_atoi_base:
 section .text
+	xor		rax, rax
+	cmp		rdi, 0x0
+	jz		.nullexc
+	cmp		rsi, 0x0
+	jz		.nullexc
 	mov		r8, 1
 .space:
 	cmp		byte [rdi], 32
@@ -177,4 +182,6 @@ section .text
 	pop		rdi
 	mov		rax, rcx
 	mul		r8
+	ret
+.nullexc:
 	ret

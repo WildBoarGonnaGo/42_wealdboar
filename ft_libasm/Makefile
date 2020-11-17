@@ -6,23 +6,23 @@
 #    By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/24 04:55:09 by wealdboar         #+#    #+#              #
-#    Updated: 2020/11/16 22:25:43 by lchantel         ###   ########.fr        #
+#    Updated: 2020/11/17 22:00:35 by lchantel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 LIB =		./lib/libasm.a
 EXEC_FILE =	cub3d
 
-SRC =		./libasm_linux-amd64/ft_read.s				\
-	 		./libasm_linux-amd64/ft_strcmp.s			\
-			./libasm_linux-amd64/ft_strcpy.s			\
-			./libasm_linux-amd64/ft_strdup.s			\
-			./libasm_linux-amd64/ft_strlen.s			\
-			./libasm_linux-amd64/ft_write.s				\
+SRC =		./libasm_linux-amd64/ft_read.s						\
+	 		./libasm_linux-amd64/ft_strcmp.s					\
+			./libasm_linux-amd64/ft_strcpy.s					\
+			./libasm_linux-amd64/ft_strdup.s					\
+			./libasm_linux-amd64/ft_strlen.s					\
+			./libasm_linux-amd64/ft_write.s						\
 
-BONUS_SRC = ./libasm_linux-amd64/ft_atoi_base.s			\
-			./libasm_linux-amd64/ft_list_push_front.s	\
-			./libasm_linux-amd64/ft_list_size.s			\
+BONUS_SRC = ./libasm_linux-amd64/ft_atoi_base_bonus.s			\
+			./libasm_linux-amd64/ft_list_push_front_bonus.s		\
+			./libasm_linux-amd64/ft_list_size_bonus.s			\
 
 ASM = nasm
 FLAGS = -f elf64 -F dwarf -g

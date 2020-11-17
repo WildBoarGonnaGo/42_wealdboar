@@ -7,9 +7,9 @@ t_list			*ft_create_elem(void *data)
 	t_list		*rage;
 	
 	if (!(rage = (t_list *)malloc(sizeof(t_list))))
-		return (NULL);
+		return (null);
 	rage->data = data;
-	rage->next = NULL;
+	rage->next = null;
 	return (rage);
 }
 
@@ -21,7 +21,7 @@ void			ft_list_push_back(t_list **begin_list, void *data)
 	loop = *begin_list;
 	rage = (t_list *)malloc(sizeof(t_list));
 	rage->data = data;
-	rage->next = NULL;
+	rage->next = null;
 	while (loop->next)
 		loop = loop->next;
 	loop->next = rage;

@@ -3,6 +3,9 @@ extern malloc
 
 ft_list_push_front:
 section .text
+	xor		rax, rax
+	cmp		rdi, 0
+	jz		.return
 	push	rax
 	push	rdi
 	push	rsi
@@ -19,4 +22,5 @@ section .text
 	mov		[rcx], rdx
 	pop		rcx
 	mov		[rdi], rcx
+.return:
 	ret
