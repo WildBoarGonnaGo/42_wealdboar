@@ -1,0 +1,20 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name localhost;
+    redirect 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl default_server;
+    listen [::]:443 ssl default_server;
+    root /www/
+    ssl on
+    ssl_certificate /etc/ssl/certs/lchantel.crt
+    ssl_certificate_key /etc/ssl/private/lchantel.key
+    index index.html
+    location / {
+        try_files $uri $uri/ =404
+    }
+    
+}

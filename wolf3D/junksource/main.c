@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
+/*   By: lchantel <lchantel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/31 03:05:23 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/10/18 21:28:53 by lchantel         ###   ########.fr       */
+/*   Created: 2020/11/26 16:03:20 by lchantel          #+#    #+#             */
+/*   Updated: 2020/11/26 16:03:30 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/maze3d.h"
 
 int	main(void)
 {
