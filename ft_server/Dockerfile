@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Dockerfile                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lchantel <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: lchantel <lchantel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/30 18:09:21 by lchantel          #+#    #+#              #
-#    Updated: 2020/10/30 18:12:48 by lchantel         ###   ########.fr        #
+#    Updated: 2020/11/26 23:37:16 by lchantel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM debian:buster
 RUN apt-get -y update && apt-get -y upgrade
-RUN apt-get install -y nginx mariadb-server php7.3 \ 
+RUN apt-get install -y nginx mariadb-server php7.3 \
 php7.3-common php7.3-xmlrpc php7.3-soap php7.3-intl php7.3-cli php7.3-curl \
 php7.3-fpm php7.3-mysql php7.3-mbstring php7.3-zip php7.3-gd php7.3-xml php-pear \
 php7.3-gettext php7.3-cgi curl wget
@@ -33,7 +33,7 @@ COPY ./srcs/indx_disable.sh .
 #install phpMyAdmin
 #create phpMyAdmin install directory
 RUN mkdir /var/www/html/phpmyadmin
-#download 
+#download
 RUN wget https://files.phpmyadmin.net/phpMyAdmin/5.0.4/phpMyAdmin-5.0.4-english.tar.gz -O phpmyadmin.tar.gz
 RUN tar xzf phpmyadmin.tar.gz
 RUN mv /phpMyAdmin-5.0.4-english/* ./var/www/html/phpmyadmin/
