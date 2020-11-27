@@ -2,6 +2,8 @@ apiVerison: v1
 Kind: Pod
 metadata:
     name: nginx
+    labels:
+        app: nginx
 spec:
     containers:
     name: nginx

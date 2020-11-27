@@ -11,5 +11,11 @@
 <https://kapeli.com/cheat_sheets/Dockerfile.docset/Contents/Resources/Documents/index>
 + Connection to the docker daemon socket failure
 <https://stackoverflow.com/questions/48957195/how-to-fix-docker-got-permission-denied-issue>
-+ Alpine Linux and Nginx
++ Alpine Linux и Nginx
 <https://wiki.alpinelinux.org/wiki/Nginx>
++ MetalLB оффициальный сайт
+<https://metallb.universe.tf/>
++ Настройка mysql в alpine
+<https://wiki.alpinelinux.org/wiki/Mysql>
++ Настройка и работа в MariaDB для начинающих
+<https://www.tecmint.com/learn-mysql-mariadb-for-beginners/>
