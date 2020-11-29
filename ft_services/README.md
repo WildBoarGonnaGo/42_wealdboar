@@ -1,5 +1,5 @@
 # ft_services
-### Полезные ссылки
+## Полезные ссылки
 
 + Лекция по ft_services
 <https://cloud.mail.ru/public/4tZj/52wEKRKwL>
@@ -15,7 +15,16 @@
 <https://wiki.alpinelinux.org/wiki/Nginx>
 + MetalLB оффициальный сайт
 <https://metallb.universe.tf/>
++ Работа с openrc
+<https://docs.alpinelinux.org/user-handbook/0.1a/Working/openrc.html>
+
+### Настройка MySQL (mariadb) в Alpine Linux
+
 + Настройка mysql в alpine
 <https://wiki.alpinelinux.org/wiki/Mysql>
 + Настройка и работа в MariaDB для начинающих
 <https://www.tecmint.com/learn-mysql-mariadb-for-beginners/>
++ Оффициальный сайт mariadb
+<https://mariadb.com>
++ Как поднять docker на macos
+<

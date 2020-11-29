@@ -6,7 +6,7 @@
 /*   By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/26 22:40:40 by wealdboar         #+#    #+#             */
-/*   Updated: 2020/08/28 00:00:49 by wealdboar        ###   ########.fr       */
+/*   Updated: 2020/11/29 15:22:28 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,14 +166,10 @@ void			ft_stdx(_obj *proc)
 	++proc->i;
 	num = va_arg(proc->list, unsigned int);
 	proc->len = ft_numlen_base(num, 16);
-	/*if (!num && proc->if_precis)
-		proc->len = 0;*/
 	if (proc->if_precis && (proc->precis -= proc->len) > 0)
 		proc->zero = proc->precis;
 	ft_putchar_len(proc->width - proc->zero - proc->len, ' ', &proc);
 	ft_putchar_len(proc->zero, '0', &proc);
-	/*if (proc->if_precis && !num)
-		return ;*/
 	ft_stdnum_base(num, 16, "0123456789abcdef");
 	proc->output += proc->len;
 }
