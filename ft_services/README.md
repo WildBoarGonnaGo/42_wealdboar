@@ -17,7 +17,20 @@
 <https://metallb.universe.tf/>
 + Работа с openrc
 <https://docs.alpinelinux.org/user-handbook/0.1a/Working/openrc.html>
++ Metallb
+<https://metallb.universe.tf/installation/>
 
+### Kubernetes
++ Шпаргалка по kubernetes
+<https://kubernetes.io/docs/reference/kubectl/cheatsheet/>
+
+### Настройка PhpMyAdmin в Alpine Linux
+Настройка:
+<https://wiki.alpinelinux.org/wiki/PhpMyAdmin>
+Соединение с MySql: 
+<https://medium.com/@_sathishshan/accessing-remote-database-server-from-local-phpmyadmin-client-97d4bee5242e>
+Информация по kubectl:
+<https://kubernetes.io/docs/reference/kubectl/>
 ### Настройка MySQL (mariadb) в Alpine Linux
 
 + Настройка mysql в alpine
@@ -26,5 +39,3 @@
 <https://www.tecmint.com/learn-mysql-mariadb-for-beginners/>
 + Оффициальный сайт mariadb
 <https://mariadb.com>
-+ Как поднять docker на macos
-<

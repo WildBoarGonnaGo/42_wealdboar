@@ -11,6 +11,12 @@
 + Raycasting Basics with JavaScript: <https://courses.pikuma.com/courses/raycasting>
 
 ## Vim text editor
-+ Vim key mapping tutorial
++ Vim назначение клавиш
 <https://vim.fandom.com/wiki/Mapping_keys_in_Vim_-_Tutorial_(Part_1)>
++ Как превратить Vim в IDE
+<https://vim.fandom.com/wiki/Use_Vim_like_an_IDE>
 
+## Tmux
+
++ Конфигурация tmux
+<https://www.hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/>

@@ -14,7 +14,6 @@ FROM alpine:latest
 RUN apk update && apk upgrade -a -U
 RUN apk add mysql mysql-client openrc
 RUN chown -R mysql:mysql /var/lib/mysql/
-RUN	rc default 
 COPY ./my.cnf /etc/
 COPY ./secure_config.sh /root
 RUN /etc/init.d/mariadb setup
