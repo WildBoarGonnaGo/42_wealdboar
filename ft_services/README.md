@@ -25,14 +25,14 @@
 <https://kubernetes.io/docs/reference/kubectl/cheatsheet/>
 
 ### Настройка PhpMyAdmin в Alpine Linux
-Настройка:
++ Настройка:
 <https://wiki.alpinelinux.org/wiki/PhpMyAdmin>
-Соединение с MySql: 
++ Соединение с MySql: 
 <https://medium.com/@_sathishshan/accessing-remote-database-server-from-local-phpmyadmin-client-97d4bee5242e>
-Информация по kubectl:
++ Информация по kubectl:
 <https://kubernetes.io/docs/reference/kubectl/>
-### Настройка MySQL (mariadb) в Alpine Linux
 
+### Настройка MySQL (mariadb) в Alpine Linux
 + Настройка mysql в alpine
 <https://wiki.alpinelinux.org/wiki/Mysql>
 + Настройка и работа в MariaDB для начинающих
