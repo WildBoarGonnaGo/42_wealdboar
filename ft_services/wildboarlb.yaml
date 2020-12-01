@@ -6,8 +6,21 @@
 #    By: lchantel <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/30 16:44:53 by lchantel          #+#    #+#              #
-#    Updated: 2020/12/01 14:38:25 by lchantel         ###   ########.fr        #
+#    Updated: 2020/12/01 16:55:16 by lchantel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-apiVersion: apps/v1
+apiVersion: core/v1
+kind: ConfigMap
+metadata:
+    namespace: metallb-system
+    name: config
+data:
+    config: |
+        address-pools:
+        - name: default
+          protocol: layer2
+          addresses:
+          - 192.168.1.240-192.168.1.250
+
+       

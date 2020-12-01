@@ -23,6 +23,9 @@
 ### Kubernetes
 + Шпаргалка по kubernetes
 <https://kubernetes.io/docs/reference/kubectl/cheatsheet/>
++ Kubernetes API objects overview
+<https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/>
+
 
 ### Настройка PhpMyAdmin в Alpine Linux
 + Настройка:
@@ -31,6 +34,10 @@
 <https://medium.com/@_sathishshan/accessing-remote-database-server-from-local-phpmyadmin-client-97d4bee5242e>
 + Информация по kubectl:
 <https://kubernetes.io/docs/reference/kubectl/>
+
+### Настройка Wordpress в Alpine Linux
++ Оффициальная страница по настройке
+<https://metallb.universe.tf/configuration/>
 
 ### Настройка MySQL (mariadb) в Alpine Linux
 + Настройка mysql в alpine

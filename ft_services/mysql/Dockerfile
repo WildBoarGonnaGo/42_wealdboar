@@ -6,7 +6,7 @@
 #    By: lchantel <lchantel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/27 16:35:16 by lchantel          #+#    #+#              #
-#    Updated: 2020/11/29 20:31:10 by lchantel         ###   ########.fr        #
+#    Updated: 2020/12/01 17:34:45 by lchantel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,4 +24,6 @@ RUN sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf
 RUN sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf.d/mariadb-server.cnf
 RUN sed -i "s|.*skip-networking.*|skip-networking|g" /etc//my.cnf
 RUN sed -i "s|.*skip-networking.*|skip-networking|g" /etc/my.cnf.d/mariadb-server.cnf
+RUN rc default
+RUN 
 CMD rc default 
