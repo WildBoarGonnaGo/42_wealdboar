@@ -6,7 +6,7 @@
 #    By: lchantel <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/29 20:31:22 by lchantel          #+#    #+#              #
-#    Updated: 2020/11/29 20:37:05 by lchantel         ###   ########.fr        #
+#    Updated: 2020/12/02 20:49:21 by lchantel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,5 +23,6 @@ RUN cp -R phpMyAdmin-5.0.4-english /var/www/phpmyadmin
 RUN mv phpMyAdmin-5.0.4-english /usr/share/webapps/phpmyadmin
 RUN rm -rf phpMyAdmin-5.0.4-english.tar.gz
 RUN chmod -R 777 /usr/share/webapps/
+EXPOSE 5000
 CMD rc-update add lighttpd default && rc default 
 # && /bin/sh

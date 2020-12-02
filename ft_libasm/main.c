@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 13:16:03 by lcreola           #+#    #+#             */
-/*   Updated: 2020/11/17 23:00:59 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/12/01 21:23:43 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,7 @@ void			ft_list_push_back(t_list **begin_list, void *data)
 	while (loop->next)
 		loop = loop->next;
 	loop->next = rage;
-}
-
-void		
+}		
 
 int		main(void)
 {
