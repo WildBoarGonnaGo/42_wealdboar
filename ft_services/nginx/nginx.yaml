@@ -1,4 +1,18 @@
 apiVerison: v1
+kind: Service
+metadata:
+    name: nginx
+    annotations:
+        metallb.universe.tf/allow-shared-ip
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: nginx
+  type: LoadBalancer 
+---
+apiVerison: v1
 kind: Pod
 metadata:
     name: nginx
@@ -7,5 +21,7 @@ metadata:
 spec:
     containers:
     name: nginx
-    image: nginx-servimg
+    image: wbnginx
+    targetPort:
+        80;
     imagePullPolicy: never
