@@ -13,15 +13,22 @@ typedef	struct	s_rctngl
 	int		i;
 	int		row;
 	int		fd;
+	float	x;
+	float	y;
 	float	rectw;
 	float	recth;
 	float	buf;
+	char	st;
+	char	stt;
 	char	back;
-	char	bound;
-	char	fill;
+	char	eol;
 	int		**field;
 }				t_rctngl;
 
 void	create_field(t_rctngl *obj);
+void	draw_empty(t_rctngl *obj);
+void	draw_fill(t_rctngl *obj);
+int		ft_strlen(const char *str);
+int		check_row(FILE *fd, t_rctngl *obj);
 
 # endif

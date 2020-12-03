@@ -1,27 +1,44 @@
 apiVerison: v1
 kind: Service
 metadata:
-    name: nginx
+    name: wbnginx
     annotations:
         metallb.universe.tf/allow-shared-ip
 spec:
+  type: LoadBalancer
+  LoadBalancerIP: 192.168.1.101 
   ports:
   - port: 80
-    targetPort: 80
+    name: http
+    protocol: TCP
+    targetPort: 80  
+  - port: 443
+    name: https
+    protocol: TCP
+    targetPort: 443
+  - port: 22
+    name: ssh
+    protocol: TCP
+    targetPort: 22
   selector:
-    app: nginx
-  type: LoadBalancer 
+    app: nginx 
 ---
-apiVerison: v1
-kind: Pod
+apiVerison: apps/v1
+kind: Deployment
 metadata:
-    name: nginx
+    name: wbnginx-depl
     labels:
         app: nginx
+template:
+    metadata:
+        labels:
+            app: nginx
 spec:
     containers:
-    name: nginx
-    image: wbnginx
-    targetPort:
-        80;
-    imagePullPolicy: never
+    - name: nginx
+      image: wbnginx;
+      imagePullPolicy: never
+      ports:
+      - containerPort: 80
+      - containerPort: 443
+      - containerPort: 22

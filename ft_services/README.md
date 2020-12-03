@@ -19,6 +19,8 @@
 <https://kubernetes.io/docs/reference/kubectl/cheatsheet/>
 + Kubernetes API objects overview
 <https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/>
++ Настройка Minikube
+<https://forhjy.medium.com/42-ft-service-how-to-install-kubernetes-metallb-30d66f92d726>
 
 ### Настройка Nginx в Alpine Linux
 + Alpine Linux и Nginx
