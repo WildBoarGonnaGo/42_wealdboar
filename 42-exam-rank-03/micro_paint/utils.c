@@ -1,66 +1,147 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/04 22:15:44 by lchantel          #+#    #+#             */
+/*   Updated: 2020/12/05 00:31:17 by lchantel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "micro_paint.h"
 
-int		ft_ceil(float a)
+int ft_ceil(float a)
 {
-	if ((a - (int)a) > 0)
-		return ((int)(a + 1));
+	if (a - (int)a > 0)
+		return ((int)a + 1);
 	else
 		return ((int)a);
 }
 
-int		ft_strlen(const char *str)
+int	ft_strlen(const char *str)
 {
-	int	len;
+	int i;
 
-	len = -1;
-	while (*(str + ++len))
+	i = -1;
+	while (*(str + ++i))
 		;
-	return (len);
+	return (i);
 }
 
-void	create_field(t_rctngl *obj)
+void create_field(t_rect *obj)
 {
-	int	pos[2];
+	int pos[2];
 
 	pos[0] = -1;
 	obj->i = -1;
-	obj->field = (int **)calloc(obj->height, sizeof(int *));
-	while (++obj->i < obj->width)
-		*(obj->field + obj->i) = (int *)calloc(obj->width, sizeof(int));
-	pos[0] = -1;
-	while (++pos[0] < obj->height)
+	obj->arr = (int **)calloc(obj->h, sizeof(int *));
+	while (++obj->i < obj->h)
+		obj->arr[obj->i] = (int *)calloc(obj->w, sizeof(int));
+	while (++pos[0] < obj->h)
 	{
 		pos[1] = -1;
-		while (++pos[1] < obj->width)
-			obj->field[pos[0]][pos[1]] = obj->back;
+		while (++pos[1] < obj->w)
+			obj->arr[pos[0]][pos[1]] = obj->bk;
 	}
 }
 
-void	draw_fill(t_rctngl *obj)
+void create_empty(t_rect *obj)
 {
-	float	pos[2];
+	int pos[2];
 
-	pos[0] = (obj->y - 1);
-	while (++pos[0] < (obj->y + obj->recth))
+	pos[0] = ft_ceil(obj->y);
+	while ((float)pos[0] <= (obj->y + obj->rh) )
 	{
-		pos[1] = (obj->x - 1);
-		while (++pos[1] < (obj->x + obj->rectw))
-			obj->field[ft_ceil(pos[0])][ft_ceil(pos[1])] = obj->stt;
+		pos[1] = ft_ceil(obj->x);
+		while ((float)pos[1] <= (obj->x + obj->rw) && pos[1]< obj->w)
+		{
+			obj->i = ((pos[0] == ft_ceil(obj->y) || pos[0] == (int)(obj->y + obj->rh) ||
+			(pos[0] != ft_ceil(obj->y) && pos[0] != (int)(obj->y + obj->rh) &&
+			(pos[1] == ft_ceil(obj->x) || pos[1] == (int)(obj->x + obj->rw)))) &&
+			pos[0] >= 0 && pos[1] >= 0 && pos[0] < obj->h && pos[1] < obj->w);
+			if (obj->i)
+				obj->arr[pos[0]][pos[1]] = obj->stt;
+			++pos[1];
+		}
+		++pos[0];
 	}
 }
 
-void	draw_empty(t_rctngl *obj)
+void create_fill(t_rect *obj)
 {
-	float	pos[2];
+	int pos[2];
 
-	pos[0] = obj->y - 1;
-	while (++pos[0] < obj->y + obj->recth)
+	pos[0] = ft_ceil(obj->y);
+	while ((float)pos[0] <= (obj->y + obj->rh) && pos[0] >= 0 && pos[0] < obj->h)
 	{
-		pos[1] = (obj->x - 1);
-		while (++pos[1] < (obj->x + obj->rectw))
-			if ((pos[0] == obj->y || pos[0] == obj->y + obj->recth - 1) ||
-				((pos[0] != obj->y && pos[0] != obj->y + obj->recth - 1) && 
-				 (pos[1] == obj->x || pos[1] == obj->x + obj->rectw - 1)))
-			obj->field[ft_ceil(pos[0])][ft_ceil(pos[1])] = obj->stt;
+		pos[1] = ft_ceil(obj->x);
+		while ((float)pos[1] <= (obj->x + obj->rw) && pos[1] >= 0 && pos[1] < obj->w)
+		{
+			obj->i = (pos[0] >= 0 && pos[1] >= 0 && pos[0] < obj->h && pos[1] < obj->w);
+			if (obj->i)
+				obj->arr[pos[0]][pos[1]] = obj->stt;
+			++pos[1];
+		}
+		++pos[0];
 	}
+}
+
+void print_arr(t_rect *obj)
+{
+	int pos[2];
+
+	pos[0] = -1;
+	while (++pos[0] < obj->h)
+	{
+		pos[1] = -1;
+		while (++pos[1] < obj->w)
+		{
+			write(1, &obj->arr[pos[0]][pos[1]], 1);
+			if (pos[1] == obj->w - 1)
+				write(1, "\n", 1);
+		}
+	}
+}
+
+
+int check_row(FILE *fd, t_rect *obj)
+{
+	int st;
+
+	if (!obj->row)
+	{
+		++obj->row;
+		st = fscanf(fd, "%d %d %c%c", &obj->w, &obj->h, &obj->bk, &obj->eol);
+		if (st != 4)
+			return (-1);
+		st = ((obj->w <= 0 || obj->w > 300) || (obj->h <= 0 || obj->h > 300));
+		if (st)
+			return (-1);
+		create_field(obj);	
+	}
+	else
+	{
+		st = fscanf(fd, "%c %f %f %f %f %c%c", &obj->st, &obj->x, 
+		&obj->y, &obj->rw, &obj->rh, &obj->stt, &obj->eol);
+		if (st == -1)
+			return (0);
+		if (st != 7 || (obj->st != 'r' && obj->st != 'R'))
+			return (-1);
+		(obj->st == 'R') ? create_fill(obj) : create_empty(obj);
+	}
+	return (1);
+}
+
+void free_arr(t_rect *obj)
+{
+	obj->i = -1;
+	while (++obj->i < obj->h)
+	{
+		free(*(obj->arr + obj->i));
+		*(obj->arr + obj->i) = NULL;
+	}
+	free(obj->arr);
+	obj->arr = NULL;
 }

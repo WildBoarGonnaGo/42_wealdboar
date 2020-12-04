@@ -1,34 +1,43 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   micro_paint.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/04 23:20:21 by lchantel          #+#    #+#             */
+/*   Updated: 2020/12/04 23:45:42 by lchantel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MICRO_PAINT_H
 # define MICRO_PAINT_H
 
-# include <stdlib.h>
-# include <unistd.h>
-# include <string.h>
-# include <stdio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
-typedef	struct	s_rctngl
+typedef struct	s_rect
 {
-	int		width;
-	int		height;
-	int		i;
 	int		row;
-	int		fd;
+	int 	i;
+	int		w;
+	int		h;
 	float	x;
 	float	y;
-	float	rectw;
-	float	recth;
-	float	buf;
+	float	rw;
+	float	rh;
+	char	bk;
 	char	st;
 	char	stt;
-	char	back;
+	int		**arr;
 	char	eol;
-	int		**field;
-}				t_rctngl;
+}				t_rect;
 
-void	create_field(t_rctngl *obj);
-void	draw_empty(t_rctngl *obj);
-void	draw_fill(t_rctngl *obj);
-int		ft_strlen(const char *str);
-int		check_row(FILE *fd, t_rctngl *obj);
+int				ft_strlen(const char *str);
+int				check_row(FILE *fd, t_rect *obj);
+void			print_arr(t_rect *obj);
+void			free_arr(t_rect *obj);
 
-# endif
+#endif
