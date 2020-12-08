@@ -23,6 +23,8 @@
 <https://forhjy.medium.com/42-ft-service-how-to-install-kubernetes-metallb-30d66f92d726>
 + Kubernetes tutorial
 <https://www.youtube.com/watch?v=X48VuDVv0do>
++ Настройка mysql в kubernetes
+<https://kubernetes.io/docs/tasks/run-application/run-single-instance-stateful-application/>
 
 ### Настройка Nginx в Alpine Linux
 + Alpine Linux и Nginx

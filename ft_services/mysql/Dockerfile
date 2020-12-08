@@ -6,7 +6,7 @@
 #    By: lchantel <lchantel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/27 16:35:16 by lchantel          #+#    #+#              #
-#    Updated: 2020/12/02 20:05:33 by lchantel         ###   ########.fr        #
+#    Updated: 2020/12/09 01:09:51 by lchantel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,4 +28,5 @@ RUN sed -i "s|.*skip-networking.*|skip-networking|g" /etc/my.cnf.d/mariadb-serve
 COPY ./wpdb.sh /
 COPY ./sql_launch.sh /
 RUN chmod 777 /sql_launch.sh
+EXPOSE 3306
 CMD /sql_launch.sh
