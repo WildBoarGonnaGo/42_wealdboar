@@ -1,4 +1,0 @@
-CREATE DATABASE wordpress;
-CREATE USER 'curreg'@'%' IDENTIFIED BY 'root';
-GRANT ALL PRIVILEGES ON wordpress.* TO 'curreg'@'%';
-FLUSH PRIVILEGES;

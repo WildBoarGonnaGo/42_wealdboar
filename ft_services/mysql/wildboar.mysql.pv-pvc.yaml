@@ -9,7 +9,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /home/lchantel/pv_proj
+    path: /home/lchantel/pv_proj/
 
 ---
 

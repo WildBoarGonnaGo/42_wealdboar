@@ -1,4 +1,4 @@
-#!bin/sh
+#!/bin/sh
 
 mysql -e "CREATE DATABASE wordpress;"
 mysql -e "CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';"

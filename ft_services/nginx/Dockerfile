@@ -6,7 +6,7 @@
 #    By: lchantel <lchantel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/26 16:16:21 by lchantel          #+#    #+#              #
-#    Updated: 2020/12/07 19:32:36 by lchantel         ###   ########.fr        #
+#    Updated: 2020/12/10 04:27:16 by lchantel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ RUN chown -R www:www /var/lib/nginx/
 RUN openssl req -x509 -nodes -days 30 -newkey rsa:2048 -subj \
 "/C=RU/ST=Moscow/L=Moscow/O=lchantel/CN=localhost" -keyout \
 /etc/ssl/private/lchantel.key -out /etc/ssl/certs/lchantel.crt
-COPY ./conf /etc/nginx/conf.d/default.conf
+COPY ./default.conf /etc/nginx/conf.d/default.conf
 COPY ./supervisor.conf /etc/supervisord.conf
 RUN mkdir -p /run/nginx/
 EXPOSE 80 443 22
