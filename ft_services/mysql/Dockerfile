@@ -6,13 +6,13 @@
 #    By: lchantel <lchantel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/27 16:35:16 by lchantel          #+#    #+#              #
-#    Updated: 2020/12/10 04:57:51 by lchantel         ###   ########.fr        #
+#    Updated: 2020/12/14 22:04:53 by lchantel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM alpine:latest
 RUN apk update && apk upgrade -a -U
-RUN apk add mysql mysql-client openrc
+RUN apk add mysql mysql-client openrc supervisor
 RUN chown -R mysql:mysql /var/lib/mysql/
 COPY ./my.cnf /etc/
 COPY ./secure_config.sh /root
@@ -23,10 +23,12 @@ RUN chmod 755 /root/secure_config.sh
 RUN /root/secure_config.sh
 RUN sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf
 RUN sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf.d/mariadb-server.cnf
-RUN sed -i "s|.*skip-networking.*|skip-networking|g" /etc//my.cnf
+RUN sed -i "s|.*skip-networking.*|skip-networking|g" /etc/my.cnf
 RUN sed -i "s|.*skip-networking.*|skip-networking|g" /etc/my.cnf.d/mariadb-server.cnf
-# COPY ./wpdb.sh /
-# COPY ./sql_launch.sh /
-# RUN chmod 777 /sql_launch.sh
+COPY ./wpdb.sh .
+COPY ./sql_launch.sh .
+RUN chmod 755 /wpdb.sh
+RUN chmod 755 /sql_launch.sh
+COPY ./supervisord.conf /etc/
 EXPOSE 3306
-# CMD /sql_launch.sh
+CMD /sql_launch.sh

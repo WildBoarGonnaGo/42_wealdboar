@@ -3,24 +3,24 @@ kind: PersistentVolume
 metadata:
   name: pv-mysql
 spec:
-  storageClassName: manual
   capacity:
-    storage: 500mb
+    storage: 500Mi
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /home/lchantel/pv_proj/
+    path: "/home/lchantel/pv_proj/"
 
 ---
 
 apiVersion: v1
 kind: PersistentVolumeClaim
-matadata:
+metadata:
   name: pv-claim-mysql
+  labels:
+    app: mysql
 spec:
-  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   resources:
-    request:
-      storage: 500mb
+    requests:
+      storage: 500Mi

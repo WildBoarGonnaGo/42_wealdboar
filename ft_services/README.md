@@ -41,6 +41,8 @@
 <https://medium.com/@_sathishshan/accessing-remote-database-server-from-local-phpmyadmin-client-97d4bee5242e>
 + Информация по kubectl:
 <https://kubernetes.io/docs/reference/kubectl/>
++ Траблы с сокетом в PhpMyAdmin
+<https://stackoverflow.com/questions/23443398/nginx-error-connect-to-php5-fpm-sock-failed-13-permission-denied>
 
 ### Настройка Wordpress в Alpine Linux
 + Оффициальная страница по настройке

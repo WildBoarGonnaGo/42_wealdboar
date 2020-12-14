@@ -2,16 +2,18 @@ apiVersion: v1
 kind: Service
 metadata:
   name: wildboar-mysql-service
+  labels:
+    app: mysql
 spec:
-  type: CluserIP
+  type: ClusterIP
   selector:
     app: mysql
   ports:
-  - name: mysql
-    port: 3306
-    targetPort: 3306
-    protocol: TCP
-  clusterIP: none
+    - name: mysql
+      port: 3306
+      targetPort: 3306
+      protocol: TCP
+  clusterIP: None
 
 ---
 
@@ -22,6 +24,7 @@ metadata:
   labels:
     app: mysql
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: mysql
@@ -33,41 +36,19 @@ spec:
         app: mysql
     spec:
       containers:
-      - name: wildboar-mysql-pod
-        images: wildboar.mysql:latest
+        - name: wildboar-mysql-pod
+          image: wildboar.mysql:latest
           ports:
-          - containerPort: 3306
-            name: mysql
+            - containerPort: 3306
+              name: mysql
           volumeMounts:
-          - name: mysql-volume-mnt
-            mountPath: /docker-entrypoint-initdb.d
+            - name: mysqldb-storage
+              mountPath: /var/lib/mysql/
           env:
-          - name: MYSQL_ROOT_PASSWORD
-            value: root
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
           imagePullPolicy: Never
       volumes:
-        - name: mysql-volume-mnt
-          ConfigMap:
-            name: wildboar-mysql-data
-          
----
-
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: wildboar-mysql-data
-data:
-  wpdb.sh: |-
-    mysql -e "CREATE DATABASE wordpress;"
-    mysql -e "CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';"
-    mysql -e "CREATE USER 'lchantel'@'localhost' IDENTIFIED BY 'lchantel';"
-    mysql -e "CREATE USER 'pstein'@'localhost' IDENTIFIED BY 'pstein'"
-    mysql -e "CREATE USER 'admins_mom'@'localhost' IDENTIFIED BY 'admins_mom'"
-    mysql -e "DELETE FROM mysql.user WHERE user = '';"
-    mysql -e "SET PASSWORD FOR 'admins_mom'@'localhost' = PASSWORD('killadmin');"
-    mysql -e "SET PASSWORD FOR 'admin'@'localhost' = PASSWORD('urdaddyduty');"
-    mysql -e "SET PASSWORD FOR 'pstein'@'localhost' = PASSWORD('yolomlg');"
-    mysql -e "SET PASSWORD FOR 'lchantel'@'localhost' = PASSWORD('guy');"
-    mysql -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'admin'@'localhost' IDENTIFIED BY 'admin';"
-    mysql -e "FLUSH PRIVILEGES;"
-    rc default 
+        - name: mysqldb-storage
+          persistentVolumeClaim:
+            claimName: pv-claim-mysql

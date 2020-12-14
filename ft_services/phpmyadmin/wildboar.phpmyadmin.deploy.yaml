@@ -31,8 +31,8 @@ spec:
   strategy:
     type: Recreate
   selector:
-   matchLabels:
-     app: phpmyadmin
+    matchLabels:
+      app: phpmyadmin
   template:
     metadata:
       labels:
@@ -40,9 +40,21 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-      - name: wildboar-phpmyadmin-pod
-        image: wildboar.phpmyadmin:latest
-        ports:
-        - containerPort: 5000
-        imagePullPolicy: Never
-
+        - name: wildboar-phpmyadmin-pod
+          image: wildboar.phpmyadmin:latest
+          ports:
+            - containerPort: 5000
+              name: phpmyadmin
+          env:
+            - name: PMA_HOST
+              value: wildboar-mysql-service
+            - name: PMA_PORT
+              value: "3306"
+          imagePullPolicy: Never
+          volumeMounts:
+            - name: phpmyadmin-persist-storage
+              mountPath: /var/lib/mysql/
+      volumes:
+        - name: phpmyadmin-persist-storage
+          persistentVolumeClaim:
+            claimName: wildboar-phpmyadmin-claim
