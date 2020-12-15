@@ -1,6 +1,7 @@
 #!/bin/sh
 
 mysql -e "CREATE DATABASE wordpress;"
+mysql -e "DROP DATABASE test;"
 mysql -e "CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';"
 mysql -e "CREATE USER 'lchantel'@'localhost' IDENTIFIED BY 'lchantel';"
 mysql -e "CREATE USER 'pstein'@'localhost' IDENTIFIED BY 'pstein'"

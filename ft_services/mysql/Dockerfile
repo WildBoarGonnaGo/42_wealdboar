@@ -6,7 +6,7 @@
 #    By: lchantel <lchantel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/27 16:35:16 by lchantel          #+#    #+#              #
-#    Updated: 2020/12/14 22:04:53 by lchantel         ###   ########.fr        #
+#    Updated: 2020/12/15 23:49:31 by lchantel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ RUN rc default
 RUN /etc/init.d/mariadb setup
 RUN /etc/init.d/mariadb start
 RUN chmod 755 /root/secure_config.sh
+VOLUME /var/lib/mysql/
 RUN /root/secure_config.sh
 RUN sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf
 RUN sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf.d/mariadb-server.cnf
@@ -31,4 +32,4 @@ RUN chmod 755 /wpdb.sh
 RUN chmod 755 /sql_launch.sh
 COPY ./supervisord.conf /etc/
 EXPOSE 3306
-CMD /sql_launch.sh
+CMD ./sql_launch.sh

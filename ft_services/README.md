@@ -55,3 +55,5 @@
 <https://www.tecmint.com/learn-mysql-mariadb-for-beginners/>
 + Оффициальный сайт mariadb
 <https://mariadb.com>
++ Инициализация новой директории для mysql
+<https://www.tecmint.com/change-default-mysql-mariadb-data-directory-in-linux/>
