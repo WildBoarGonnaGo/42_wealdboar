@@ -45,16 +45,4 @@ spec:
           ports:
             - containerPort: 5000
               name: phpmyadmin
-          env:
-            - name: PMA_HOST
-              value: wildboar-mysql-service
-            - name: PMA_PORT
-              value: "3306"
           imagePullPolicy: Never
-#          volumeMounts:
-#            - name: phpmyadmin-persist-storage
-#              mountPath: /var/lib/mysql/
-#      volumes:
-#        - name: phpmyadmin-persist-storage
-#          persistentVolumeClaim:
-#            claimName: pv-claim-mysql

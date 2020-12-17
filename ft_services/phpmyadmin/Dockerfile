@@ -6,7 +6,7 @@
 #    By: lchantel <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/29 20:31:22 by lchantel          #+#    #+#              #
-#    Updated: 2020/12/14 20:29:47 by lchantel         ###   ########.fr        #
+#    Updated: 2020/12/18 01:10:01 by lchantel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ COPY ./default.conf /etc/nginx/conf.d/
 COPY ./www.conf /etc/php7/php-fpm.d/
 COPY ./nginx.conf /etc/nginx/
 RUN mv /phpMyAdmin-5.0.4-english/ /var/www/phpmyadmin/
-RUN mkdir -p /var/lib/mysql/ 
+COPY ./config.inc.php /var/www/phpmyadmin/
 EXPOSE 5000
 RUN rc default && rc-service nginx start && rc-service php-fpm7 start
 RUN rc-service nginx stop && rc-service php-fpm7 stop

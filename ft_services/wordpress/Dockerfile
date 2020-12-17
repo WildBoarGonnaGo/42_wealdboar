@@ -6,7 +6,7 @@
 #    By: lchantel <lchantel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/27 11:18:44 by lchantel          #+#    #+#              #
-#    Updated: 2020/12/14 01:54:23 by lchantel         ###   ########.fr        #
+#    Updated: 2020/12/18 01:09:42 by lchantel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ RUN apk add nginx php7-common php7-iconv php7-json php7-gd php7-curl php7-xml ph
 php7-imap php7-cgi fcgi php7-pdo php7-pdo_mysql php7-soap php7-xmlrpc php7-posix php7-mcrypt \
 php7-gettext php7-ldap php7-ctype php7-dom openrc php7-session php7-fpm supervisor
 RUN adduser -D -g 'www' www  
-RUN chown -R www:www /var/www/
+VOLUME /var/lib/mysql/
 COPY ./repositories /etc/apk/
 RUN wget http://wordpress.org/latest.tar.gz
 RUN tar -xzf latest.tar.gz 
@@ -28,6 +28,8 @@ COPY ./supervisord.conf /etc/
 COPY ./default.conf /etc/nginx/conf.d/
 COPY ./www.conf /etc/php7/php-fpm.d/
 COPY ./nginx.conf /etc/nginx/
+COPY ./wp-config.php /var/www/wordpress/
+RUN chown -R www:www /var/www/
 EXPOSE 5050
 RUN rc default && rc-service nginx start && rc-service php-fpm7 start
 RUN rc-service nginx stop && rc-service php-fpm7 stop

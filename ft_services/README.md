@@ -43,10 +43,14 @@
 <https://kubernetes.io/docs/reference/kubectl/>
 + Траблы с сокетом в PhpMyAdmin
 <https://stackoverflow.com/questions/23443398/nginx-error-connect-to-php5-fpm-sock-failed-13-permission-denied>
++ Конфигурация phpMyAdmin и переменные
+<https://docs.phpmyadmin.net/en/latest/config.html>
 
 ### Настройка Wordpress в Alpine Linux
 + Оффициальная страница по настройке
 <https://metallb.universe.tf/configuration/>
++ Редактирование базы конфигов в wordpress
+<https://codex.wordpress.org/%D0%A0%D0%B5%D0%B4%D0%B0%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_wp-config.php>
 
 ### Настройка MySQL (mariadb) в Alpine Linux
 + Настройка mysql в alpine
@@ -57,3 +61,7 @@
 <https://mariadb.com>
 + Инициализация новой директории для mysql
 <https://www.tecmint.com/change-default-mysql-mariadb-data-directory-in-linux/>
+
+### Настройка ftps в Alpine Linux
++ Установка ftps и его настрока в среде Linux
+<https://blog.sedicomm.com/2018/11/05/ustanovka-nastrojka-i-zashhita-servera-ftp-vsftpd-v-linux/>

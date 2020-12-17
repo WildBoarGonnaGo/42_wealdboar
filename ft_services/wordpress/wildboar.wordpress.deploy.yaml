@@ -50,7 +50,7 @@ spec:
               value: wildboar-mysql-service
           volumeMounts:
             - name: mysqldb-storage
-              mountPath: /var/www/html/
+              mountPath: /var/lib/mysql/
           imagePullPolicy: Never
       volumes:
         - name: mysqldb-storage
