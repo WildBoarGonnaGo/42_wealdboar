@@ -16,10 +16,8 @@ spec:
   - protocol: TCP
     port: 5050
     targetPort: 5050
-    name: wordpress
-    
+    name: wordpress 
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -45,14 +43,14 @@ spec:
           ports:
             - containerPort: 5050
               name: wordpress
-          env:
-            - name: WORDPRESS_DB_HOST
-              value: wildboar-mysql-service
-          volumeMounts:
-            - name: mysqldb-storage
-              mountPath: /var/lib/mysql/
+#          env:
+#            - name: WORDPRESS_DB_HOST
+#              value: wildboar-mysql-service
+#          volumeMounts:
+#            - name: mysqldb-storage
+#              mountPath: /var/lib/mysql/
           imagePullPolicy: Never
-      volumes:
-        - name: mysqldb-storage
-          persistentVolumeClaim:
-            claimName: pv-claim-mysql
+#      volumes:
+#        - name: mysqldb-storage
+#          persistentVolumeClaim:
+#            claimName: pv-claim-mysql

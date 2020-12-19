@@ -5,7 +5,7 @@ define( 'DB_USER', 'admin' );
 define( 'DB_PASSWORD', 'urdaddyduty' );
 define( 'DB_HOST', 'wildboar-mysql-service' );
 define( 'DB_CHARSET', 'utf8' );
-define( 'DB_COLLATE', '' );
+define( 'DB_COLLATE',  '');
 define( 'WP_DEBUG', false );
 define( 'AUTH_KEY',         'D[E;5b?~zd7%5sHiRVc*7gh&I-KKGA%xi|y%N`$IHT~bU^8ZiOmMLzY<FNY;$R7V' );
 define( 'SECURE_AUTH_KEY',  'tA~ L(T^Bad<%ZEab+U&/gz&cRy9-^8.yz,Bw>cNms_-oyBDG+D7 05%$n~[7#d=' );
@@ -19,4 +19,4 @@ if ( ! defined( 'ABSPATH' ) ) {
         define( 'ABSPATH', '/var/www/wordpress/' . '/' );
 }
 $table_prefix = 'wp_';
-require_once ABSPATH . 'wp_settings.php';
+require_once ABSPATH . 'wp-settings.php';

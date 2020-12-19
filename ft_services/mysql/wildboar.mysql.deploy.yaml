@@ -13,23 +13,18 @@ spec:
       port: 3306
       targetPort: 3306
       protocol: TCP
-  clusterIP: None
-
 ---
-
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: pv-claim-mysql
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
       storage: 2Gi
-
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:

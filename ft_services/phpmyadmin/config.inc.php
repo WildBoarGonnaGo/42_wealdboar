@@ -8,6 +8,5 @@ $cfg['Servers'][$i]['compress'] = false;
 $cfg['Servers'][$i]['AllowNoPassword'] = false;
 $cfg['Servers'][$i]['controluser'] = 'admin';
 $cfg['Servers'][$i]['controlpass'] = 'urdaddyduty';
-$cfg['AllowUserDropDatabase'] = 'false'
 $cfg['UploadDir'] = '';
 $cfg['SaveDir'] = '';
