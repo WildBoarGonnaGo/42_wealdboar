@@ -7,6 +7,6 @@ $cfg['Servers'][$i]['host'] = 'wildboar-mysql-service';
 $cfg['Servers'][$i]['compress'] = false;
 $cfg['Servers'][$i]['AllowNoPassword'] = false;
 $cfg['Servers'][$i]['controluser'] = 'admin';
-$cfg['Servers'][$i]['controlpass'] = 'urdaddyduty';
+$cfg['Servers'][$i]['controlpass'] = 'admin';
 $cfg['UploadDir'] = '';
 $cfg['SaveDir'] = '';

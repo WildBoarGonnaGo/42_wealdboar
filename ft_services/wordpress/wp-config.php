@@ -2,11 +2,11 @@
 
 define( 'DB_NAME', 'wordpress' );
 define( 'DB_USER', 'admin' );
-define( 'DB_PASSWORD', 'urdaddyduty' );
+define( 'DB_PASSWORD', 'admin' );
 define( 'DB_HOST', 'wildboar-mysql-service' );
 define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE',  '');
-define( 'WP_DEBUG', false );
+define( 'WP_DEBUG', true );
 define( 'AUTH_KEY',         'D[E;5b?~zd7%5sHiRVc*7gh&I-KKGA%xi|y%N`$IHT~bU^8ZiOmMLzY<FNY;$R7V' );
 define( 'SECURE_AUTH_KEY',  'tA~ L(T^Bad<%ZEab+U&/gz&cRy9-^8.yz,Bw>cNms_-oyBDG+D7 05%$n~[7#d=' );
 define( 'LOGGED_IN_KEY',    'k3X9(YNgA;.a<BhP_X:ymU)pK$>zn$hra-b$r-K-Gcwk<uJ/Tz=jA*/E]Mt{gDux' );

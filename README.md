@@ -16,9 +16,10 @@
 <https://vim.fandom.com/wiki/Use_Vim_like_an_IDE>
 + Назначение популярных клавиш
 <https://vim.fandom.com/wiki/Quick_yank_and_paste>
++ Копирование из Vim в буфер обмена
+<https://stackoverflow.com/questions/3961859/how-to-copy-to-clipboard-in-vim>
 
 ### Tmux
-
 + Конфигурация tmux
 <https://www.hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/>
 

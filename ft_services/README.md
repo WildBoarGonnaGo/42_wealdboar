@@ -65,3 +65,5 @@
 ### Настройка ftps в Alpine Linux
 + Установка ftps и его настрока в среде Linux
 <https://blog.sedicomm.com/2018/11/05/ustanovka-nastrojka-i-zashhita-servera-ftp-vsftpd-v-linux/>
++ Настройка ftps в Ubuntu с ssl (подходит и для alpine)
+<https://www.dmosk.ru/miniinstruktions.php?mini=vsftpd-ubuntu>

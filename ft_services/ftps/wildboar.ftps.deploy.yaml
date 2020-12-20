@@ -11,7 +11,15 @@ spec:
     - protocol: TCP
       port: 21
       targetPort: 21
-      name: ftps
+      name: ftps-active
+    - protocol: TCP
+      port: 20
+      targetPort: 20
+      name: ftps-pass
+    - protocol: TCP
+      port: 61000
+      targetPort: 61000
+      name: pass-add
   selector:
     app: ftps 
   type: LoadBalancer
@@ -39,15 +47,12 @@ spec:
       restartPolicy: Always
       containers:
         - name: wildboar-ftps-pod
-          image: alpine:latest
+          image: wildboar.ftps:latest
           ports:
             - containerPort: 21
-              name: ftps
+              name: ftps-active
+            - containerPort: 20
+              name: ftps-pass
+            - containerPort: 61000
+              name: pass-add
           imagePullPolicy: Never
-          volumeMounts:
-            - name: wildboar-ftps-start
-              mountPath: /docker-entrypoint-ftps
-      volumes:
-        - name: wildboar-ftps-start
-          configMap:
-            name: ftps-build
