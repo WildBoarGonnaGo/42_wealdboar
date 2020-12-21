@@ -17,8 +17,8 @@ spec:
       targetPort: 20
       name: ftps-pass
     - protocol: TCP
-      port: 61000
-      targetPort: 61000
+      port: 21000
+      targetPort: 21000
       name: pass-add
   selector:
     app: ftps 
@@ -53,6 +53,6 @@ spec:
               name: ftps-active
             - containerPort: 20
               name: ftps-pass
-            - containerPort: 61000
+            - containerPort: 21000
               name: pass-add
           imagePullPolicy: Never
