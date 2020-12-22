@@ -67,3 +67,9 @@
 <https://blog.sedicomm.com/2018/11/05/ustanovka-nastrojka-i-zashhita-servera-ftp-vsftpd-v-linux/>
 + Настройка ftps в Ubuntu с ssl (подходит и для alpine)
 <https://www.dmosk.ru/miniinstruktions.php?mini=vsftpd-ubuntu>
+
+### InfluxDB, Grafana и Telegraf 
++ Удаленное содединение графаны с сервисами
+<https://stackoverflow.com/questions/54267675/how-to-monitor-remote-system-metrics-with-telegraf>
++ Видео по телеграфе, графане и инфлюксу
+<https://www.youtube.com/watch?v=pE7zU4MOqC8&t=171s>
