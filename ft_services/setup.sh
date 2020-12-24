@@ -12,10 +12,14 @@ docker build -t wildboar.mysql ./mysql/
 docker build -t wildboar.phpmyadmin ./phpmyadmin/
 docker build -t wildboar.wordpress ./wordpress/
 docker build -t wildboar.ftps ./ftps/
+docker build -t wildboar.influxdb-telegraf ./influxdb
+docker build -t wildboar.grafana ./grafana
 kubectl apply -f ./wildboarlb.yaml
 kubectl apply -f ./nginx/wildboar.nginx.yaml
 kubectl apply -f ./ftps/wildboar.ftps.deploy.yaml
 kubectl apply -f ./mysql/wildboar.mysql.deploy.yaml
 kubectl apply -f ./phpmyadmin/wildboar.phpmyadmin.deploy.yaml
 kubectl apply -f ./wordpress/wildboar.wordpress.deploy.yaml
+kubectl apply -f ./influxdb/wildboar.influxdb-telegraf.deploy.yaml
+kubectl apply -f ./grafana/wildboar.grafana.deploy.yaml
 minikube dashboard

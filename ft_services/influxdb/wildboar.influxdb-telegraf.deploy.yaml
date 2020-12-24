@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wildboar-influxdb-service
+  labels:
+    app: influxdb
+spec:
+  type: ClusterIP
+  selector:
+    app: influxdb
+  ports:
+    - name: influxdb
+      port: 8086
+      targetPort: 8086
+      protocol: TCP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pv-claim-influxdb
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wildboar-influxdb-deploy
+  labels:
+    app: influxdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: influxdb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: influxdb
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: wildboar-influxdb-pod
+          image: wildboar.influxdb-telegraf:latest
+          ports:
+            - containerPort: 8086
+              name: mysql
+          volumeMounts:
+            - name: influxdb-storage
+              mountPath: "/var/lib/influxdb"
+            - name: wildboar-docker-socket
+              mountPath: "/var/run/docker.sock"
+          imagePullPolicy: Never
+      volumes:
+        - name: influxdb-storage
+          persistentVolumeClaim:
+            claimName: pv-claim-influxdb
+        - name: wildboar-docker-socket
+          hostPath:
+            path: "/var/run/docker.sock"
