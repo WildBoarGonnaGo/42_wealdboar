@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 11:02:39 by lchantel          #+#    #+#             */
-/*   Updated: 2020/12/05 11:34:28 by lchantel         ###   ########.fr       */
+/*   Updated: 2020/12/25 15:37:33 by wildboarg        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,9 @@ typedef struct s_crcl
 	char eol;
 }				t_crcl;
 
-int	ft_strlen(const char *str);
+int		ft_strlen(const char *str);
+void	print_arr(t_crcl *obj);
+void	free_arr(t_crcl *obj);
+int		check_row(FILE *fd, t_crcl *obj);
+
+#endif
