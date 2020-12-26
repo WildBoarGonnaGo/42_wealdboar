@@ -2,10 +2,12 @@
 
 int main(int argc, char **argv)
 {
+	
 	FILE *fd;
 	t_crcl obj;
 	int st;
 
+	memset(&obj, 0, sizeof(obj) - 1);
 	if (argc != 2)
 	{
 		write(1, "Error: argument\n", ft_strlen("Error: argument\n"));

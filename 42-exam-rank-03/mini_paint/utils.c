@@ -128,10 +128,10 @@ int	check_row(FILE *fd, t_crcl *obj)
 	else
 	{
 		st = fscanf(fd, "%c %f %f %f %c%c", &obj->st, &obj->x, &obj->y, &obj->rx, &obj->stt, &obj->eol);
-		if (st != 6 || !obj->rx || (obj->st != 'c' && obj->st != 'C') || obj->rx < 0)
-			return (-1);
 		if (st == -1)
 			return (0);
+		if (st != 6 || !obj->rx || (obj->st != 'c' && obj->st != 'C') || obj->rx < 0)
+			return (-1);
 		(obj->st = 'c') ? create_empty(obj) : create_fill(obj);
 	}
 	return (1);
