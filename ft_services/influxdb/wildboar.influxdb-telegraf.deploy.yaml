@@ -49,7 +49,7 @@ spec:
           image: wildboar.influxdb-telegraf:latest
           ports:
             - containerPort: 8086
-              name: mysql
+              name: influxdb
           volumeMounts:
             - name: influxdb-storage
               mountPath: "/var/lib/influxdb"

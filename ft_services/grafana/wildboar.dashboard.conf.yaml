@@ -1,11 +1,14 @@
 # # config file version
 apiVersion: 1
-
 providers:
- - name: 'influxdb'
-   orgId: 1
-   folder: ''
-   folderUid: ''
-   type: file
-   options:
-     path: /usr/share/grafana/public/dashboards/
+  - name: 'influxdb'
+    orgId: 1
+    folder: ''
+    folderUid: ''
+    type: file
+    disableDeletion: false
+    editable: true
+    updateIntervalSeconds: 5
+    allowUiUpdates: true
+    options:
+      path: /usr/share/grafana/public/dashboards/

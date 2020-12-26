@@ -66,4 +66,3 @@ type: Opaque
 stringData:
   grafana.user: wildboar
   grafana.password: wildboar
-

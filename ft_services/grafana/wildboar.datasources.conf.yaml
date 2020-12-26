@@ -1,30 +1,29 @@
 # # config file version
 apiVersion: 1
-
 # # list of datasources that should be deleted from the database
 #deleteDatasources:
 #   - name: Graphite
 #     orgId: 1
-
+#
 # # list of datasources to insert/update depending
 # # on what's available in the database
-#datasources:
+datasources:
 #   # <string, required> name of the datasource. Required
-name: influxdb
+  - name: influxdb
 #   # <string, required> datasource type. Required
-type: influxdb
+    type: influxdb
 #   # <string, required> access mode. direct or proxy. Required
-access: proxy
+    access: proxy
 #   # <int> org id. will default to orgId 1 if not specified
-orgId: 1
+    orgId: 1
 #   # <string> url
-url: http://wildboar-influxdb-service:8086
+    url: http://wildboar-influxdb-service:8086
 #   # <string> database password, if used
-password: wildboar
+    password: wildboar
 #   # <string> database user, if used
-user: wildboar
+    user: wildboar
 #   # <string> database name, if used
-database: telegraf
+    database: telegraf
 #   # <bool> enable/disable basic auth
 #   basicAuth:
 #   # <string> basic auth username
@@ -34,7 +33,7 @@ database: telegraf
 #   # <bool> enable/disable with credentials headers
 #   withCredentials:
 #   # <bool> mark as default datasource. Max one per org
-isDefault: true
+    isDefault: true
 #   # <map> fields that will be converted to json and stored in json_data
 #   jsonData:
 #      graphiteVersion: "1.1"
@@ -51,4 +50,3 @@ isDefault: true
 #   version: 1
 #   # <bool> allow users to edit datasources from the UI.
 #   editable: false
-

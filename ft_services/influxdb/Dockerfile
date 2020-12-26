@@ -6,7 +6,7 @@
 #    By: lchantel <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/22 19:21:23 by lchantel          #+#    #+#              #
-#    Updated: 2020/12/24 19:06:39 by lchantel         ###   ########.fr        #
+#    Updated: 2020/12/25 19:56:39 by lchantel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,4 +19,5 @@ COPY ./influxdb.conf /etc/
 COPY ./launch.sh .
 RUN chmod 755 ./launch.sh
 EXPOSE 8086
+# VOLUME /var/run/docker.sock
 CMD /launch.sh

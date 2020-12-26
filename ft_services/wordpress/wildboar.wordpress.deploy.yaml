@@ -53,4 +53,4 @@ spec:
 #      volumes:
 #        - name: mysqldb-storage
 #          persistentVolumeClaim:
-#            claimName: pv-claim-mysql
+#            claimNameafter_switch_theme: pv-claim-mysql
