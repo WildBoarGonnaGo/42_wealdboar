@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ftps-service
+  labels:
+    app: ftps
+  annotations:
+    metallb.universe.tf/allow-shared-ip: minikube
+spec:
+  ports:
+    - protocol: TCP
+      port: 21
+      targetPort: 21
+      name: ftps-active
+    - protocol: TCP
+      port: 21000
+      targetPort: 21000
+      name: pass-add
+  selector:
+    app: ftps 
+  type: LoadBalancer
+  loadBalancerIP: 192.168.99.105
+  externalTrafficPolicy: Cluster
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ftps-deploy
+  labels:
+    app: ftps
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ftps
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: ftps
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: ftps
+          image: ftps:latest
+          ports:
+            - containerPort: 21
+              name: ftps-active
+            - containerPort: 21000
+              name: pass-add
+          imagePullPolicy: Never

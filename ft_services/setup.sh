@@ -3,23 +3,25 @@
 minikube delete 
 minikube start --driver=virtualbox --disk-size='5000mb' --memory='3072mb'
 minikube addons enable metallb
+minikube addons enable metrics-server
 eval $(minikube docker-env)
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml
 kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
-docker build -t wildboar.nginx ./nginx/
-docker build -t wildboar.mysql ./mysql/
-docker build -t wildboar.phpmyadmin ./phpmyadmin/
-docker build -t wildboar.wordpress ./wordpress/
-docker build -t wildboar.ftps ./ftps/
-docker build -t wildboar.influxdb-telegraf ./influxdb
-docker build -t wildboar.grafana ./grafana
-kubectl apply -f ./wildboarlb.yaml
-kubectl apply -f ./nginx/wildboar.nginx.yaml
-kubectl apply -f ./ftps/wildboar.ftps.deploy.yaml
-kubectl apply -f ./mysql/wildboar.mysql.deploy.yaml
-kubectl apply -f ./phpmyadmin/wildboar.phpmyadmin.deploy.yaml
-kubectl apply -f ./wordpress/wildboar.wordpress.deploy.yaml
-kubectl apply -f ./influxdb/wildboar.influxdb-telegraf.deploy.yaml
-kubectl apply -f ./grafana/wildboar.grafana.deploy.yaml
+docker build -t nginx ./srcs/nginx/
+docker build -t mysql ./srcs/mysql/
+docker build -t phpmyadmin ./srcs/phpmyadmin/
+docker build -t wordpress ./srcs/wordpress/
+docker build -t ftps ./srcs/ftps/
+docker build -t influxdb ./srcs/influxdb
+docker build -t grafana ./srcs/grafana
+kubectl apply -f ./srcs/metallb.yaml
+kubectl apply -f ./srcs/nginx/nginx.yaml
+kubectl apply -f ./srcs/ftps/ftps.yaml
+kubectl apply -f ./srcs/mysql/mysql.yaml
+kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml
+kubectl apply -f ./srcs/wordpress/wordpress.yaml
+kubectl apply -f ./srcs/influxdb/influxdb.yaml
+kubectl apply -f ./srcs/grafana/grafana.yaml
+rm -f ~/.ssh/known_hosts/
 minikube dashboard

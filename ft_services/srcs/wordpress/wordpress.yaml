@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress-service
+  labels:
+    app: wordpress
+  annotations:
+    metallb.universe.tf/allow-shared-ip: minikube
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 192.168.99.105
+  externalTrafficPolicy: Cluster
+  selector:
+    app: wordpress
+  ports:
+  - protocol: TCP
+    port: 5050
+    targetPort: 5050
+    name: wordpress 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress-deploy
+  labels:
+    app: wordpress
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: wordpress
+  template:
+    metadata:
+      labels:
+        app: wordpress
+    spec:
+      restartPolicy: Always 
+      containers:
+        - name: wordpress
+          image: wordpress:latest
+          ports:
+            - containerPort: 5050
+              name: wordpress
+#          env:
+#            - name: WORDPRESS_DB_HOST
+#              value: wildboar-mysql-service
+#          volumeMounts:
+#            - name: mysqldb-storage
+#              mountPath: /var/lib/mysql/
+          imagePullPolicy: Never
+#      volumes:
+#        - name: mysqldb-storage
+#          persistentVolumeClaim:
+#            claimNameafter_switch_theme: pv-claim-mysql
