@@ -1,11 +1,5 @@
 CREATE DATABASE wordpress;
 DELETE FROM mysql.user WHERE user = '';
-CREATE USER 'lchantel'@'%' IDENTIFIED BY 'lchantel';
-CREATE USER 'pstein'@'%' IDENTIFIED BY 'pstein';
-CREATE USER 'jbelinda'@'%' IDENTIFIED BY 'jbelinda';
-SET PASSWORD FOR 'jbelinda'@'%' = PASSWORD('jbelinda');
-SET PASSWORD FOR 'pstein'@'%' = PASSWORD('pstein');
-SET PASSWORD FOR 'lchantel'@'%' = PASSWORD('lchantel');
 GRANT ALL PRIVILEGES ON wordpress.* TO 'admin'@'%' IDENTIFIED BY 'admin';
 SET PASSWORD FOR 'admin'@'%' = PASSWORD('admin');
 FLUSH PRIVILEGES;

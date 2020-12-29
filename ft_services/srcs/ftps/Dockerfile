@@ -6,7 +6,7 @@
 #    By: lchantel <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/14 19:15:48 by lchantel          #+#    #+#              #
-#    Updated: 2020/12/27 17:49:32 by lchantel         ###   ########.fr        #
+#    Updated: 2020/12/29 20:16:26 by lchantel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,15 +21,7 @@ RUN mkdir -p /home/wildboar/
 RUN mkdir /2ch.hk
 RUN echo -e "wildboar\nwildboar\n" | adduser wildboar
 RUN chown wildboar:wildboar /home/wildboar/
-#COPY ./virt1 /etc/vsftpd_virtuser_conf/
-#COPY ./vsftpd /etc/pam.d/
 COPY ./ftps_launch.sh /
 RUN chmod 755 ./ftps_launch.sh
 EXPOSE 21 21000
-#RUN rc-update add vsftpd default
-#RUN rc default
 CMD /ftps_launch.sh
-#["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"] 
-#/bin/sh
-
-
