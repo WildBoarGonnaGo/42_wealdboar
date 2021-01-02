@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 22:15:44 by lchantel          #+#    #+#             */
-/*   Updated: 2020/12/05 00:31:17 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/02 19:06:30 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ void create_empty(t_rect *obj)
 	int pos[2];
 
 	pos[0] = ft_ceil(obj->y);
-	while ((float)pos[0] <= (obj->y + obj->rh) )
+	while ((float)pos[0] <= (obj->y + obj->rh))
 	{
 		pos[1] = ft_ceil(obj->x);
-		while ((float)pos[1] <= (obj->x + obj->rw) && pos[1]< obj->w)
+		while ((float)pos[1] <= (obj->x + obj->rw))
 		{
 			obj->i = ((pos[0] == ft_ceil(obj->y) || pos[0] == (int)(obj->y + obj->rh) ||
 			(pos[0] != ft_ceil(obj->y) && pos[0] != (int)(obj->y + obj->rh) &&
@@ -74,10 +74,10 @@ void create_fill(t_rect *obj)
 	int pos[2];
 
 	pos[0] = ft_ceil(obj->y);
-	while ((float)pos[0] <= (obj->y + obj->rh) && pos[0] >= 0 && pos[0] < obj->h)
+	while ((float)pos[0] <= (obj->y + obj->rh))
 	{
 		pos[1] = ft_ceil(obj->x);
-		while ((float)pos[1] <= (obj->x + obj->rw) && pos[1] >= 0 && pos[1] < obj->w)
+		while ((float)pos[1] <= (obj->x + obj->rw))
 		{
 			obj->i = (pos[0] >= 0 && pos[1] >= 0 && pos[0] < obj->h && pos[1] < obj->w);
 			if (obj->i)
@@ -127,7 +127,7 @@ int check_row(FILE *fd, t_rect *obj)
 		&obj->y, &obj->rw, &obj->rh, &obj->stt, &obj->eol);
 		if (st == -1)
 			return (0);
-		if (st != 7 || (obj->st != 'r' && obj->st != 'R'))
+		if (st != 7 || (obj->st != 'r' && obj->st != 'R') || obj->rw <= 0 || obj->rh <= 0)
 			return (-1);
 		(obj->st == 'R') ? create_fill(obj) : create_empty(obj);
 	}

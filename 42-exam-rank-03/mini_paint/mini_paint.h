@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 11:02:39 by lchantel          #+#    #+#             */
-/*   Updated: 2020/12/25 15:37:33 by wildboarg        ###   ########.fr       */
+/*   Updated: 2021/01/02 18:34:27 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@
 #include <unistd.h>
 #include <math.h>
 
-# define DAX 0.999848
-# define DAY 0.017452
+# define DAX 0.9999904807207345
+# define DAY 0.004363309284746571
+# define DAXE 0.9998476951563913
+# define DAYE 0.01745240643728351
 
 typedef struct s_crcl
 {
@@ -28,10 +30,10 @@ typedef struct s_crcl
 	int row;
 	int w;
 	int h;
-	float rx;
-	float ry;
-	float x;
-	float y;
+	double rx;
+	double ry;
+	double x;
+	double y;
 	char bk;
 	char st;
 	char stt;

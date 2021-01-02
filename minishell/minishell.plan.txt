@@ -1,0 +1,76 @@
+План по работе с Minishell
+
+-> Minishell - основные положения
+   1. Проект должен соответствовать Norm (проверка norminette будет обязательна)
+   2. Применение Makefile опциональна. Однако если будет применяться libft, то его
+      библиотека будет строиться при проверке через Makefile
+   3. Не допускаются как-либо утечки памяти
+   4. Не допускаются какие-либо ошибки вроде segfault, buserror, sigabbort и прочие
+      кроме тех, что попадают в категорию неопределенного поведения
+
+-> Встроенные функции в Minishell
+   1. Функции в Minishell должны вызываться по PATH, абсолютному и относительному пути 
+      точно также как и в bash
+
+	      bash-3.2$ ../../../usr/bin/diff --version
+          diff (GNU diffutils) 2.8.1
+          Copyright (C) 2002 Free Software Foundation, Inc.
+
+          This program comes with NO WARRANTY, to the extent permitted by law.
+          You may redistribute copies of this program
+          under the terms of the GNU General Public License.
+          For more information about these matters, see the file named COPYING.
+
+          Written by Paul Eggert, Mike Haertel, David Hayes,
+          Richard Stallman, and Len Tower.
+
+          bash-3.2$ /usr/bin/diff --version
+          diff (GNU diffutils) 2.8.1
+          Copyright (C) 2002 Free Software Foundation, Inc.
+
+          This program comes with NO WARRANTY, to the extent permitted by law.
+          You may redistribute copies of this program
+          under the terms of the GNU General Public License.
+          For more information about these matters, see the file named COPYING.
+
+          Written by Paul Eggert, Mike Haertel, David Hayes,
+          Richard Stallman, and Len Tower.
+
+          bash-3.2$ diff --version
+          diff (GNU diffutils) 2.8.1
+          Copyright (C) 2002 Free Software Foundation, Inc.
+
+          This program comes with NO WARRANTY, to the extent permitted by law.
+          You may redistribute copies of this program
+          under the terms of the GNU General Public License.
+          For more information about these matters, see the file named COPYING.
+
+          Written by Paul Eggert, Mike Haertel, David Hayes,
+          Richard Stallman, and Len Tower.
+
+   2. Встроенные функции должны вести себя точно также как и в bash
+       --> echo и echo -n
+	       bash-3.2$ echo -n Hello World
+           Hello Worldbash-3.2$ echo Hello World
+           Hello World
+           bash-3.2$ echo ./
+           ./
+           bash-3.2$ echo -n ./
+           ./bash-3.2$
+	   --> cd через относительный и абсолютные пути
+           bash-3.2$ cd ./minishell/
+           bash-3.2$ cd ./ng_3_minishell.pdf
+           bash: cd: ./ng_3_minishell.pdf: Not a directory
+           bash-3.2$ cd ./not_existing_dir
+           bash: cd: ./not_existing_dir: No such file or directory
+           bash-3.2$ cd /usr/local/bin/
+           bash-3.2$ ls
+           VBoxAutostart	VBoxHeadless	VirtualBoxVM	nasm		r2		r2r		rafind2		rasign2		vboximg-mount
+           VBoxBalloonCtrl	VBoxManage	    docker		    pip		    r2agent	rabin2	ragg2		rasm2		vboxwebsrv
+           VBoxBugReport	VBoxVRDP	docker-compose	    pip2		r2p		radare2	rahash2		rax2
+           VBoxDTrace	VirtualBox	docker-machine	pip2.7		r2pm		radiff2		rarun2		vbox-img
+       --> pwd без каких-либо опций
+	       bash-3.2$ pwd
+           /usr/local/bin
+	   --> 
+ 

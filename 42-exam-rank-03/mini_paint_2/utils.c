@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/02 16:02:30 by lchantel          #+#    #+#             */
+/*   Updated: 2021/01/02 18:27:32 by lchantel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mini_paint.h"
 
-int	ft_strlen(const char *str)
+int ft_strlen(const char *str)
 {
 	int len;
 
 	len = -1;
-	while (*(str + ++len))
+	while (str(++len))
 		;
 	return (len);
 }
@@ -48,7 +60,6 @@ void	print_arr(t_crcl *obj)
 	}
 }
 
-
 void	create_arr(t_crcl *obj)
 {
 	int pos[2];
@@ -63,64 +74,6 @@ void	create_arr(t_crcl *obj)
 		pos[1] = -1;
 		while (++pos[1] < obj->w)
 			obj->arr[pos[0]][pos[1]] = obj->bk;
-	}
-}
-
-void	create_empty(t_crcl *obj)
-{
-	float ac;
-	int	pos[2];
-	double r;
-	double buf;
-	double dist;
-
-	obj->ry = 0;
-	ac = 0;
-	r = obj->rx;
-	while (ac < 360)
-	{
-		pos[0] = ft_ceil(obj->y + obj->ry);
-		pos[1] = ft_ceil(obj->x + obj->rx);
-		dist = sqrt(powf(obj->y - pos[0], 2) + powf(obj->x - pos[1], 2));
-		if (pos[0] >= 0 && pos[0] < obj->h && pos[1] >= 0 && pos[1] < obj->w
-		/*&& r - dist <= 1.000000*/)
-			obj->arr[pos[0]][pos[1]] = obj->stt;
-		buf = obj->rx;
-		obj->rx = obj->rx * DAX - obj->ry * DAY;
-		obj->ry = buf * DAY + obj->ry * DAX;
-		ac += 0.25;
-	}
-}
-
-void	create_fill(t_crcl *obj)
-{
-	float ac;
-	int	pos[3];
-	float buf[3];
-	float dist;
-	buf[0] = obj->rx;
-	buf[2] = buf[0];
-	obj->ry = 0;
-	ac = 0;
-	while (obj->rx >= 0)
-	{
-		while (ac < 360)
-		{
-			pos[0] = ft_ceil(obj->y + obj->ry);
-			pos[1] = ft_ceil(obj->x + obj->rx);
-			dist = sqrt(powf(obj->y - pos[0], 2) + powf(obj->x - pos[1], 2));
-			if (pos[0] >= 0 && pos[0] < obj->h && pos[1] >= 0 && pos[1] < obj->w
-			&& dist <= buf[2])
-				obj->arr[pos[0]][pos[1]] = obj->stt;
-			buf[1] = obj->rx;
-			obj->rx = obj->rx * DAX - obj->ry * DAY;
-			obj->ry = buf[1] * DAY + obj->ry * DAX;
-			ac += 0.25;
-		}
-		ac = 0;
-		buf[0] -= 0.25;
-		obj->rx = buf[0];
-	   	obj->ry = 0;
 	}
 }
 
@@ -141,7 +94,7 @@ int	check_row(FILE *fd, t_crcl *obj)
 	}
 	else
 	{
-		st = fscanf(fd, "%c %lf %lf %lf %c%c", &obj->st, &obj->x, &obj->y, &obj->rx, &obj->stt, &obj->eol);
+		st = fscanf(fd, "%c %f %f %f %c%c", &obj->st, &obj->x, &obj->y, &obj->rx, &obj->stt, &obj->eol);
 		if (st == -1)
 			return (0);
 		if (st != 6 || !obj->rx || (obj->st != 'c' && obj->st != 'C') || obj->rx < 0)
