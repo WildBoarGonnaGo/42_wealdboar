@@ -12,7 +12,7 @@
    1. Функции в Minishell должны вызываться по PATH, абсолютному и относительному пути 
       точно также как и в bash
 
-	      bash-3.2$ ../../../usr/bin/diff --version
+	  bash-3.2$ ../../../usr/bin/diff --version
           diff (GNU diffutils) 2.8.1
           Copyright (C) 2002 Free Software Foundation, Inc.
 
@@ -57,6 +57,20 @@
            ./
            bash-3.2$ echo -n ./
            ./bash-3.2$
+           bash-3.2$ echo
+           
+           bash-3.2$
+           root@wbmachine:/home/lchantel# echo $PATH
+           /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+           root@wbmachine:/home/lchantel# echo $LANGUAGE
+           en_US
+           root@wbmachine:/home/lchantel# echo $NONEXIST
+
+           root@wbmachine:/home/lchantel# echo $LOL
+
+           root@wbmachine:/home/lchantel# echo $
+           $
+           root@wbmachine:/home/lchantel# 
 	   --> cd через относительный и абсолютные пути
            bash-3.2$ cd ./minishell/
            bash-3.2$ cd ./ng_3_minishell.pdf
@@ -70,7 +84,464 @@
            VBoxBugReport	VBoxVRDP	docker-compose	    pip2		r2p		radare2	rahash2		rax2
            VBoxDTrace	VirtualBox	docker-machine	pip2.7		r2pm		radiff2		rarun2		vbox-img
        --> pwd без каких-либо опций
-	       bash-3.2$ pwd
+	       bash-3.2$ pwd <любая фигня>
            /usr/local/bin
-	   --> 
- 
+	   --> Командка export без каких-либо опций 
+           :~$ export
+           declare -x CLUTTER_BACKEND="x11"
+           declare -x COLORFGBG="0;15"
+           declare -x COLORTERM="truecolor"
+           declare -x DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/1000/bus"
+           declare -x DEFAULTS_PATH="/usr/share/gconf/xubuntu.default.path"
+           declare -x DESKTOP_SESSION="xubuntu"
+           declare -x DISPLAY=":0.0"
+           declare -x GDMSESSION="xubuntu"
+           declare -x GDM_LANG="en_US"
+           declare -x GPG_AGENT_INFO="/run/user/1000/gnupg/S.gpg-agent:0:1"
+           declare -x GTK_OVERLAY_SCROLLING="0"
+           declare -x HOME="/home/lchantel"
+           declare -x KONSOLE_DBUS_SERVICE=":1.54"
+           declare -x KONSOLE_DBUS_SESSION="/Sessions/3"
+           declare -x KONSOLE_DBUS_WINDOW="/Windows/1"
+           declare -x KONSOLE_VERSION="191203"
+           declare -x LANG="ru_RU.utf8"
+           declare -x LANGUAGE="en_US"
+           declare -x LC_ADDRESS="ru_RU.UTF-8"
+           declare -x LC_IDENTIFICATION="ru_RU.UTF-8"
+           declare -x LC_MEASUREMENT="ru_RU.UTF-8"
+           declare -x LC_MONETARY="ru_RU.UTF-8"
+           declare -x LC_NAME="ru_RU.UTF-8"
+           declare -x LC_NUMERIC="ru_RU.UTF-8"
+           declare -x LC_PAPER="ru_RU.UTF-8"
+           declare -x LC_TELEPHONE="ru_RU.UTF-8"
+           declare -x LC_TIME="ru_RU.UTF-8"
+           declare -x LESSCLOSE="/usr/bin/lesspipe %s %s"
+           declare -x LESSOPEN="| /usr/bin/lesspipe %s"
+           declare -x LOGNAME="lchantel"
+           declare -x LS_COLORS="rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;lchantel@wbmachine:~$ export WILDBOAR_GIT=/home/lchantel/42-wildboar-git/35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:"
+           declare -x MANDATORY_PATH="/usr/share/gconf/xubuntu.mandatory.path"
+           declare -x OLDPWD
+           declare -x PATH="/home/lchantel/.krew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
+           declare -x PROFILEHOME=""
+           declare -x PWD="/home/lchantel"
+           declare -x QT_ACCESSIBILITY="1"
+           declare -x QT_QPA_PLATFORMTHEME="gtk2"
+           declare -x SESSION_MANAGER="local/wbmachine:@/tmp/.ICE-unix/1373,unix/wbmachine:/tmp/.ICE-unix/1373"
+           declare -x SHELL="/bin/bash"
+           declare -x SHELL_SESSION_ID="6da6d6eca39d4eb8bae857e2443857ec"
+           declare -x SHLVL="1"
+           declare -x SSH_AGENT_PID="1454"
+           declare -x SSH_AUTH_SOCK="/run/user/1000/keyring/ssh"
+           declare -x TERM="xterm-256color"
+           declare -x USER="lchantel"
+           declare -x VIM_MODS="/home/lchantel/.vim"
+           declare -x WINDOWID="69206023"
+           declare -x XAUTHORITY="/home/lchantel/.Xauthority"
+           declare -x XDG_CONFIG_DIRS="/etc/xdg/xdg-xubuntu:/etc/xdg:/etc/xdg"
+           declare -x XDG_CURRENT_DESKTOP="XFCE"
+           declare -x XDG_DATA_DIRS="/usr/share/xubuntu:/usr/share/xfce4:/usr/local/share:/usr/share:/var/lib/snapd/desktop:/usr/share"
+           declare -x XDG_GREETER_DATA_DIR="/var/lib/lightdm-data/lchantel"
+           declare -x XDG_MENU_PREFIX="xfce-"
+           declare -x XDG_RUNTIME_DIR="/run/user/1000"
+           declare -x XDG_SEAT="seat0"
+           declare -x XDG_SEAT_PATH="/org/freedesktop/DisplayManager/Seat0"
+           declare -x XDG_SESSION_CLASS="user"
+           declare -x XDG_SESSION_DESKTOP="xubuntu"
+           declare -x XDG_SESSION_ID="c2"
+           declare -x XDG_SESSION_PATH="/org/freedesktop/DisplayManager/Session0"
+           declare -x XDG_SESSION_TYPE="x11"
+           declare -x XDG_VTNR="7"
+
+           lchantel@wbmachine:~$ export WILDBOAR_GIT=/home/lchantel/42-wildboar-git/
+           lchantel@wbmachine:~$ export 42_WILDBOAR_GIT=/home/lchantel/42-wildboar-git/
+		   bash: export: `42_WILDBOAR_GIT=/home/lchantel/42-wildboar-git/': not a valid identifier
+           lchantel@wbmachine:~$ export WILDBOAR_GIT=/home/lchantel/42-wildboar-git/
+           lchantel@wbmachine:~$ printenv | grep WILDBOAR_GIT
+           WILDBOAR_GIT=/home/lchantel/42-wildboar-git/
+           lchantel@wbmachine:~$ export WILDBOAR_GIT=/usr/local/bin/
+           lchantel@wbmachine:~$ printenv | grep WILDBOAR_GIT       
+           WILDBOAR_GIT=/usr/local/bin/
+           lchantel@wbmachine:~$ export WILDBOAR_GIT_42=/usr/local/bin/
+           lchantel@wbmachine:~$ printenv | grep WILDBOAR_GIT_42       
+           WILDBOAR_GIT_42=/usr/local/bin/
+           lchantel@wbmachine:~$ export WILDBOAR_GIT_42=/home/lchantel/42-wildboar-git/minishell/
+           lchantel@wbmachine:~$ printenv | grep WILDBOAR_GIT_42
+           WILDBOAR_GIT_42=/home/lchantel/42-wildboar-git/minishell/
+       --> Командка unset без каких-либо опций
+           lchantel@wbmachine:~$ printenv | grep WILDBOAR_GIT
+           WILDBOAR_GIT_42=/home/lchantel/42-wildboar-git/minishell/
+           lchantel@wbmachine:~$ unset WILDBOAR_GIT_42
+           lchantel@wbmachine:~$ printenv | grep WILDBOAR_GIT
+           lchantel@wbmachine:~$ 
+	   --> Команда env без каких-либо опций и каких-либо аргументов
+           lchantel@wbmachine:~$ env
+           SHELL=/bin/bash
+           SESSION_MANAGER=local/wbmachine:@/tmp/.ICE-unix/1373,unix/wbmachine:/tmp/.ICE-unix/1373
+           WINDOWID=69206023
+           QT_ACCESSIBILITY=1
+           COLORTERM=truecolor
+           XDG_CONFIG_DIRS=/etc/xdg/xdg-xubuntu:/etc/xdg:/etc/xdg
+           XDG_SESSION_PATH=/org/freedesktop/DisplayManager/Session0
+           XDG_MENU_PREFIX=xfce-
+           CLUTTER_BACKEND=x11
+           LANGUAGE=en_US
+           MANDATORY_PATH=/usr/share/gconf/xubuntu.mandatory.path
+           LC_ADDRESS=ru_RU.UTF-8
+           LC_NAME=ru_RU.UTF-8
+           SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
+           SHELL_SESSION_ID=6da6d6eca39d4eb8bae857e2443857ec
+           DESKTOP_SESSION=xubuntu
+           LC_MONETARY=ru_RU.UTF-8
+           SSH_AGENT_PID=1454
+           XDG_SEAT=seat0
+           PWD=/home/lchantel
+           XDG_SESSION_DESKTOP=xubuntu
+           LOGNAME=lchantel
+           QT_QPA_PLATFORMTHEME=gtk2
+           XDG_SESSION_TYPE=x11
+           GPG_AGENT_INFO=/run/user/1000/gnupg/S.gpg-agent:0:1
+           XAUTHORITY=/home/lchantel/.Xauthority
+           XDG_GREETER_DATA_DIR=/var/lib/lightdm-data/lchantel
+           GDM_LANG=en_US
+           HOME=/home/lchantel
+           LC_PAPER=ru_RU.UTF-8
+           LANG=ru_RU.utf8
+           LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+           XDG_CURRENT_DESKTOP=XFCE
+           KONSOLE_DBUS_SERVICE=:1.54
+           VIM_MODS=/home/lchantel/.vim
+           KONSOLE_DBUS_SESSION=/Sessions/3
+           PROFILEHOME=
+           XDG_SEAT_PATH=/org/freedesktop/DisplayManager/Seat0
+           KONSOLE_VERSION=191203
+           LESSCLOSE=/usr/bin/lesspipe %s %s
+           XDG_SESSION_CLASS=user
+           TERM=xterm-256color
+           LC_IDENTIFICATION=ru_RU.UTF-8
+           GTK_OVERLAY_SCROLLING=0
+           DEFAULTS_PATH=/usr/share/gconf/xubuntu.default.path
+           LESSOPEN=| /usr/bin/lesspipe %s
+           USER=lchantel
+           COLORFGBG=0;15
+           DISPLAY=:0.0
+           SHLVL=1
+           LC_TELEPHONE=ru_RU.UTF-8
+           LC_MEASUREMENT=ru_RU.UTF-8
+           XDG_VTNR=7
+           XDG_SESSION_ID=c2
+           XDG_RUNTIME_DIR=/run/user/1000
+           LC_TIME=ru_RU.UTF-8
+           XDG_DATA_DIRS=/usr/share/xubuntu:/usr/share/xfce4:/usr/local/share:/usr/share:/var/lib/snapd/desktop:/usr/share
+           PATH=/home/lchantel/.krew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+           GDMSESSION=xubuntu
+           DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+           LC_NUMERIC=ru_RU.UTF-8
+           KONSOLE_DBUS_WINDOW=/Windows/1
+           _=/usr/bin/env
+       --> Команда exit без каких-либо опций           
+           lchantel@wbmachine:~$ sudo /bin/bash
+           root@wbmachine:/home/lchantel# 432 4432 4213123
+           432: command not found
+           root@wbmachine:/home/lchantel# exit 432 4432 4213123
+           exit
+           bash: exit: too many arguments
+           root@wbmachine:/home/lchantel# exit
+           exit
+           lchantel@wbmachine:~$ echo $?
+           127
+           lchantel@wbmachine:~$ sudo /bin/bash
+           root@wbmachine:/home/lchantel# exit 520
+           exit
+           lchantel@wbmachine:~$ echo $?
+           8
+           lchantel@wbmachine:~$
+   3. ';' должны разделять команды также как и в bash       
+       root@wbmachine:/home/lchantel# echo hello ; ls
+       hello
+       42-wildboar-git             gdb-10.1.tar.gz       lol.c                       snap
+       anime_script.sh             getdepends.sh         minishell.odt               something
+       curreg_ft_services.tar.gz   hurrah                molokai_color               Steam
+       Desktop                     krew_install.sh       mongo_express_with_db.tar   Templates
+       Diagram1.dia.autosave       kubernetes_tutorial   Music                       Videos
+       Documents                  "lchantel's"           Pictures                    wildboar-nginx-deploy.tar
+       Downloads                   lol                   Public                      xterm-256color-italic
+       ftps_check                  lol_2                 pv_proj
+       gdb-10.1                    lol_2.c               rage.c
+       root@wbmachine:/home/lchantel# echo pwd ; ls ./42-wildboar-git/
+       pwd
+       42-exam-rank-02  42-Piscine   ft_libasm  ft_server    lchantel_gnl  minishell  wolf3D
+       42-exam-rank-03  cpp_modules  ft_printf  ft_services  libft         README.md
+       root@wbmachine:/home/lchantel# pwd ; ls ./42-wildboar-git/     
+       /home/lchantel
+       42-exam-rank-02  42-Piscine   ft_libasm  ft_server    lchantel_gnl  minishell  wolf3D
+       42-exam-rank-03  cpp_modules  ft_printf  ft_services  libft         README.md
+       root@wbmachine:/home/lchantel# pwd ; ls ./42-wildboar-git/ ; 
+       /home/lchantel
+       42-exam-rank-02  42-Piscine   ft_libasm  ft_server    lchantel_gnl  minishell  wolf3D
+       42-exam-rank-03  cpp_modules  ft_printf  ft_services  libft         README.md
+       root@wbmachine:/home/lchantel# ; ;
+       bash: syntax error near unexpected token `;'
+       root@wbmachine:/home/lchantel# ;
+       bash: syntax error near unexpected token `;'
+       root@wbmachine:/home/lchantel# ; echo hello
+       bash: syntax error near unexpected token `;'
+       root@wbmachine:/home/lchantel# echo hello ; ; ;
+       bash: syntax error near unexpected token `;'
+       root@wbmachine:/home/lchantel# echo hello ; echo hello ; ;
+       bash: syntax error near unexpected token `;'
+       root@wbmachine:/home/lchantel# echo hello ; echo hello ; echo hello ;
+       hello
+       hello
+       hello
+       root@wbmachine:/home/lchantel# echo hello ; echo $PATH ; echo hello ;                              
+       hello
+       /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+       hello
+       root@wbmachine:/home/lchantel# echo hello ; echo $RAGE ; echo hello ;    
+       hello
+
+       hello
+       root@wbmachine:/home/lchantel# echo hello ; exit ; echo hello ;          
+       hello
+       exit
+       lchantel@wbmachine:~$ $?
+       0: command not found
+       lchantel@wbmachine:~$ sudo /bin/bash
+       root@wbmachine:/home/lchantel# echo hello ; exit ; $?
+       hello
+       exit
+       lchantel@wbmachine:~$ $?
+       0: command not found
+       lchantel@wbmachine:~$ sudo /bin/bash
+       root@wbmachine:/home/lchantel# echo hello ; exit ;
+       hello
+       exit
+       lchantel@wbmachine:~$ $?
+       0: command not found
+       lchantel@wbmachine:~$ sudo /bin/bash
+       root@wbmachine:/home/lchantel# pwd ; cd ; pwd
+       /home/lchantel
+       /root
+       root@wbmachine:~#
+   4. ' и " должны вести точно также как и в bash
+        
+       echo "$PATH"
+       /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+       root@wbmachine:~# "pwd"
+       /root
+       root@wbmachine:~# 'pwd'
+       /root
+       root@wbmachine:~# '/usr/bin/echo'
+       root@wbmachine:~# '/usr/bin/echo' hello
+       hello
+       root@wbmachine:~# '/usr/bin/echo hello'
+       bash: /usr/bin/echo hello: No such file or directory
+       root@wbmachine:~# "/usr/bin/echo hello"
+       bash: /usr/bin/echo hello: No such file or directory
+       root@wbmachine:~# echo ''
+       root@wbmachine:~# echo ""
+       root@wbmachine:~# echo "$PATH"
+       /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+       root@wbmachine:~# echo "$"PATH
+       $PATH
+       root@wbmachine:~# echo "$"PATH"
+       > 
+       > 
+       > "
+       $PATH
+       root@wbmachine:/home/lchantel# export LOL=""
+       root@wbmachine:/home/lchantel# env | grep LOL
+       LOL=
+       root@wbmachine:/home/lchantel# export LOL='This project is total lame'
+       root@wbmachine:/home/lchantel# env | grep LOL
+       LOL=This project is total lame
+   5.  Редиректы <. >, >> должны работать также кау и в оригинальном bash
+       root@wbmachine:/home/lchantel# echo "Hello there" > test.txt
+       root@wbmachine:/home/lchantel# cat < test.txt 
+       Hello there
+       root@wbmachine:/home/lchantel# cat > test.txt  
+       SUp
+       Hello
+       Fuck
+       ^C
+       root@wbmachine:/home/lchantel# cat < test.txt 
+       SUp
+       Hello
+       Fuck
+       root@wbmachine:/home/lchantel# echo "Next line" >> test.txt 
+       root@wbmachine:/home/lchantel# echo "Next line - 2" >> test.txt  
+       root@wbmachine:/home/lchantel# cat test.txt 
+       SUp
+       Hello
+       Fuck
+       Next line
+       Next line - 2
+       root@wbmachine:/home/lchantel# echo < test.txt 
+
+       root@wbmachine:/home/lchantel# echo "Hello there" > test.txt
+       root@wbmachine:/home/lchantel# cat < test.txt 
+       Hello there
+       root@wbmachine:/home/lchantel# cat > test.txt  
+       SUp
+       Hello
+       Fuck
+       ^C
+       root@wbmachine:/home/lchantel# cat < test.txt 
+       SUp
+       Hello
+       Fuck
+       root@wbmachine:/home/lchantel# echo "Next line" >> test.txt 
+       root@wbmachine:/home/lchantel# echo "Next line - 2" >> test.txt  
+       root@wbmachine:/home/lchantel# cat test.txt 
+       SUp
+       Hello
+       Fuck
+       Next line
+       Next line - 2
+       root@wbmachine:/home/lchantel# echo < test.txt 
+
+       root@wbmachine:/home/lchantel# cat < test.txt 
+       SUp
+       Hello
+       Fuck
+       Next line
+       Next line - 2
+       root@wbmachine:/home/lchantel# echo New cotains > test.txt 
+       root@wbmachine:/home/lchantel# cat < test.txt 
+       New cotains
+       root@wbmachine:/home/lchantel# cat < test.txt 
+       SUp
+       Hello
+       Fuck
+       Next line
+       Next line - 2
+       root@wbmachine:/home/lchantel# echo New cotains > test.txt 
+       root@wbmachine:/home/lchantel# cat < test.txt 
+       New cotains
+   6. Использование каналов pipes ()
+      root@wbmachine:/home/lchantel# cat lol.c
+      #include <stdio.h>
+      #include <stdlib.h>
+
+      void    print_matrix(int **obj)
+      {
+          int pos[2];
+
+          pos[0] = -1;
+          pos[1] = -1;
+          while (++pos[0] < 4)
+          {
+              while (++pos[1] < 4)
+                  (pos[1] != 3) ? printf("%d ", obj[pos[0]][pos[1]]) :
+                  printf("%d\n", obj[pos[0]][pos[1]]);
+              pos[1] = -1;
+          }
+      }
+
+      int main(void)
+      {
+          int     **rage = NULL;
+          int pos[2];
+
+          pos[0] = -1;
+          pos[1] = -1;
+          rage = (int **)malloc(sizeof(int *) * 4);
+          while (++pos[0] < 4)
+          {
+              rage[pos[0]] = (int *)malloc(sizeof(int) * 4);
+              while (++pos[1] < 4)
+                  rage[pos[0]][pos[1]] = pos[0];
+              pos[1] = -1;
+          }
+          printf("Hello world!\n");
+          printf("Hello world");
+          return (0);
+      }
+      root@wbmachine:/home/lchantel# cat lol.c | head -7
+      #include <stdio.h>
+      #include <stdlib.h>
+
+      void    print_matrix(int **obj)
+      {
+          int pos[2];
+
+      root@wbmachine:/home/lchantel# cat lol.c | head -7 | tail -4
+      void    print_matrix(int **obj)root@wbmachine:/home/lchantel#
+      {
+         int pos[2];
+
+      root@wbmachine:/home/lchantel# cat test.txt
+      gkarina
+      lchantel
+      lcreola
+      sgertrud
+      vegeta
+      pepe
+      lchantel
+      gkarina
+      sgertrud
+      jberlina
+      vegeta
+
+      root@wbmachine:/home/lchantel# cat test.txt | grep l
+      lchantel
+      lcreola
+      lchantel
+      jberlina
+      
+      root@wbmachine:/home/lchantel# cat test.txt | head -6 | tee file.txt
+      gkarina
+      lchantel
+      lcreola
+      sgertrud
+      vegeta
+      pepe
+      root@wbmachine:/home/lchantel# cat file.txt 
+      gkarina
+      lchantel
+      lcreola
+      sgertrud
+      vegeta
+      pepe
+      root@wbmachine:/home/lchantel# cat notexist | grep lol
+      cat: notexist: No such file or directory
+      root@wbmachine:/home/lchantel# cat test.txt | head -5 | nocommand
+      nocommand: command not found
+      root@wbmachine:/home/lchantel# cat test.txt | head 5 | nocommand
+      head: cannot open '5' for reading: No such file or directory
+      nocommand: command not found
+   7. Сочетание $? должно вести себя точно также как и в bash
+      root@wbmachine:/home/lchantel# $?
+      0: command not found
+      root@wbmachine:/home/lchantel# echo $?
+      127
+      root@wbmachine:/home/lchantel# echo $?
+      0
+      root@wbmachine:/home/lchantel# cat test.txt | grep l
+      lchantel
+      lcreola
+      lchantel
+      jberlina
+      root@wbmachine:/home/lchantel# echo $?
+      0
+    8. Сигналы Ctrl-D, Ctrl-C, Ctrl-\
+       root@wbmachine:/home/lchantel# exit
+       lchantel@wbmachine:~$ sudo /bin/bash
+       [sudo] password for lchantel: 
+       root@wbmachine:/home/lchantel# ^C
+       root@wbmachine:/home/lchantel# ^C
+       root@wbmachine:/home/lchantel# ^C
+       <Ctrl-D> при пустой строке просто выходит из bash, <Ctrl-C> при пустой строке просто
+       выводит ^C, <Ctrl-\>
+       root@wbmachine:/home/lchantel# cat file.txt ^C
+       root@wbmachine:/home/lchantel# 
+       <Ctrl-D> и <Ctrl-\> при введенном контенте в строке не делают ничего
+
+       root@wbmachine:/home/lchantel# cat
+       ^C
+       root@wbmachine:/home/lchantel# cat 
+       root@wbmachine:/home/lchantel# <Если нажать Ctrl-D то просто появится строка bash>
+       root@wbmachine:/home/lchantel# cat
+       ^\Quit (core dumped)
+       root@wbmachine:/home/lchantel# cat
+       bla bla^\Quit (core dumped)
