@@ -75,10 +75,3 @@
 <https://www.youtube.com/watch?v=pE7zU4MOqC8&t=171s>:w
 + Настройка телеграфа и инфлюкса
 <https://aperogeek.fr/monitoring-docker-with-telegraf-influxdb-and-grafana/>
-+ Пример правильного telegraf.conf
-![alt text](https://github.com/WildBoarGonnaGo/42_wealdboar/tree/master/ft_services/influxdb/influxdb-telegraf-grafana.jpg?raw=true)
-![alt text](https://github.com/WildBoarGonnaGo/42_wealdboar/tree/master/ft_services/influxdb/influxdb-telegraf-grafan_0.jpg?raw=true)
-+ Dockerfile
-![alt text](https://github.com/WildBoarGonnaGo/42_wealdboar/tree/master/ft_services/influxdb/influxdb-telegraf-grafan_1.jpg?raw=true)
-+ Yaml файл
-![alt text](https://github.com/WildBoarGonnaGo/42_wealdboar/tree/master/ft_services/influxdb/influxdb-telegraf-grafan_2.jpg?raw=true)

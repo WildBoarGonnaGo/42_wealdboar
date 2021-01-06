@@ -6,7 +6,7 @@
 #    By: lchantel <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/30 10:53:46 by lchantel          #+#    #+#              #
-#    Updated: 2020/11/16 23:37:54 by lchantel         ###   ########.fr        #
+#    Updated: 2021/01/05 04:30:52 by lchantel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ SRC = ft_atoi.c			\
 	ft_lstmap.c			\
 
 CC			= clang
-WARNS		= -Wall -Wextra -Werror
+WARNS		= -Wall -Wextra -Werror -g
 MAIN_OBJS	= $(SRC:.c=.o)
 HEADER		= libft.h
 

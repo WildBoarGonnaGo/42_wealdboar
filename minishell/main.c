@@ -6,16 +6,17 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:01:50 by wildboarg         #+#    #+#             */
-/*   Updated: 2020/12/29 15:18:07 by wildboarg        ###   ########.fr       */
+/*   Updated: 2021/01/05 12:21:09 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
-int main(void)
+int main(int argc, char *envp[])
 {
 	char	*line;
 
+	line = NULL;
 	write(1, "minishell: ", ft_strlen("minishell: "));
 	while ((sh_gnl(0, &line)) > 0)
 	{

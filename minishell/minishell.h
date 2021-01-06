@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2020/12/29 15:01:16 by wildboarg        ###   ########.fr       */
+/*   Updated: 2021/01/05 12:45:20 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include "./srcs/libft/libft.h"
 
 typedef struct	s_gnl
 {
@@ -24,7 +25,6 @@ typedef struct	s_gnl
 	int			i;
 }				t_gnl;
 
-int ft_strlen(const char *s);
 int sh_gnl(int fd, char **line);
 
 #endif

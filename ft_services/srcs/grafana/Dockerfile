@@ -6,7 +6,7 @@
 #    By: lchantel <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/20 16:55:28 by lchantel          #+#    #+#              #
-#    Updated: 2020/12/28 00:40:48 by lchantel         ###   ########.fr        #
+#    Updated: 2021/01/06 01:06:02 by lchantel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,3 +23,4 @@ RUN rm -f  /usr/share/grafana/conf/provisioning/datasources/sample.yaml
 VOLUME /usr/share/grafana/
 EXPOSE 3000
 CMD ["/usr/sbin/grafana-server", "--homepath=/usr/share/grafana"]
+
