@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 16:02:30 by lchantel          #+#    #+#             */
-/*   Updated: 2021/01/07 01:38:40 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/07 11:31:13 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,36 @@ int	ft_ceil(float a)
 	return ((int)a);
 }
 
+void create_arr(t_drawing *obj)
+{
+	int pos[2];
+
+	pos[0] = -1;
+	obj->i = -1;
+	obj->arr = (int **)calloc(obj->h, sizeof(int *));
+	while (++obj->i < obj->h)
+		obj->arr[obj->i] = (int *)calloc(obj->w, sizeof(int));
+	while (++pos[0] < obj->h)
+	{
+		pos[1] = -1;
+		while (++pos[1] < obj->w)
+			obj->arr[pos[0]][pos[1]] = obj->bk;
+	}
+}
+
+
 int get_field(FILE *fd, t_drawing *obj)
 {
 	int ret;
-	char *tmp;
 	int i;
 	char back;
+	char eol;
 
-	ret = fscanf(fd, "%d %d")
+	if (!(ret = fscanf(fd, "%d %d %c%c", &obj->w, &obj->h, &back, &eol)))
+		return (1);
+	if (obj->w <= 0 || obj->w > 300 && obj->h <= 0 && obj->h > 300)
+		return (1);
+	if (!create_arr(t_drawing))
+		return (1);
+	return (0);
 }

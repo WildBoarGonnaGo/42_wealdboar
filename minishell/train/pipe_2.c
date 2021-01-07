@@ -29,7 +29,8 @@ int main(int argc, char *argv[])
 		printf("CHILD: Sup, It's child process, let's write something: ");
 		scanf("%[^\n]%*c", pipewend);
 		size[0] = strlen(pipewend);
-		write(pipefd[1], &size[0], sizeof(int));
+		write(pipefd[1], &size[0], sizeof(int)); // size[0] + pipewend -> системный буфер -> size[1] + piperend. 
+		// Порядок чтения точно такой же как и у записи
 		write(pipefd[1], pipewend, size[0]);
 		close(pipefd[1]);
 	}

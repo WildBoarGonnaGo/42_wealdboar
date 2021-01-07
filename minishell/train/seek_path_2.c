@@ -190,7 +190,7 @@ int main(int argc, char *argv[], char *envp[])
 		line = ft_strdup(argv[1]);
 	/*Обнуляем argv[1] - иначе execve сработает неправильно!*/
 	argv[1] = NULL;	
-	_idprog = fork();
+	_idprog = fork(); // pid_t _idprog
 	/*Переход в процесс-потомок*/
 	if (!_idprog)
 	{

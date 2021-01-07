@@ -3,27 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
+/*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/07 16:37:18 by lchantel         ###   ########.fr       */
+/*   Created: 2021/01/06 21:07:18 by lcreola           #+#    #+#             */
+/*   Updated: 2021/01/06 21:09:27 by lcreola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <fcntl.h>
-# include "./srcs/libft/libft.h"
+# include <signal.h>
+# include <string.h>
+# include <errno.h>
+# include "../libft/libft.h"
 
-typedef struct	s_gnl
-{
-	int 		st;
-	char		buf[2048];
-	int			byte;
-	int			i;
-}				t_gnl;
+# define BUFFER_SIZE 1024
 
 typedef struct	s_shell
 {
@@ -39,7 +37,7 @@ typedef struct	s_shell
 	char	exit;
 }				t_shell;
 
-
-int sh_gnl(int fd, char **line);
+void	ft_checkargc(int argc);
+void	ft_errors(int error);
 
 #endif

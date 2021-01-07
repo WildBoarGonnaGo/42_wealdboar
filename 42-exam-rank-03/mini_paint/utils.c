@@ -81,9 +81,9 @@ void	create_empty(t_crcl *obj)
 	{
 		pos[0] = ft_ceil(obj->y + obj->ry);
 		pos[1] = ft_ceil(obj->x + obj->rx);
-		dist = sqrt(powf(obj->y - pos[0], 2) + powf(obj->x - pos[1], 2));
+		dist = sqrtf(powf(obj->y - pos[0], 2.0) + powf(obj->x - pos[1], 2.0));
 		if (pos[0] >= 0 && pos[0] < obj->h && pos[1] >= 0 && pos[1] < obj->w
-		/*&& r - dist <= 1.000000*/)
+		&& dist - r <= 1.000000 && dist - r <= 1.000000)
 			obj->arr[pos[0]][pos[1]] = obj->stt;
 		buf = obj->rx;
 		obj->rx = obj->rx * DAX - obj->ry * DAY;
@@ -108,9 +108,9 @@ void	create_fill(t_crcl *obj)
 		{
 			pos[0] = ft_ceil(obj->y + obj->ry);
 			pos[1] = ft_ceil(obj->x + obj->rx);
-			dist = sqrt(powf(obj->y - pos[0], 2) + powf(obj->x - pos[1], 2));
+			dist = sqrtf(powf(obj->y - pos[0], 2.0) + powf(obj->x - pos[1], 2.0));
 			if (pos[0] >= 0 && pos[0] < obj->h && pos[1] >= 0 && pos[1] < obj->w
-			&& dist <= buf[2])
+			&& dist - buf[2] <= 1.000000)
 				obj->arr[pos[0]][pos[1]] = obj->stt;
 			buf[1] = obj->rx;
 			obj->rx = obj->rx * DAX - obj->ry * DAY;
