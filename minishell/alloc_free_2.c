@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   alloc_free_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/06 21:05:30 by lcreola           #+#    #+#             */
-/*   Updated: 2021/01/08 18:29:50 by lchantel         ###   ########.fr       */
+/*   Created: 2021/01/08 19:05:39 by lchantel          #+#    #+#             */
+/*   Updated: 2021/01/08 19:05:59 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "./minishell.h"
 
-int	ft_minishell_pwd(void)
+void alloc_free_2(void **mem)
 {
-	char	cwd[BUFFER_SIZE];
+	int i;
 
-	getcwd(cwd, BUFFER_SIZE);
-	write(1, cwd, ft_strlen(cwd));
-	write(1, "\n", 1);
-	return (0);
+	i = -1;
+
+	while (mem[++i] && mem)
+	{
+		free(mem[i]);
+		mem[i] = NULL;
+	}	
+	free(mem);
+	mem = NULL;
 }
+

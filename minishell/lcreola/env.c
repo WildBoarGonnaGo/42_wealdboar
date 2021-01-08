@@ -6,17 +6,20 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:53:12 by lcreola           #+#    #+#             */
-/*   Updated: 2021/01/06 20:54:33 by lcreola          ###   ########.fr       */
+/*   Updated: 2021/01/08 22:10:01 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../minishell.h"
 
-void	ft_minishell_env(char **envp)
+void	ft_minishell_env(t_shell obj)
 {
 	int	i;
 
-	i = 0;
-	while (envp[i])
-		write(1, envp[i], ft_strlen(envp[i++]));
+	i = -1;
+	while (obj.envp[++i])
+	{
+		write(1, obj.envp[i], ft_strlen(obj.envp[i]));
+		write(1, "\n", 1);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/07 16:37:18 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/08 23:07:13 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,50 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include "./srcs/libft/libft.h"
+# include <sys/types.h>
+# include <dirent.h> 
+# include <sys/wait.h>
+# include <errno.h>
+# include <string.h>
 
-typedef struct	s_gnl
+
+# define BUFFER_SIZE 2048
+
+typedef struct		s_gnl
 {
-	int 		st;
-	char		buf[2048];
-	int			byte;
-	int			i;
-}				t_gnl;
+	int 			st;
+	char			buf[2048];
+	int				byte;
+	int				i;
+}					t_gnl;
 
-typedef struct	s_shell
+typedef struct		s_shell
 {
-	char	**arg;
-	char	**env;
-	char	**cmd;
-	char	*prompt;
-	char	*line;
-	int		fd[2];
-	pid_t	child;
-	int		argc;
-	char	loop;
-	char	exit;
-}				t_shell;
+	char			**arg;
+	char			**envp;
+	char			**cmd;
+	char			**tmp;
+	char			*prompt;
+	char			*line;
+	void			*clean;
+	int				fd[2];
+	int				argc;
+	int				len;
+	char			loop;
+	char			eol;
+	char			exit;
+	pid_t			child;
+	DIR				*sh_dir;
+	struct dirent	*binary;
+}					t_shell;
 
-
-int sh_gnl(int fd, char **line);
+int					sh_gnl(int fd, char **line);
+int					ft_minishell_pwd(void);
+void				sh_line_ansys(t_shell *obj);
+void 				alloc_free_2(void **mem);
+void				ft_minishell_echo(t_shell *obj, int indx);
+char				*sh_envp_search(const char *str, t_shell obj);
+void				ft_minishell_env(t_shell obj);
+char				*addchar(char *s, char c);
 
 #endif

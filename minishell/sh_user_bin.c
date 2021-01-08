@@ -1,36 +1,3 @@
-/*
- seek_path_2 - программа которая исполняет бинарники как если бы вводили их в bash.
- Является заготовкой для дальнейшего использования в minishell. Команда принимает
- только один аргумент командной строки (это может быть относительный, абсолютный путь 
- к бинарнику, а также по PATH (типа ./seek_path_2 ls))
-
- $ ./seek_path_2 ls
- PARENT: Let's wait for executing some process...
- CHILD: Hi, let's launch a program
- fork_2.c  kill.c     pipe_2    pipe.c     seek_path_2    seek_path.c  wait.c
- fork.c    leaks.txt  pipe_2.c  seek_path  seek_path_2.c  signal.c
- PARENT: child process is executed! Bye
-  
- $ ./seek_path_2 ~/../../usr/bin/pwd
- PARENT: Let's wait for executing some process...
- CHILD: Hi, let's launch a program
- /home/lchantel/42-wildboar-git/minishell/train
- PARENT: child process is executed! Bye
-
- $ ./seek_path_2 ~/hello_world
- PARENT: Let's wait for executing some process...
- CHILD: Hi, let's launch a program
- Hello world!
- PARENT: child process is executed! Bye
-
- Что не доработано: в случае если пытаемся передать в качестве аргумента
- директорию то должна выскакивать ошибка Is a directory - в процессе доработкиiш
- для работы программы необходима статическая библиотека libft. Также не рассмотрен
- случай, когда процесс-потомок не смог создаться через fork(), т.е _idprog = -1.
- Программа тестилась в системе Ubuntu 20.04 LTS, на других дистрибутивах Linux и
- OS семейства Unix и Windows NT тесты не проводились
- * */
-
 #include <sys/types.h>                  // для fork(), opendir(), readdir(), wait()
 #include <stdio.h>                      // printf=)
 #include <dirent.h>                     // для структуры dirent, opendir(), readdir()
@@ -45,25 +12,6 @@
  этой программы. ВНИМАНИЕ: освобождается память заалоцированная под s
  этот факт необходимо учитывать при использовании.
  */
-char *addchar(char *s, char c)
-{
-	char *res;
-	int len[2];
-
-	if (!s)
-		return (NULL);
-	len[0] = ft_strlen(s) + 2;
-	res = (char *)malloc(len[0]);
-	len[1] = -1;
-	while (s[++len[1]])
-		res[len[1]] = s[len[1]];
-	res[len[1]++] = c;
-	res[len[1]] = 0;
-	free(s);
-	s = NULL;
-	return (res);
-}
-
 // alloc_free_2 - освобождает память двумерного массива path_values
 void alloc_free_2(void **mem)
 {
@@ -80,7 +28,7 @@ void alloc_free_2(void **mem)
 	mem = NULL;
 }
 
-int main(int argc, char *argv[], char *envp[])
+int sh_user_bin(int argc, char *argv[], char *envp[])
 {
 	int i;                        // счетчик
 	char **path_values;           // для хранения директорий PATH
