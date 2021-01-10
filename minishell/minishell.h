@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/08 23:07:13 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/09 20:53:47 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,11 @@ typedef struct		s_gnl
 
 typedef struct		s_shell
 {
-	char			**arg;
-	char			**envp;
-	char			**cmd;
-	char			**tmp;
+	char			**argv;	//пока не применил
+	char			**envp; // переменные окружения 
+	char			**cmd; // команды
+	char			**tmp; // временное хранилище
+	char 			**bin; 
 	char			*prompt;
 	char			*line;
 	void			*clean;
@@ -61,5 +62,6 @@ void				ft_minishell_echo(t_shell *obj, int indx);
 char				*sh_envp_search(const char *str, t_shell obj);
 void				ft_minishell_env(t_shell obj);
 char				*addchar(char *s, char c);
+int					sh_user_bin(t_shell *obj, int indx);
 
 #endif

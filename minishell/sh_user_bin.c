@@ -2,160 +2,82 @@
 #include <stdio.h>                      // printf=)
 #include <dirent.h>                     // для структуры dirent, opendir(), readdir()
 #include <stdlib.h>                     // для malloc и exit
-#include "../srcs/libft/libft.h"        // Заголовочный файл libft, ваш путь может отличаться=)
+#include "./srcs/libft/libft.h"        // Заголовочный файл libft, ваш путь может отличаться=)
 #include <unistd.h>                     // для write(), fork() и execve()
 #include <sys/wait.h>                   // для wait()
 #include <errno.h>                      // для errno
 #include <string.h>                     // для strerror
+#include "./minishell.h"
 
-/* addchar - добавляет символ в строку. Фукнция рабочая в рамках
- этой программы. ВНИМАНИЕ: освобождается память заалоцированная под s
- этот факт необходимо учитывать при использовании.
- */
-// alloc_free_2 - освобождает память двумерного массива path_values
-void alloc_free_2(void **mem)
+int sh_user_bin(t_shell *obj, int indx)
 {
-	int i;
-
-	i = -1;
-
-	while (mem[++i] && mem)
-	{
-		free(mem[i]);
-		mem[i] = NULL;
-	}	
-	free(mem);
-	mem = NULL;
-}
-
-int sh_user_bin(int argc, char *argv[], char *envp[])
-{
-	int i;                        // счетчик
-	char **path_values;           // для хранения директорий PATH
-	pid_t _idprog;                // для работы с fork()
-	int st;                       /* переменная состояний, необходимая для обработки раличных случаев вызова бинарника 
-								  (относительный путь, абсолютный путь, по PATH) а также для обработки ошибок вызова 
-								  (типа несуществующего файла или неверного бинарника по PATH)*/
-	DIR *sh_dir;                  // Переменная типа директории - она нужна для поиска бинарника по PATH
-	struct dirent *binary;        // Структура dirent - она нужна для поиска бинарника по PATH
-	char *line;                   // Строка которая будет передаваться в execve
-	int len;                      // Для работы по поиску бинарника в PATH
-	char *alloc_free;             // Для освобожения старой памяти в ft_strjoin
+	int i;            
+	int st;
 
 	errno = 0;
 	i = -1;
 	st = 1;
-	len = 1;
-	line = NULL;
-	/*Передаваться должен строго 1 аргумент!*/
-	if (argc != 2)
-	{
-		write(1, "Error: wrong number of arguments: is should be two.\n", 
-		ft_strlen("Error: wrong number of arguments: is should be two.\n"));
-		return (1);
-	}
-	/*Если мы передаем бинарник, то здесь начинается обработка по PATH*/
-	if (*argv[1] != '.' && *argv[1] != '/' && *argv[1] != '~')
+	obj->len = 1;
+	obj->line = NULL;
+	if (*obj->tmp[indx] != '.' && *obj->tmp[indx] != '/' && *obj->tmp[indx] != '~')
 	{
 		st = 0;
-		/*Ищем строку с переменной окружения PATH*/
-		while (ft_strncmp(envp[++i], "PATH", 4))
+		while (ft_strncmp(obj->envp[++i], "PATH", 4))
 			;
-		/*Часть строки "PATH=" нам не нужна, целевые директории идут после знака '=' (сдвиг на 5-й байт)
-		  Эти директорий разделены ':'. вывод PATH через env
-		 $ env | grep PATH
-		 ...
-         PATH=/home/lchantel/.krew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
-		  */
-		path_values = ft_split(envp[i] + 5, ':');
-		/*Обнуляем i для следующей итерации*/
+		obj->bin = ft_split(obj->envp[i] + 5, ':');
 		i = -1;
-		/*В итерации ниже производим поиск бинарника по директориям переменной PATH*/
-		while (path_values[++i])
+		while (obj->bin[++i])
 		{
-			//len = ft_strlen(path_values[i]);
-			/*Выход в случае ошибки открытия файла. ВНИМАНИЕ: не освобождается память
-			 в случае ошибки открытия. Будут дальнейшие доработки =)*/	
-			if (!(sh_dir = opendir(path_values[i])))
+			if (!(obj->sh_dir = opendir(obj->bin[i])))
 			{
 				write(1, "minishell: ", ft_strlen("minishell: "));
 				write(2, strerror(errno), ft_strlen(strerror(errno)));
 				write(1, "\n", 1);
 				exit (1);
 			}
-			/*Читаем содержимое папки path_values[i], которая заложена выше в sh_dir*/
-			while ((binary = readdir(sh_dir)))
+			while ((obj->binary = readdir(obj->sh_dir)))
 			{
-				/*Длина строки с учетом нуль-терминатора. Это нужно для того, чтобы например в случае cat
-				  не проходил какой-нибудь неправильный бинарник вроде catchsegv*/
-				len = ft_strlen(argv[1]) + 1;
-				/*Ищем бинарник на точное совпадение. ОБЯЗАТЕЛЬНО преобразование binary->d_name в (char *)
-				  иначе вместо нормальной строки будете в функцию передавать всякий сифилис (навроде 
-				  /000/021/666/то_что_нужно_бл../000/037/000/021/ну_вы_п0няли/не_то_что_нужно). Такое
-				  поведение binary->d_name наблюдается на ubuntu, насчет MacOSX хз*/
-				if (!(len = ft_strncmp(argv[1], (char *)binary->d_name, len)))
+				obj->len = ft_strlen(obj->tmp[indx]) + 1;
+				if (!(obj->len = ft_strncmp(obj->tmp[indx],
+				(char *)obj->binary->d_name, obj->len)))
 				{
-					/*Нашли совпадение теперь line присвоена директория*/
-					line = ft_strdup(path_values[i]);
-					len = ft_strlen(line);
-					/*В случае отсутствия / на конце, необходимо добавить его. Иначе получится
-					 что то вроде /usr/bincat*/
-					if (line[len - 1] != '/')
-						line = addchar(line, '/');
-					/*Фиксируем старый участок памяти, который необходимо освободить*/
-					alloc_free = line;
-					/*Теперь добавляем бинарник*/
-					line = ft_strjoin(line, binary->d_name);
-					/*Для дальнейшего выхода из цикла*/
-					len = 0;
-					/*Освобождаем старую память*/
-					free(alloc_free);	
+					obj->line = ft_strdup(obj->bin[i]);
+					obj->len = ft_strlen(obj->line);
+					if (obj->line[obj->len - 1] != '/')
+						obj->line = addchar(obj->line, '/');
+					obj->clean = obj->line;
+					obj->line = ft_strjoin(obj->line, obj->binary->d_name);
+					obj->len = 0;
+					free(obj->clean);	
 					break ;
 				}
 			}
-			/*Директорию необходимо закрывать, иначе в конце нас ждут утечки
-			  от opendir*/
-			closedir(sh_dir);
-			/*Нашли бинарник, выходим из цикла*/
-			if (!len)
+			closedir(obj->sh_dir);
+			if (!obj->len)
 				break ;
 		}
 	}
-	/*Обрабатываем ситуацию когда искали именно бинарник через PATH*/
 	if (!st)
 	{
-		/*!line - значит мы так и не нашли нужный бинарник в PATH. Тогда
-		 в execve передает неправильный бинарник для дальнейшего 
-		 вывода правильной ошибки */
-		if (!line)
-			line = ft_strdup(argv[1]);
-		/*Освобождаем память, заалоцированную под директорию PATH*/
-		alloc_free_2((void **)path_values);
+		if (!obj->line)
+			obj->line = ft_strdup(obj->tmp[indx]);
+		alloc_free_2((void **)obj->bin);
 	}
-	/*В противном случае если мы имеем дело с относительным или
-	  абсолютным путем то сразу присваваем line путь к бинарнику*/
 	else 		
-		line = ft_strdup(argv[1]);
-	/*Обнуляем argv[1] - иначе execve сработает неправильно!*/
-	argv[1] = NULL;	
-	_idprog = fork(); // pid_t _idprog
-	/*Переход в процесс-потомок*/
-	if (!_idprog)
+		obj->line = ft_strdup(obj->tmp[indx]);
+	obj->child = fork();
+	if (!obj->child)
 	{
-		printf("CHILD: Hi, let's launch a program\n");
-		/*В случае ошибки execve возвращает -1 и errno присваивается код,
-		  в случае успеха ничего не возвращается, чем и воспользуемся*/
-		st += execve(line, argv, envp);;
+		st += execve(obj->line, obj->argv, obj->envp);
 		if (st <= 0)
 		{
-			/*st = -1 - Случай ошибки бинарника*/
 			if (st == -1)
 			{
-				write(1, line, ft_strlen(line));
+				write(1, obj->line, ft_strlen(obj->line));
 				write(2, ": command not found\n", ft_strlen(": command not found\n"));
 			}
-			/*ОБработка ошибки директории*/
-			else if (!st && (*line == '.' || *line == '/' || *line == '~'))
+			else if (!st && (*obj->line == '.'
+			|| *obj->line == '/' || *obj->line == '~'))
 			{
 				write(1, "minishell: ", ft_strlen("minishell: "));
 				write(2, strerror(errno), ft_strlen(strerror(errno)));
@@ -166,12 +88,11 @@ int sh_user_bin(int argc, char *argv[], char *envp[])
 	}
 	else
 	{
-		printf("PARENT: Let's wait for executing some process...\n");
-		/*Переход и ожидание когда закончится процесс-потомок*/
 		wait(NULL);
-		printf("PARENT: child process is executed! Bye\n");
-		free(line);
-		line = NULL;
+		free(obj->line);
+		obj->line = NULL;
 	}
 	return (0);
 }
+
+

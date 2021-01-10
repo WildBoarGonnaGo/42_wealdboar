@@ -189,7 +189,10 @@ int main(int argc, char *argv[], char *envp[])
 	else 		
 		line = ft_strdup(argv[1]);
 	/*Обнуляем argv[1] - иначе execve сработает неправильно!*/
-	argv[1] = NULL;	
+	alloc_free = argv[1];
+	argv[1] = ft_strdup("../addchar.c");
+	//free(alloc_free);
+	//alloc_free = NULL;
 	_idprog = fork(); // pid_t _idprog
 	/*Переход в процесс-потомок*/
 	if (!_idprog)
