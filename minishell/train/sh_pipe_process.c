@@ -3,15 +3,23 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 #include <fcntl.h>
 
 int main(int argc, char *argv[], char *envp[])
 {
 	char	**tmp;
 	char	**cmd;
+	char 	**arg;
+	char	**sh_envp;
 	pid_t	pid;
+	pid_t	pid_2;
 	int		pipefd[2];
+	int		pipefd2[2];
+	char	rbuf[4096] = {0};
+	char	wbuf[4096];
 	int		i;
+	int		len;
 
 	i = 0;
 	if (argc != 2)
@@ -20,26 +28,63 @@ int main(int argc, char *argv[], char *envp[])
 		ft_strlen("Error: wrong number of arguments\n"));
 		return (1);
 	}
-	tmp = ft_split(argv[i], '|');
+	tmp = ft_split(argv[1], '|');
 	i = 0;
-	while (tmp[++i])
+	while (tmp[i++])
 	{
-		cmd = ft_split()
 		pipe(pipefd);
-		pid = fork(); // pid процесса ребенка
-
-		
+		pid = fork();	
 		if (!pid)
-		{
+		{	
 			close(pipefd[0]);
-			dup2(1, pipefd[1]);
-			execve()
+			if (i != 1)
+			{
+				close(pipefd2[1]);
+				dup2(pipefd2[0], 0);
+			}
+			cmd = ft_split(tmp[i - 1], ' ');
+			len = -1;
+			while (cmd[++len])
+				;
+			arg = (char **)malloc(sizeof(char *) * len + 1);
+			i = 0;
+			arg[0] = argv[0];
+			while (++i < len)
+				arg[i] = ft_strdup(cmd[i]);
+			arg[i] = NULL;
+			dup2(pipefd[1], 1);
+			close(pipefd[1]);
+			execve(cmd[0], arg, envp);
+			if (i != 1)
+				close(pipefd2[0]);	
+			exit (0);
+		}
+		else
+		{
+			close(pipefd[1]);
+			wait(NULL);
+			len = -1;	
+			while (++len < 4096)
+				rbuf[len] = 0;
+			read(pipefd[0], rbuf, 4096);
+			close(pipefd[0]);
+			pipe(pipefd2);
+			pid_2 = fork();
+			if (!pid_2)
+			{
+				close(pipefd2[0]);
+				write(pipefd2[1], rbuf, 4096);
+				close(pipefd2[1]);
+				exit (0);
+			}
+			wait(NULL);	
 		}
 	}
+	close(pipefd2[0]);
+	write(1, rbuf, 4096);
 	return (0);
 }
 
-execve("/usr/bin/cat", "./file.txt", env_kakoi_to)
 /*char **sh_pipe(t_shell *obj)
 {
 	char	**data;
