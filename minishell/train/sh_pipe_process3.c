@@ -45,7 +45,6 @@ int main(int argc, char *argv[], char *envp[])
 	char 	**arg;
 	char	**sh_envp;
 	pid_t	pid;
-	//pid_t	pid_2;
 	int		pipefd[2];
 	int		pipefd2[2];
 	char	rbuf[4096] = {0};
@@ -68,22 +67,15 @@ int main(int argc, char *argv[], char *envp[])
 		pid = fork();	
 		if (!pid)
 		{
-			if (i == 1)
+			if (!((i - 1) % 2))
 			{
-				if (!((i - 1)% 2))
-				{
-					dup2(pipefd[0], 0);
-					close(pipefd[0]);
-					dup2(pipefd2[1], 1);
-					close(pipefd[1]);
-				}
-				else
-				{
-					dup2(pipefd2[0], 0);
-					close(pipefd2[0]);
-					dup2(pipefd[1], 1);
-					close(pipefd[1]);
-				}
+				dup2(pipefd2[1], 1);
+				close(pipefd2[1]);
+			}
+			else
+			{
+				dup2(pipefd[1], 1);
+				close(pipefd[1]);
 			}
 			close(pipefd[0]);
 			close(pipefd[1]);
@@ -110,34 +102,21 @@ int main(int argc, char *argv[], char *envp[])
 			{
 				dup2(pipefd[0], 0);
 				close(pipefd[0]);
-				dup2(pipefd2[1], 1);
-				close(pipefd[1]);
 			}
 			else
 			{
 				dup2(pipefd2[0], 0);
 				close(pipefd2[0]);
-				dup2(pipefd[1], 1);
-				close(pipefd[1]);
 			}
 			close(pipefd[0]);
 			close(pipefd[1]);
 			close(pipefd2[0]);
 			close(pipefd2[1]);
 			wait(NULL);
-			if ()
-			/*len = -1;	
-			dup2(0, pipefd2[])
-			read(0, rbuf, 4096);
-			
-			write(pipefd2[1], rbuf, 4096);
-			close(pipefd2[1]);*/
+			if (!tmp[i])
+				read(0, rbuf, 4096);	
 		}
 	}
-	close(pipefd2[0]);
-	close(pipefd2[1]);
-	close(pipefd[0]);
-	close(pipefd[1]);
 	write(1, rbuf, 4096);
 	return (0);
 }
