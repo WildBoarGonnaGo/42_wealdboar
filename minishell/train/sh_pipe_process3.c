@@ -6,6 +6,20 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+int char_count(const char *s, char c)
+{
+	int i;
+	int len;
+	int res;
+
+	len = ft_strlen(s);
+	i = -1;
+	res = 0;
+	while (++i < len)
+		res += (s[i] == c);
+	return (res);
+}
+
 void alloc_free_2(void **mem)
 {
 	int i;
@@ -31,7 +45,7 @@ int main(int argc, char *argv[], char *envp[])
 	char 	**arg;
 	char	**sh_envp;
 	pid_t	pid;
-	pid_t	pid_2;
+	//pid_t	pid_2;
 	int		pipefd[2];
 	int		pipefd2[2];
 	char	rbuf[4096] = {0};
@@ -50,15 +64,31 @@ int main(int argc, char *argv[], char *envp[])
 	while (tmp[i++])
 	{
 		pipe(pipefd);
+		pipe(pipefd2);
 		pid = fork();	
 		if (!pid)
-		{	
-			if (i != 1)
+		{
+			if (i == 1)
 			{
-				dup2(pipefd2[0], 0);
-				close(pipefd2[0]);
+				if (!((i - 1)% 2))
+				{
+					dup2(pipefd[0], 0);
+					close(pipefd[0]);
+					dup2(pipefd2[1], 1);
+					close(pipefd[1]);
+				}
+				else
+				{
+					dup2(pipefd2[0], 0);
+					close(pipefd2[0]);
+					dup2(pipefd[1], 1);
+					close(pipefd[1]);
+				}
 			}
 			close(pipefd[0]);
+			close(pipefd[1]);
+			close(pipefd2[0]);
+			close(pipefd2[1]);
 			cmd = ft_split(tmp[i - 1], ' ');
 			len = -1;
 			while (cmd[++len])
@@ -69,8 +99,6 @@ int main(int argc, char *argv[], char *envp[])
 			while (++i < len)
 				arg[i] = ft_strdup(cmd[i]);
 			arg[i] = NULL;
-			dup2(pipefd[1], 1);
-			close(pipefd[1]);
 			execve(cmd[0], arg, envp);
 			alloc_free_2((void **)cmd);
 			alloc_free_2((void **)arg);
@@ -78,24 +106,32 @@ int main(int argc, char *argv[], char *envp[])
 		}
 		else
 		{
-			close(pipefd[1]);
-			dup2(pipefd[0], 0);
-			close(pipefd[0]);
-			wait(NULL);
-			len = -1;	
-			while (++len < 4096)
-				rbuf[len] = 0;
-			read(0, rbuf, 4096);
-			pipe(pipefd2);
-			//pid_2 = fork();
-			//if (!pid_2)
-			/*{
+			if ((i - 1) % 2)
+			{
+				dup2(pipefd[0], 0);
+				close(pipefd[0]);
+				dup2(pipefd2[1], 1);
+				close(pipefd[1]);
+			}
+			else
+			{
+				dup2(pipefd2[0], 0);
 				close(pipefd2[0]);
-								close(pipefd2[1]);
-				exit (0);
-			}*/
-			write(pipefd2[1], rbuf, 4096);
+				dup2(pipefd[1], 1);
+				close(pipefd[1]);
+			}
+			close(pipefd[0]);
+			close(pipefd[1]);
+			close(pipefd2[0]);
 			close(pipefd2[1]);
+			wait(NULL);
+			if ()
+			/*len = -1;	
+			dup2(0, pipefd2[])
+			read(0, rbuf, 4096);
+			
+			write(pipefd2[1], rbuf, 4096);
+			close(pipefd2[1]);*/
 		}
 	}
 	close(pipefd2[0]);
@@ -105,33 +141,3 @@ int main(int argc, char *argv[], char *envp[])
 	write(1, rbuf, 4096);
 	return (0);
 }
-
-/*char **sh_pipe(t_shell *obj)
-{
-	char	**data;
-	int		pos[2];
-
-	obj->pipes = ft_split(obj);
-	pos[0] = 0;
-	pipe(obj->fd);
-	data = NULL;
-	while (pipes[++pos[0]])
-	{
-		obj->child = fork();
-		if (!obj->child)
-		{
-			close(obj->fd[0]);
-			//char **sh_line_proc(char *pipe_line, char **data) - функция которая возвращает результат в виде двойного массива
-			data = sh_line_proc(pipes[pos[0] - 1], data);
-			write(obj->fd[1], data, sizeof(char **));
-			close(ojb->fd[1]);
-		}
-		else
-		{
-			close(obj->fd[1]);
-			read(obj->fd[0], data, sizeof(char **));
-			close(ojb->fd[0]);
-		}
-	}
-	return (data);
-}*/
