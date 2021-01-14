@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 15:23:53 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/14 15:24:33 by wildboarg        ###   ########.fr       */
+/*   Updated: 2021/01/14 23:15:51 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char **execve_args(t_shell *obj, int indx)
 	i = 0;
 	res[0] = obj->argv[0];
 	while (i++ < size)
-		res[i] = obj->bin[i];
+		res[i] = ft_strdup(obj->bin[i]);
 	alloc_free_2((void **)obj->bin);
 	return (res);
 }
