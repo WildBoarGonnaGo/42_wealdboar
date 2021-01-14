@@ -1,12 +1,3 @@
-#include <sys/types.h>                  // для fork(), opendir(), readdir(), wait()
-#include <stdio.h>                      // printf=)
-#include <dirent.h>                     // для структуры dirent, opendir(), readdir()
-#include <stdlib.h>                     // для malloc и exit
-#include "./srcs/libft/libft.h"        // Заголовочный файл libft, ваш путь может отличаться=)
-#include <unistd.h>                     // для write(), fork() и execve()
-#include <sys/wait.h>                   // для wait()
-#include <errno.h>                      // для errno
-#include <string.h>                     // для strerror
 #include "./minishell.h"
 
 int sh_user_bin(t_shell *obj, int indx)
@@ -19,6 +10,7 @@ int sh_user_bin(t_shell *obj, int indx)
 	st = 1;
 	obj->len = 1;
 	obj->line = NULL;
+	obj->bin_args = execve_args(obj, indx);
 	if (*obj->tmp[indx] != '.' && *obj->tmp[indx] != '/' && *obj->tmp[indx] != '~')
 	{
 		st = 0;
@@ -68,13 +60,14 @@ int sh_user_bin(t_shell *obj, int indx)
 	obj->child = fork();
 	if (!obj->child)
 	{
-		st += execve(obj->line, obj->argv, obj->envp);
+		st += execve(obj->line, obj->bin_args, obj->envp);
 		if (st <= 0)
 		{
 			if (st == -1)
 			{
 				write(1, obj->line, ft_strlen(obj->line));
 				write(2, ": command not found\n", ft_strlen(": command not found\n"));
+
 			}
 			else if (!st && (*obj->line == '.'
 			|| *obj->line == '/' || *obj->line == '~'))
@@ -94,5 +87,3 @@ int sh_user_bin(t_shell *obj, int indx)
 	}
 	return (0);
 }
-
-

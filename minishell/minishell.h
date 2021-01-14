@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/09 20:53:47 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/14 15:23:35 by wildboarg        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <dirent.h>
 # include "./srcs/libft/libft.h"
 # include <sys/types.h>
 # include <dirent.h> 
@@ -40,6 +41,7 @@ typedef struct		s_shell
 	char			**cmd; // команды
 	char			**tmp; // временное хранилище
 	char 			**bin; 
+	char			**bin_args;
 	char			*prompt;
 	char			*line;
 	void			*clean;
@@ -63,5 +65,6 @@ char				*sh_envp_search(const char *str, t_shell obj);
 void				ft_minishell_env(t_shell obj);
 char				*addchar(char *s, char c);
 int					sh_user_bin(t_shell *obj, int indx);
+char 				**execve_args(t_shell *obj, int indx);
 
 #endif
