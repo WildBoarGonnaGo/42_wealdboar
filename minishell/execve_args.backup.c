@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 15:23:53 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/15 13:58:37 by wildboarg        ###   ########.fr       */
+/*   Updated: 2021/01/15 11:05:35 by wildboarg        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char **execve_args(t_shell *obj, int indx)
 	int 	size;
 	int 	i;
 
-	obj->bin = ft_split(obj->pipe_block[indx], ' ');
+	obj->bin = ft_split(obj->tmp[indx], ' ');
 	size = -1;
 	while (obj->bin[++size])
 		;

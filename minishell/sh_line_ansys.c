@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 14:43:43 by lchantel          #+#    #+#             */
-/*   Updated: 2021/01/10 00:46:34 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/15 16:02:59 by wildboarg        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,53 @@
 void sh_line_ansys(t_shell *obj)
 {
 	int		i;
+	int 	j;
+	char	rbuf[4096] = {0};
 
 	i = -1;	
 	obj->tmp = ft_split(obj->line, ';');
 	while (obj->tmp[++i])
 	{
-		obj->clean = obj->tmp[i];
-		obj->tmp[i] = ft_strtrim(obj->tmp[i], " ");
-		free(obj->clean);
-		obj->clean = NULL;
-		obj->len = ft_strlen(obj->tmp[i]) + 1;
-		if (!ft_strncmp("pwd", obj->tmp[i], obj->len) ||
-		ft_strncmp("pwd", obj->tmp[i], 5) == -32)
-			ft_minishell_pwd();
-		else if (!ft_strncmp("echo", obj->tmp[i], 5) ||
-		ft_strncmp("echo", obj->tmp[i], 5) == -32)
-			ft_minishell_echo(obj, i);
-		else if (!ft_strncmp("env", obj->tmp[i], obj->len) ||
-		ft_strncmp("env", obj->tmp[i], 5) == -32)
-			ft_minishell_env(*obj);
-		else
-			sh_user_bin(obj, i);
+		j = 0;
+		obj->pipe_block = ft_split(obj->tmp[i], '|');
+		while (obj->pipe_block[j++])
+		{
+			obj->clean = obj->pipe_block[j - 1];
+			obj->pipe_block[j - 1] = ft_strtrim(obj->pipe_block[j - 1], " ");
+			free(obj->clean);
+			obj->clean = NULL;
+			obj->len = ft_strlen(obj->pipe_block[j - 1]) + 1;
+			pipe(obj->fd_pipe);
+			obj->sh_pid[0] = fork();
+			if (!obj->sh_pid[0])
+			{
+				//errno = 0;
+				dup2(obj->fd_pipe[1], 1);
+				close(obj->fd_pipe[0]);
+				close(obj->fd_pipe[1]);
+				if (!ft_strncmp("pwd", obj->pipe_block[j - 1], obj->len) ||
+				ft_strncmp("pwd", obj->pipe_block[j - 1], 5) == -32)
+					ft_minishell_pwd();
+				else if (!ft_strncmp("echo", obj->pipe_block[j - 1], 5) ||
+				ft_strncmp("echo", obj->pipe_block[j - 1], 5) == -32)
+					ft_minishell_echo(obj, j - 1);
+				else if (!ft_strncmp("env", obj->pipe_block[j - 1], obj->len) ||
+				ft_strncmp("env", obj->pipe_block[j - 1], 5) == -32)
+					ft_minishell_env(*obj);
+				else
+					sh_user_bin(obj, j - 1);
+				exit (0);
+			}
+			else
+			{
+				dup2(obj->fd_pipe[0], 0);
+				close(obj->fd_pipe[0]);
+				close(obj->fd_pipe[1]);
+				wait(&obj->status[0]);
+				//waitpid(obj->sh_pid[0], &obj->status[0], /*WIFEXITED(obj->status[0])*/0);
+			}
+		}
+		write(1, rbuf, 4096);
 	}
 	alloc_free_2((void **)obj->tmp);
 }

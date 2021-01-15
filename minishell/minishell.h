@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/14 15:23:35 by wildboarg        ###   ########.fr       */
+/*   Updated: 2021/01/15 12:08:23 by wildboarg        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,21 @@ typedef struct		s_shell
 	char			**cmd; // команды
 	char			**tmp; // временное хранилище
 	char 			**bin; 
+	char			**pipe_block;
 	char			**bin_args;
 	char			*prompt;
+	char			*bin_search;
 	char			*line;
 	void			*clean;
-	int				fd[2];
+	int				fd_pipe[2];
+	int				fd_bin[2];
 	int				argc;
 	int				len;
+	int				status[2];
 	char			loop;
 	char			eol;
 	char			exit;
-	pid_t			child;
+	pid_t			sh_pid[2];
 	DIR				*sh_dir;
 	struct dirent	*binary;
 }					t_shell;
