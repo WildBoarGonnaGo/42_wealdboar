@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 14:43:43 by lchantel          #+#    #+#             */
-/*   Updated: 2021/01/15 16:02:59 by wildboarg        ###   ########.fr       */
+/*   Updated: 2021/01/16 00:25:33 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void sh_line_ansys(t_shell *obj)
 	int		i;
 	int 	j;
 	char	rbuf[4096] = {0};
+	//int 	fd[2];
 
 	i = -1;	
 	obj->tmp = ft_split(obj->line, ';');
@@ -32,10 +33,10 @@ void sh_line_ansys(t_shell *obj)
 			obj->clean = NULL;
 			obj->len = ft_strlen(obj->pipe_block[j - 1]) + 1;
 			pipe(obj->fd_pipe);
-			obj->sh_pid[0] = fork();
-			if (!obj->sh_pid[0])
+			//obj->sh_pid[0] = fork();
+			if (!fork())
 			{
-				//errno = 0;
+				errno = 0;
 				dup2(obj->fd_pipe[1], 1);
 				close(obj->fd_pipe[0]);
 				close(obj->fd_pipe[1]);

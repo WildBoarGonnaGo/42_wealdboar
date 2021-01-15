@@ -52,7 +52,7 @@ int sh_user_bin(t_shell *obj, int indx)
 	}
 	else 		
 		obj->line = ft_strdup(obj->pipe_block[indx]);
-	/*obj->sh_pid[1] = fork();
+	obj->sh_pid[1] = fork();
 	if (!obj->sh_pid[1])
 	{
 		st += execve(obj->line, obj->bin_args, obj->envp);
@@ -61,7 +61,7 @@ int sh_user_bin(t_shell *obj, int indx)
 			if (st == -1)
 			{
 				write(1, obj->line, ft_strlen(obj->line));
-				write(2, ": command not found\n", ft_strlen(": command not found\n"));
+				write(2, "command not found\n", ft_strlen(": command not found\n"));
 
 			}
 			else if (!st && (*obj->line == '.'
@@ -72,7 +72,7 @@ int sh_user_bin(t_shell *obj, int indx)
 				write(1, "\n", 1);
 			}
 		}
-		return (st);
+		//return (st);
 	}
 	else
 	{
@@ -80,8 +80,11 @@ int sh_user_bin(t_shell *obj, int indx)
 		wait(&obj->status[1]);
 		free(obj->line);
 		obj->line = NULL;
-	}*/
-	st += execve(obj->line, obj->bin_args, obj->envp);
+	}
+	return (st);
+}
+
+/*st += execve(obj->line, obj->bin_args, obj->envp);
 	if (st <= 0)
 	{
 		if (st == -1)
@@ -96,6 +99,5 @@ int sh_user_bin(t_shell *obj, int indx)
 			write(2, strerror(errno), ft_strlen(strerror(errno)));
 			write(1, "\n", 1);
 		}
-	}
-	return (st);
-}
+	}*/
+
