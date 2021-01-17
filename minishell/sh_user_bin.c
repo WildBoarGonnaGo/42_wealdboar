@@ -53,13 +53,13 @@ int sh_user_bin(t_shell *obj, int indx)
 	else 		
 		obj->line = ft_strdup(obj->pipe_block[indx]);
 	//st += execve(obj->line, obj->bin_args, obj->envp);
-	st = execve(obj->line, obj->bin_args, obj->envp);
+	st += execve(obj->line, obj->bin_args, obj->envp);
 	if (st <= 0)
 	{
 		if (st == -1)
 		{
 			write(1, obj->line, ft_strlen(obj->line));
-			write(2, ": command not found\n", ft_strlen(": command not found\n"));
+			write(2, " command not found\n", ft_strlen(" command not found\n"));
 		}
 		else if (!st && (*obj->line == '.'
 		|| *obj->line == '/' || *obj->line == '~'))

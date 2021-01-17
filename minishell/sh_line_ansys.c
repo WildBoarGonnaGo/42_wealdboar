@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 14:43:43 by lchantel          #+#    #+#             */
-/*   Updated: 2021/01/16 21:44:51 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/17 16:46:31 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ void sh_line_ansys(t_shell *obj)
 				ft_strncmp("echo", obj->pipe_block[j - 1], 5) == -32)
 					ft_minishell_echo(obj, j - 1);
 				else if (!ft_strncmp("env", obj->pipe_block[j - 1], obj->len) ||
-				ft_strncmp("env", obj->pipe_block[j - 1], 5) == -32)
+				ft_strncmp("env", obj->pipe_block[j - 1], 4) == -32)
+					ft_minishell_env(*obj);
+				else if (!ft_strncmp("cd", obj->pipe_block[j - 1], obj->len) ||
+				ft_strncmp("cd", obj->pipe_block[j - 1], 3) == -32)
 					ft_minishell_env(*obj);
 				else
 					sh_user_bin(obj, j - 1);

@@ -22,4 +22,3 @@
   <https://www.geeksforgeeks.org/bitwise-operators-in-c-cpp/>
 - Оффициальная документация по bash
   <https://pubs.opengroup.org/onlinepubs/9699919799.2018edition/utilities/V3_chap02.html#tag_18_02_01>
-

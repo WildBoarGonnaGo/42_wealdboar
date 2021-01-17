@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/16 21:44:26 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/17 16:42:51 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,6 @@ void				ft_minishell_env(t_shell obj);
 char				*addchar(char *s, char c);
 int					sh_user_bin(t_shell *obj, int indx);
 char 				**execve_args(t_shell *obj, int indx);
+int 				change_dir(t_shell *obj, int indx);
 
 #endif
