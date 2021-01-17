@@ -52,7 +52,45 @@ int sh_user_bin(t_shell *obj, int indx)
 	}
 	else 		
 		obj->line = ft_strdup(obj->pipe_block[indx]);
-	obj->sh_pid[1] = fork();
+	//st += execve(obj->line, obj->bin_args, obj->envp);
+	st = execve(obj->line, obj->bin_args, obj->envp);
+	if (st <= 0)
+	{
+		if (st == -1)
+		{
+			write(1, obj->line, ft_strlen(obj->line));
+			write(2, ": command not found\n", ft_strlen(": command not found\n"));
+		}
+		else if (!st && (*obj->line == '.'
+		|| *obj->line == '/' || *obj->line == '~'))
+		{
+			write(1, "minishell: ", ft_strlen("minishell: "));
+			write(2, strerror(errno), ft_strlen(strerror(errno)));
+			write(1, "\n", 1);
+		}
+	}
+	exit (0);
+	//return (st);
+}
+
+/*st += execve(obj->line, obj->bin_args, obj->envp);
+	if (st <= 0)
+	{
+		if (st == -1)
+		{
+			write(1, obj->line, ft_strlen(obj->line));
+			write(2, ": command not found\n", ft_strlen(": command not found\n"));
+		}
+		else if (!st && (*obj->line == '.'
+		|| *obj->line == '/' || *obj->line == '~'))
+		{
+			write(1, "minishell: ", ft_strlen("minishell: "));
+			write(2, strerror(errno), ft_strlen(strerror(errno)));
+			write(1, "\n", 1);
+		}
+	}*/
+
+/*obj->sh_pid[1] = fork();
 	if (!obj->sh_pid[1])
 	{
 		st += execve(obj->line, obj->bin_args, obj->envp);
@@ -80,24 +118,5 @@ int sh_user_bin(t_shell *obj, int indx)
 		wait(&obj->status[1]);
 		free(obj->line);
 		obj->line = NULL;
-	}
-	return (st);
-}
-
-/*st += execve(obj->line, obj->bin_args, obj->envp);
-	if (st <= 0)
-	{
-		if (st == -1)
-		{
-			write(1, obj->line, ft_strlen(obj->line));
-			write(2, ": command not found\n", ft_strlen(": command not found\n"));
-		}
-		else if (!st && (*obj->line == '.'
-		|| *obj->line == '/' || *obj->line == '~'))
-		{
-			write(1, "minishell: ", ft_strlen("minishell: "));
-			write(2, strerror(errno), ft_strlen(strerror(errno)));
-			write(1, "\n", 1);
-		}
 	}*/
 

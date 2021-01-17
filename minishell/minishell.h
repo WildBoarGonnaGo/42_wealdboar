@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/15 12:08:23 by wildboarg        ###   ########.fr       */
+/*   Updated: 2021/01/16 21:44:26 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,18 @@ typedef struct		s_shell
 	int				argc;
 	int				len;
 	int				status[2];
+	int				fd_recover[2];
 	char			loop;
 	char			eol;
 	char			exit;
 	pid_t			sh_pid[2];
+	pid_t			child;
 	DIR				*sh_dir;
 	struct dirent	*binary;
 }					t_shell;
 
 int					sh_gnl(int fd, char **line);
-int					ft_minishell_pwd(void);
+int					ft_minishell_pwd(t_shell obj);
 void				sh_line_ansys(t_shell *obj);
 void 				alloc_free_2(void **mem);
 void				ft_minishell_echo(t_shell *obj, int indx);

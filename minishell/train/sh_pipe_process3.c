@@ -43,7 +43,7 @@ int main(int argc, char *argv[], char *envp[])
 	char	**tmp;
 	char	**cmd;
 	char 	**arg;
-	char	**sh_envp;
+	//char	**sh_envp;
 	pid_t	pid;
 	int		pipefd[2];
 	int		pipefd2[2];
