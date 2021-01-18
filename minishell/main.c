@@ -6,14 +6,30 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:01:50 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/10 00:30:00 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/18 19:26:03 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
 
-int main(int argc, char **argv, char **envp)
+char 	**envp_dupl(t_shell obj)
+{
+	int		size;
+	char	**res;
+
+	size = -1;
+	while (obj.envp[++size])
+		;
+	res = (char **)malloc(sizeof(char *) * size + 1);
+	size = -1;
+	while (obj.envp[++size])
+		res[size] = ft_strdup(obj.envp[size]);
+	res[size] = NULL;
+	return (res);
+}
+
+int 	main(int argc, char **argv, char **envp)
 {
 	t_shell obj;
 
@@ -21,6 +37,7 @@ int main(int argc, char **argv, char **envp)
 	obj.argc = argc;
 	obj.argv = argv;
 	obj.line = NULL;
+	obj.envp_secure = envp_dupl(obj);
 	write(1, "minishell$ ", ft_strlen("minishell$ "));
 	while ((sh_gnl(0, &obj.line)) > 0)
 	{

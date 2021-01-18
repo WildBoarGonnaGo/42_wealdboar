@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:55:02 by lcreola           #+#    #+#             */
-/*   Updated: 2021/01/18 15:51:53 by wildboarg        ###   ########.fr       */
+/*   Updated: 2021/01/18 23:28:29 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		ft_minishell_export_output(t_shell obj)
 	int		len;
 
 	tmp = ft_minishell_export_sort(obj.envp);
-	obj->len = ft_minishell_export_envplen(obj.envp);
+	obj.len = ft_minishell_export_envplen(obj.envp);
 	i = 0;
 	while (i < len)
 	{
@@ -37,32 +37,27 @@ int		ft_minishell_export_output(t_shell obj)
 	return (0);
 }
 
-static int	ft_minishell_export_check(t_shell *obj, int indx)
+static int	ft_minishell_export_check(t_shell *obj)
 {
 	char	*var;
-	int		i;
-	int		j;
+	char	*eq_char;
+	int		pos[2];
 
-	j = 0;
-	if ((var = ft_minishell_getvar(obj->pipe_block[indx])))
+	pos[0] = 0;
+	while (obj->cmd[++pos[0]])
 	{
-		i = ft_strlen(var);
-		while ((*envp)[j] && (j < i))
+		if (check_export_input(obj->cmd[pos[0]], 0))
 		{
-			if (ft_minishell_export_set())
-				break ;
+			pos[1] = -1;
+			while (++pos[1])
+			{
+				eq_char = ft_strchr(obj->envp_secure[pos[1]], '=');
+				if (ft_strncmp())
+				obj->envp_secure[i] = ft_minishell_getvar(char *str) 
+			}
+			
 		}
-		if (!(*envp)[j])
-			(*envp) = ft_minishell_export_add(ft_strdup((*argv)), envp);
-		if (argv[1])
-			ft_minishell_export(&argv[1], envp);
 	}
-	else
-	{
-		ft_minishell_export_set(&argv[1], envp);
-		return (0);
-	}
-	return (0);
 }
 
 void	ft_minishell_export(t_shell *obj, int indx)
@@ -77,5 +72,4 @@ void	ft_minishell_export(t_shell *obj, int indx)
 		ft_minishell_export_check(obj);
 	else
 		ft_minishell_export_output(*obj);
-	return (0);
 }

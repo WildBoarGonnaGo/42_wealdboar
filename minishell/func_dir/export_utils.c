@@ -6,18 +6,17 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 21:00:49 by lcreola           #+#    #+#             */
-/*   Updated: 2021/01/18 15:21:28 by wildboarg        ###   ########.fr       */
+/*   Updated: 2021/01/18 19:38:35 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		check_getvar_input(char *str, int count)
+int		check_export_input(char *str, int count)
 {
 	if (ft_isdigit(*str) && *str && !count)
 		return (0);
-	else if (ft_strchr("!@#%^&*)(", *str) && *str
-	&&count)
+	else if (ft_strchr("!@#%^&*)(", *str) && *str)
 		return (0);
 	else if (*str)
 		return (check_getvar_input(++str, ++count));
