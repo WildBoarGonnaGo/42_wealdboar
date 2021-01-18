@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/17 16:42:51 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/18 13:11:45 by wildboarg        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include <string.h>
-
 
 # define BUFFER_SIZE 2048
 
@@ -73,5 +72,8 @@ char				*addchar(char *s, char c);
 int					sh_user_bin(t_shell *obj, int indx);
 char 				**execve_args(t_shell *obj, int indx);
 int 				change_dir(t_shell *obj, int indx);
+char				**ft_minishell_export_add(char *str, char ***envp);
+char				**ft_minishell_export_sort(char **envp);
+int					ft_minishell_export_envplen(char **envp);
 
 #endif

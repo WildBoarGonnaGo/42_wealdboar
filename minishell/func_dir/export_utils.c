@@ -6,11 +6,23 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 21:00:49 by lcreola           #+#    #+#             */
-/*   Updated: 2021/01/06 21:05:13 by lcreola          ###   ########.fr       */
+/*   Updated: 2021/01/18 15:21:28 by wildboarg        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../minishell.h"
+
+int		check_getvar_input(char *str, int count)
+{
+	if (ft_isdigit(*str) && *str && !count)
+		return (0);
+	else if (ft_strchr("!@#%^&*)(", *str) && *str
+	&&count)
+		return (0);
+	else if (*str)
+		return (check_getvar_input(++str, ++count));
+	return (1);
+}
 
 char	*ft_minishell_getvar(char *str)
 {
@@ -18,6 +30,14 @@ char	*ft_minishell_getvar(char *str)
 	int		equal;
 
 	equal = 0;
+	if (!(check_getvar_input(str, 0)))
+	{
+		write(2, "minishell: export: ",
+		ft_strlen("minishell: export: "));
+		write(2, str, ft_strlen(str));
+		write(2. "\n", 1);
+		return (NULL);
+	}
 	while (str[equal] != '=')
 		++equal;
 	var = ft_substr(str, 0, equal);
@@ -53,15 +73,11 @@ char	**ft_minishell_export_sort(char **envp)
 	int		i;
 
 	len = ft_minishell_export_envplen(envp);
-	i = 0;
-	if (!(res = (char**)malloc(sizeof(char*) * (len + 1))))
-		ft_errors(1);
-	while (i < len)
-	{
-		res[i] = malloc(ft_strlen(envp[i] + 1));
-		res[i] = ft_strcpy(res[i], envp[i]);
-		++i;
-	}
+	i = -1;
+	if (!(res = (char **)malloc(sizeof(char *) * (len + 1))))
+		return (NULL);
+	while (++i < len)
+		res[i] = ft_strdup(envp[i]);
 	res[len] = NULL;
 	i = 0;
 	while (res[i])
@@ -69,7 +85,7 @@ char	**ft_minishell_export_sort(char **envp)
 		len = i;
 		while (res[len + 1])
 		{
-			if (ft_strcmp(res[i], res[len + 1]) > 0)
+			if (ft_strncmp(res[i], res[len + 1], ft_strlen(res[i])) > 0)
 				ft_minishell_export_swap(&res[i], &res[len + 1]);
 			++len;
 		}

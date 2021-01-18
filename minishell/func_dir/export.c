@@ -6,24 +6,24 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:55:02 by lcreola           #+#    #+#             */
-/*   Updated: 2021/01/06 21:00:27 by lcreola          ###   ########.fr       */
+/*   Updated: 2021/01/18 15:51:53 by wildboarg        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../minishell.h"
 
-static char	**ft_minishell_export_add(char *str, char ***envp);
+char	**ft_minishell_export_add(char *str, char ***envp);
 
-static int	ft_minishell_export_set();
+//int	ft_minishell_export_set();
 
-static int	ft_minishell_export_output(char **envp)
+int		ft_minishell_export_output(t_shell obj)
 {
 	char	**tmp;
 	int		i;
 	int		len;
 
-	tmp = ft_minishell_export_sort(envp);
-	len = ft_minishell_export_envplen(envp);
+	tmp = ft_minishell_export_sort(obj.envp);
+	obj->len = ft_minishell_export_envplen(obj.envp);
 	i = 0;
 	while (i < len)
 	{
@@ -37,14 +37,14 @@ static int	ft_minishell_export_output(char **envp)
 	return (0);
 }
 
-static int	ft_minishell_export_check(char **argv, char **envp)
+static int	ft_minishell_export_check(t_shell *obj, int indx)
 {
 	char	*var;
 	int		i;
 	int		j;
 
 	j = 0;
-	if (var = ft_minishell_getvar(*argv))
+	if ((var = ft_minishell_getvar(obj->pipe_block[indx])))
 	{
 		i = ft_strlen(var);
 		while ((*envp)[j] && (j < i))
@@ -65,11 +65,17 @@ static int	ft_minishell_export_check(char **argv, char **envp)
 	return (0);
 }
 
-void	ft_minishell_export(char **argv, char **envp)
+void	ft_minishell_export(t_shell *obj, int indx)
 {
-	if (*argv)
-		ft_minishell_export_check(argv, envp);
+	int	size;
+
+	size = -1;
+	obj->cmd = ft_split(obj->pipe_block[indx], ' ');
+	while (obj->cmd[++size])
+		;
+	if (size >= 2)
+		ft_minishell_export_check(obj);
 	else
-		ft_minishell_export_output(envp);
+		ft_minishell_export_output(*obj);
 	return (0);
 }
