@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/18 19:20:15 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/19 16:01:56 by wildboarg        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct		s_shell
 	char			**cmd; // команды
 	char			**tmp; // временное хранилище
 	char 			**bin; 
+	char			**clean2;
 	char			**pipe_block;
 	char			**bin_args;
 	char			**envp_secure;
@@ -76,7 +77,9 @@ int 				change_dir(t_shell *obj, int indx);
 char				**ft_minishell_export_add(char *str, char ***envp);
 char				**ft_minishell_export_sort(char **envp);
 int					ft_minishell_export_envplen(char **envp);
-int					check_export_input(char *str, int count);
+void				ft_minishell_export(t_shell *obj, int indx);
+int					check_export_input(char *str, int count, char *cmd);
 void				*memrealloc(void *mem, int oldsize, int addbyte);
+int 				unset_envp(t_shell *obj, int indx);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 16:28:01 by lchantel          #+#    #+#             */
-/*   Updated: 2021/01/18 11:26:46 by wildboarg        ###   ########.fr       */
+/*   Updated: 2021/01/19 11:16:16 by wildboarg        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ char	*cd_two_args(t_shell *obj, char **cd_args)
 	ft_strlen(obj->clean + ft_strlen(cd_args[1])));
 	return (res);
 }
+
 
 int 	change_dir(t_shell *obj, int indx)
 {

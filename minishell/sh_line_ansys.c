@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 14:43:43 by lchantel          #+#    #+#             */
-/*   Updated: 2021/01/17 16:46:31 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/19 16:02:16 by wildboarg        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,13 @@ void sh_line_ansys(t_shell *obj)
 					ft_minishell_env(*obj);
 				else if (!ft_strncmp("cd", obj->pipe_block[j - 1], obj->len) ||
 				ft_strncmp("cd", obj->pipe_block[j - 1], 3) == -32)
-					ft_minishell_env(*obj);
+					change_dir(obj, j - 1);
+				else if (!ft_strncmp("export", obj->pipe_block[j - 1], obj->len) ||
+				ft_strncmp("export", obj->pipe_block[j - 1], 7) == -32)
+					ft_minishell_export(obj, j - 1);
+				else if (!ft_strncmp("unset", obj->pipe_block[j - 1], obj->len) ||
+				ft_strncmp("unset", obj->pipe_block[j - 1], 6) == -32)
+					unset_envp(obj, j - 1);
 				else
 					sh_user_bin(obj, j - 1);
 				exit (0);
