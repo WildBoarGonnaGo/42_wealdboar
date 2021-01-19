@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:55:02 by lcreola           #+#    #+#             */
-/*   Updated: 2021/01/19 15:51:25 by wildboarg        ###   ########.fr       */
+/*   Updated: 2021/01/19 21:05:57 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int		ft_minishell_export_output(t_shell obj)
 {
 	char	**tmp;
 	int		i;
-	int		len;
 
 	tmp = ft_minishell_export_sort(obj.envp);
 	obj.len = ft_minishell_export_envplen(obj.envp);
@@ -35,7 +34,7 @@ int		ft_minishell_export_output(t_shell obj)
 
 int		ft_minishell_export_check(t_shell *obj)
 {
-	char	*var;
+	//char	*var;
 	char	*eq_char;
 	int		pos[3];
 

@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 21:00:49 by lcreola           #+#    #+#             */
-/*   Updated: 2021/01/19 12:13:54 by wildboarg        ###   ########.fr       */
+/*   Updated: 2021/01/19 20:59:35 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int		check_export_input(char *str, int count, char *cmd)
 {
 	if (ft_isdigit(*str) && *str && !count)
 		return (0);
-	else if (ft_strchr("!@#%^&*)(", *str) && *str ||
-	(!ft_strncmp("unset", cmd, ft_strlen(cmd)) && *str == '='))
+	else if (ft_strchr("!@#%^&*)(", *str) && (*str ||
+	(!ft_strncmp("unset", cmd, ft_strlen(cmd)) && *str == '=')))
 	{
 		write(2, "minishell: ",
 		ft_strlen("minishell: "));
