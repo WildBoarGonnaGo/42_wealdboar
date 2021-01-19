@@ -27,3 +27,7 @@ git checkout -b <new_branch> <commit_sha>
 + How to clone a certain branch
 ```bash
 git clone --single-branch --branch <branch_name> <remote_repo>
+
++ To push commit to branch you should input command
+```bash
+git push --set-upstream origin <your_branch>
