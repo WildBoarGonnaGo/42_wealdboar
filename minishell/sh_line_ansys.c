@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 14:43:43 by lchantel          #+#    #+#             */
-/*   Updated: 2021/01/19 22:20:39 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/21 18:17:55 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void sh_line_ansys(t_shell *obj)
 			obj->clean = NULL;
 			obj->len = ft_strlen(obj->pipe_block[j - 1]) + 1;
 			pipe(obj->fd_pipe);
-			//obj->sh_pid[0] = fork();
 			if (!fork())
 			{
 				errno = 0;
@@ -46,13 +45,13 @@ void sh_line_ansys(t_shell *obj)
 				close(obj->fd_pipe[1]);
 				if (!ft_strncmp("pwd", obj->pipe_block[j - 1], obj->len) ||
 				ft_strncmp("pwd", obj->pipe_block[j - 1], 5) == -32)
-					ft_minishell_pwd(*obj);
+					ft_minishell_pwd(*obj, j - 1);
 				else if (!ft_strncmp("echo", obj->pipe_block[j - 1], 5) ||
 				ft_strncmp("echo", obj->pipe_block[j - 1], 5) == -32)
 					ft_minishell_echo(obj, j - 1);
 				else if (!ft_strncmp("env", obj->pipe_block[j - 1], obj->len) ||
 				ft_strncmp("env", obj->pipe_block[j - 1], 4) == -32)
-					ft_minishell_env(*obj);
+					ft_minishell_env(*obj, j - 1);
 				else if (!ft_strncmp("cd", obj->pipe_block[j - 1], obj->len) ||
 				ft_strncmp("cd", obj->pipe_block[j - 1], 3) == -32)
 					change_dir(obj, j - 1);
@@ -68,15 +67,12 @@ void sh_line_ansys(t_shell *obj)
 			}
 			else
 			{
-				dup2(obj->fd_pipe[0], 0);
+				dup2(obj->fd_pipe[0], 0);	
 				close(obj->fd_pipe[0]);
 				close(obj->fd_pipe[1]);
 				wait(&obj->status[0]);
-				//waitpid(obj->sh_pid[0], &obj->status[0], /*WIFEXITED(obj->status[0])*/0);
 			}
 		}
-		read(0, rbuf, 4096);
-		write(1, rbuf, 4096);
 		dup2(obj->fd_recover[0], STDIN_FILENO);
 	}
 	alloc_free_2((void **)obj->tmp);	

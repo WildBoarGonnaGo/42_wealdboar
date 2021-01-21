@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:50:06 by lcreola           #+#    #+#             */
-/*   Updated: 2021/01/21 01:44:02 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/21 14:22:19 by wildboarg        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ void	ft_minishell_echo(t_shell *obj, int indx)
 
 	word = 0;
 	obj->eol = '\n';
-	//dup2(obj->fd_recover[1], STDOUT_FILENO);
 	tmp = ft_split(obj->pipe_block[indx], ' ');
+	if (!obj->pipe_block[indx + 1])
+		dup2(obj->fd_recover[1], 1);
 	while (tmp[++i])
 	{
 		if (word)

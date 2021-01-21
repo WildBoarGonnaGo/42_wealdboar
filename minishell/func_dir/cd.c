@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 16:28:01 by lchantel          #+#    #+#             */
-/*   Updated: 2021/01/19 11:16:16 by wildboarg        ###   ########.fr       */
+/*   Updated: 2021/01/21 14:59:26 by wildboarg        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ char	*cd_two_args(t_shell *obj, char **cd_args)
 	if (!(obj->clean = ft_strnstr(obj->line,
 	cd_args[1], ft_strlen(obj->line))))
 	{
-		write(2, "cd: not in pwd: ", ft_strlen("cd: not in pwd: "));
-		write(2, cd_args[1], ft_strlen(cd_args[1]));
-		write(2, "\n", 1);
+		write(1, "cd: not in pwd: ", ft_strlen("cd: not in pwd: "));
+		write(1, cd_args[1], ft_strlen(cd_args[1]));
+		write(1, "\n", 1);
 		return (NULL);
 	}
 	obj->len += ft_strlen(cd_args[2]) - ft_strlen(cd_args[1]);
@@ -55,7 +55,6 @@ char	*cd_two_args(t_shell *obj, char **cd_args)
 	ft_strlen(obj->clean + ft_strlen(cd_args[1])));
 	return (res);
 }
-
 
 int 	change_dir(t_shell *obj, int indx)
 {

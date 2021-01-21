@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/19 16:01:56 by wildboarg        ###   ########.fr       */
+/*   Updated: 2021/01/21 14:38:17 by wildboarg        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ typedef struct		s_shell
 }					t_shell;
 
 int					sh_gnl(int fd, char **line);
-int					ft_minishell_pwd(t_shell obj);
+int					ft_minishell_pwd(t_shell obj, int indx);
 void				sh_line_ansys(t_shell *obj);
 void 				alloc_free_2(void **mem);
 void				ft_minishell_echo(t_shell *obj, int indx);
 char				*sh_envp_search(const char *str, t_shell obj);
-void				ft_minishell_env(t_shell obj);
+void				ft_minishell_env(t_shell obj, int indx);
 char				*addchar(char *s, char c);
 int					sh_user_bin(t_shell *obj, int indx);
 char 				**execve_args(t_shell *obj, int indx);

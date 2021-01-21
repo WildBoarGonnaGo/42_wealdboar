@@ -52,6 +52,8 @@ int sh_user_bin(t_shell *obj, int indx)
 	}
 	else 		
 		obj->line = ft_strdup(obj->pipe_block[indx]);
+	if (!obj->pipe_block[indx + 1])
+		dup2(obj->fd_recover[1], 1);
 	st += execve(obj->line, obj->bin_args, obj->envp);
 	if (st <= 0)
 	{
@@ -68,7 +70,7 @@ int sh_user_bin(t_shell *obj, int indx)
 			write(1, "\n", 1);
 		}
 	}
-	exit (0);
+	return (st);
 	//return (st);
 }
 
