@@ -6,12 +6,11 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:01:50 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/21 19:31:29 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/23 17:42:26 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
-
 
 char 	**envp_dupl(t_shell obj)
 {
@@ -32,12 +31,12 @@ char 	**envp_dupl(t_shell obj)
 int 	main(int argc, char **argv, char **envp)
 {
 	t_shell obj;
-
 	obj.envp = envp;
 	obj.argc = argc;
 	obj.argv = argv;
 	obj.line = NULL;
-	obj.envp_secure = envp_dupl(obj);
+	envp = envp_dupl(obj);
+	obj.envp = envp;
 	write(1, "minishell$ ", ft_strlen("minishell$ "));
 	while ((sh_gnl(0, &obj.line)) > 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 19:05:39 by lchantel          #+#    #+#             */
-/*   Updated: 2021/01/12 07:54:38 by wildboarg        ###   ########.fr       */
+/*   Updated: 2021/01/23 16:31:45 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,15 @@ void alloc_free_2(void **mem)
 
 	i = -1;
 
-	while (mem[++i] && mem)
+	if (mem)
 	{
-		free(mem[i]);
-		mem[i] = NULL;
-	}	
-	free(mem);
-	mem = NULL;
+		while (mem[++i])
+		{
+			free(mem[i]);
+			mem[i] = NULL;
+		}	
+		free(mem);
+		mem = NULL;
+	}
 }
 

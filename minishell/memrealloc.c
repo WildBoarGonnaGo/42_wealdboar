@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 19:00:01 by lchantel          #+#    #+#             */
-/*   Updated: 2021/01/19 13:32:02 by wildboarg        ###   ########.fr       */
+/*   Updated: 2021/01/23 17:09:35 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 void	*memrealloc(void *mem, int oldsize, int addbyte)
 {
-	void	*mem_to_purge;
 	void	*res;
 	int		indx;
+	void	*mem_to_purge;
 
 	indx = -1;
-	mem_to_purge = mem;
 	oldsize += (addbyte < 0) * addbyte;
+	mem_to_purge = mem;
 	res = malloc(oldsize + (addbyte > 0) * addbyte);
 	while (++indx < oldsize && mem)
-		*(char *)(res + indx) = *(char *)(mem_to_purge + indx);
+		*(char *)(res + indx) = *(char *)(mem + indx);
 	while (indx < oldsize + addbyte)
 		*(char *)(res + indx++) = 0;
-	free(mem_to_purge);
-	mem_to_purge = NULL;
+	if (mem_to_purge)
+		free(mem_to_purge);
 	return (res);
 }
 

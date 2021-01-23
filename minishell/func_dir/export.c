@@ -6,11 +6,33 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:55:02 by lcreola           #+#    #+#             */
-/*   Updated: 2021/01/19 21:06:38 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/23 23:03:01 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	export_no_arg_format(char *str)
+{
+	char	*pos_eq;
+	int		len;
+
+	len = ft_strlen(str);
+	if ((pos_eq = ft_strchr(str, '=')))
+	{
+		write(1, "declare -x ", 11);
+		write(1, str, pos_eq - str + 1);
+		write(1, "\"", 1);
+		write(1, str + (pos_eq - str + 1), len - (pos_eq - str));
+		write(1, "\"\n", 2);
+	}
+	else
+	{
+		write(1, "declare -x ", 11);
+		write(1, str, len);
+		write(1, "\n", 1);
+	}
+}
 
 int		ft_minishell_export_output(t_shell obj)
 {
@@ -22,10 +44,7 @@ int		ft_minishell_export_output(t_shell obj)
 	i = 0;
 	while (i < obj.len)
 	{
-		write(1, "declare -x ", 11);
-		write(1, tmp[i], ft_strlen(tmp[i]));
-		write(1, "\n", 1);
-		free(tmp[i]);
+		export_no_arg_format(tmp[i]);
 		++i;
 	}
 	alloc_free_2((void **)tmp);
@@ -34,7 +53,6 @@ int		ft_minishell_export_output(t_shell obj)
 
 int		ft_minishell_export_check(t_shell *obj)
 {
-	//char	*var;
 	char	*eq_char;
 	int		pos[3];
 

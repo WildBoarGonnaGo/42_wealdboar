@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/21 14:38:17 by wildboarg        ###   ########.fr       */
+/*   Updated: 2021/01/23 18:59:45 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,10 @@ typedef struct		s_shell
 	char			**pipe_block;
 	char			**bin_args;
 	char			**envp_secure;
-	char			*prompt;
+	char			*backup;
 	char			*bin_search;
 	char			*line;
+	char			*argstr;
 	void			*clean;
 	int				fd_pipe[2];
 	int				fd_bin[2];
