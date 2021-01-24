@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/23 18:59:45 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/24 18:06:32 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ typedef struct		s_shell
 	char			*argstr;
 	void			*clean;
 	int				fd_pipe[2];
-	int				fd_bin[2];
+	int				fd_err[2];
 	int				argc;
 	int				len;
 	int				status[2];
-	int				fd_recover[2];
+	int				fd_recover[3];
 	char			loop;
 	char			eol;
 	char			exit;
@@ -65,12 +65,12 @@ typedef struct		s_shell
 }					t_shell;
 
 int					sh_gnl(int fd, char **line);
-int					ft_minishell_pwd(t_shell obj, int indx);
+int					ft_minishell_pwd(t_shell *obj, int indx);
 void				sh_line_ansys(t_shell *obj);
 void 				alloc_free_2(void **mem);
 void				ft_minishell_echo(t_shell *obj, int indx);
 char				*sh_envp_search(const char *str, t_shell obj);
-void				ft_minishell_env(t_shell obj, int indx);
+void				ft_minishell_env(t_shell *obj, int indx);
 char				*addchar(char *s, char c);
 int					sh_user_bin(t_shell *obj, int indx);
 char 				**execve_args(t_shell *obj, int indx);
@@ -79,7 +79,7 @@ char				**ft_minishell_export_add(char *str, char ***envp);
 char				**ft_minishell_export_sort(char **envp);
 int					ft_minishell_export_envplen(char **envp);
 void				ft_minishell_export(t_shell *obj, int indx);
-int					check_export_input(char *str, int count, char *cmd);
+int					check_export_input(char *str, int count, char *cmd, int bit_eq);
 void				*memrealloc(void *mem, int oldsize, int addbyte);
 int 				unset_envp(t_shell *obj, int indx);
 

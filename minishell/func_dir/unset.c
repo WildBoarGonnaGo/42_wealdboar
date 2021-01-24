@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 10:59:47 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/19 15:11:32 by wildboarg        ###   ########.fr       */
+/*   Updated: 2021/01/24 14:42:15 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,12 @@ char 	**arr_redef(char **mem, int indx)
 	pos[0] = -1;
 	pos[1] = -1;
 	res = (char **)malloc(sizeof(char *) * size);
-	while (++pos[0] < size)
+	while (mem[++pos[0]])
 	{
-
-		if (++pos[1] != indx)
-			res[pos[1]] = ft_strdup(mem[pos[0]]);
-		else
-			--pos[1];
+		if (pos[0] != indx)
+			res[++pos[1]] = ft_strdup(mem[pos[0]]);
 	}
+	res[++pos[1]] = NULL;
 	return (res); 
 }
 
@@ -42,18 +40,19 @@ void 	rm_envp_var(t_shell *obj)
 	pos[0] = 0;
 	while (obj->cmd[++pos[0]])
 	{
-		if (check_export_input(obj->cmd[pos[0]], 0, obj->cmd[0]))
+		if (check_export_input(obj->cmd[pos[0]], 0, obj->cmd[0], 0))
 		{
 			pos[1] = -1;
-			while (obj->envp_secure[++pos[1]])
+			while (obj->envp[++pos[1]])
 			{
-				eq_char = ft_strchr(obj->envp_secure[pos[1]], '=');
-				(eq_char) ? obj->len = eq_char - obj->envp_secure[1] :
-				ft_strlen(obj->envp_secure[1]);
-				if (ft_strncmp(obj->envp_secure[pos[1]], obj->cmd[pos[0]], obj->len))
+				eq_char = ft_strchr(obj->envp[pos[1]], '=');
+				(eq_char) ? obj->len = eq_char - obj->envp[pos[1]]:
+				ft_strlen(obj->envp[pos[1]]);
+				if (!ft_strncmp(obj->envp[pos[1]], obj->cmd[pos[0]], obj->len + 1) ||
+				ft_strncmp(obj->envp[pos[1]], obj->cmd[pos[0]], obj->len + 1) == 61)
 				{
-					obj->clean2 = obj->envp_secure;
-					obj->envp_secure = arr_redef(obj->envp_secure, pos[1]);
+					obj->clean2 = obj->envp;
+					obj->envp = arr_redef(obj->envp, pos[1]);
  					alloc_free_2((void **)obj->clean2);
 					break ;
 				}
@@ -66,11 +65,9 @@ int 	unset_envp(t_shell *obj, int indx)
 {
 	obj->cmd = ft_split(obj->pipe_block[indx], ' ');
 	obj->len = -1;
-	while (obj->pipe_block[++obj->len])
+	while (obj->cmd[++obj->len])
 		;
-	if (obj->len > 2)
+	if (obj->len > 1)
 		rm_envp_var(obj);
-	else
-		write(1, "\n", 1);
 	return (0);
 }

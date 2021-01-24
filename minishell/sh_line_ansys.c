@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 14:43:43 by lchantel          #+#    #+#             */
-/*   Updated: 2021/01/23 22:31:44 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/24 17:57:49 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,26 +43,31 @@ void sh_line_ansys(t_shell *obj)
 			else if (!ft_strncmp("export", obj->pipe_block[j - 1], obj->len) ||
 			ft_strncmp("export", obj->pipe_block[j - 1], 7) == -32)
 				ft_minishell_export(obj, j - 1);
+			else if (!ft_strncmp("unset", obj->pipe_block[j - 1], obj->len) ||
+			ft_strncmp("unset", obj->pipe_block[j - 1], 6) == -32)
+				unset_envp(obj, j - 1);
+			else if (!ft_strncmp("echo", obj->pipe_block[j - 1], 5) ||
+			ft_strncmp("echo", obj->pipe_block[j - 1], 5) == -32)
+				ft_minishell_echo(obj, j - 1);
+			else if (!ft_strncmp("env", obj->pipe_block[j - 1], obj->len) ||
+			ft_strncmp("env", obj->pipe_block[j - 1], 4) == -32)
+				ft_minishell_env(obj, j - 1);
 			else if (!(obj->child = fork()))
 			{
 				errno = 0;
-				dup2(obj->fd_pipe[1], 1);
+				dup2(obj->fd_pipe[1], 1); // obj->fd_pipe[1] -> системный буфер -> obj->fd_pipe[0]
 				close(obj->fd_pipe[0]);
 				close(obj->fd_pipe[1]);
-				if (!ft_strncmp("pwd", obj->pipe_block[j - 1], obj->len) ||
+				/*if (!ft_strncmp("pwd", obj->pipe_block[j - 1], obj->len) ||
 				ft_strncmp("pwd", obj->pipe_block[j - 1], 5) == -32)
-					ft_minishell_pwd(*obj, j - 1);
+					ft_minishell_pwd(obj, j - 1);
 				else if (!ft_strncmp("echo", obj->pipe_block[j - 1], 5) ||
 				ft_strncmp("echo", obj->pipe_block[j - 1], 5) == -32)
 					ft_minishell_echo(obj, j - 1);
 				else if (!ft_strncmp("env", obj->pipe_block[j - 1], obj->len) ||
 				ft_strncmp("env", obj->pipe_block[j - 1], 4) == -32)
-					ft_minishell_env(*obj, j - 1);
-				else if (!ft_strncmp("unset", obj->pipe_block[j - 1], obj->len) ||
-				ft_strncmp("unset", obj->pipe_block[j - 1], 6) == -32)
-					unset_envp(obj, j - 1);
-				else
-					sh_user_bin(obj, j - 1);
+					ft_minishell_env(obj, j - 1);*/
+				sh_user_bin(obj, j - 1);
 				exit (0);
 			}
 			else

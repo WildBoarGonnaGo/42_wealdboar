@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 16:28:01 by lchantel          #+#    #+#             */
-/*   Updated: 2021/01/23 22:15:58 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/24 11:19:06 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int 	change_dir(t_shell *obj, int indx)
 		obj->argstr = cd_args[1];
 		free(obj->clean);
 	}
-	else if (cd_args[1])
+	else if (cd_args[1] && (i == 2 || i >= 4))
 		obj->argstr = cd_args[1];
 	st = chdir(obj->argstr);
 	if (st)

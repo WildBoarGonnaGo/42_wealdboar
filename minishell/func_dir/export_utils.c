@@ -6,52 +6,46 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 21:00:49 by lcreola           #+#    #+#             */
-/*   Updated: 2021/01/19 20:59:35 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/24 13:35:55 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		check_export_input(char *str, int count, char *cmd)
+void	err_identifier_output(char *str, char *cmd)
 {
-	if (ft_isdigit(*str) && *str && !count)
-		return (0);
-	else if (ft_strchr("!@#%^&*)(", *str) && (*str ||
-	(!ft_strncmp("unset", cmd, ft_strlen(cmd)) && *str == '=')))
-	{
-		write(2, "minishell: ",
-		ft_strlen("minishell: "));
-		write(2, cmd, ft_strlen(cmd));
-		write(2, str, ft_strlen(str));
-		write(2, ": not a valid identifier\n", 
-		ft_strlen(": not a valid identifier\n"));
-		return (0);
-	}
-	else if (*str)
-		return (check_export_input(++str, ++count, cmd));
-	return (1);
+	write(2, "minishell: ", ft_strlen("minishell: "));
+	write(2, cmd, ft_strlen(cmd));
+	write(2, ": `", ft_strlen(": `"));
+	write(2, str, ft_strlen(str));
+	write(2, "': not a valid identifier", 
+	ft_strlen("': not a valid identifier"));
+	write(2, "\n", 1);
 }
 
-/*char	*ft_minishell_getvar(char *str)
+int		check_export_input(char *str, int count, char *cmd, int bit_eq)
 {
-	char	*var;
-	int		equal;
-
-	equal = 0;
-	if (!(check_export_input(str, 0)))
+	if (ft_isdigit(*(str + count)) && *(str + count) && !count)
 	{
-		write(2, "minishell: export: ",
-		ft_strlen("minishell: export: "));
-		write(2, str, ft_strlen(str));
-		write(2, " not a valid identifier\n", 
-		ft_strlen(" not a valid identifier\n"));
-		return (NULL);
+		err_identifier_output(str, cmd);
+		return (0);
 	}
-	while (str[equal] != '=')
-		++equal;
-	var = ft_substr(str, 0, equal);
-	return (var);
-}*/
+	else if (((ft_strchr("!@#%^&*)(+-", *(str + count)) && !bit_eq) ||
+	(!ft_strncmp("unset", cmd, ft_strlen(cmd) - 1) && *(str + count) == '='))
+	&& *(str + count))
+	{
+		err_identifier_output(str, cmd);
+		return (0);
+	}
+	else if (*(str + count))
+	{
+		if (*(str + count) == '=')
+			++bit_eq;
+		++count;
+		return (check_export_input(str, count, cmd, bit_eq));	
+	}
+	return (1);
+}
 
 void	ft_minishell_export_swap(char **str1, char **str2)
 {

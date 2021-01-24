@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:50:06 by lcreola           #+#    #+#             */
-/*   Updated: 2021/01/21 14:22:19 by wildboarg        ###   ########.fr       */
+/*   Updated: 2021/01/24 17:42:48 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,32 @@ void	ft_minishell_echo(t_shell *obj, int indx)
 	word = 0;
 	obj->eol = '\n';
 	tmp = ft_split(obj->pipe_block[indx], ' ');
-	if (!obj->pipe_block[indx + 1])
-		dup2(obj->fd_recover[1], 1);
-	while (tmp[++i])
+	pipe(obj->fd_pipe);
+	if (!(obj->child = fork()))
 	{
-		if (word)
-			write(1, " ", 1);
-		if (!spec_case(&tmp[i], obj, i))
-			continue ;
-		obj->len = ft_strlen(tmp[i]);
-		write(1, tmp[i], obj->len);
-		word += obj->len;
+		dup2(obj->fd_pipe[1], 1);
+		close(obj->fd_pipe[0]);
+		close(obj->fd_pipe[1]);
+		if (!obj->pipe_block[indx + 1])
+			dup2(obj->fd_recover[1], 1);
+		while (tmp[++i])
+		{
+			if (word)
+				write(1, " ", 1);
+			if (!spec_case(&tmp[i], obj, i))
+				continue ;
+			obj->len = ft_strlen(tmp[i]);
+			write(1, tmp[i], obj->len);
+			word += obj->len;
+		}
+		write(1, &obj->eol, 1);
 	}
-	write(1, &obj->eol, 1);
+	else
+	{
+		dup2(obj->fd_pipe[0], 0);
+		close(obj->fd_pipe[0]);
+		close(obj->fd_pipe[1]);
+		wait(&obj->status[0]);
+	}
 	alloc_free_2((void **)tmp);
 }

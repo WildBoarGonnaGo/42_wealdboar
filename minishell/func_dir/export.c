@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:55:02 by lcreola           #+#    #+#             */
-/*   Updated: 2021/01/23 23:03:01 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/24 17:38:37 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,31 @@ void	export_no_arg_format(char *str)
 	}
 }
 
-int		ft_minishell_export_output(t_shell obj)
+int		ft_minishell_export_output(t_shell *obj, int indx)
 {
 	char	**tmp;
 	int		i;
 
-	tmp = ft_minishell_export_sort(obj.envp);
-	obj.len = ft_minishell_export_envplen(obj.envp);
+	tmp = ft_minishell_export_sort(obj->envp);
+	obj->len = ft_minishell_export_envplen(obj->envp);
 	i = 0;
-	while (i < obj.len)
+	pipe(obj->fd_pipe);
+	if (!(obj->child = fork()))
 	{
-		export_no_arg_format(tmp[i]);
-		++i;
+		dup2(obj->fd_pipe[1], 1);
+		close(obj->fd_pipe[0]);
+		close(obj->fd_pipe[1]);
+		if (!obj->pipe_block[indx + 1])
+			dup2(obj->fd_recover[1], 1);
+		while (i < obj->len)
+			export_no_arg_format(tmp[i++]);
+	}
+	else
+	{
+		dup2(obj->fd_pipe[0], 0);
+		close(obj->fd_pipe[0]);
+		close(obj->fd_pipe[1]);
+		wait(&obj->status[0]);
 	}
 	alloc_free_2((void **)tmp);
 	return (0);
@@ -54,38 +67,40 @@ int		ft_minishell_export_output(t_shell obj)
 int		ft_minishell_export_check(t_shell *obj)
 {
 	char	*eq_char;
-	int		pos[3];
+	int		pos[4];
 
-	pos[0] = 0;
+	pos[0] = 0;	
 	while (obj->cmd[++pos[0]])
 	{
-		if (check_export_input(obj->cmd[pos[0]], 0, obj->cmd[0]))
+		pos[2] = -1;
+		pos[3] = 0;
+		while (obj->envp[++pos[2]])
+			;
+		if (check_export_input(obj->cmd[pos[0]], 0, obj->cmd[0], 0))
 		{
-			pos[2] = 0;
 			pos[1] = -1;
-			while (obj->envp_secure[++pos[1]])
+			while (obj->envp[++pos[1]])
 			{
-				eq_char = ft_strchr(obj->envp_secure[pos[1]], '=');
-				(eq_char) ? obj->len = eq_char - obj->envp_secure[1] :
-				ft_strlen(obj->envp_secure[1]);
-				if (ft_strncmp(obj->envp_secure[pos[1]], obj->cmd[pos[0]], obj->len))
+				eq_char = ft_strchr(obj->envp[pos[1]], '=');
+				(eq_char) ? obj->len = eq_char - obj->envp[pos[1]] :
+				ft_strlen(obj->envp[pos[1]]);
+				if (!ft_strncmp(obj->envp[pos[1]], obj->cmd[pos[0]], obj->len))
 				{
-					obj->clean = obj->envp_secure[pos[1]];
-					obj->envp_secure[pos[1]] = ft_strdup(obj->cmd[0]);
-					free(obj->clean);
-					++pos[2];
+					if (ft_strchr(obj->cmd[pos[0]], '='))
+					{
+						obj->clean = obj->envp[pos[1]];
+						obj->envp[pos[1]] = ft_strdup(obj->cmd[pos[0]]);
+						free(obj->clean);
+					}
 					break ;
 				}
 			}
-			if (pos[2])
+			if (pos[1] == pos[2])
 			{
-				pos[1] = -1;
-				while (obj->envp_secure[++pos[1]])
-					;
-				obj->envp_secure = (char **)memrealloc((void *)obj->envp_secure, 
+				obj->envp = (char **)memrealloc((void *)obj->envp, 
 				(++pos[1]) * sizeof(char*), sizeof(char *));
-				obj->envp_secure[pos[1] - 1] = ft_strdup(obj->cmd[pos[0]]);
-				obj->envp_secure[pos[1]] = NULL;
+				obj->envp[pos[1] - 1] = ft_strdup(obj->cmd[pos[0]]);
+				obj->envp[pos[1]] = NULL;
 			}
 		}
 	}
@@ -103,5 +118,5 @@ void	ft_minishell_export(t_shell *obj, int indx)
 	if (size > 1)
 		ft_minishell_export_check(obj);
 	else
-		ft_minishell_export_output(*obj);
+		ft_minishell_export_output(obj, indx);
 }
