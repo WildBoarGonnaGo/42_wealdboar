@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/24 18:06:32 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/25 21:19:06 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,6 @@ void				ft_minishell_export(t_shell *obj, int indx);
 int					check_export_input(char *str, int count, char *cmd, int bit_eq);
 void				*memrealloc(void *mem, int oldsize, int addbyte);
 int 				unset_envp(t_shell *obj, int indx);
+int 				sh_exit(t_shell *obj, int indx);
 
 #endif

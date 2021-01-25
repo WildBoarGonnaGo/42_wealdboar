@@ -52,72 +52,41 @@ int sh_user_bin(t_shell *obj, int indx)
 	}
 	else 		
 		obj->line = ft_strdup(obj->pipe_block[indx]);
-	if (!obj->pipe_block[indx + 1])
-		dup2(obj->fd_recover[1], 1);
-	st += execve(obj->line, obj->bin_args, obj->envp);
-	if (st <= 0)
+	pipe(obj->fd_pipe);
+	if (!(obj->child = fork()))
 	{
-		if (st == -1)
-		{
-			write(1, obj->line, ft_strlen(obj->line));
-			write(1, " command not found\n", ft_strlen(" command not found\n"));
-		}
-		else if (!st && (*obj->line == '.'
-		|| *obj->line == '/' || *obj->line == '~'))
-		{
-			write(1, "minishell: ", ft_strlen("minishell: "));
-			write(1, strerror(errno), ft_strlen(strerror(errno)));
-			write(1, "\n", 1);
-		}
-	}
-	return (st);
-	//return (st);
-}
-
-/*st += execve(obj->line, obj->bin_args, obj->envp);
-	if (st <= 0)
-	{
-		if (st == -1)
-		{
-			write(1, obj->line, ft_strlen(obj->line));
-			write(2, ": command not found\n", ft_strlen(": command not found\n"));
-		}
-		else if (!st && (*obj->line == '.'
-		|| *obj->line == '/' || *obj->line == '~'))
-		{
-			write(1, "minishell: ", ft_strlen("minishell: "));
-			write(2, strerror(errno), ft_strlen(strerror(errno)));
-			write(1, "\n", 1);
-		}
-	}*/
-
-/*obj->sh_pid[1] = fork();
-	if (!obj->sh_pid[1])
-	{
+		dup2(obj->fd_pipe[1], 1);
+		close(obj->fd_pipe[0]);
+		close(obj->fd_pipe[1]);
+		if (!obj->pipe_block[indx + 1])
+			dup2(obj->fd_recover[1], 1);
 		st += execve(obj->line, obj->bin_args, obj->envp);
 		if (st <= 0)
 		{
 			if (st == -1)
 			{
-				write(1, obj->line, ft_strlen(obj->line));
-				write(2, "command not found\n", ft_strlen(": command not found\n"));
-
+				write(2, "minishell: ", ft_strlen("minishell: "));
+				write(2, obj->bin_search, ft_strlen(obj->bin_search));
+				write(2, ": ", 2);
+				write(2, "command not found\n", ft_strlen("command not found\n"));
 			}
 			else if (!st && (*obj->line == '.'
 			|| *obj->line == '/' || *obj->line == '~'))
 			{
-				write(1, "minishell: ", ft_strlen("minishell: "));
+				write(2, "minishell: ", ft_strlen("minishell: "));
+				write(2, obj->bin_search, ft_strlen(obj->bin_search));
+				write(2, ": ", 2);
 				write(2, strerror(errno), ft_strlen(strerror(errno)));
-				write(1, "\n", 1);
-			}
+				write(2, "\n", 1);
+			}	
 		}
-		//return (st);
 	}
 	else
 	{
-		//waitpid(obj->sh_pid[1], &obj->status[1], 0);
-		wait(&obj->status[1]);
-		free(obj->line);
-		obj->line = NULL;
-	}*/
-
+		dup2(obj->fd_pipe[0], 0);	
+		close(obj->fd_pipe[0]);
+		close(obj->fd_pipe[1]);
+		wait(&obj->status[0]);
+	}
+	return (st);
+}
