@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:50:06 by lcreola           #+#    #+#             */
-/*   Updated: 2021/01/24 17:42:48 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/26 18:37:00 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ int		spec_case(char **str, t_shell *obj, int indx)
 	if (**str == '$')
 	{
 		obj->clean = *str;
-		*str = sh_envp_search(*str + 1, *obj);
+		if (!(ft_strncmp(*str, "$?", 2)))
+			*str = ft_itoa(obj->status[0]);
+		else
+			*str = sh_envp_search(*str + 1, *obj);
 		free(obj->clean);
 		obj->clean = NULL;
 	}

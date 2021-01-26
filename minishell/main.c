@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:01:50 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/25 21:05:15 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/26 21:50:35 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int 	main(int argc, char **argv, char **envp)
 	envp = envp_dupl(obj);
 	obj.envp = envp;
 	obj.status[1] = -1;
+	obj.status[0] = 0;
 	write(1, "minishell$ ", ft_strlen("minishell$ "));
 	while ((sh_gnl(0, &obj.line)) > 0)
 	{

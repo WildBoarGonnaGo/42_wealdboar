@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:55:02 by lcreola           #+#    #+#             */
-/*   Updated: 2021/01/24 17:38:37 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/26 22:43:07 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		ft_minishell_export_output(t_shell *obj, int indx)
 	obj->len = ft_minishell_export_envplen(obj->envp);
 	i = 0;
 	pipe(obj->fd_pipe);
-	if (!(obj->child = fork()))
+	if (!fork())
 	{
 		dup2(obj->fd_pipe[1], 1);
 		close(obj->fd_pipe[0]);
@@ -52,6 +52,7 @@ int		ft_minishell_export_output(t_shell *obj, int indx)
 			dup2(obj->fd_recover[1], 1);
 		while (i < obj->len)
 			export_no_arg_format(tmp[i++]);
+		exit (0);
 	}
 	else
 	{
@@ -60,6 +61,8 @@ int		ft_minishell_export_output(t_shell *obj, int indx)
 		close(obj->fd_pipe[1]);
 		wait(&obj->status[0]);
 	}
+	if (WIFEXITED(obj->status[0]))
+		obj->status[0] = (WEXITSTATUS(obj->status[0]) > 0);
 	alloc_free_2((void **)tmp);
 	return (0);
 }
@@ -69,7 +72,7 @@ int		ft_minishell_export_check(t_shell *obj)
 	char	*eq_char;
 	int		pos[4];
 
-	pos[0] = 0;	
+	pos[0] = 0;
 	while (obj->cmd[++pos[0]])
 	{
 		pos[2] = -1;
@@ -103,6 +106,8 @@ int		ft_minishell_export_check(t_shell *obj)
 				obj->envp[pos[1]] = NULL;
 			}
 		}
+		else
+			obj->status[0] = 1;
 	}
 	return (0);
 }
@@ -112,6 +117,7 @@ void	ft_minishell_export(t_shell *obj, int indx)
 	int	size;
 
 	size = -1;
+	obj->status[0] = 0;
 	obj->cmd = ft_split(obj->pipe_block[indx], ' ');
 	while (obj->cmd[++size])
 		;

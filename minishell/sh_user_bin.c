@@ -69,6 +69,7 @@ int sh_user_bin(t_shell *obj, int indx)
 				write(2, obj->bin_search, ft_strlen(obj->bin_search));
 				write(2, ": ", 2);
 				write(2, "command not found\n", ft_strlen("command not found\n"));
+				exit (1);
 			}
 			else if (!st && (*obj->line == '.'
 			|| *obj->line == '/' || *obj->line == '~'))
@@ -78,7 +79,9 @@ int sh_user_bin(t_shell *obj, int indx)
 				write(2, ": ", 2);
 				write(2, strerror(errno), ft_strlen(strerror(errno)));
 				write(2, "\n", 1);
-			}	
+				exit (1);
+			}
+			exit (0);
 		}
 	}
 	else
@@ -88,5 +91,7 @@ int sh_user_bin(t_shell *obj, int indx)
 		close(obj->fd_pipe[1]);
 		wait(&obj->status[0]);
 	}
+	if (WIFEXITED(obj->status[0]))
+		obj->status[0] = (WEXITSTATUS(obj->status[0]) > 0);
 	return (st);
 }

@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 14:43:43 by lchantel          #+#    #+#             */
-/*   Updated: 2021/01/25 20:39:49 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/26 17:54:29 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void sh_line_ansys(t_shell *obj)
 			free(obj->clean);
 			obj->clean = NULL;
 			obj->len = ft_strlen(obj->pipe_block[j - 1]) + 1;
-			pipe(obj->fd_pipe);
 			if (!ft_strncmp("cd", obj->pipe_block[j - 1], obj->len) ||
 			ft_strncmp("cd", obj->pipe_block[j - 1], 3) == -32)
 				change_dir(obj, j - 1);

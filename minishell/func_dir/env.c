@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:53:12 by lcreola           #+#    #+#             */
-/*   Updated: 2021/01/24 17:51:07 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/26 18:39:54 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,5 @@ void	ft_minishell_env(t_shell *obj, int indx)
 		close(obj->fd_pipe[1]);
 		wait(&obj->status[0]);
 	}
+	obj->status[0] = 0;
 }
