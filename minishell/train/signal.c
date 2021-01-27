@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-
 void	handle_sigint(int signum)
 {
 	printf("signum(%d) | Process is terminated\n", signum);

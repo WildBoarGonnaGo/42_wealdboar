@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:02:14 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/21 18:32:58 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/27 06:51:57 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,20 @@ char	*sh_strchr(const char *s, int c, size_t size)
 	return (NULL);
 }
 
-int sh_gnl(int fd, char **line)
+/*void		sh_read_escape(int sig)
+{
+	sig = 0;
+}*/
+
+
+int 	sh_gnl(int fd, char **line)
 {
 	t_gnl obj;
 	obj.st = 0;
 	obj.i = 0;
 	if (!*line)
 		*line = ft_strdup("");
+	//signal(SIGINT, sh_read_escape);
 	while ((obj.byte = read(fd, &obj.buf[obj.i], 1)) > 0)
 	{
 		if (obj.buf[obj.i] == '\n')
