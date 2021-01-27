@@ -21,5 +21,5 @@
 ## Полезные ссылки
 - [Битовые операции](https://www.geeksforgeeks.org/bitwise-operators-in-c-cpp/)
 - [Оффициальная документация по bash](https://pubs.opengroup.org/onlinepubs/9699919799.2018edition/utilities/V3_chap02.html#tag_18_02_01)
-- [Сигналы на языке Си](<https://www.geeksforgeeks.org/signals-c-language/)
+- [Сигналы на языке Си](https://www.geeksforgeeks.org/signals-c-language/)
 - [Сигналы](https://pubs.opengroup.org/onlinepubs/009695399/basedefs/signal.h.html)
