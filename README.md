@@ -27,6 +27,9 @@
 + Переход с gdb на lldb:
 <http://lldb.llvm.org/use/map.html>
 
+### Github и Gitlab
+[Оформление файла README.md](https://github.com/fefong/markdown_readme#Getting-started-with-Markdown)
+
 ### Математика
 + Комбинаторика
 + Двоичная алгебра
