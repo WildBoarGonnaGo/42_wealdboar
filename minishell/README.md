@@ -16,6 +16,7 @@
 + ~~Написать функции export, unset, exit, cd~~
 + ~~$? (в связке с exit)~~
 + Cигналы Ctrl-C, Ctrl-D, Ctrl-\
++ Редиректы
 
 ## Полезные ссылки
 - [Битовые операции](https://www.geeksforgeeks.org/bitwise-operators-in-c-cpp/)
