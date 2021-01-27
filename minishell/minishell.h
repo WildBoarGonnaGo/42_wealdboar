@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/25 21:19:06 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/27 04:09:57 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include <string.h>
+# include <signal.h>
 
 # define BUFFER_SIZE 2048
 

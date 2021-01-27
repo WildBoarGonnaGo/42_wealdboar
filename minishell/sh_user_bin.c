@@ -92,6 +92,9 @@ int sh_user_bin(t_shell *obj, int indx)
 		wait(&obj->status[0]);
 	}
 	if (WIFEXITED(obj->status[0]))
+	{
 		obj->status[0] = (WEXITSTATUS(obj->status[0]) > 0);
+		kill(obj->child, SIGTERM);
+	}
 	return (st);
 }

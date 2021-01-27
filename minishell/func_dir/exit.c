@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 20:04:33 by lchantel          #+#    #+#             */
-/*   Updated: 2021/01/26 22:33:34 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/27 05:20:17 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ int sh_exit(t_shell *obj, int indx)
 		;
 	if (obj->len >= 2)
 		while (tmp[1][++i])
+		{
+			if (!i && tmp[1][i] == '-')
+				continue ;
 			res += (!(ft_isdigit(tmp[1][i])));
+		}
 	if (obj->len > 2)
 	{
 		write(2, "minishell: ", ft_strlen("minishell: "));
@@ -52,7 +56,8 @@ int sh_exit(t_shell *obj, int indx)
 	}
 	else if (obj->len == 2 && !res)
 	{
-		res = ft_atoi(tmp[1]) % 256 + (tmp[1] < 0) * 256;
+		res = ft_atoi(tmp[1]);
+		res = res % 256 + (res < 0) * 256;
 		obj->status[0] = 1;
 	}
 	return (res);

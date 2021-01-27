@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:50:06 by lcreola           #+#    #+#             */
-/*   Updated: 2021/01/26 18:37:00 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/27 04:58:16 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	ft_minishell_echo(t_shell *obj, int indx)
 			word += obj->len;
 		}
 		write(1, &obj->eol, 1);
+		exit (0);
 	}
 	else
 	{
@@ -70,6 +71,11 @@ void	ft_minishell_echo(t_shell *obj, int indx)
 		close(obj->fd_pipe[0]);
 		close(obj->fd_pipe[1]);
 		wait(&obj->status[0]);
+	}
+	if (WIFEXITED(obj->status[0]))
+	{
+		obj->status[0] = (WEXITSTATUS(obj->status[0]) > 0);
+		kill(obj->child, SIGTERM);
 	}
 	alloc_free_2((void **)tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:55:02 by lcreola           #+#    #+#             */
-/*   Updated: 2021/01/26 22:43:07 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/27 04:42:23 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		ft_minishell_export_output(t_shell *obj, int indx)
 	obj->len = ft_minishell_export_envplen(obj->envp);
 	i = 0;
 	pipe(obj->fd_pipe);
-	if (!fork())
+	if (!(obj->child = fork()))
 	{
 		dup2(obj->fd_pipe[1], 1);
 		close(obj->fd_pipe[0]);
@@ -62,7 +62,10 @@ int		ft_minishell_export_output(t_shell *obj, int indx)
 		wait(&obj->status[0]);
 	}
 	if (WIFEXITED(obj->status[0]))
+	{
 		obj->status[0] = (WEXITSTATUS(obj->status[0]) > 0);
+		kill(obj->child, SIGTERM);
+	}
 	alloc_free_2((void **)tmp);
 	return (0);
 }
