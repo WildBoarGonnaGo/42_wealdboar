@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:01:50 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/26 21:50:35 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/28 22:01:29 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int 	main(int argc, char **argv, char **envp)
 	obj.envp = envp;
 	obj.status[1] = -1;
 	obj.status[0] = 0;
+	sig_state = 0;
+	signal(SIGINT, sh_read_escape);
 	write(1, "minishell$ ", ft_strlen("minishell$ "));
 	while ((sh_gnl(0, &obj.line)) > 0)
 	{
@@ -47,6 +49,15 @@ int 	main(int argc, char **argv, char **envp)
 		{
 			write(1, "exit\n", ft_strlen("exit\n"));
 			break ;
+		}
+		if (sig_state)
+		{
+			sig_state = 0;
+			if (obj.line)
+				free(obj.line);
+			write(1, "minishell$ ", ft_strlen("minishell$ "));
+			obj.line = NULL;
+			continue ;
 		}
 		else
 			write(1, "minishell$ ", ft_strlen("minishell$ "));

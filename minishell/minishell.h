@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/27 04:09:57 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/28 21:19:29 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,18 @@
 
 # define BUFFER_SIZE 2048
 
+int					sig_state;
+
 typedef struct		s_gnl
 {
 	int 			st;
 	char			buf[2048];
 	int				byte;
 	int				i;
+	int				fd_pipe[2];
+	pid_t			gnl_fork;
+	int				wstatus;
+	int				orig_stdout;
 }					t_gnl;
 
 typedef struct		s_shell
@@ -84,5 +90,6 @@ int					check_export_input(char *str, int count, char *cmd, int bit_eq);
 void				*memrealloc(void *mem, int oldsize, int addbyte);
 int 				unset_envp(t_shell *obj, int indx);
 int 				sh_exit(t_shell *obj, int indx);
+void				sh_read_escape(int sig);
 
 #endif
