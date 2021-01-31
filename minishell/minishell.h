@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/28 21:19:29 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/01/31 20:00:43 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 # define BUFFER_SIZE 2048
 
-int					sig_state;
+static int			sig_state;
 
 typedef struct		s_gnl
 {
@@ -38,11 +38,12 @@ typedef struct		s_gnl
 	pid_t			gnl_fork;
 	int				wstatus;
 	int				orig_stdout;
+	int				len;
 }					t_gnl;
 
 typedef struct		s_shell
 {
-	char			**argv;	//пока не применил
+	char			**argv;	// пока не применил
 	char			**envp; // переменные окружения 
 	char			**cmd; // команды
 	char			**tmp; // временное хранилище
@@ -54,6 +55,7 @@ typedef struct		s_shell
 	char			*backup;
 	char			*bin_search;
 	char			*line;
+	char			*recycle;
 	char			*argstr;
 	void			*clean;
 	int				fd_pipe[2];
@@ -65,10 +67,13 @@ typedef struct		s_shell
 	char			loop;
 	char			eol;
 	char			exit;
+	char			spec_char;
 	pid_t			sh_pid[2];
 	pid_t			child;
 	DIR				*sh_dir;
 	struct dirent	*binary;
+	t_list			*lst_start;
+	t_list			*lst_head;
 }					t_shell;
 
 int					sh_gnl(int fd, char **line);
@@ -91,5 +96,7 @@ void				*memrealloc(void *mem, int oldsize, int addbyte);
 int 				unset_envp(t_shell *obj, int indx);
 int 				sh_exit(t_shell *obj, int indx);
 void				sh_read_escape(int sig);
+int					check_line(char *line);
+t_list				*sh_parcer(t_shell *obj, char *line);
 
 #endif

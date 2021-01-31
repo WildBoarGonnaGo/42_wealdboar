@@ -1,4 +1,6 @@
 #include "./minishell.h"
+#include <errno.h>
+#include <sys/wait.h>
 
 int sh_user_bin(t_shell *obj, int indx)
 {
@@ -55,6 +57,7 @@ int sh_user_bin(t_shell *obj, int indx)
 	pipe(obj->fd_pipe);
 	if (!(obj->child = fork()))
 	{
+		errno = 0;
 		dup2(obj->fd_pipe[1], 1);
 		close(obj->fd_pipe[0]);
 		close(obj->fd_pipe[1]);
@@ -69,7 +72,7 @@ int sh_user_bin(t_shell *obj, int indx)
 				write(2, obj->bin_search, ft_strlen(obj->bin_search));
 				write(2, ": ", 2);
 				write(2, "command not found\n", ft_strlen("command not found\n"));
-				exit (1);
+				exit (127);
 			}
 			else if (!st && (*obj->line == '.'
 			|| *obj->line == '/' || *obj->line == '~'))
@@ -81,7 +84,7 @@ int sh_user_bin(t_shell *obj, int indx)
 				write(2, "\n", 1);
 				exit (1);
 			}
-			exit (0);
+			exit (errno);
 		}
 	}
 	else
@@ -93,8 +96,10 @@ int sh_user_bin(t_shell *obj, int indx)
 	}
 	if (WIFEXITED(obj->status[0]))
 	{
-		obj->status[0] = (WEXITSTATUS(obj->status[0]) > 0);
+		st = (WEXITSTATUS(obj->status[0]) > 0);
+		if (st)
+			obj->status[0] = WEXITSTATUS(obj->status[0]);
 		kill(obj->child, SIGTERM);
 	}
-	return (st);
+	return (obj->status[0]);
 }

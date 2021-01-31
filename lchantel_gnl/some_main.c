@@ -12,10 +12,10 @@ int	main(int argc, char *argv[])
 	int		status;
 
 	status = 0;
-	if (argc != 2)
+	/*if (argc != 2)
 		return (-1);
 	file = argv[1];
-	fd = open(file, O_RDONLY);
+	fd = open(file, O_RDONLY);*/
 	while ((status = get_next_line(fd, &line)) > 0)
 	{
 		printf("%d |%s\n", status, line);
