@@ -25,10 +25,15 @@
 int					get_next_line(int fd, char **line);
 int					check_n(char *between);
 int					ft_strlen(char *str);
+char                **create_words(char *s);
 int					check_read(int fd, char **line);
 char				*get_left(char *between, int *flag);
 char				*get_right(char *between, int *flag);
 char				*ft_glue(char *between, char *buff, int *flag);
 char				**ft_split(char const *s, char c);
+int                 ft_isspec(char c);
+char                *ft_strjoinc(char *s, char c);
+int                 ft_isalpha(int c);
+void                *memrealloc(void *mem, int oldsize, int addbyte);
 
 #endif
