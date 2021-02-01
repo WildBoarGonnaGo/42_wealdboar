@@ -6,12 +6,13 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:02:14 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/31 20:02:36 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/01 20:46:34 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 #include "srcs/libft/libft.h"
+#include <signal.h>
 
 int		check_line(char *line)
 {
@@ -53,10 +54,13 @@ int 	sh_gnl(int fd, char **line)
 	obj.len = 0;
 	if (!*line)
 		*line = ft_strdup("");
+	signal(SIGQUIT, SIG_IGN);
 	while ((obj.byte = read(fd, &obj.buf[obj.i], 1)) > 0 || obj.len)
 	{
-		if (!obj.buf[obj.i - 1] && check_line(*line) && !obj.byte)
+		if ((!obj.buf[obj.i - 1] && check_line(*line) && !obj.byte)
+		|| sig_quit_st)
 		{
+			sig_quit_st = 0;
 			write(1, "  \b\b", 4);
 				continue ;
 		}

@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 16:12:18 by lchantel          #+#    #+#             */
-/*   Updated: 2021/01/31 20:27:36 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/01 21:21:16 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void		find_elem(t_shell *obj, int pos, int *st)
 		*st &= 0b11111011;
 		obj->recycle = addchar(obj->recycle, obj->line[pos]);
 	}
-	else if (obj->line[pos[0]] == '$')
-		
+	else if (obj->line[pos[0]] == '$' !(obj))
+		obj.st = pos[0]
 	else if (obj->line[pos] == ' ' && !(*st & 0b11))
 		return ;
 	else

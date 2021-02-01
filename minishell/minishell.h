@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/31 20:00:43 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/01 19:17:24 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define BUFFER_SIZE 2048
 
 static int			sig_state;
+static int			sig_quit_st;
 
 typedef struct		s_gnl
 {
@@ -98,5 +99,6 @@ int 				sh_exit(t_shell *obj, int indx);
 void				sh_read_escape(int sig);
 int					check_line(char *line);
 t_list				*sh_parcer(t_shell *obj, char *line);
+void				sh_func_quit(int sig);
 
 #endif

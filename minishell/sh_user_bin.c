@@ -1,8 +1,9 @@
 #include "./minishell.h"
+#include "srcs/libft/libft.h"
 #include <errno.h>
 #include <sys/wait.h>
 
-int sh_user_bin(t_shell *obj, int indx)
+int 	sh_user_bin(t_shell *obj, int indx)
 {
 	int i;            
 	int st;
@@ -83,6 +84,12 @@ int sh_user_bin(t_shell *obj, int indx)
 				write(2, strerror(errno), ft_strlen(strerror(errno)));
 				write(2, "\n", 1);
 				exit (1);
+			}
+			if (sig_quit_st)
+			{
+				sig_quit_st = 0;
+				write(1, "^\\Quit: 3\n", ft_strlen("^\\Quit: 3\n"));
+				exit(131);
 			}
 			exit (errno);
 		}

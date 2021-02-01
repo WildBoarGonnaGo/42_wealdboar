@@ -6,11 +6,12 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:01:50 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/31 19:01:24 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/01 20:45:56 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
+#include <signal.h>
 
 char 	**envp_dupl(t_shell obj)
 {
@@ -27,6 +28,14 @@ char 	**envp_dupl(t_shell obj)
 	res[size] = NULL;
 	return (res);
 }
+
+void	sh_func_quit(int sig)
+{
+	//SIG_IGN;
+	sig_quit_st = sig;
+	write(1, "\b\b  \b\b", 6);
+}
+
 
 int 	main(int argc, char **argv, char **envp)
 {
@@ -46,7 +55,7 @@ int 	main(int argc, char **argv, char **envp)
 	write(1, "minishell$ ", ft_strlen("minishell$ "));
 	while ((rage = sh_gnl(0, &obj.line)) > 0)
 	{
-		obj.lst_start = sh_parcer(&obj, obj.line);
+		//obj.lst_start = sh_parcer(&obj, obj.line);
 		sh_line_ansys(&obj);
 		if (obj.status[1] >= 0 || !rage)
 		{
