@@ -6,13 +6,12 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 16:12:18 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/01 21:21:16 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/02 20:34:34 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "srcs/libft/libft.h"
-#include <stdlib.h>
 
 void		find_elem(t_shell *obj, int pos, int *st)
 {
@@ -35,7 +34,7 @@ void		find_elem(t_shell *obj, int pos, int *st)
 		obj->recycle = addchar(obj->recycle, obj->line[pos]);
 	}
 	else if (obj->line[pos[0]] == '$' !(obj))
-		obj.st = pos[0]
+		obj.st = pos[0];
 	else if (obj->line[pos] == ' ' && !(*st & 0b11))
 		return ;
 	else

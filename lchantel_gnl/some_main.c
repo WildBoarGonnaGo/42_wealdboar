@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <signal.h>
 
 int	main(int argc, char *argv[])
 {
@@ -16,6 +17,8 @@ int	main(int argc, char *argv[])
 		return (-1);
 	file = argv[1];
 	fd = open(file, O_RDONLY);*/
+	fd = 0;
+	signal(SIGQUIT, SIG_IGN);
 	while ((status = get_next_line(fd, &line)) > 0)
 	{
 		printf("%d |%s\n", status, line);
