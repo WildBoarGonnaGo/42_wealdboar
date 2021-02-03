@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/02/01 19:17:24 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/03 20:01:09 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct		s_shell
 	char			*recycle;
 	char			*argstr;
 	void			*clean;
+	int				readenv;
 	int				fd_pipe[2];
 	int				fd_err[2];
 	int				argc;

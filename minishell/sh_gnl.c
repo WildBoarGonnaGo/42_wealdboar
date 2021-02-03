@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:02:14 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/02/02 21:02:14 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/03 19:18:50 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int 	sh_gnl(int fd, char **line)
 		{
 			sig_quit_st = 0;
 			write(1, "  \b\b", 4);
-				continue ;
+			continue ;
 		}
 		if (obj.buf[obj.i] == '\n')
 		{

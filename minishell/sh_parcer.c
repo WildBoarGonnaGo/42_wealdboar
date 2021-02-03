@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 16:12:18 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/02 20:34:34 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/03 20:28:43 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ void		find_elem(t_shell *obj, int pos, int *st)
 	else if (obj->line[pos] == '"' && !(*st & 3))
 		*st |= 1;
 	else if (obj->line[pos] == '"' && (*st & 1))
+	{
 		*st &= 0b11111110;
+		if ((*st & 0b1000) == 8)
+			
+	}
 	else if (obj->line[pos] == '\'' && (*st & 2))
 		*st &= 0b11111101;
 	else if (obj->line[pos] == '\\' && ((*st & 5) == 1))
@@ -33,11 +37,14 @@ void		find_elem(t_shell *obj, int pos, int *st)
 		*st &= 0b11111011;
 		obj->recycle = addchar(obj->recycle, obj->line[pos]);
 	}
-	else if (obj->line[pos[0]] == '$' !(obj))
-		obj.st = pos[0];
+	else if ((obj->line[pos] == '$') && ((*st & 3) != 2))
+	{
+		obj->readenv = (pos + 1);
+		*st |= 8;
+	}
 	else if (obj->line[pos] == ' ' && !(*st & 0b11))
 		return ;
-	else
+	else if ((*st & 0b1000) != 8)
 		obj->recycle = addchar(obj->recycle, obj->line[pos]);
 	find_elem(obj, ++pos, st);
 }
