@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:01:50 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/02/02 20:34:46 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/04 19:34:32 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int 	main(int argc, char **argv, char **envp)
 	write(1, "minishell$ ", ft_strlen("minishell$ "));
 	while ((rage = sh_gnl(0, &obj.line)) > 0)
 	{
-		//obj.lst_start = sh_parcer(&obj, obj.line);
+		obj.lst_start = sh_parcer(&obj, obj.line);
 		sh_line_ansys(&obj);
 		if (obj.status[1] >= 0 || !rage)
 		{
