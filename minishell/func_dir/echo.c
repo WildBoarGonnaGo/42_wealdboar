@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:50:06 by lcreola           #+#    #+#             */
-/*   Updated: 2021/01/28 19:39:08 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/06 18:45:10 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,12 @@ int		spec_case(char **str, t_shell *obj, int indx)
 	{
 		obj->clean = *str;
 		if (!(ft_strncmp(*str, "$?", 2)))
-			*str = ft_itoa(obj->status[0]);
+		{
+			if (obj->status[2])
+				*str = ft_itoa(obj->status[2]);
+			else
+				*str = ft_itoa(obj->status[0]);
+		}
 		else
 			*str = sh_envp_search(*str + 1, *obj);
 		free(obj->clean);
@@ -39,6 +44,7 @@ void	ft_minishell_echo(t_shell *obj, int indx)
 	int		i;
 	char	**tmp;
 	int		word;
+	int		st;
 	i = 0;
 
 	word = 0;
@@ -74,8 +80,11 @@ void	ft_minishell_echo(t_shell *obj, int indx)
 	}
 	if (WIFEXITED(obj->status[0]))
 	{
-		obj->status[0] = (WEXITSTATUS(obj->status[0]) > 0);
+		st = (WEXITSTATUS(obj->status[0]) > 0);
+		if (st)
+			obj->status[0] = WEXITSTATUS(obj->status[0]);
 		kill(obj->child, SIGTERM);
 	}
+	obj->status[2] = 0;
 	alloc_free_2((void **)tmp);
 }

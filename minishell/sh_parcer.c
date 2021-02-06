@@ -6,13 +6,17 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 16:12:18 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/06 12:59:44 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/06 23:13:15 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "srcs/libft/libft.h"
-#include <stdlib.h>
+
+int			err_analisys(t_shell *obj)
+{
+		
+}
 
 void		find_elem(t_shell *obj, int st)
 {
@@ -38,21 +42,25 @@ void		find_elem(t_shell *obj, int st)
 			}
 		}
 	}
-	else if (obj->line[obj->len] == 92 && (st & 2))
+	else if (obj->line[obj->len] == '\'' && (st & 2))
 		st &= 0b11111101;
-	else if (obj->line[obj->len] == 92 && ((st & 5) == 1))
+	else if (obj->line[obj->len] == '\\' && (!(st & 0b110)))
 		st |= 4;
-	else if ((obj->line[obj->len] == 92 || obj->line[obj->len] == '$' 
-	|| obj->line[obj->len] == '"') && ((st & 5) == 5))
+	else if ((obj->line[obj->len] == '$' || obj->line[obj->len] == 92 ||
+	obj->line[obj->len] == '"') && ((st & 6) == 4))
 	{
 		st &= 0b11111011;
 		obj->recycle = addchar(obj->recycle, obj->line[obj->len]);
 	}
-	else if ((obj->line[obj->len] == '$') && (!((st >> 4) & 1) || 
-	!((st >> 2) & 1)))
+	else if ((obj->line[obj->len] == '$') && !(st & 0b110))
 	{
 		obj->readenv = (obj->len + 1);
 		st |= 8;
+	}
+	else if ((obj->line[obj->len] == ';') && !(st & 0b11))
+	{
+		--obj->len;
+		return ;
 	}
 	else if ((obj->line[obj->len] == ' ' && !(st & 0b11)) || !obj->line[obj->len])
 	{
@@ -73,7 +81,11 @@ void		find_elem(t_shell *obj, int st)
 		return ;
 	}
 	else if ((st & 0b1000) != 8)
+	{
+		if (ft_strchr("0123456789!;"))
+			st |= 16;
 		obj->recycle = addchar(obj->recycle, obj->line[obj->len]);
+	}
 	++obj->len;
 	find_elem(obj, st);
 }

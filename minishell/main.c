@@ -6,11 +6,12 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:01:50 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/02/06 13:49:10 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/06 22:23:26 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
+#include "srcs/libft/libft.h"
 #include <signal.h>
 
 char 	**envp_dupl(t_shell obj)
@@ -29,10 +30,34 @@ char 	**envp_dupl(t_shell obj)
 	return (res);
 }
 
-void	sh_func_quit(int sig)
+void	sh_signal_proc(t_shell *obj, int sig)
 {
-	sig_quit_st = sig;
-	write(1, "\b\b  \b\b", 6);
+	static t_shell *magic;
+	
+	if (!magic)
+		magic = obj;
+	else if (sig == SIGQUIT && !magic->if_child)
+		write(1, "\b\b  \b\b", 6);
+	else if (sig == SIGQUIT && magic->if_child)
+	{
+		write(2, "Quit: 3\n", ft_strlen("Quit: 3\n"));
+		magic->status[2] = 128 + sig;
+	}
+	else if (sig == SIGINT && !magic->if_child)
+	{
+		write(1, "\b\b  \nminishell$ ", ft_strlen("\b\b  \nminishell$ ") + 1);
+		magic->status[2] = 1;
+	}
+	else if (sig == SIGINT && magic->if_child)
+	{
+		write(1, "\n", 1);
+		magic->status[2] = 128 + sig;
+	}
+}
+
+void	signal_handle(int sig)
+{
+	sh_signal_proc(0x0, sig);
 }
 
 
@@ -49,10 +74,13 @@ int 	main(int argc, char **argv, char **envp)
 	obj.envp = envp;
 	obj.status[1] = -1;
 	obj.status[0] = 0;
+	obj.status[2] = 0;
 	sig_state = 0;
 	obj.child = 1;
-	signal(SIGINT, sh_read_escape);
-	signal(SIGQUIT, sh_func_quit);
+	obj.if_child = 0;
+	sh_signal_proc(&obj, 0);
+	signal(SIGINT, signal_handle);
+	signal(SIGQUIT, signal_handle);
 	write(1, "minishell$ ", ft_strlen("minishell$ "));
 	while ((rage = sh_gnl(0, &obj.line)) > 0)
 	{
@@ -63,17 +91,7 @@ int 	main(int argc, char **argv, char **envp)
 			write(1, "exit\n", ft_strlen("exit\n"));
 			break ;
 		}
-		if (sig_state)
-		{
-			sig_state = 0;
-			if (obj.line)
-				free(obj.line);
-			write(1, "minishell$ ", ft_strlen("minishell$ "));
-			obj.line = NULL;
-			continue ;
-		}
-		else
-			write(1, "minishell$ ", ft_strlen("minishell$ "));
+		write(1, "minishell$ ", ft_strlen("minishell$ "));
 		free(obj.line);
 		obj.line = NULL;
 	}

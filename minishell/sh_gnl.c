@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:02:14 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/02/06 11:17:47 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/06 23:16:52 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ char	*sh_strchr(const char *s, int c, size_t size)
 	return (NULL);
 }
 
-void		sh_read_escape(int sig)
+/*void		sh_read_escape(int sig)
 {
-	write(1, "\b\b  \nminishell$ ", ft_strlen("\b\b  \nminishell$ ") + 1);
 	sig_state = sig;
-}
+	write(1, "\b\b  \nminishell$ ", ft_strlen("\b\b  \nminishell$ ") + 1);
+}*/
 
 
 int 	sh_gnl(int fd, char **line)
@@ -56,7 +56,7 @@ int 	sh_gnl(int fd, char **line)
 		*line = ft_strdup("");
 	while ((obj.byte = read(fd, &obj.buf[obj.i], 1)) > 0 || obj.len)
 	{
-		if ((!obj.buf[obj.i - 1] && check_line(*line) && !obj.byte))
+		if ((/*!obj.buf[obj.i - 1] && check_line(*line) && */!obj.byte))
 		{
 			write(1, "  \b\b", 4);
 			continue ;

@@ -2,6 +2,7 @@
 #include "srcs/libft/libft.h"
 #include <errno.h>
 #include <sys/wait.h>
+#include <stdio.h>
 
 int 	sh_user_bin(t_shell *obj, int indx)
 {
@@ -67,13 +68,7 @@ int 	sh_user_bin(t_shell *obj, int indx)
 		st += execve(obj->line, obj->bin_args, obj->envp);
 		if (st <= 0)
 		{
-			if (sig_quit_st)
-			{
-				sig_quit_st = 0;
-				write(2, "^\\Quit: 3\n", ft_strlen("^\\Quit: 3\n"));
-				exit(131);
-			}
-			else if (st == -1)
+			if (st == -1)
 			{
 				write(2, "minishell: ", ft_strlen("minishell: "));
 				write(2, obj->bin_search, ft_strlen(obj->bin_search));
@@ -86,7 +81,7 @@ int 	sh_user_bin(t_shell *obj, int indx)
 			{
 				write(2, "minishell: ", ft_strlen("minishell: "));
 				write(2, obj->bin_search, ft_strlen(obj->bin_search));
-				write(2, ": ", 2);
+				write(1, ": ", 2);
 				write(2, strerror(errno), ft_strlen(strerror(errno)));
 				write(2, "\n", 1);
 				exit (1);
@@ -96,16 +91,16 @@ int 	sh_user_bin(t_shell *obj, int indx)
 	}
 	else
 	{
+		obj->if_child = 1;
 		dup2(obj->fd_pipe[0], 0);	
 		close(obj->fd_pipe[0]);
 		close(obj->fd_pipe[1]);
 		wait(&obj->status[0]);
 	}
+	obj->if_child = 0;
 	if (WIFEXITED(obj->status[0]))
 	{
-		st = (WEXITSTATUS(obj->status[0]) > 0);
-		if (st)
-			obj->status[0] = WEXITSTATUS(obj->status[0]);
+		obj->status[0] = WEXITSTATUS(obj->status[0]);
 		kill(obj->child, SIGTERM);
 	}
 	return (obj->status[0]);
