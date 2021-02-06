@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/02/03 20:01:09 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/05 19:49:07 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int 				unset_envp(t_shell *obj, int indx);
 int 				sh_exit(t_shell *obj, int indx);
 void				sh_read_escape(int sig);
 int					check_line(char *line);
-t_list				*sh_parcer(t_shell *obj, char *line);
+void				sh_parcer(t_shell *obj, char *line);
 void				sh_func_quit(int sig);
 
 #endif

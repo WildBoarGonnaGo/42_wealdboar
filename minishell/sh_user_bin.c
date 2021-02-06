@@ -67,7 +67,13 @@ int 	sh_user_bin(t_shell *obj, int indx)
 		st += execve(obj->line, obj->bin_args, obj->envp);
 		if (st <= 0)
 		{
-			if (st == -1)
+			if (sig_quit_st)
+			{
+				sig_quit_st = 0;
+				write(2, "^\\Quit: 3\n", ft_strlen("^\\Quit: 3\n"));
+				exit(131);
+			}
+			else if (st == -1)
 			{
 				write(2, "minishell: ", ft_strlen("minishell: "));
 				write(2, obj->bin_search, ft_strlen(obj->bin_search));
@@ -84,15 +90,9 @@ int 	sh_user_bin(t_shell *obj, int indx)
 				write(2, strerror(errno), ft_strlen(strerror(errno)));
 				write(2, "\n", 1);
 				exit (1);
-			}
-			if (sig_quit_st)
-			{
-				sig_quit_st = 0;
-				write(1, "^\\Quit: 3\n", ft_strlen("^\\Quit: 3\n"));
-				exit(131);
-			}
-			exit (errno);
+			}	
 		}
+		exit (errno);
 	}
 	else
 	{

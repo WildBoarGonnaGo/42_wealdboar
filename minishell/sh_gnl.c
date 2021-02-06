@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:02:14 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/02/03 19:18:50 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/06 11:17:47 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,8 @@ int 	sh_gnl(int fd, char **line)
 		*line = ft_strdup("");
 	while ((obj.byte = read(fd, &obj.buf[obj.i], 1)) > 0 || obj.len)
 	{
-		if ((!obj.buf[obj.i - 1] && check_line(*line) && !obj.byte)
-		|| sig_quit_st)
+		if ((!obj.buf[obj.i - 1] && check_line(*line) && !obj.byte))
 		{
-			sig_quit_st = 0;
 			write(1, "  \b\b", 4);
 			continue ;
 		}
