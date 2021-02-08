@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/02/06 22:56:05 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/08 06:56:07 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@
 # include <signal.h>
 
 # define BUFFER_SIZE 2048
+# define SQUOTE 0b10
+# define DQUOTE 0b1
+# define ISQUOTE 0b11
+# define ESCCHAR 0b100
+# define PARAMEXP 0b1000
+# define COMCHAR 0b10000
 
 static int			sig_state;
 
