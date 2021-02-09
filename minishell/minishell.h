@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/02/08 06:56:07 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/09 18:13:21 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct		s_shell
 	int				status[3];
 	int				fd_recover[3];
 	int				if_child;
+	int				roll;
 	char			loop;
 	char			eol;
 	char			exit;
@@ -82,6 +83,7 @@ typedef struct		s_shell
 	struct dirent	*binary;
 	t_list			*lst_start;
 	t_list			*lst_head;
+	t_list			*lst_newoper;
 }					t_shell;
 
 int					sh_gnl(int fd, char **line);
@@ -105,7 +107,7 @@ int 				unset_envp(t_shell *obj, int indx);
 int 				sh_exit(t_shell *obj, int indx);
 void				sh_read_escape(int sig);
 int					check_line(char *line);
-void				sh_parcer(t_shell *obj, char *line);
+int					sh_parcer(t_shell *obj, char *line);
 void				sh_func_quit(int sig);
 
 #endif
