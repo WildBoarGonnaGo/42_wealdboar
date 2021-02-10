@@ -6,12 +6,13 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 16:12:18 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/09 21:23:17 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/10 21:26:50 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "srcs/libft/libft.h"
+#include <sys/fcntl.h>
 
 int			err_noarg_com(t_shell *obj)
 {
@@ -42,6 +43,12 @@ int			err_noarg_com(t_shell *obj)
 			ft_putstr_fd("'\n", 2);
 			return (0);
 		}
+		if (!(ft_strncmp(">", (char *)grabber->content, 2)) && !state[1])
+			obj->fd_redir[1] = open((char *)grabber->next->content, O_RDWR | O_TRUNC | O_CREAT);
+		else if (!(ft_strncmp("<", (char *)grabber->content, 2)) && !state[1])
+			obj->fd_redir[0] = open((char *)grabber->next->content, O_RDONLY);
+		else if (!(ft_strncmp(">>", (char *)grabber->content, 2)) && !state[1])
+			obj->fd_redir[1] = open((char *)grabber->next->content, O_RDWR | O_APPEND | O_CREAT);
 		grabber = grabber->next;
 	}
 	if (grabber == obj->lst_start && state[0])
@@ -54,64 +61,12 @@ int			err_noarg_com(t_shell *obj)
 	return (1);
 }
 
-int			no_alnum(char *str)
-{
-	if (ft_isalnum(*str))
-		return (0);
-	else if (*str)
-		return (no_alnum(++str));
-	return (1);
-}
-
-void		err_arrow_case(char *str, int count, char c)
-{
-	if (!*(str + count) || !(ft_strchr("<>", *(str + count))))
-	{
-		if (count == 5 && (*str + count - 1) == c && c == '<')
-			ft_putstr_fd("minishell: syntax error near unexpected token `<'\n", 2);
-		else if (count == 6 && c == '<' && *(str + count - 1) == c)
-			ft_putstr_fd("minishell: syntax error near unexpected token `<<'\n", 2);
-		else if (count == 6 && c == '<' && *(str + count - 1) == '>')
-			ft_putstr_fd("minishell: syntax error near unexpected token `<>'\n", 2);
-		else if (count >= 7 && c == '<' && *(str + count - 1) == c)
-			ft_putstr_fd("minishell: syntax error near unexpected token `<<<'\n", 2);
-		else if (count == 4 && (*str + count - 1) == c && c == '>')
-			ft_putstr_fd("minishell: syntax error near unexpected token `>'\n", 2);
-		else if (count >= 5 && (*str + count - 1) == c && c == '>')
-			ft_putstr_fd("minishell: syntax error near unexpected token `>>'\n", 2);
-		return ;
-	}
-	else if ((*str + count))
-		err_arrow_case(str, ++count, c);
-}
-
-int			err_analisys(t_shell *obj)
-{
-	int i;
-	if (no_alnum(obj->recycle) || ft_strlen(obj->recycle) == 1)
-		return (0);
-	if (!strncmp(";;", obj->recycle, 2) && ft_strlen(obj->recycle) >= 2)
-		ft_putstr_fd("minishell: syntax error near unexpected token `;;'\n", 2);
-	else if (!strncmp("|;", obj->recycle, 2))
-		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
-	else if (!strncmp("||", obj->recycle, 2) && ft_strlen(obj->recycle) >= 2)
-		ft_putstr_fd("minishell: syntax error near unexpected token `||'\n", 2);
-	else if (!ft_strncmp("<<<", obj->recycle, 4) || !ft_strncmp("<<", obj->recycle, 3) ||
-	!ft_strncmp(">>", obj->recycle, 3) || !ft_strncmp(">", obj->recycle, 2) || 
-	!ft_strncmp("<", obj->recycle, 2))
-		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 1);
-	else if (!ft_strncmp("<<<<", obj->recycle, 4) && ft_strlen(obj->recycle) >= 4)
-			err_arrow_case(obj->recycle, 4, '<');
-	else if (!ft_strncmp(">>>", obj->recycle, 3) && ft_strlen(obj->recycle) >= 3)
-			err_arrow_case(obj->recycle, 3, '>');
-	return (1);
-}
 
 void		find_elem(t_shell *obj, int st)
 {
 	if (!obj->recycle)
 		obj->recycle = ft_strdup("");
-	if (ft_strchr(";|<>", obj->line[obj->roll]) && !st)
+	if (ft_strchr(";|<>", obj->line[obj->roll]) && !ft_strncmp("", obj->recycle, 1))
 	{
 		obj->recycle = addchar(obj->recycle, obj->line[obj->roll]);
 		st |= COMCHAR;
@@ -141,10 +96,13 @@ void		find_elem(t_shell *obj, int st)
 	else if (obj->line[obj->roll] == '\\' && (!(st & (ESCCHAR | SQUOTE))))
 		st |= ESCCHAR;
 	else if ((obj->line[obj->roll] == '$' || obj->line[obj->roll] == '\\' ||
-	obj->line[obj->roll] == '"') && ((st & (ESCCHAR | SQUOTE)) == ESCCHAR))
+	obj->line[obj->roll] == '"' || obj->line[obj->roll] == 'n') && ((st & (ESCCHAR | SQUOTE)) == ESCCHAR))
 	{
 		st &= ~ESCCHAR;
-		obj->recycle = addchar(obj->recycle, obj->line[obj->roll]);
+		if (obj->line[obj->roll] == 'n')
+			obj->recycle = addchar(obj->recycle, '\n');
+		else
+			obj->recycle = addchar(obj->recycle, obj->line[obj->roll]);
 	}
 	else if ((obj->line[obj->roll] == '$') && !(st & (ESCCHAR | SQUOTE)))
 	{
@@ -219,9 +177,9 @@ int			sh_parcer(t_shell *obj, char *line)
 				free(obj->recycle);
 				obj->recycle = NULL;
 			}
+			if (!(ft_strncmp(";", (char *)obj->lst_head->content, 2)))
+				break ;
 		}
-		if (!err_noarg_com(obj))
-			return (0);
 	}
-	return (1);
+	return (err_noarg_com(obj));
 }

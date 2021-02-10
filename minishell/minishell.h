@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/02/09 18:13:21 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/10 20:46:10 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct		s_shell
 	int				readenv;
 	int				fd_pipe[2];
 	int				fd_err[2];
+	int				fd_redir[2];
 	int				argc;
 	int				len;
 	int				status[3];
@@ -109,5 +110,7 @@ void				sh_read_escape(int sig);
 int					check_line(char *line);
 int					sh_parcer(t_shell *obj, char *line);
 void				sh_func_quit(int sig);
+void				err_arrow_case(char *str, int count, char c);
+int					err_analisys(t_shell *obj);
 
 #endif
