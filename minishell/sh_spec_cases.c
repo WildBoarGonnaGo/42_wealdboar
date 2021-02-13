@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 20:02:41 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/10 20:13:30 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/13 14:24:01 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,5 @@ int			err_analisys(t_shell *obj)
 			err_arrow_case(obj->recycle, 3, '>');
 	return (1);
 }
+
 

@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 10:59:47 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/01/26 21:34:20 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/13 20:05:30 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,15 @@ void 	rm_envp_var(t_shell *obj)
 	}
 }
 
-int 	unset_envp(t_shell *obj, int indx)
+int 	unset_envp(t_shell *obj)
 {
-	obj->cmd = ft_split(obj->pipe_block[indx], ' ');
+	obj->cmd = obj->pipe_block;
 	obj->len = -1;
 	obj->status[0] = 0;
 	while (obj->cmd[++obj->len])
 		;
 	if (obj->len > 1)
 		rm_envp_var(obj);
+	alloc_free_2((void **)obj->cmd);
 	return (0);
 }

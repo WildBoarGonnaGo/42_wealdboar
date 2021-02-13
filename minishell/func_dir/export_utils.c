@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 21:00:49 by lcreola           #+#    #+#             */
-/*   Updated: 2021/01/24 13:35:55 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/13 20:23:38 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 void	err_identifier_output(char *str, char *cmd)
 {
-	write(2, "minishell: ", ft_strlen("minishell: "));
-	write(2, cmd, ft_strlen(cmd));
-	write(2, ": `", ft_strlen(": `"));
-	write(2, str, ft_strlen(str));
-	write(2, "': not a valid identifier", 
-	ft_strlen("': not a valid identifier"));
-	write(2, "\n", 1);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": `",2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("': not a valid identifier\n", 2);
 }
 
 int		check_export_input(char *str, int count, char *cmd, int bit_eq)

@@ -6,13 +6,13 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:53:12 by lcreola           #+#    #+#             */
-/*   Updated: 2021/01/27 04:47:13 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/13 20:02:50 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_minishell_env(t_shell *obj, int indx)
+void	ft_minishell_env(t_shell *obj)
 {
 	int	i;
 
@@ -23,7 +23,7 @@ void	ft_minishell_env(t_shell *obj, int indx)
 		dup2(obj->fd_pipe[1], 1);
 		close(obj->fd_pipe[0]);
 		close(obj->fd_pipe[1]);
-		if (!obj->pipe_block[indx + 1])
+		if (!(obj->cmd_flag & HANPIPE))
 			dup2(obj->fd_recover[1], 1);
 		while (obj->envp[++i])
 		{

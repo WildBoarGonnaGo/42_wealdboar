@@ -6,13 +6,13 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 20:04:33 by lchantel          #+#    #+#             */
-/*   Updated: 2021/01/27 05:20:17 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/13 20:07:26 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int sh_exit(t_shell *obj, int indx)
+int sh_exit(t_shell *obj)
 {
 	char	**tmp;
 	int		res;
@@ -22,7 +22,7 @@ int sh_exit(t_shell *obj, int indx)
 	obj->len = 0;
 	res = 0;
 	obj->status[0] = 0;
-	tmp = ft_split(obj->pipe_block[indx], ' ');
+	tmp = obj->pipe_block;
 	while (tmp[++obj->len])
 		;
 	if (obj->len >= 2)

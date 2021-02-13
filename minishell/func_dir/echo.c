@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:50:06 by lcreola           #+#    #+#             */
-/*   Updated: 2021/02/06 18:45:10 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/13 20:02:10 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,24 @@ int		spec_case(char **str, t_shell *obj, int indx)
 	return (1);
 }
 
-void	ft_minishell_echo(t_shell *obj, int indx)
+void	ft_minishell_echo(t_shell *obj)
 {
 	int		i;
 	char	**tmp;
 	int		word;
 	int		st;
+	
 	i = 0;
-
 	word = 0;
 	obj->eol = '\n';
-	tmp = ft_split(obj->pipe_block[indx], ' ');
+	tmp = obj->pipe_block;
 	pipe(obj->fd_pipe);
 	if (!(obj->child = fork()))
 	{
 		dup2(obj->fd_pipe[1], 1);
 		close(obj->fd_pipe[0]);
 		close(obj->fd_pipe[1]);
-		if (!obj->pipe_block[indx + 1])
+		if (/*!obj->pipe_block[indx + 1]*/!(obj->cmd_flag & HANPIPE))
 			dup2(obj->fd_recover[1], 1);
 		while (tmp[++i])
 		{

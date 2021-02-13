@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 16:28:01 by lchantel          #+#    #+#             */
-/*   Updated: 2021/01/24 11:19:06 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/13 18:54:26 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	*cd_two_args(t_shell *obj, char **cd_args)
 	return (res);
 }
 
-int 	change_dir(t_shell *obj, int indx)
+int 	change_dir(t_shell *obj)
 {
 	int		st;
 	char	**cd_args;
@@ -97,7 +97,7 @@ int 	change_dir(t_shell *obj, int indx)
 	st = 0;
 	obj->backup = (char *)malloc(512);
 	getcwd(obj->backup, 512);
-	cd_args = ft_split(obj->pipe_block[indx], ' ');
+	cd_args = obj->pipe_block;
 	while (cd_args[++i])
 		;
 	if (i == 1)
@@ -118,11 +118,11 @@ int 	change_dir(t_shell *obj, int indx)
 	st = chdir(obj->argstr);
 	if (st)
 	{
-		write(1, "cd: ", ft_strlen("cd: "));
-		write(1, strerror(errno), ft_strlen(strerror(errno)));
-		write(1, ": ", ft_strlen(": "));
-		write(1, obj->argstr, ft_strlen(obj->argstr));
-		write(1, "\n", 1);
+		ft_putstr_fd("cd: ", 2);
+		ft_putstr_fd(strerror(errno), 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(obj->argstr, 2);
+		ft_putstr_fd("\n", 2);
 	}
 	else
 	{

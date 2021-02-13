@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:55:02 by lcreola           #+#    #+#             */
-/*   Updated: 2021/01/28 21:24:38 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/13 19:55:46 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	export_no_arg_format(char *str)
 	}
 }
 
-int		ft_minishell_export_output(t_shell *obj, int indx)
+int		ft_minishell_export_output(t_shell *obj)
 {
 	char	**tmp;
 	int		i;
@@ -48,7 +48,7 @@ int		ft_minishell_export_output(t_shell *obj, int indx)
 		dup2(obj->fd_pipe[1], 1);
 		close(obj->fd_pipe[0]);
 		close(obj->fd_pipe[1]);
-		if (!obj->pipe_block[indx + 1])
+		if (!(obj->cmd_flag & HANPIPE))
 			dup2(obj->fd_recover[1], 1);
 		while (i < obj->len)
 			export_no_arg_format(tmp[i++]);
@@ -115,17 +115,17 @@ int		ft_minishell_export_check(t_shell *obj)
 	return (0);
 }
 
-void	ft_minishell_export(t_shell *obj, int indx)
+void	ft_minishell_export(t_shell *obj)
 {
 	int	size;
 
 	size = -1;
 	obj->status[0] = 0;
-	obj->cmd = ft_split(obj->pipe_block[indx], ' ');
+	obj->cmd = obj->pipe_block;
 	while (obj->cmd[++size])
 		;
 	if (size > 1)
 		ft_minishell_export_check(obj);
 	else
-		ft_minishell_export_output(obj, indx);
+		ft_minishell_export_output(obj);
 }

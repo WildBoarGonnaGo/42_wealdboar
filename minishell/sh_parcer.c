@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 16:12:18 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/10 21:26:50 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/13 22:02:19 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ void		find_elem(t_shell *obj, int st)
 	else if (obj->line[obj->roll] == '\\' && (!(st & (ESCCHAR | SQUOTE))))
 		st |= ESCCHAR;
 	else if ((obj->line[obj->roll] == '$' || obj->line[obj->roll] == '\\' ||
-	obj->line[obj->roll] == '"' || obj->line[obj->roll] == 'n') && ((st & (ESCCHAR | SQUOTE)) == ESCCHAR))
+	obj->line[obj->roll] == '"' || obj->line[obj->roll] == 'n') && 
+	((st & (ESCCHAR | SQUOTE)) == ESCCHAR))
 	{
 		st &= ~ESCCHAR;
 		if (obj->line[obj->roll] == 'n')
@@ -112,6 +113,7 @@ void		find_elem(t_shell *obj, int st)
 	else if (ft_strchr(";|<>", obj->line[obj->roll]) && !(st & ISQUOTE) && obj->roll)
 	{
 		--obj->roll;
+		//++obj->lst_flag[0];
 		return ;
 	}
 	else if ((obj->line[obj->roll] == ' ' && !(st & 0b11)) || !obj->line[obj->roll])
@@ -130,12 +132,22 @@ void		find_elem(t_shell *obj, int st)
 		}
 		else
 			obj->recycle = addchar(obj->recycle, 0);
+
 		return ;
 	}
 	else if ((st & PARAMEXP) != PARAMEXP)
+	{
+		st |= ((obj->line[obj->roll] == '~') * TOKTWIDDLE);
+		if (st & TOKTWIDDLE)
+		{
+			if (ft_strchr("\0 /.", obj->line[obj->len]))
+				obj->recycle = ft_strjoin(obj->recycle, sh_envp_search("PATH", *obj));
+		}
 		obj->recycle = addchar(obj->recycle, obj->line[obj->roll]);
+	}
 	if ((st & ~COMCHAR) && (st & COMCHAR))
 	{
+		//++obj->lst_flag[0];
 		--obj->roll;
 		return ;
 	}
@@ -152,6 +164,7 @@ int			sh_parcer(t_shell *obj, char *line)
 	info[3] = 0;
 	info[2] = 0;
 	obj->recycle = NULL;
+	obj->lst_flag[1] = obj->lst_flag[0];
 	while (line[++obj->roll])
 	{
 		if (line[obj->roll] == ' ')
@@ -160,6 +173,7 @@ int			sh_parcer(t_shell *obj, char *line)
 		{
 			info[1] = obj->roll;
 			find_elem(obj, 0);
+			++obj->lst_flag[0];
 			if (!err_analisys(obj))
 				return (0);
 			info[3] = ft_strlen(obj->recycle) + 1;
