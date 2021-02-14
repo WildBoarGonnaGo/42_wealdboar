@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 10:59:47 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/02/13 20:05:30 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/14 17:17:29 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,6 @@ int 	unset_envp(t_shell *obj)
 		;
 	if (obj->len > 1)
 		rm_envp_var(obj);
-	alloc_free_2((void **)obj->cmd);
+	//alloc_free_2((void **)obj->cmd);
 	return (0);
 }

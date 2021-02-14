@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 14:43:43 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/13 21:53:13 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/14 19:35:29 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	**set_arr2_strbound(char **arr, int *pos, char *str)
 	info[1] = *pos - info[0] * (info[0] != -1);
 	res = (char **)malloc(sizeof(char *) * (info[1] + 1));
 	info[2] = -1;
-	while (++info[0] <= *pos)
+	while (++info[0] < *pos)
 		res[++info[2]] = ft_strdup(arr[info[0]]);
 	res[info[0]] = 0x0;
 	return (res);
@@ -71,15 +71,23 @@ void	sh_line_ansys(t_shell *obj)
 	while (obj->cmd_flag & HANSEMI)
 	{
 		sh_parcer(obj, obj->line);
+		if (!ft_strncmp(";", (char *)obj->lst_head->content, 2))
+			--obj->lst_flag[0];
+		else
+			obj->cmd_flag &= ~HANSEMI;
+		++obj->roll;
 		obj->cmd = lst_to_arr2(obj->lst_start, obj->lst_flag[1],
-		obj->lst_flag[0] - obj->lst_flag[1]);
-		obj->cmd_flag &= ((!obj->line[obj->roll]) * HANPIPE);
+		obj->lst_flag[0]++ - obj->lst_flag[1]);
+		/*if (!obj->line[obj->roll++])
+			obj->cmd_flag &= ~HANSEMI;*/
 		//obj->pipe_block = ft_split(obj->tmp[i], '|');
 		j = -1;
+		obj->cmd_flag |= HANPIPE;
 		while (obj->cmd_flag & HANPIPE)
 		{
 			obj->pipe_block = set_arr2_strbound(obj->cmd, &j, "|");
-			obj->cmd_flag &= ((obj->cmd[j] != 0) * HANPIPE);
+			if (!obj->cmd[j])
+				obj->cmd_flag &= ~HANPIPE;
 			//obj->clean = obj->pipe_block[j - 1];
 			//obj->pipe_block[j - 1] = ft_strtrim(obj->pipe_block[j - 1], " ");
 			//free(obj->clean);
@@ -91,7 +99,7 @@ void	sh_line_ansys(t_shell *obj)
 			else if (!ft_strncmp("export", obj->pipe_block[0], obj->len)/* ||
 			ft_strncmp("export", obj->pipe_block[j - 1], 7) == -32*/)
 				ft_minishell_export(obj);
-			else if (!ft_strncmp("unset", obj->pipe_block[j - 1], obj->len)/* ||
+			else if (!ft_strncmp("unset", obj->pipe_block[0], obj->len)/* ||
 			ft_strncmp("unset", obj->pipe_block[j - 1], 6) == -32*/)
 				unset_envp(obj);
 			else if (!ft_strncmp("echo", obj->pipe_block[0], 5)/* ||
@@ -107,6 +115,8 @@ void	sh_line_ansys(t_shell *obj)
 				sh_user_bin(obj);
 		}
 		dup2(obj->fd_recover[0], STDIN_FILENO);
+		alloc_free_2((void **)obj->cmd);	
 	}
-	alloc_free_2((void **)obj->tmp);	
+	ft_lstclear(&obj->lst_start, free);
+	//alloc_free_2((void **)obj->cmd);	
 }

@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 16:12:18 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/13 22:02:19 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/14 19:00:43 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,31 +66,32 @@ void		find_elem(t_shell *obj, int st)
 {
 	if (!obj->recycle)
 		obj->recycle = ft_strdup("");
-	if (ft_strchr(";|<>", obj->line[obj->roll]) && !ft_strncmp("", obj->recycle, 1))
+	if (ft_strchr(";|<>", obj->line[obj->roll]) && !ft_strncmp("", obj->recycle, 1)
+	&& obj->line[obj->roll])
 	{
 		obj->recycle = addchar(obj->recycle, obj->line[obj->roll]);
 		st |= COMCHAR;
 	}
 	else if (obj->line[obj->roll] == '\'' && !(st & ISQUOTE))
-		st |= 2;
+		st |= SQUOTE;
 	else if (obj->line[obj->roll] == '"' && !(st & ISQUOTE))
-		st |= 1;
-	else if (obj->line[obj->roll] == '"' && (st & DQUOTE))
+		st |= DQUOTE;
+	else if (((st & (SQUOTE | PARAMEXP)) == PARAMEXP) && !ft_isalnum(obj->line[obj->roll]))
 	{
-		st &= ~DQUOTE;
-		if ((st & 0b1000) == 8)
+		obj->argstr = (char *)malloc(obj->roll - obj->readenv + 1);
+		ft_strlcpy(obj->argstr, obj->line + obj->readenv, obj->roll - obj->readenv + 1);
+		obj->clean = obj->recycle;
+		obj->recycle = ft_strjoin(obj->recycle, sh_envp_search(obj->argstr, *obj));
+		if (obj->clean)
 		{
-			obj->argstr = (char *)malloc(obj->roll - obj->readenv + 1);
-			ft_strlcpy(obj->argstr, obj->line + obj->readenv, obj->roll - obj->readenv + 1);
-			obj->clean = obj->recycle;
-			obj->recycle = ft_strjoin(obj->recycle, sh_envp_search(obj->argstr, *obj));
-			if (obj->clean)
-			{
-				free(obj->clean);
-				obj->clean = NULL;
-			}
+			free(obj->clean);
+			obj->clean = NULL;
 		}
+		st &= ~PARAMEXP;
+		--obj->roll;
 	}
+	else if (obj->line[obj->roll] == '"' && ((st & (DQUOTE | ESCCHAR)) == DQUOTE))
+		st &= ~DQUOTE;
 	else if (obj->line[obj->roll] == '\'' && (st & SQUOTE))
 		st &= ~SQUOTE;
 	else if (obj->line[obj->roll] == '\\' && (!(st & (ESCCHAR | SQUOTE))))
@@ -113,12 +114,11 @@ void		find_elem(t_shell *obj, int st)
 	else if (ft_strchr(";|<>", obj->line[obj->roll]) && !(st & ISQUOTE) && obj->roll)
 	{
 		--obj->roll;
-		//++obj->lst_flag[0];
 		return ;
 	}
 	else if ((obj->line[obj->roll] == ' ' && !(st & 0b11)) || !obj->line[obj->roll])
 	{
-		if ((st & PARAMEXP) == PARAMEXP)
+		if ((st & PARAMEXP))
 		{
 			obj->argstr = (char *)malloc(obj->len - obj->readenv + 1);
 			ft_strlcpy(obj->argstr, obj->line + obj->readenv, obj->len - obj->readenv + 1);
@@ -132,7 +132,6 @@ void		find_elem(t_shell *obj, int st)
 		}
 		else
 			obj->recycle = addchar(obj->recycle, 0);
-
 		return ;
 	}
 	else if ((st & PARAMEXP) != PARAMEXP)
@@ -141,14 +140,14 @@ void		find_elem(t_shell *obj, int st)
 		if (st & TOKTWIDDLE)
 		{
 			if (ft_strchr("\0 /.", obj->line[obj->len]))
-				obj->recycle = ft_strjoin(obj->recycle, sh_envp_search("PATH", *obj));
+				obj->recycle = ft_strjoin(obj->recycle, sh_envp_search("HOME", *obj));
 		}
-		obj->recycle = addchar(obj->recycle, obj->line[obj->roll]);
+		else
+			obj->recycle = addchar(obj->recycle, obj->line[obj->roll]);
 	}
-	if ((st & ~COMCHAR) && (st & COMCHAR))
+	if (!(st & ~COMCHAR) && (st & COMCHAR))
 	{
-		//++obj->lst_flag[0];
-		--obj->roll;
+		//++obj->roll;
 		return ;
 	}
 	++obj->roll;
@@ -159,8 +158,8 @@ int			sh_parcer(t_shell *obj, char *line)
 {
 	int	info[5];
 	
-	obj->lst_start = NULL;
-	obj->roll = -1;
+	//obj->lst_start = NULL;
+	//obj->roll = -1;
 	info[3] = 0;
 	info[2] = 0;
 	obj->recycle = NULL;
