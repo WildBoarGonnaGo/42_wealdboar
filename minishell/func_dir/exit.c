@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 20:04:33 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/13 20:07:26 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/15 20:48:05 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int sh_exit(t_shell *obj)
 	i = -1;
 	obj->len = 0;
 	res = 0;
-	obj->status[0] = 0;
+	//obj->status[0] = 0;
 	tmp = obj->pipe_block;
 	while (tmp[++obj->len])
 		;

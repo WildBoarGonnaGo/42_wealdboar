@@ -1,4 +1,5 @@
-/* ************************************************************************** */
+/* ******
+ * ******************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
@@ -6,7 +7,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 16:28:01 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/13 18:54:26 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/15 17:45:24 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +18,19 @@ char	*cd_no_args(t_shell *obj)
 	int	i;
 	
 	i = -1;
-	obj->clean = obj->line;
-	while (ft_strncmp(obj->envp[++i], "HOME", 4))
-		;
-	obj->line = ft_strdup(obj->envp[i] + 5);
+	obj->clean = obj->clunit;
+	while (obj->envp[++i])
+	{
+		if (!ft_strncmp(obj->envp[i], "HOME", 5) || 
+		ft_strncmp(obj->envp[i], "HOME", 5) == 61)
+			break ;
+	}
+	obj->clunit = (obj->envp[i]) ? ft_strdup(obj->envp[i] + 5) :
+	ft_strdup("");
+	obj->if_child = ((!ft_strncmp("", obj->clunit, 1)) && (obj->envp[i] != 0));
 	if (obj->clean)
 		free(obj->clean);
-	return (obj->line);
+	return (obj->clunit);
 }
 
 char	**change_pwd(t_shell *obj, char *envpwd, char *dir)
@@ -71,8 +78,8 @@ char	*cd_two_args(t_shell *obj, char **cd_args)
 	obj->len = ft_strlen(line);
 	if (!(clean = ft_strnstr(line, cd_args[1], ft_strlen(line))))
 	{
-		write(1, "cd: not in pwd: ", ft_strlen("cd: not in pwd: "));
-		write(1, cd_args[1], ft_strlen(cd_args[1]));
+		ft_putstr_fd("cd: not in pwd: ", 1);
+		ft_putstr_fd(cd_args[1], 1);
 		write(1, "\n", 1);
 		return (NULL);
 	}
@@ -95,9 +102,11 @@ int 	change_dir(t_shell *obj)
 
 	i = -1;
 	st = 0;
+	obj->if_child = 0;
 	obj->backup = (char *)malloc(512);
 	getcwd(obj->backup, 512);
 	cd_args = obj->pipe_block;
+	obj->if_child = 0;
 	while (cd_args[++i])
 		;
 	if (i == 1)
@@ -116,15 +125,22 @@ int 	change_dir(t_shell *obj)
 	else if (cd_args[1] && (i == 2 || i >= 4))
 		obj->argstr = cd_args[1];
 	st = chdir(obj->argstr);
-	if (st)
+	obj->status[0] = (st != 0);
+	obj->readenv = (obj->if_child && i == 1 && st);
+	if (st && !obj->readenv)
 	{
-		ft_putstr_fd("cd: ", 2);
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd(": ", 2);
-		ft_putstr_fd(obj->argstr, 2);
-		ft_putstr_fd("\n", 2);
+		if (!ft_strncmp(obj->argstr, "", 1) && i == 1 && !obj->if_child)
+			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
+		else
+		{
+			ft_putstr_fd("cd: ", 2);
+			ft_putstr_fd(strerror(errno), 2);
+			ft_putstr_fd(": ", 2);
+			ft_putstr_fd(obj->argstr, 2);
+			ft_putstr_fd("\n", 2);
+		}
 	}
-	else
+	else if (!st && !obj->readenv)
 	{
 		cd_clean_2 = obj->envp;
 		obj->envp = change_pwd(obj, "PWD", obj->argstr);

@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:01:50 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/02/14 18:57:00 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/15 20:39:44 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ void	signal_handle(int sig)
 int 	main(int argc, char **argv, char **envp)
 {
 	int	rage;
-
 	t_shell obj;
+
 	obj.envp = envp;
 	obj.argc = argc;
 	obj.argv = argv;
