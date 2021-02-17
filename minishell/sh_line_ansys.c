@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 14:43:43 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/14 19:35:29 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/17 22:35:30 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,9 @@ void	sh_line_ansys(t_shell *obj)
 			else if (!ft_strncmp("exit", obj->pipe_block[0], obj->len)/* ||
 			ft_strncmp("exit", obj->pipe_block[j - 1], 5) == -32*/)
 				obj->status[1] = sh_exit(obj);
+			else if (!ft_strncmp("pwd", obj->pipe_block[0], obj->len)/* ||
+			ft_strncmp("exit", obj->pipe_block[j - 1], 5) == -32*/)
+				ft_minishell_pwd(obj);
 			else
 				sh_user_bin(obj);
 		}

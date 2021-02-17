@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 21:05:30 by lcreola           #+#    #+#             */
-/*   Updated: 2021/02/17 22:03:43 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/17 22:36:41 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,14 @@ int	ft_minishell_pwd(t_shell *obj)
 		if (/*!obj->pipe_block[indx + 1]*/!(obj->cmd_flag & HANPIPE))
 			dup2(obj->fd_recover[1], 1);
 		if (!getcwd(cwd, BUFFER_SIZE))
+		{
 			ft_putstr_fd(obj->backup, 1);
-		else
-			ft_putstr_fd(cwd, 1);
+			write(1, "\n", 1);
+			exit (1);
+		}
+		ft_putstr_fd(cwd, 1);
 		write(1, "\n", 1);
+		exit (0);
 	}
 	else
 	{
