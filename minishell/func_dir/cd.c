@@ -1,17 +1,19 @@
-/* ******
- * ******************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/17 16:28:01 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/15 17:45:24 by lchantel         ###   ########.fr       */
+/*   Created: 2021/02/17 18:16:06 by lchantel          #+#    #+#             */
+/*   Updated: 2021/02/17 21:58:07 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <stdlib.h>
+#include <strings.h>
+#include <unistd.h>
 
 char	*cd_no_args(t_shell *obj)
 {
@@ -55,6 +57,9 @@ char	**change_pwd(t_shell *obj, char *envpwd, char *dir)
 			envp_cd[info[1]] = (char *)malloc(ft_strlen(dir) + ++len + 1);
 			ft_strlcpy(envp_cd[info[1]], envpwd, len);
 			ft_strlcat(envp_cd[info[1]], "=", len + 1);
+			/*if (!ft_strncmp(envpwd, "PWD", 4))
+				ft_strlcat(envp_cd[info[1]], buf, ft_strlen(buf) + len + 1);
+			else*/
 			ft_strlcat(envp_cd[info[1]], dir, ft_strlen(dir) + len + 1);
 			info[1] = -1;
 		}
@@ -99,12 +104,13 @@ int 	change_dir(t_shell *obj)
 	char	**cd_args;
 	int		i;
 	char	**cd_clean_2;
+	char	buf[BUFFER_SIZE];
 
 	i = -1;
 	st = 0;
 	obj->if_child = 0;
-	obj->backup = (char *)malloc(512);
-	getcwd(obj->backup, 512);
+	obj->backup = sh_envp_search("PWD", obj);
+	//obj->oldpwd = sh_envp_search("OLDPWD", obj);
 	cd_args = obj->pipe_block;
 	obj->if_child = 0;
 	while (cd_args[++i])
@@ -127,29 +133,58 @@ int 	change_dir(t_shell *obj)
 	st = chdir(obj->argstr);
 	obj->status[0] = (st != 0);
 	obj->readenv = (obj->if_child && i == 1 && st);
-	if (st && !obj->readenv)
+	if ((st && !obj->readenv))
 	{
-		if (!ft_strncmp(obj->argstr, "", 1) && i == 1 && !obj->if_child)
+		if (!ft_strncmp(obj->argstr, "", 1) && ((i == 1 && !obj->if_child) 
+		|| obj->env_is_home))
 			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 		else
 		{
-			ft_putstr_fd("cd: ", 2);
+			ft_putstr_fd("minishell: cd: ", 2);
 			ft_putstr_fd(strerror(errno), 2);
 			ft_putstr_fd(": ", 2);
 			ft_putstr_fd(obj->argstr, 2);
 			ft_putstr_fd("\n", 2);
 		}
 	}
-	else if (!st && !obj->readenv)
+	else if ((!st && !obj->readenv) || !ft_strncmp("", obj->backup, 1))
 	{
 		cd_clean_2 = obj->envp;
+		bzero(buf, BUFFER_SIZE);
 		obj->envp = change_pwd(obj, "PWD", obj->argstr);
 		if (cd_clean_2)
 			alloc_free_2((void **)cd_clean_2);
-		cd_clean_2 = obj->envp;
+		/*cd_clean_2 = obj->envp;
 		obj->envp = change_pwd(obj, "OLDPWD", obj->backup);
 		if (cd_clean_2)
-			alloc_free_2((void **)cd_clean_2);
+			alloc_free_2((void **)cd_clean_2);*/
+		if (!getcwd(buf, BUFFER_SIZE))
+		{
+			ft_putstr_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n", 2);
+			cd_clean_2 = obj->envp;
+			obj->clean = obj->backup;
+			obj->envp = change_pwd(obj, "OLDPWD", obj->backup);
+			obj->backup = ft_strjoin(obj->backup, obj->argstr);
+			obj->envp = change_pwd(obj, "PWD", obj->backup);
+			if (cd_clean_2)
+				alloc_free_2((void **)cd_clean_2);
+			if (obj->clean)
+			{
+				free(obj->clean);
+				obj->clean = NULL;
+			}
+		}
+		else
+		{
+			cd_clean_2 = obj->envp;
+			obj->envp = change_pwd(obj, "PWD", buf);
+			if (cd_clean_2)
+				alloc_free_2((void **)cd_clean_2);
+			cd_clean_2 = obj->envp;
+			obj->envp = change_pwd(obj, "OLDPWD", obj->backup);
+			if (cd_clean_2)
+				alloc_free_2((void **)cd_clean_2);
+		}
 	}
 	i = -1;
 	free(obj->backup);

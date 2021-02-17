@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 15:23:53 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/02/13 20:43:32 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/17 18:51:12 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ char **execve_args(t_shell *obj)
 	res[i] = NULL;
 	if (obj->pipe_block[0])
 		obj->bin_search = ft_strdup(obj->pipe_block[0]);
-	alloc_free_2((void **)obj->pipe_block);
+	//alloc_free_2((void **)obj->pipe_block);
 	return (res);
 }

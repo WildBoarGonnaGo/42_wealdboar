@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 20:54:10 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/13 21:01:56 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/17 18:45:23 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int 	sh_user_bin(t_shell *obj)
 	obj->len = 1;
 	line = NULL;
 	obj->bin_args = execve_args(obj);
+	obj->cmd = obj->pipe_block;
 	if (*obj->bin_search != '.' && *obj->bin_search != '/' \
 	&& *obj->bin_search != '~')
 	{

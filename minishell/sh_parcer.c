@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 16:12:18 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/14 19:00:43 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/17 17:05:28 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void		find_elem(t_shell *obj, int st)
 		obj->argstr = (char *)malloc(obj->roll - obj->readenv + 1);
 		ft_strlcpy(obj->argstr, obj->line + obj->readenv, obj->roll - obj->readenv + 1);
 		obj->clean = obj->recycle;
-		obj->recycle = ft_strjoin(obj->recycle, sh_envp_search(obj->argstr, *obj));
+		obj->recycle = ft_strjoin(obj->recycle, sh_envp_search(obj->argstr, obj));
 		if (obj->clean)
 		{
 			free(obj->clean);
@@ -123,7 +123,7 @@ void		find_elem(t_shell *obj, int st)
 			obj->argstr = (char *)malloc(obj->len - obj->readenv + 1);
 			ft_strlcpy(obj->argstr, obj->line + obj->readenv, obj->len - obj->readenv + 1);
 			obj->clean = obj->recycle;
-			obj->recycle = ft_strjoin(obj->recycle, sh_envp_search(obj->argstr, *obj));
+			obj->recycle = ft_strjoin(obj->recycle, sh_envp_search(obj->argstr, obj));
 			if (obj->clean)
 			{
 				free(obj->clean);
@@ -140,7 +140,7 @@ void		find_elem(t_shell *obj, int st)
 		if (st & TOKTWIDDLE)
 		{
 			if (ft_strchr("\0 /.", obj->line[obj->len]))
-				obj->recycle = ft_strjoin(obj->recycle, sh_envp_search("HOME", *obj));
+				obj->recycle = ft_strjoin(obj->recycle, sh_envp_search("HOME", obj));
 		}
 		else
 			obj->recycle = addchar(obj->recycle, obj->line[obj->roll]);

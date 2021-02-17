@@ -6,17 +6,20 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 21:05:30 by lcreola           #+#    #+#             */
-/*   Updated: 2021/02/13 20:29:38 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/17 22:03:43 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <stdlib.h>
+#include <unistd.h>
 
 int	ft_minishell_pwd(t_shell *obj)
 {
 	char	cwd[BUFFER_SIZE];
 
 	pipe(obj->fd_pipe);
+	obj->backup = sh_envp_search("PWD", obj);
 	if (!(obj->child = fork()))
 	{
 		dup2(obj->fd_pipe[1], 1);
@@ -24,8 +27,10 @@ int	ft_minishell_pwd(t_shell *obj)
 		close(obj->fd_pipe[1]);
 		if (/*!obj->pipe_block[indx + 1]*/!(obj->cmd_flag & HANPIPE))
 			dup2(obj->fd_recover[1], 1);
-		getcwd(cwd, BUFFER_SIZE);
-		ft_putstr_fd(cwd, 1);
+		if (!getcwd(cwd, BUFFER_SIZE))
+			ft_putstr_fd(obj->backup, 1);
+		else
+			ft_putstr_fd(cwd, 1);
 		write(1, "\n", 1);
 	}
 	else
@@ -39,6 +44,13 @@ int	ft_minishell_pwd(t_shell *obj)
 	{
 		obj->status[0] = (WEXITSTATUS(obj->status[0]) > 0);
 		kill(obj->child, SIGTERM);
+	}
+	if (!getcwd(NULL, 0))
+		obj->envp = change_pwd(obj, "PWD", obj->backup);
+	if (obj->backup)
+	{
+		free(obj->backup);
+		obj->backup = NULL;
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/02/15 21:33:18 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/17 21:55:58 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct		s_shell
 	char			*recycle;
 	char			*argstr;
 	char			*clunit;
+	char			*oldpwd;
 	void			*clean;
 	int				readenv;
 	int				fd_pipe[2];
@@ -82,6 +83,7 @@ typedef struct		s_shell
 	int				lst_flag[2];
 	int				pipe_pos[2];
 	int				cmd_flag;
+	int				env_is_home;
 	char			loop;
 	char			eol;
 	char			exit;
@@ -100,7 +102,7 @@ int					ft_minishell_pwd(t_shell *obj);
 void				sh_line_ansys(t_shell *obj);
 void 				alloc_free_2(void **mem);
 void				ft_minishell_echo(t_shell *obj);
-char				*sh_envp_search(const char *str, t_shell obj);
+char				*sh_envp_search(const char *str, t_shell *obj);
 void				ft_minishell_env(t_shell *obj);
 char				*addchar(char *s, char c);
 int					sh_user_bin(t_shell *obj);
@@ -120,5 +122,7 @@ int					sh_parcer(t_shell *obj, char *line);
 void				sh_func_quit(int sig);
 void				err_arrow_case(char *str, int count, char c);
 int					err_analisys(t_shell *obj);
+char				**change_pwd(t_shell *obj, char *envpwd, char *dir);
+
 
 #endif
