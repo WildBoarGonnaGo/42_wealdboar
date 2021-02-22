@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/02/17 21:55:58 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/22 10:11:34 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@
 # define TOKTWIDDLE 0b100000
 # define HANPIPE 0b1000000
 # define HANSEMI 0b10000000
+# define ECHOFLAG 0b1
 
+# define SH_INT_MAX 2147483647
 
 static int			sig_state;
 
@@ -71,6 +73,7 @@ typedef struct		s_shell
 	char			*oldpwd;
 	void			*clean;
 	int				readenv;
+	int				err_status;
 	int				fd_pipe[2];
 	int				fd_err[2];
 	int				fd_redir[2];
@@ -84,6 +87,8 @@ typedef struct		s_shell
 	int				pipe_pos[2];
 	int				cmd_flag;
 	int				env_is_home;
+	int				err_fst;
+	int				err_pos;
 	char			loop;
 	char			eol;
 	char			exit;
@@ -123,6 +128,5 @@ void				sh_func_quit(int sig);
 void				err_arrow_case(char *str, int count, char c);
 int					err_analisys(t_shell *obj);
 char				**change_pwd(t_shell *obj, char *envpwd, char *dir);
-
 
 #endif

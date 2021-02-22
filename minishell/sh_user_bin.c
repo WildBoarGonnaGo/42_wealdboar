@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 20:54:10 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/17 18:45:23 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/22 20:56:26 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int 	sh_user_bin(t_shell *obj)
 	obj->len = 1;
 	line = NULL;
 	obj->bin_args = execve_args(obj);
-	obj->cmd = obj->pipe_block;
+	//obj->tmp = obj->pipe_block;
 	if (*obj->bin_search != '.' && *obj->bin_search != '/' \
 	&& *obj->bin_search != '~')
 	{
@@ -73,7 +73,7 @@ int 	sh_user_bin(t_shell *obj)
 		dup2(obj->fd_pipe[1], 1);
 		close(obj->fd_pipe[0]);
 		close(obj->fd_pipe[1]);
-		if (/*!obj->pipe_block[indx + 1]*/!(obj->cmd_flag & HANPIPE))
+		if (!(obj->cmd_flag & HANPIPE) && !obj->fd_redir[1])
 			dup2(obj->fd_recover[1], 1);
 		st += execve(line, obj->bin_args, obj->envp);
 		if (st <= 0)
@@ -83,20 +83,19 @@ int 	sh_user_bin(t_shell *obj)
 				ft_putstr_fd("minishell: ", 2);
 				ft_putstr_fd(obj->bin_search, 2);
 				ft_putstr_fd(": command not found\n", 2);
-				//write(2, "command not found\n", ft_strlen("command not found\n"));
 				exit (127);
 			}
-			else if (!st && (*obj->line == '.'
-			|| *obj->line == '/' || *obj->line == '~'))
+			else if (!st && (*line == '.' || *line == '/' || *line == '~'))
 			{
 				ft_putstr_fd("minishell: ", 2);
 				ft_putstr_fd(obj->bin_search, 2);
 				write(2, ": ", 2);
 				ft_putstr_fd(strerror(errno), 2);
 				write(2, "\n", 1);
-				exit (1);
 			}	
 		}
+		if (errno == 13)
+			exit (126);
 		exit (errno);
 	}
 	else

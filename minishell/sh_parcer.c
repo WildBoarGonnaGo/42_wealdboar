@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 16:12:18 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/17 17:05:28 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/22 15:45:45 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ int			err_noarg_com(t_shell *obj)
 			obj->fd_redir[1] = open((char *)grabber->next->content, O_RDWR | O_APPEND | O_CREAT);
 		grabber = grabber->next;
 	}
-	if (grabber == obj->lst_start && state[0])
+	/*if (grabber == obj->lst_start && state[0])
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
 		ft_putstr_fd((char *)grabber->content, 2);
 		ft_putstr_fd("'\n", 2);
 		return (0);
-	}
+	}*/
 	return (1);
 }
 
@@ -76,19 +76,31 @@ void		find_elem(t_shell *obj, int st)
 		st |= SQUOTE;
 	else if (obj->line[obj->roll] == '"' && !(st & ISQUOTE))
 		st |= DQUOTE;
-	else if (((st & (SQUOTE | PARAMEXP)) == PARAMEXP) && !ft_isalnum(obj->line[obj->roll]))
+	else if (((st & (SQUOTE | PARAMEXP)) == PARAMEXP) && (!ft_isalnum(obj->line[obj->roll]) 
+	|| obj->line[obj->roll] == '?'))
 	{
 		obj->argstr = (char *)malloc(obj->roll - obj->readenv + 1);
 		ft_strlcpy(obj->argstr, obj->line + obj->readenv, obj->roll - obj->readenv + 1);
 		obj->clean = obj->recycle;
-		obj->recycle = ft_strjoin(obj->recycle, sh_envp_search(obj->argstr, obj));
+		if (!ft_strncmp("$?", obj->line + obj->roll - 1, 2))
+		{
+			obj->clunit = ft_itoa(obj->status[0]);
+			obj->recycle = ft_strjoin(obj->recycle, obj->clunit);
+			if (obj->clunit)
+			{
+				free(obj->clunit);
+				obj->clunit = 0x0;
+			}
+		}
+		else
+			obj->recycle = ft_strjoin(obj->recycle, sh_envp_search(obj->argstr, obj));
 		if (obj->clean)
 		{
 			free(obj->clean);
 			obj->clean = NULL;
 		}
 		st &= ~PARAMEXP;
-		--obj->roll;
+		obj->roll -= (obj->line[obj->roll] != '?');
 	}
 	else if (obj->line[obj->roll] == '"' && ((st & (DQUOTE | ESCCHAR)) == DQUOTE))
 		st &= ~DQUOTE;
@@ -96,15 +108,19 @@ void		find_elem(t_shell *obj, int st)
 		st &= ~SQUOTE;
 	else if (obj->line[obj->roll] == '\\' && (!(st & (ESCCHAR | SQUOTE))))
 		st |= ESCCHAR;
-	else if ((obj->line[obj->roll] == '$' || obj->line[obj->roll] == '\\' ||
-	obj->line[obj->roll] == '"' || obj->line[obj->roll] == 'n') && 
-	((st & (ESCCHAR | SQUOTE)) == ESCCHAR))
+	else if ((st & (ESCCHAR | SQUOTE)) == ESCCHAR)
 	{
 		st &= ~ESCCHAR;
 		if (obj->line[obj->roll] == 'n')
 			obj->recycle = addchar(obj->recycle, '\n');
-		else
+		else if (obj->line[obj->roll] == '$' || obj->line[obj->roll] == '\\' ||
+		obj->line[obj->roll] == '"' || obj->line[obj->roll] == ' ')
 			obj->recycle = addchar(obj->recycle, obj->line[obj->roll]);
+		else
+		{
+			obj->recycle = addchar(obj->recycle, obj->line[obj->roll - 1]);
+			obj->recycle = addchar(obj->recycle, obj->line[obj->roll]);
+		}
 	}
 	else if ((obj->line[obj->roll] == '$') && !(st & (ESCCHAR | SQUOTE)))
 	{
@@ -146,10 +162,7 @@ void		find_elem(t_shell *obj, int st)
 			obj->recycle = addchar(obj->recycle, obj->line[obj->roll]);
 	}
 	if (!(st & ~COMCHAR) && (st & COMCHAR))
-	{
-		//++obj->roll;
 		return ;
-	}
 	++obj->roll;
 	find_elem(obj, st);
 }
@@ -158,8 +171,6 @@ int			sh_parcer(t_shell *obj, char *line)
 {
 	int	info[5];
 	
-	//obj->lst_start = NULL;
-	//obj->roll = -1;
 	info[3] = 0;
 	info[2] = 0;
 	obj->recycle = NULL;
@@ -173,8 +184,6 @@ int			sh_parcer(t_shell *obj, char *line)
 			info[1] = obj->roll;
 			find_elem(obj, 0);
 			++obj->lst_flag[0];
-			if (!err_analisys(obj))
-				return (0);
 			info[3] = ft_strlen(obj->recycle) + 1;
 			obj->lst_head = ft_lstnew(NULL);
 			obj->lst_head->content = malloc(info[3]);

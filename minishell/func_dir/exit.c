@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 20:04:33 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/15 20:48:05 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/22 16:39:11 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,21 @@ int sh_exit(t_shell *obj)
 		}
 	if (obj->len > 2)
 	{
-		write(2, "minishell: ", ft_strlen("minishell: "));
-		write(2, tmp[0], ft_strlen(tmp[0]));
-		write(2, ": ", 2);
-		write(2, "too many arguments\n",
-		ft_strlen("too many arguments\n"));
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(tmp[0], 2);
+		//write(2, ": ", 2);
+		ft_putstr_fd(": too many arguments\n", 2);
 		res = -1;
 		obj->status[0] = 1;
 	}
 	else if (res)
 	{
-		write(2, "minishell: ", ft_strlen("minishell: "));
-		write(2, tmp[0], ft_strlen(tmp[0]));
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(tmp[0], 2);
 		write(2, ": ", 2);
-		write(2, tmp[1], ft_strlen(tmp[1]));
-		write(2, ": ", 2);
-		write(2, "numeric argument required\n",
-		ft_strlen("numeric argument required\n"));
+		ft_putstr_fd(tmp[1], 2);
+		//write(2, ": ", 2);
+		ft_putstr_fd(": numeric argument required\n", 2) ;
 		res = 255;
 		obj->status[0] = 1;
 	}

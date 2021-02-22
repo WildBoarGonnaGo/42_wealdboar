@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:53:12 by lcreola           #+#    #+#             */
-/*   Updated: 2021/02/13 20:02:50 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/22 16:30:04 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_minishell_env(t_shell *obj)
 		dup2(obj->fd_pipe[1], 1);
 		close(obj->fd_pipe[0]);
 		close(obj->fd_pipe[1]);
-		if (!(obj->cmd_flag & HANPIPE))
+		if (!(obj->cmd_flag & HANPIPE) && !obj->fd_redir[1])
 			dup2(obj->fd_recover[1], 1);
 		while (obj->envp[++i])
 		{

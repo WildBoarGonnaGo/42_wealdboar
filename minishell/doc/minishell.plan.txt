@@ -545,3 +545,34 @@
        ^\Quit (core dumped)
        root@wbmachine:/home/lchantel# cat
        bla bla^\Quit (core dumped)
+
+
+
+
+case_0
+
+$2 = {argv = 0x7fffffffde48(+), envp = 0x40c2a0(+), cmd = 0x40c540, tmp = 0x38000000380, bin = 0x38000000380,
+  clean2 = 0x412b60, pipe_block = 0x40c670, bin_args = 0x38000000380, envp_secure = 0x38000000380,
+  backup = 0x40d690 "@\312@", bin_search = 0x38000000380 <error: Cannot access memory at address 0x38000000380>,
+  line = 0x40d6c0 "cd $HOME/Desktop ; ./README.md", recycle = 0x0, argstr = 0x40d850 " \330@", clunit = 0x0,
+  oldpwd = 0x38000000380 <error: Cannot access memory at address 0x38000000380>, clean = 0x0, readenv = 0,
+  fd_pipe = {64, 0}, fd_err = {0, 0}, fd_redir = {0, 0}, argc = 1, len = 12, status = {0, -1, 0}, fd_recover = {3,
+    4, 0}, if_child = 0, roll = 31, lst_flag = {5, 3}, pipe_pos = {0, 0}, cmd_flag = 0, env_is_home = 0,
+--Type <RET> for more, q to quit, c to continue without paging--
+  000', eol = 0 '\000', exit = 0 '\000', spec_char = 0 '\000', sh_pid = {15775231, 0}, child = 1,
+  sh_dir = 0x7fffffffdd37, binary = 0x7fffffffdd36, lst_start = 0x40d670, lst_head = 0x40c4c0,
+  lst_newoper = 0x40c4c0}
+
+case_1
+
+$1 = {argv = 0x7fffffffde48(+), envp = 0x40c2a0(+), cmd = 0x40c560, tmp = 0x38000000380, bin = 0x38000000380,
+  clean2 = 0x412b10, pipe_block = 0x40c630, bin_args = 0x38000000380, envp_secure = 0x38000000380,
+  backup = 0x40d810 "@\312@", bin_search = 0x38000000380 <error: Cannot access memory at address 0x38000000380>,
+  line = 0x40c4c0 "./README.md", recycle = 0x0, argstr = 0x40d7d0 "\240\327@", clunit = 0x0,
+  oldpwd = 0x38000000380 <error: Cannot access memory at address 0x38000000380>, clean = 0x0, readenv = 0,
+  fd_pipe = {64, 0}, fd_err = {0, 0}, fd_redir = {0, 0}, argc = 1, len = 12, status = {0, -1, 0}, fd_recover = {5,
+    6, 0}, if_child = 0, roll = 12, lst_flag = {2, 0}, pipe_pos = {0, 0}, cmd_flag = 0, env_is_home = 0,
+  loop = 0 '\000', eol = 0 '\000', exit = 0 '\000', spec_char = 0 '\000', sh_pid = {15775231, 0}, child = 1,
+--Type <RET> for more, q to quit, c to continue without paging--
+   0x7fffffffdd37, binary = 0x7fffffffdd36, lst_start = 0x40c540, lst_head = 0x40c540,
+  lst_newoper = 0x40c540}

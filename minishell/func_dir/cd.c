@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 18:16:06 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/17 22:47:28 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/22 16:18:11 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	**change_pwd(t_shell *obj, char *envpwd, char *dir)
 	len = ft_strlen(envpwd);
 	info[0] = -1;
 	info[1] = -1;
-	envp_cd = NULL;
+	envp_cd = NULL;;
 	while (obj->envp[++info[0]])
 	{
 		obj->clean2 = envp_cd;
@@ -57,9 +57,6 @@ char	**change_pwd(t_shell *obj, char *envpwd, char *dir)
 			envp_cd[info[1]] = (char *)malloc(ft_strlen(dir) + ++len + 1);
 			ft_strlcpy(envp_cd[info[1]], envpwd, len);
 			ft_strlcat(envp_cd[info[1]], "=", len + 1);
-			/*if (!ft_strncmp(envpwd, "PWD", 4))
-				ft_strlcat(envp_cd[info[1]], buf, ft_strlen(buf) + len + 1);
-			else*/
 			ft_strlcat(envp_cd[info[1]], dir, ft_strlen(dir) + len + 1);
 			info[1] = -1;
 		}
@@ -83,9 +80,9 @@ char	*cd_two_args(t_shell *obj, char **cd_args)
 	obj->len = ft_strlen(line);
 	if (!(clean = ft_strnstr(line, cd_args[1], ft_strlen(line))))
 	{
-		ft_putstr_fd("cd: not in pwd: ", 1);
-		ft_putstr_fd(cd_args[1], 1);
-		write(1, "\n", 1);
+		ft_putstr_fd("cd: not in pwd: ", 2);
+		ft_putstr_fd(cd_args[1], 2);
+		write(1, "\n", 2);
 		return (NULL);
 	}
 	obj->len += ft_strlen(cd_args[2]) - ft_strlen(cd_args[1]) + 1;
@@ -101,7 +98,6 @@ char	*cd_two_args(t_shell *obj, char **cd_args)
 int 	change_dir(t_shell *obj)
 {
 	int		st;
-	char	**cd_args;
 	int		i;
 	char	**cd_clean_2;
 	char	buf[BUFFER_SIZE];
@@ -110,26 +106,25 @@ int 	change_dir(t_shell *obj)
 	st = 0;
 	obj->if_child = 0;
 	obj->backup = sh_envp_search("PWD", obj);
-	//obj->oldpwd = sh_envp_search("OLDPWD", obj);
-	cd_args = obj->pipe_block;
 	obj->if_child = 0;
-	while (cd_args[++i])
+	obj->clunit = 0x0;
+	while (obj->pipe_block[++i])
 		;
 	if (i == 1)
 		obj->argstr = cd_no_args(obj);
 	else if (i == 3)
 	{
-		obj->clean = cd_args[1];
-		if (!(cd_args[1] = cd_two_args(obj, cd_args)))
+		obj->clean = obj->pipe_block[1];
+		if (!(obj->pipe_block[1] = cd_two_args(obj, obj->pipe_block)))
 		{
 			free(obj->backup);
 			return (-1);
 		}
-		obj->argstr = cd_args[1];
+		obj->argstr = obj->pipe_block[1];
 		free(obj->clean);
 	}
-	else if (cd_args[1] && (i == 2 || i >= 4))
-		obj->argstr = cd_args[1];
+	else if (obj->pipe_block[1] && (i == 2 || i >= 4))
+		obj->argstr = obj->pipe_block[1];
 	st = chdir(obj->argstr);
 	obj->status[0] = (st != 0);
 	obj->readenv = (obj->if_child && i == 1 && st);
@@ -154,10 +149,6 @@ int 	change_dir(t_shell *obj)
 		obj->envp = change_pwd(obj, "PWD", obj->argstr);
 		if (cd_clean_2)
 			alloc_free_2((void **)cd_clean_2);
-		/*cd_clean_2 = obj->envp;
-		obj->envp = change_pwd(obj, "OLDPWD", obj->backup);
-		if (cd_clean_2)
-			alloc_free_2((void **)cd_clean_2);*/
 		if (!getcwd(buf, BUFFER_SIZE))
 		{
 			ft_putstr_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n", 2);
@@ -188,6 +179,5 @@ int 	change_dir(t_shell *obj)
 	}
 	i = -1;
 	free(obj->backup);
-	alloc_free_2((void **)cd_args);
 	return (st);
 }

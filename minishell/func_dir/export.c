@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:55:02 by lcreola           #+#    #+#             */
-/*   Updated: 2021/02/13 19:55:46 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/22 16:40:27 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		ft_minishell_export_output(t_shell *obj)
 		dup2(obj->fd_pipe[1], 1);
 		close(obj->fd_pipe[0]);
 		close(obj->fd_pipe[1]);
-		if (!(obj->cmd_flag & HANPIPE))
+		if (!(obj->cmd_flag & HANPIPE) && !obj->fd_redir[1])
 			dup2(obj->fd_recover[1], 1);
 		while (i < obj->len)
 			export_no_arg_format(tmp[i++]);
