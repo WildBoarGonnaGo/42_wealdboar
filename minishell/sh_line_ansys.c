@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 14:43:43 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/23 14:31:51 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/23 15:28:02 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,19 @@ char	**lst_to_arr2(t_list *list, int start, int size)
 		walker = walker->next;
 	while (info[0] < start + size && walker)
 	{
-		res[info[1]++] = ft_strdup((char *)walker->content);
-		walker = walker->next;
+		//res[info[1]++] = ft_strdup((char *)walker->content);
+		if (!ft_strncmp((char *)walker->content, ">", 2) ||
+		!ft_strncmp((char *)walker->content, "<", 2) ||
+		!ft_strncmp((char *)walker->content, ">>", 3))
+		{
+			walker = walker->next->next;
+			start -= 2;
+		}
+		else
+		{
+			res[info[1]++] = ft_strdup((char *)walker->content);
+			walker = walker->next;
+		}
 		++info[0];
 	}
 	res[info[1]] = 0x0;
@@ -70,11 +81,13 @@ void	sh_line_ansys(t_shell *obj)
 		obj->fd_redir[0] = 0;
 		obj->fd_redir[1] = 0;
 		sh_parcer(obj, obj->line);
-		sh_redir_list_fix(obj);
+		//sh_redir_list_fix(obj);
+		//ft_putstr_fd((char *)obj->lst_head->content, 2);
 		if (!ft_strncmp(";", (char *)obj->lst_head->content, 2))
 			--obj->lst_flag[0];
 		else
 			obj->cmd_flag &= ~HANSEMI;
+		//ft_putstr_fd("minesweep process\n", 2);
 		++obj->roll;
 		obj->cmd = lst_to_arr2(obj->lst_start, obj->lst_flag[1],
 		obj->lst_flag[0]++ - obj->lst_flag[1]);

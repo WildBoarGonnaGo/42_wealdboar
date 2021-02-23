@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 16:12:18 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/23 14:29:12 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/23 16:10:11 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int			err_noarg_com(t_shell *obj)
 	state[0] = (!(ft_strncmp(";", (char *)grabber->content, 2)) ||
 	!(ft_strncmp("|", (char *)grabber->content, 2)) ||
 	!(ft_strncmp(">", (char *)grabber->content, 2)) ||
-	!(ft_strncmp("<", (char *)grabber->content, 2)));
+	!(ft_strncmp("<", (char *)grabber->content, 2)) ||
+	!(ft_strncmp(">>", (char *)grabber->content, 2)));
 	if (!grabber)
 		return (0);
 	while (grabber->next)
@@ -31,11 +32,13 @@ int			err_noarg_com(t_shell *obj)
 		state[0] = (!(ft_strncmp(";", (char *)grabber->content, 2)) ||
 		!(ft_strncmp("|", (char *)grabber->content, 2)) ||
 		!(ft_strncmp(">", (char *)grabber->content, 2)) ||
-		!(ft_strncmp("<", (char *)grabber->content, 2)));
+		!(ft_strncmp("<", (char *)grabber->content, 2)) ||
+		!(ft_strncmp(">>", (char *)grabber->content, 2)));
 		state[1] = (!(ft_strncmp(";", (char *)grabber->next->content, 2)) ||
 		!(ft_strncmp("|", (char *)grabber->next->content, 2)) ||
 		!(ft_strncmp(">", (char *)grabber->next->content, 2)) ||
-		!(ft_strncmp("<", (char *)grabber->next->content, 2)));
+		!(ft_strncmp("<", (char *)grabber->next->content, 2)) ||
+		!(ft_strncmp(">>", (char *)grabber->content, 2)));
 		if (state[0] && state[1])
 		{
 			ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
@@ -45,21 +48,26 @@ int			err_noarg_com(t_shell *obj)
 		}
 		if (!(ft_strncmp(">", (char *)grabber->content, 2)) && !state[1])
 		{
-			obj->fd_redir[1] = open((char *)grabber->next->content, O_RDWR | O_TRUNC | O_CREAT);
-			if (obj->fd_redir[1])
-				close(obj->fd_redir[1]);
+			obj->fd_redir[1] = open((char *)grabber->next->content, 
+			O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+			/*if (obj->fd_redir[1])
+				close(obj->fd_redir[1]);*/
+			dup2(obj->fd_redir[1], 1);
 		}
 		else if (!(ft_strncmp("<", (char *)grabber->content, 2)) && !state[1])
 		{
 			obj->fd_redir[0] = open((char *)grabber->next->content, O_RDONLY);
-			if (obj->fd_redir[0])
-				close(obj->fd_redir[0]);
+			/*if (obj->fd_redir[0])
+				close(obj->fd_redir[0]);*/
+			dup2(obj->fd_redir[0], 1);
 		}
 		else if (!(ft_strncmp(">>", (char *)grabber->content, 2)) && !state[1])
 		{
-			obj->fd_redir[1] = open((char *)grabber->next->content, O_RDWR | O_APPEND | O_CREAT);
-			if (obj->fd_redir[1])
-				close(obj->fd_redir[1]);
+			obj->fd_redir[1] = open((char *)grabber->next->content, O_RDWR | O_APPEND | O_CREAT,
+			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+			/*if (obj->fd_redir[1])
+				close(obj->fd_redir[1]);*/
+			dup2(obj->fd_redir[1], 1);
 		}
 		grabber = grabber->next;
 	}

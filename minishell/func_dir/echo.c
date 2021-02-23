@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:50:06 by lcreola           #+#    #+#             */
-/*   Updated: 2021/02/22 16:19:06 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/23 16:11:29 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ void	ft_minishell_echo(t_shell *obj)
 	pipe(obj->fd_pipe);
 	if (!(obj->child = fork()))
 	{
-		dup2(obj->fd_pipe[1], 1);
+		if (!obj->fd_redir[1])
+			dup2(obj->fd_pipe[1], 1);
+		else
+			dup2(1, obj->fd_pipe[1]);
 		close(obj->fd_pipe[0]);
 		close(obj->fd_pipe[1]);
 		if (!(obj->cmd_flag & HANPIPE) && !obj->fd_redir[1]) 
