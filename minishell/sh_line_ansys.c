@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 14:43:43 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/22 16:17:04 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/23 14:31:51 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	sh_line_ansys(t_shell *obj)
 		obj->fd_redir[0] = 0;
 		obj->fd_redir[1] = 0;
 		sh_parcer(obj, obj->line);
+		sh_redir_list_fix(obj);
 		if (!ft_strncmp(";", (char *)obj->lst_head->content, 2))
 			--obj->lst_flag[0];
 		else
@@ -104,6 +105,17 @@ void	sh_line_ansys(t_shell *obj)
 			alloc_free_2((void **)obj->pipe_block);
 		}
 		dup2(obj->fd_recover[0], STDIN_FILENO);
+		dup2(obj->fd_recover[1], STDOUT_FILENO);
+		if (obj->fd_redir[1])
+		{
+			close(obj->fd_redir[1]);
+			obj->fd_redir[1] = 0;
+		}
+		if (obj->fd_redir[0])
+		{
+			close(obj->fd_redir[0]);
+			obj->fd_redir[0] = 0;
+		}
 		alloc_free_2((void **)obj->cmd);	
 	}
 	ft_lstclear(&obj->lst_start, free);

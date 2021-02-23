@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/02/22 10:11:34 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/23 13:01:19 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,5 +128,6 @@ void				sh_func_quit(int sig);
 void				err_arrow_case(char *str, int count, char c);
 int					err_analisys(t_shell *obj);
 char				**change_pwd(t_shell *obj, char *envpwd, char *dir);
+void				sh_redir_list_fix(t_shell *obj);
 
 #endif

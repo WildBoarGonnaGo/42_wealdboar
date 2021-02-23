@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 16:12:18 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/22 15:45:45 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/23 14:29:12 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,23 @@ int			err_noarg_com(t_shell *obj)
 			return (0);
 		}
 		if (!(ft_strncmp(">", (char *)grabber->content, 2)) && !state[1])
+		{
 			obj->fd_redir[1] = open((char *)grabber->next->content, O_RDWR | O_TRUNC | O_CREAT);
+			if (obj->fd_redir[1])
+				close(obj->fd_redir[1]);
+		}
 		else if (!(ft_strncmp("<", (char *)grabber->content, 2)) && !state[1])
+		{
 			obj->fd_redir[0] = open((char *)grabber->next->content, O_RDONLY);
+			if (obj->fd_redir[0])
+				close(obj->fd_redir[0]);
+		}
 		else if (!(ft_strncmp(">>", (char *)grabber->content, 2)) && !state[1])
+		{
 			obj->fd_redir[1] = open((char *)grabber->next->content, O_RDWR | O_APPEND | O_CREAT);
+			if (obj->fd_redir[1])
+				close(obj->fd_redir[1]);
+		}
 		grabber = grabber->next;
 	}
 	/*if (grabber == obj->lst_start && state[0])
