@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 14:43:43 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/23 15:28:02 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/23 18:39:25 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,16 @@ char	**lst_to_arr2(t_list *list, int start, int size)
 		walker = walker->next;
 	while (info[0] < start + size && walker)
 	{
-		//res[info[1]++] = ft_strdup((char *)walker->content);
-		if (!ft_strncmp((char *)walker->content, ">", 2) ||
-		!ft_strncmp((char *)walker->content, "<", 2) ||
-		!ft_strncmp((char *)walker->content, ">>", 3))
-		{
-			walker = walker->next->next;
-			start -= 2;
-		}
-		else
-		{
-			res[info[1]++] = ft_strdup((char *)walker->content);
-			walker = walker->next;
-		}
+		res[info[1]++] = ft_strdup((char *)walker->content);
+		walker = walker->next;
 		++info[0];
 	}
 	res[info[1]] = 0x0;
 	return (res);
 }
 
-char	**set_arr2_strbound(char **arr, int *pos, char *str)
+char	**set_arr2_strbound(char **arr, int *pos, 
+		char *str, t_shell *obj)
 {
 	char	**res;
 	int		info[3];
@@ -62,7 +52,10 @@ char	**set_arr2_strbound(char **arr, int *pos, char *str)
 	res = (char **)malloc(sizeof(char *) * (info[1] + 1));
 	info[2] = -1;
 	while (++info[0] < *pos)
-		res[++info[2]] = ft_strdup(arr[info[0]]);
+	{
+		if (!sh_redirects(obj, &info[0]))
+			res[++info[2]] = ft_strdup(arr[info[0]]);
+	}
 	res[++info[2]] = 0x0;
 	return (res);
 }
@@ -78,8 +71,6 @@ void	sh_line_ansys(t_shell *obj)
 	obj->fd_recover[1] = dup(STDOUT_FILENO);
 	while (obj->cmd_flag & HANSEMI)
 	{
-		obj->fd_redir[0] = 0;
-		obj->fd_redir[1] = 0;
 		sh_parcer(obj, obj->line);
 		//sh_redir_list_fix(obj);
 		//ft_putstr_fd((char *)obj->lst_head->content, 2);
@@ -95,7 +86,9 @@ void	sh_line_ansys(t_shell *obj)
 		obj->cmd_flag |= HANPIPE;
 		while (obj->cmd_flag & HANPIPE)
 		{
-			obj->pipe_block = set_arr2_strbound(obj->cmd, &j, "|");
+			obj->fd_redir[0] = 0;
+			obj->fd_redir[1] = 0;
+			obj->pipe_block = set_arr2_strbound(obj->cmd, &j, "|", obj);
 			if (!obj->cmd[j])
 				obj->cmd_flag &= ~HANPIPE;
 			obj->len = ft_strlen(obj->pipe_block[0]) + 1;
@@ -116,20 +109,16 @@ void	sh_line_ansys(t_shell *obj)
 			else
 				sh_user_bin(obj);
 			alloc_free_2((void **)obj->pipe_block);
+			if (obj->fd_redir[1])
+				close(obj->fd_redir[1]);
+			if (obj->fd_redir[0])
+				close(obj->fd_redir[0]);
 		}
 		dup2(obj->fd_recover[0], STDIN_FILENO);
 		dup2(obj->fd_recover[1], STDOUT_FILENO);
-		if (obj->fd_redir[1])
-		{
-			close(obj->fd_redir[1]);
-			obj->fd_redir[1] = 0;
-		}
-		if (obj->fd_redir[0])
-		{
-			close(obj->fd_redir[0]);
-			obj->fd_redir[0] = 0;
-		}
-		alloc_free_2((void **)obj->cmd);	
+		alloc_free_2((void **)obj->cmd);
+		obj->fd_redir[0] = 0;
+		obj->fd_redir[1] = 0;
 	}
 	ft_lstclear(&obj->lst_start, free);
 }

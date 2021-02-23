@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 16:12:18 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/23 20:28:55 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/23 18:30:44 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,38 @@ int			err_noarg_com(t_shell *obj)
 			ft_putstr_fd("'\n", 2);
 			return (0);
 		}
+		/*if (!(ft_strncmp(">", (char *)grabber->content, 2)) && !state[1])
+		{
+			obj->fd_redir[1] = open((char *)grabber->next->content, 
+			O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+			dup2(obj->fd_redir[1], 1);
+		}
+		else if (!(ft_strncmp("<", (char *)grabber->content, 2)) && !state[1])
+		{
+			obj->fd_redir[0] = open((char *)grabber->next->content, O_RDONLY);
+			dup2(obj->fd_redir[0], 1);
+		}
+		else if (!(ft_strncmp(">>", (char *)grabber->content, 2)) && !state[1])
+		{
+			obj->fd_redir[1] = open((char *)grabber->next->content, O_RDWR | O_APPEND | O_CREAT,
+			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+			dup2(obj->fd_redir[1], 1);
+		}*/
 		grabber = grabber->next;
 	}
+	/*if (grabber == obj->lst_start && state[0])
+	{
+		ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+		ft_putstr_fd((char *)grabber->content, 2);
+		ft_putstr_fd("'\n", 2);
+		return (0);
+	}*/
 	return (1);
 }
 
 
 void		find_elem(t_shell *obj, int st)
 {
-	void	*sh_clean[3];
-	int		i;
-
 	if (!obj->recycle)
 		obj->recycle = ft_strdup("");
 	if (ft_strchr(";|<>", obj->line[obj->roll]) && !ft_strncmp("", obj->recycle, 1)
@@ -72,8 +93,7 @@ void		find_elem(t_shell *obj, int st)
 	else if (((st & (SQUOTE | PARAMEXP)) == PARAMEXP) && (!ft_isalnum(obj->line[obj->roll]) 
 	|| obj->line[obj->roll] == '?'))
 	{
-		
-		/*obj->argstr = (char *)malloc(obj->roll - obj->readenv + 1);
+		obj->argstr = (char *)malloc(obj->roll - obj->readenv + 1);
 		ft_strlcpy(obj->argstr, obj->line + obj->readenv, obj->roll - obj->readenv + 1);
 		obj->clean = obj->recycle;
 		if (!ft_strncmp("$?", obj->line + obj->roll - 1, 2))
@@ -85,37 +105,13 @@ void		find_elem(t_shell *obj, int st)
 				free(obj->clunit);
 				obj->clunit = 0x0;
 			}
-		}*/
-		sh_clean[0] = obj->line;
-		obj->line = ft_substr(obj->line, 0, obj->readenv - 2);
-		sh_clean[1] = obj->line;
-		if (!ft_strncmp("$?", sh_clean[0] + obj->roll - 1, 2))
- 		{
-			sh_clean[2] = ft_itoa(obj->status[0]);
-			obj->line = ft_strjoin(obj->line, sh_clean[2]);	
-			if (sh_clean[2])
-			{
-				free(sh_clean[2]);
-				sh_clean[2] = NULL;
-			}
 		}
 		else
-			obj->line = ft_strjoin(obj->recycle, sh_envp_search(obj->argstr, obj));
+			obj->recycle = ft_strjoin(obj->recycle, sh_envp_search(obj->argstr, obj));
 		if (obj->clean)
 		{
 			free(obj->clean);
 			obj->clean = NULL;
-		}
-		sh_clean[2] = obj->line;
-		obj->line = ft_strjoin(obj->line, sh_clean[0] + obj->roll);
-		i = -1;
-		while (++i < 3)
-		{
-			if (sh_clean[i])
-			{
-				free(sh_clean[i]);
-				sh_clean[i] = NULL;
-			}
 		}
 		st &= ~PARAMEXP;
 		obj->roll -= (obj->line[obj->roll] != '?');

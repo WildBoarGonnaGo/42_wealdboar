@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 20:54:10 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/22 20:56:26 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/23 19:06:06 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,11 @@ int 	sh_user_bin(t_shell *obj)
 	if (!(obj->child = fork()))
 	{
 		errno = 0;
-		dup2(obj->fd_pipe[1], 1);
+		//dup2(obj->fd_pipe[1], 1);
+		if (!obj->fd_redir[1])
+			dup2(obj->fd_pipe[1], 1);
+		else
+			dup2(1, obj->fd_pipe[1]);
 		close(obj->fd_pipe[0]);
 		close(obj->fd_pipe[1]);
 		if (!(obj->cmd_flag & HANPIPE) && !obj->fd_redir[1])
