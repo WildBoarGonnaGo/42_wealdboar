@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 10:59:47 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/02/22 17:57:40 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/24 19:57:37 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void 	rm_envp_var(t_shell *obj)
 
 int 	unset_envp(t_shell *obj)
 {
+	obj->tmp = obj->cmd;
 	obj->cmd = obj->pipe_block;
 	obj->len = -1;
 	obj->status[0] = 0;
@@ -72,6 +73,6 @@ int 	unset_envp(t_shell *obj)
 		;
 	if (obj->len > 1)
 		rm_envp_var(obj);
-	//alloc_free_2((void **)obj->cmd);
+	obj->cmd = obj->tmp;
 	return (0);
 }

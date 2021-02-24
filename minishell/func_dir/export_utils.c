@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 21:00:49 by lcreola           #+#    #+#             */
-/*   Updated: 2021/02/13 20:23:38 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/24 20:08:30 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	err_identifier_output(char *str, char *cmd)
 
 int		check_export_input(char *str, int count, char *cmd, int bit_eq)
 {
+	if (!count && !ft_strncmp("", str, 1))
+		err_identifier_output(str, cmd);
 	if (ft_isdigit(*(str + count)) && *(str + count) && !count)
 	{
 		err_identifier_output(str, cmd);

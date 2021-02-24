@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 18:16:06 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/22 16:18:11 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/24 21:13:29 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,9 +136,9 @@ int 	change_dir(t_shell *obj)
 		else
 		{
 			ft_putstr_fd("minishell: cd: ", 2);
-			ft_putstr_fd(strerror(errno), 2);
-			ft_putstr_fd(": ", 2);
 			ft_putstr_fd(obj->argstr, 2);
+			ft_putstr_fd(": ", 2);
+			ft_putstr_fd(strerror(errno), 2);
 			ft_putstr_fd("\n", 2);
 		}
 	}

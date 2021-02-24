@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 16:12:18 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/23 20:28:55 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/24 18:17:47 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,6 @@ int			err_noarg_com(t_shell *obj)
 
 void		find_elem(t_shell *obj, int st)
 {
-	void	*sh_clean[3];
-	int		i;
-
 	if (!obj->recycle)
 		obj->recycle = ft_strdup("");
 	if (ft_strchr(";|<>", obj->line[obj->roll]) && !ft_strncmp("", obj->recycle, 1)
@@ -71,55 +68,7 @@ void		find_elem(t_shell *obj, int st)
 		st |= DQUOTE;
 	else if (((st & (SQUOTE | PARAMEXP)) == PARAMEXP) && (!ft_isalnum(obj->line[obj->roll]) 
 	|| obj->line[obj->roll] == '?'))
-	{
-		
-		/*obj->argstr = (char *)malloc(obj->roll - obj->readenv + 1);
-		ft_strlcpy(obj->argstr, obj->line + obj->readenv, obj->roll - obj->readenv + 1);
-		obj->clean = obj->recycle;
-		if (!ft_strncmp("$?", obj->line + obj->roll - 1, 2))
-		{
-			obj->clunit = ft_itoa(obj->status[0]);
-			obj->recycle = ft_strjoin(obj->recycle, obj->clunit);
-			if (obj->clunit)
-			{
-				free(obj->clunit);
-				obj->clunit = 0x0;
-			}
-		}*/
-		sh_clean[0] = obj->line;
-		obj->line = ft_substr(obj->line, 0, obj->readenv - 2);
-		sh_clean[1] = obj->line;
-		if (!ft_strncmp("$?", sh_clean[0] + obj->roll - 1, 2))
- 		{
-			sh_clean[2] = ft_itoa(obj->status[0]);
-			obj->line = ft_strjoin(obj->line, sh_clean[2]);	
-			if (sh_clean[2])
-			{
-				free(sh_clean[2]);
-				sh_clean[2] = NULL;
-			}
-		}
-		else
-			obj->line = ft_strjoin(obj->recycle, sh_envp_search(obj->argstr, obj));
-		if (obj->clean)
-		{
-			free(obj->clean);
-			obj->clean = NULL;
-		}
-		sh_clean[2] = obj->line;
-		obj->line = ft_strjoin(obj->line, sh_clean[0] + obj->roll);
-		i = -1;
-		while (++i < 3)
-		{
-			if (sh_clean[i])
-			{
-				free(sh_clean[i]);
-				sh_clean[i] = NULL;
-			}
-		}
-		st &= ~PARAMEXP;
-		obj->roll -= (obj->line[obj->roll] != '?');
-	}
+		obj->roll = sh_env_linefix(obj, &st);
 	else if (obj->line[obj->roll] == '"' && ((st & (DQUOTE | ESCCHAR)) == DQUOTE))
 		st &= ~DQUOTE;
 	else if (obj->line[obj->roll] == '\'' && (st & SQUOTE))
@@ -154,20 +103,12 @@ void		find_elem(t_shell *obj, int st)
 	else if ((obj->line[obj->roll] == ' ' && !(st & 0b11)) || !obj->line[obj->roll])
 	{
 		if ((st & PARAMEXP))
-		{
-			obj->argstr = (char *)malloc(obj->len - obj->readenv + 1);
-			ft_strlcpy(obj->argstr, obj->line + obj->readenv, obj->len - obj->readenv + 1);
-			obj->clean = obj->recycle;
-			obj->recycle = ft_strjoin(obj->recycle, sh_envp_search(obj->argstr, obj));
-			if (obj->clean)
-			{
-				free(obj->clean);
-				obj->clean = NULL;
-			}
-		}
+			obj->roll = sh_env_linefix(obj, &st);
 		else
+		{
 			obj->recycle = addchar(obj->recycle, 0);
-		return ;
+			return ;
+		}
 	}
 	else if ((st & PARAMEXP) != PARAMEXP)
 	{
@@ -187,7 +128,7 @@ void		find_elem(t_shell *obj, int st)
 	find_elem(obj, st);
 }
 
-int			sh_parcer(t_shell *obj, char *line)
+int			sh_parcer(t_shell *obj/*, char *line*/)
 {
 	int	info[5];
 	
@@ -195,9 +136,9 @@ int			sh_parcer(t_shell *obj, char *line)
 	info[2] = 0;
 	obj->recycle = NULL;
 	obj->lst_flag[1] = obj->lst_flag[0];
-	while (line[++obj->roll])
+	while (obj->line[++obj->roll])
 	{
-		if (line[obj->roll] == ' ')
+		if (obj->line[obj->roll] == ' ')
 			continue ;
 		else
 		{

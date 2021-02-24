@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 05:06:53 by lchantel          #+#    #+#             */
-/*   Updated: 2020/05/17 20:15:08 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/24 16:50:32 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	i = 0;
 	if (!s)
 		return (NULL);
-	if (start > ft_strlen(s))
+	if (start > ft_strlen(s) || len < 0)
 		return (ft_strdup(""));
 	if (len > ft_strlen(s + start))
 		len = ft_strlen(s + start);

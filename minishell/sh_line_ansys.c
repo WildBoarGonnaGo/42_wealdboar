@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 14:43:43 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/23 18:39:25 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/24 17:50:21 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	sh_line_ansys(t_shell *obj)
 	obj->fd_recover[1] = dup(STDOUT_FILENO);
 	while (obj->cmd_flag & HANSEMI)
 	{
-		sh_parcer(obj, obj->line);
+		sh_parcer(obj);
 		//sh_redir_list_fix(obj);
 		//ft_putstr_fd((char *)obj->lst_head->content, 2);
 		if (!ft_strncmp(";", (char *)obj->lst_head->content, 2))

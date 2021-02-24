@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/02/23 17:13:25 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/24 17:50:05 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,11 +123,12 @@ int 				unset_envp(t_shell *obj);
 int 				sh_exit(t_shell *obj);
 void				sh_read_escape(int sig);
 int					check_line(char *line);
-int					sh_parcer(t_shell *obj, char *line);
+int					sh_parcer(t_shell *obj);
 void				sh_func_quit(int sig);
 void				err_arrow_case(char *str, int count, char c);
 int					err_analisys(t_shell *obj);
 char				**change_pwd(t_shell *obj, char *envpwd, char *dir);
 int					sh_redirects(t_shell *obj, int *index);
+int					sh_env_linefix(t_shell *obj, int *st);
 
 #endif

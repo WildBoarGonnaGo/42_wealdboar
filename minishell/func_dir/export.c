@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:55:02 by lcreola           #+#    #+#             */
-/*   Updated: 2021/02/22 16:40:27 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/24 16:22:18 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ void	ft_minishell_export(t_shell *obj)
 
 	size = -1;
 	obj->status[0] = 0;
+	obj->tmp = obj->cmd;
 	obj->cmd = obj->pipe_block;
 	while (obj->cmd[++size])
 		;
@@ -128,4 +129,5 @@ void	ft_minishell_export(t_shell *obj)
 		ft_minishell_export_check(obj);
 	else
 		ft_minishell_export_output(obj);
+	obj->cmd = obj->tmp;
 }
