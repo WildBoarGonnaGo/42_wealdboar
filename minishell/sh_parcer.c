@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 16:12:18 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/24 18:17:47 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/25 20:48:20 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void		find_elem(t_shell *obj, int st)
 			obj->recycle = addchar(obj->recycle, obj->line[obj->roll]);
 		}
 	}
-	else if ((obj->line[obj->roll] == '$') && !(st & (ESCCHAR | SQUOTE)))
+	else if ((obj->line[obj->roll] == '$') && !(st & (ESCCHAR | SQUOTE)) && !obj->is_echo)
 	{
 		obj->readenv = (obj->roll + 1);
 		st |= PARAMEXP;
@@ -135,7 +135,10 @@ int			sh_parcer(t_shell *obj/*, char *line*/)
 	info[3] = 0;
 	info[2] = 0;
 	obj->recycle = NULL;
+	obj->is_echo = 0;
 	obj->lst_flag[1] = obj->lst_flag[0];
+	if (obj->roll >= 0)
+		obj->roll -= (obj->line[obj->roll] != ' ');
 	while (obj->line[++obj->roll])
 	{
 		if (obj->line[obj->roll] == ' ')
@@ -160,6 +163,8 @@ int			sh_parcer(t_shell *obj/*, char *line*/)
 				free(obj->recycle);
 				obj->recycle = NULL;
 			}
+			if (!ft_strncmp((char *)obj->lst_start->content, "echo", 5))
+				obj->is_echo = 1;
 			if (!(ft_strncmp(";", (char *)obj->lst_head->content, 2)))
 				break ;
 		}

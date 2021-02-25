@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 21:00:49 by lcreola           #+#    #+#             */
-/*   Updated: 2021/02/24 20:08:30 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/25 18:18:46 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ int		check_export_input(char *str, int count, char *cmd, int bit_eq)
 	{
 		if (*(str + count) == '=')
 			++bit_eq;
-		++count;
-		return (check_export_input(str, count, cmd, bit_eq));	
+		return (check_export_input(str, ++count, cmd, bit_eq));	
 	}
 	return (1);
 }

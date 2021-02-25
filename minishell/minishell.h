@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/02/24 17:50:05 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/25 20:43:35 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct		s_shell
 	int				env_is_home;
 	int				err_fst;
 	int				err_pos;
+	int				is_echo;
 	char			loop;
 	char			eol;
 	char			exit;

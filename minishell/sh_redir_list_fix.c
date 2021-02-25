@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 12:03:03 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/23 14:15:05 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/25 20:34:46 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	sh_redir_list_fix(t_shell *obj)
 	t_list	*backup;
 
 	crawler = obj->lst_start;
+	/*if (!ft_strncmp(obj->cmd[0], "echo", 5))
+		return ;*/
 	while (crawler)
 	{
 		if (!ft_strncmp((char *)crawler->content, "<", 2) ||

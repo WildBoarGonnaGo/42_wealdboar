@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 16:43:41 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/23 19:48:06 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/25 20:22:22 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	sh_redirects(t_shell *obj, int *index)
 	int	state;
 
 	state = 0;
+	if (!ft_strncmp(obj->cmd[0], "echo", 5))
+		return (0);
 	if ((state = (!(ft_strncmp(">", obj->cmd[*index], 2)))))
 	{
 		if (obj->fd_redir[1])

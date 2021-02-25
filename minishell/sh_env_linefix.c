@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:21:02 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/24 19:20:00 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/25 19:11:11 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@ int	sh_env_linefix(t_shell *obj, int *st)
 	i = -1;
 	while (++i < 4)
 		sh_clean[i] = 0x0;
+	if (obj->line[obj->roll - 1] == '$' && (obj->line[obj->roll] == ' ' 
+	|| obj->line[obj->roll] == '\0') && !ft_strncmp("", obj->recycle, 1))
+	{
+		*st &= ~PARAMEXP;
+		obj->recycle = addchar(obj->recycle, '$');
+		return (obj->roll - 1);
+	}
 	sh_clean[0] = obj->line;
 	obj->argstr = (char *)malloc(obj->roll - obj->readenv + 1);
 	sh_clean[3] = obj->argstr;

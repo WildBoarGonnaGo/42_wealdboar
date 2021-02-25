@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 21:05:30 by lcreola           #+#    #+#             */
-/*   Updated: 2021/02/22 17:57:31 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/25 18:21:24 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ int	ft_minishell_pwd(t_shell *obj)
 	obj->backup = sh_envp_search("PWD", obj);
 	if (!(obj->child = fork()))
 	{
-		dup2(obj->fd_pipe[1], 1);
+		if (!obj->fd_redir[1])
+			dup2(obj->fd_pipe[1], 1);
+		else
+			dup2(1, obj->fd_pipe[1]);
 		close(obj->fd_pipe[0]);
 		close(obj->fd_pipe[1]);
 		if (!(obj->cmd_flag & HANPIPE) && !obj->fd_redir[1])
