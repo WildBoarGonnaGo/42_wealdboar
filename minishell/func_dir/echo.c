@@ -6,7 +6,7 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:50:06 by lcreola           #+#    #+#             */
-/*   Updated: 2021/02/25 20:42:39 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/25 21:47:28 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,6 @@ int		spec_case(char **str, t_shell *obj, int word)
 			*str = ft_itoa(obj->status[2]);
 		else
 			*str = ft_itoa(obj->status[0]);
-	}
-	else if (**str == '$' && ft_strncmp(*str, "$", 2))
-	{
-		obj->clean = sh_envp_search(*str, obj);
-		ft_putstr_fd(obj->clean, 1);
-		if (obj->clean)
-		{
-			free(obj->clean);
-			obj->clean = 0x0;
-		}
 	}
 	return (1);
 }

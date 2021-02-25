@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 16:12:18 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/25 20:48:20 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/25 21:44:40 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,8 +163,8 @@ int			sh_parcer(t_shell *obj/*, char *line*/)
 				free(obj->recycle);
 				obj->recycle = NULL;
 			}
-			if (!ft_strncmp((char *)obj->lst_start->content, "echo", 5))
-				obj->is_echo = 1;
+			/*if (!ft_strncmp((char *)obj->lst_start->content, "echo", 5))
+				obj->is_echo = 1;*/
 			if (!(ft_strncmp(";", (char *)obj->lst_head->content, 2)))
 				break ;
 		}
