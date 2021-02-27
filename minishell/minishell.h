@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/02/25 20:43:35 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/27 20:28:12 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ typedef struct		s_shell
 	int				env_is_home;
 	int				err_fst;
 	int				err_pos;
-	int				is_echo;
+	int				is_export;
 	char			loop;
 	char			eol;
 	char			exit;
@@ -131,5 +131,9 @@ int					err_analisys(t_shell *obj);
 char				**change_pwd(t_shell *obj, char *envpwd, char *dir);
 int					sh_redirects(t_shell *obj, int *index);
 int					sh_env_linefix(t_shell *obj, int *st);
+void				sh_free_str(char **str);
+void				sh_parcer_envp_fix(char **str, int st);
+char				**sh_pipe_block_fix(t_shell *obj);
+//char				*sh_ignore_colon(char *str);
 
 #endif

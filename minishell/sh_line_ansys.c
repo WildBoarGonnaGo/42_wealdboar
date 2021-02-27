@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 14:43:43 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/24 17:50:21 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/27 21:26:52 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,24 @@ char	**set_arr2_strbound(char **arr, int *pos,
 	return (res);
 }
 
+void	sh_list_semicol_fix(t_shell *obj)
+{
+	char	*clean;
+	t_list	*roll;
+
+	roll = obj->lst_start;
+	while (roll)
+	{
+		if (!ft_strncmp((char *)roll->content, "';'", 4))
+		{
+			clean = (char *)roll->content;
+			roll->content = ft_strdup(";");
+			sh_free_str(&clean);
+		}
+		roll = roll->next;
+	}
+}
+
 void	sh_line_ansys(t_shell *obj)
 {
 	int		i;
@@ -72,14 +90,12 @@ void	sh_line_ansys(t_shell *obj)
 	while (obj->cmd_flag & HANSEMI)
 	{
 		sh_parcer(obj);
-		//sh_redir_list_fix(obj);
-		//ft_putstr_fd((char *)obj->lst_head->content, 2);
 		if (!ft_strncmp(";", (char *)obj->lst_head->content, 2))
 			--obj->lst_flag[0];
 		else
 			obj->cmd_flag &= ~HANSEMI;
-		//ft_putstr_fd("minesweep process\n", 2);
 		++obj->roll;
+		sh_list_semicol_fix(obj);
 		obj->cmd = lst_to_arr2(obj->lst_start, obj->lst_flag[1],
 		obj->lst_flag[0]++ - obj->lst_flag[1]);
 		j = -1;
@@ -91,6 +107,7 @@ void	sh_line_ansys(t_shell *obj)
 			obj->pipe_block = set_arr2_strbound(obj->cmd, &j, "|", obj);
 			if (!obj->cmd[j])
 				obj->cmd_flag &= ~HANPIPE;
+			obj->pipe_block = sh_pipe_block_fix(obj);
 			obj->len = ft_strlen(obj->pipe_block[0]) + 1;
 			if (!ft_strncmp("cd", obj->pipe_block[0], obj->len))
 				change_dir(obj);

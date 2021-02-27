@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 16:12:18 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/27 21:05:08 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/25 21:44:40 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,39 +51,11 @@ int			err_noarg_com(t_shell *obj)
 	return (1);
 }
 
-int			sh_delims_override(t_shell *obj)
-{
-	int st;
-
-	st = 0;
-	obj->clean = obj->recycle;
-	if ((st = (!ft_strncmp(obj->line + obj->roll, "';'", 3) &&
-	(obj->line[obj->roll + 3] == ' ' || (obj->line[obj->roll + 3] == '\0')))))
-		obj->recycle = ft_strjoin(obj->recycle, "';'");
-	else if ((st = (!ft_strncmp(obj->line + obj->roll, "'|'", 3) &&
-	(obj->line[obj->roll + 3] == ' ' || (obj->line[obj->roll + 3] == '\0')))))
-		obj->recycle = ft_strjoin(obj->recycle, "'|'");
-	else if ((st = (!ft_strncmp(obj->line + obj->roll, "'<'", 3) &&
-	(obj->line[obj->roll + 3] == ' ' || (obj->line[obj->roll + 3] == '\0')))))		
-		obj->recycle = ft_strjoin(obj->recycle, "'<'");
-	else if ((st = (!ft_strncmp(obj->line + obj->roll, "'>'", 3) &&
-	(obj->line[obj->roll + 3] == ' ' || (obj->line[obj->roll + 3] == '\0')))))
-		obj->recycle = ft_strjoin(obj->recycle, "'>'");
-	else if ((st = (!ft_strncmp(obj->line + obj->roll, "'>>'", 4) &&
-	(obj->line[obj->roll + 4] == ' ' || (obj->line[obj->roll + 4] == '\0')))))
-		obj->recycle = ft_strjoin(obj->recycle, "'>>'");
-	obj->roll += 3 * (st != 0) + (!ft_strncmp(obj->line + obj->roll, "'>>'", 4)
-	&& (obj->line[obj->roll + 4] == ' ' || (obj->line[obj->roll + 4] == '\0')));
-	obj->clean = (st) ? obj->clean : 0x0;
-	sh_free_str((char **)&obj->clean);
-	return (st);
-}
 
 void		find_elem(t_shell *obj, int st)
 {
 	if (!obj->recycle)
 		obj->recycle = ft_strdup("");
-	sh_delims_override(obj);
 	if (ft_strchr(";|<>", obj->line[obj->roll]) && !ft_strncmp("", obj->recycle, 1)
 	&& obj->line[obj->roll])
 	{
@@ -117,7 +89,7 @@ void		find_elem(t_shell *obj, int st)
 			obj->recycle = addchar(obj->recycle, obj->line[obj->roll]);
 		}
 	}
-	else if ((obj->line[obj->roll] == '$') && !(st & (ESCCHAR | SQUOTE)))
+	else if ((obj->line[obj->roll] == '$') && !(st & (ESCCHAR | SQUOTE)) && !obj->is_echo)
 	{
 		obj->readenv = (obj->roll + 1);
 		st |= PARAMEXP;
@@ -156,14 +128,14 @@ void		find_elem(t_shell *obj, int st)
 	find_elem(obj, st);
 }
 
-int			sh_parcer(t_shell *obj)
+int			sh_parcer(t_shell *obj/*, char *line*/)
 {
 	int	info[5];
 	
 	info[3] = 0;
 	info[2] = 0;
 	obj->recycle = NULL;
-	obj->is_export = 0;
+	obj->is_echo = 0;
 	obj->lst_flag[1] = obj->lst_flag[0];
 	if (obj->roll >= 0)
 		obj->roll -= (obj->line[obj->roll] != ' ');
@@ -186,10 +158,13 @@ int			sh_parcer(t_shell *obj)
 				obj->lst_newoper = obj->lst_head;
 				info[2] = 1;
 			}
-			if (!(ft_strncmp((char *)obj->lst_newoper->content, 
-			"export", ft_strlen("export") + 1)))
-				obj->is_export = 1;
-			sh_free_str(&obj->recycle);
+			if (obj->recycle)
+			{
+				free(obj->recycle);
+				obj->recycle = NULL;
+			}
+			/*if (!ft_strncmp((char *)obj->lst_start->content, "echo", 5))
+				obj->is_echo = 1;*/
 			if (!(ft_strncmp(";", (char *)obj->lst_head->content, 2)))
 				break ;
 		}
