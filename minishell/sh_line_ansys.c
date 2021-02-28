@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 14:43:43 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/27 21:26:52 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/28 19:25:43 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ char	**set_arr2_strbound(char **arr, int *pos,
 	{
 		if (!sh_redirects(obj, &info[0]))
 			res[++info[2]] = ft_strdup(arr[info[0]]);
+		if (obj->err_fd[0])
+			break ;
 	}
 	res[++info[2]] = 0x0;
 	return (res);
@@ -90,6 +92,8 @@ void	sh_line_ansys(t_shell *obj)
 	while (obj->cmd_flag & HANSEMI)
 	{
 		sh_parcer(obj);
+		if (!ft_strncmp(obj->line, "", 1))
+			break ;
 		if (!ft_strncmp(";", (char *)obj->lst_head->content, 2))
 			--obj->lst_flag[0];
 		else
@@ -100,14 +104,24 @@ void	sh_line_ansys(t_shell *obj)
 		obj->lst_flag[0]++ - obj->lst_flag[1]);
 		j = -1;
 		obj->cmd_flag |= HANPIPE;
+		obj->err_fd[0] = 0;
+		obj->err_fd[1] = 0;
+		obj->fd_redir[0] = 0;
+		obj->fd_redir[1] = 0;
 		while (obj->cmd_flag & HANPIPE)
-		{
-			obj->fd_redir[0] = 0;
-			obj->fd_redir[1] = 0;
+		{	
 			obj->pipe_block = set_arr2_strbound(obj->cmd, &j, "|", obj);
 			if (!obj->cmd[j])
 				obj->cmd_flag &= ~HANPIPE;
 			obj->pipe_block = sh_pipe_block_fix(obj);
+			if (obj->err_fd[0])
+				break ;
+			if (!obj->pipe_block[0])
+			{
+				obj->fd_redir[0] = 0;
+				obj->fd_redir[1] = 0;
+				continue ;
+			}
 			obj->len = ft_strlen(obj->pipe_block[0]) + 1;
 			if (!ft_strncmp("cd", obj->pipe_block[0], obj->len))
 				change_dir(obj);
@@ -126,11 +140,11 @@ void	sh_line_ansys(t_shell *obj)
 			else
 				sh_user_bin(obj);
 			alloc_free_2((void **)obj->pipe_block);
-			if (obj->fd_redir[1])
-				close(obj->fd_redir[1]);
-			if (obj->fd_redir[0])
-				close(obj->fd_redir[0]);
 		}
+		if (obj->fd_redir[1])
+			close(obj->fd_redir[1]);
+		if (obj->fd_redir[0])
+			close(obj->fd_redir[0]);
 		dup2(obj->fd_recover[0], STDIN_FILENO);
 		dup2(obj->fd_recover[1], STDOUT_FILENO);
 		alloc_free_2((void **)obj->cmd);

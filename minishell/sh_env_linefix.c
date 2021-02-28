@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:21:02 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/27 16:26:26 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/28 18:34:38 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,7 @@ int	sh_env_linefix(t_shell *obj, int *st)
  	{
 		sh_clean[2] = ft_itoa(obj->status[0]);
 		obj->line = ft_strjoin(obj->line, sh_clean[2]);
-		if (sh_clean[2])
-		{
-			free(sh_clean[2]);
-			sh_clean[2] = NULL;
-		}
+		sh_free_str(&sh_clean[2]);
 	}
 	else
 		obj->line = ft_strjoin(obj->line, sh_clean[4]);
@@ -54,13 +50,11 @@ int	sh_env_linefix(t_shell *obj, int *st)
 	!ft_strncmp("$?", sh_clean[0] + obj->roll - 1, 2));
 	i = -1;
 	while (++i < 5)
-	{
-		if (sh_clean[i])
-		{
-			free(sh_clean[i]);
-			sh_clean[i] = NULL;
-		}
-	}
+		sh_free_str(&sh_clean[i]);
 	*st &= ~PARAMEXP;
-	return (obj->readenv - 2);
+	--obj->readenv; 
+	while (obj->line[obj->readenv] == ' ')
+		++obj->readenv;
+	*st |= ENVSPACE;
+	return (obj->readenv);
 }

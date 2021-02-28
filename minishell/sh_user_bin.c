@@ -6,11 +6,12 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 20:54:10 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/27 18:12:26 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/28 19:54:47 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
+#include "srcs/libft/libft.h"
 
 int 	sh_user_bin(t_shell *obj)
 {
@@ -33,32 +34,44 @@ int 	sh_user_bin(t_shell *obj)
 			if (!(ft_strncmp(obj->envp[i], "PATH", 4)))
 				break ;
 		}
-		obj->bin = ft_split(obj->envp[i] + 5, ':');
-		i = -1;
-		while (obj->bin[++i])
+		if (obj->envp[i])
 		{
-			if (!(obj->sh_dir = opendir(obj->bin[i])))
-				break ;
-			while ((obj->binary = readdir(obj->sh_dir)))
+			obj->bin = ft_split(obj->envp[i] + 5, ':');
+			i = -1;
+			while (obj->bin[++i])
 			{
-				obj->len = ft_strlen(obj->bin_search) + 1;
-				if (!(obj->len = ft_strncmp(obj->bin_search,
-				(char *)obj->binary->d_name, obj->len)))
-				{
-					line = ft_strdup(obj->bin[i]);
-					obj->len = ft_strlen(line);
-					if (line[obj->len - 1] != '/')
-						line = addchar(line, '/');
-					obj->clean = line;
-					line = ft_strjoin(line, obj->binary->d_name);
-					obj->len = 0;
-					free(obj->clean);	
+				if (!(obj->sh_dir = opendir(obj->bin[i])))
 					break ;
+				while ((obj->binary = readdir(obj->sh_dir)))
+				{
+					obj->len = ft_strlen(obj->bin_search) + 1;
+					if (!(obj->len = ft_strncmp(obj->bin_search,
+					(char *)obj->binary->d_name, obj->len)))
+					{
+						line = ft_strdup(obj->bin[i]);
+						obj->len = ft_strlen(line);
+						if (line[obj->len - 1] != '/')
+							line = addchar(line, '/');
+						obj->clean = line;
+						line = ft_strjoin(line, obj->binary->d_name);
+						obj->len = 0;
+						free(obj->clean);	
+						break ;
+					}
 				}
+				closedir(obj->sh_dir);
+				if (!obj->len)
+					break ;
 			}
-			closedir(obj->sh_dir);
-			if (!obj->len)
-				break ;
+		}
+		else
+		{
+			st = 1;
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(obj->bin_search, 2);
+			ft_putstr_fd(": No such file or directory\n", 2);
+			obj->status[0] = 127;
+			return (obj->status[0]);
 		}
 	}
 	if (!st)

@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 16:12:18 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/27 21:05:08 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/28 18:29:03 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,8 @@ void		find_elem(t_shell *obj, int st)
 		--obj->roll;
 		return ;
 	}
-	else if ((obj->line[obj->roll] == ' ' && !(st & 0b11)) || !obj->line[obj->roll])
+	else if ((obj->line[obj->roll] == ' ' && !(st & 0b11))
+	|| !obj->line[obj->roll])
 	{
 		if ((st & PARAMEXP))
 			obj->roll = sh_env_linefix(obj, &st);
@@ -149,10 +150,17 @@ void		find_elem(t_shell *obj, int st)
 		else
 			obj->recycle = addchar(obj->recycle, obj->line[obj->roll]);
 	}
-	if (!(st & ~COMCHAR) && (st & COMCHAR) && 
-	obj->line[obj->roll] != '>' && obj->line[obj->roll] != '<')
-		return ;
-	++obj->roll;
+	if (!(st & ~COMCHAR) && (st & COMCHAR) && obj->line[obj->roll])
+	{
+		if ((obj->line[obj->roll] == '>' || obj->line[obj->roll] == '<')
+		&& ft_isalnum(obj->line[obj->roll + 1]))
+			return ;
+	}
+	if (!(st & ENVSPACE))
+		++obj->roll;
+	else
+		st &= ~ENVSPACE;
+	//++obj->roll;
 	find_elem(obj, st);
 }
 

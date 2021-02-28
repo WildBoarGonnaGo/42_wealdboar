@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/02/27 20:28:12 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/28 18:02:09 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define TOKTWIDDLE 0b100000
 # define HANPIPE 0b1000000
 # define HANSEMI 0b10000000
-# define ECHOFLAG 0b1
+# define ENVSPACE 0b100000000
 
 # define SH_INT_MAX 2147483647
 
@@ -90,6 +90,7 @@ typedef struct		s_shell
 	int				err_fst;
 	int				err_pos;
 	int				is_export;
+	int				err_fd[2];
 	char			loop;
 	char			eol;
 	char			exit;

@@ -14,10 +14,5 @@
 ==122605== For lists of detected and suppressed errors, rerun with: -s
 ==122605== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
-breakpoint 2 - sh_env_linefix
-
-болезненные случаи
-echo ';'lel;
-echo l';'el
-echo l';;'el
-echo $USER$var\$USER$USER\$USERtest$USER	
+breakpoint 2 - sh_redirect
+breakpoint 3 - sh_parcer_envp_fix

@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 11:55:11 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/27 19:11:02 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/28 19:16:42 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		sh_envp_squote_off(int res, char **str, int *st)
 {
 	if ((*st & SQUOTE))
 		*str = addchar(*str, '\'');
-	*st  &= ~SQUOTE;
+	*st &= ~SQUOTE;
 	return (res);
 }
 
@@ -56,8 +56,15 @@ void	sh_parcer_envp_fix(char **str, int st)
 	}
 	if (!info[0])
 		res = addchar(res, '\'');
-	if (!(info[1] & PARAMEXP) && !st)
+	if (!(info[1] & PARAMEXP) && !st && 
+	(!info[0] || *(*str + info[0] - 1) != ' '))
 		res = addchar(res, '\'');
+	if (!ft_strncmp(res, "''", 3))
+	{
+		clean[1] = res;
+		res = ft_strdup("");
+		sh_free_str(&clean[1]);
+	}
 	*str = res;
 	sh_free_str(&clean[0]);
 }
