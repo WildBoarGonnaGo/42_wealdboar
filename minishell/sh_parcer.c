@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 16:12:18 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/28 18:29:03 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/03 00:12:02 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,22 +57,22 @@ int			sh_delims_override(t_shell *obj)
 
 	st = 0;
 	obj->clean = obj->recycle;
-	if ((st = (!ft_strncmp(obj->line + obj->roll, "';'", 3) &&
+	if ((st = (!ft_strncmp(obj->line + obj->roll, "\";\"", 3) &&
 	(obj->line[obj->roll + 3] == ' ' || (obj->line[obj->roll + 3] == '\0')))))
-		obj->recycle = ft_strjoin(obj->recycle, "';'");
-	else if ((st = (!ft_strncmp(obj->line + obj->roll, "'|'", 3) &&
+		obj->recycle = ft_strjoin(obj->recycle, "\";\"");
+	else if ((st = (!ft_strncmp(obj->line + obj->roll, "\"|\"", 3) &&
 	(obj->line[obj->roll + 3] == ' ' || (obj->line[obj->roll + 3] == '\0')))))
-		obj->recycle = ft_strjoin(obj->recycle, "'|'");
-	else if ((st = (!ft_strncmp(obj->line + obj->roll, "'<'", 3) &&
+		obj->recycle = ft_strjoin(obj->recycle, "\"|\"");
+	else if ((st = (!ft_strncmp(obj->line + obj->roll, "\"<\"", 3) &&
 	(obj->line[obj->roll + 3] == ' ' || (obj->line[obj->roll + 3] == '\0')))))		
-		obj->recycle = ft_strjoin(obj->recycle, "'<'");
-	else if ((st = (!ft_strncmp(obj->line + obj->roll, "'>'", 3) &&
+		obj->recycle = ft_strjoin(obj->recycle, "\"<\"");
+	else if ((st = (!ft_strncmp(obj->line + obj->roll, "\">\"", 3) &&
 	(obj->line[obj->roll + 3] == ' ' || (obj->line[obj->roll + 3] == '\0')))))
-		obj->recycle = ft_strjoin(obj->recycle, "'>'");
-	else if ((st = (!ft_strncmp(obj->line + obj->roll, "'>>'", 4) &&
+		obj->recycle = ft_strjoin(obj->recycle, "\">\"");
+	else if ((st = (!ft_strncmp(obj->line + obj->roll, "\">>\"", 4) &&
 	(obj->line[obj->roll + 4] == ' ' || (obj->line[obj->roll + 4] == '\0')))))
-		obj->recycle = ft_strjoin(obj->recycle, "'>>'");
-	obj->roll += 3 * (st != 0) + (!ft_strncmp(obj->line + obj->roll, "'>>'", 4)
+		obj->recycle = ft_strjoin(obj->recycle, "\">>\"");
+	obj->roll += 3 * (st != 0) + (!ft_strncmp(obj->line + obj->roll, "\">>\"", 4)
 	&& (obj->line[obj->roll + 4] == ' ' || (obj->line[obj->roll + 4] == '\0')));
 	obj->clean = (st) ? obj->clean : 0x0;
 	sh_free_str((char **)&obj->clean);
@@ -84,19 +84,19 @@ void		find_elem(t_shell *obj, int st)
 	if (!obj->recycle)
 		obj->recycle = ft_strdup("");
 	sh_delims_override(obj);
-	if (ft_strchr(";|<>", obj->line[obj->roll]) && !ft_strncmp("", obj->recycle, 1)
+	if (((st & (SQUOTE | PARAMEXP)) == PARAMEXP) && (!ft_isalnum(obj->line[obj->roll]) 
+	|| obj->line[obj->roll] == '?'))
+		obj->roll = sh_env_linefix(obj, &st);
+	else if (ft_strchr(";|<>", obj->line[obj->roll]) && !ft_strncmp("", obj->recycle, 1)
 	&& obj->line[obj->roll])
 	{
 		obj->recycle = addchar(obj->recycle, obj->line[obj->roll]);
 		st |= COMCHAR;
 	}
-	else if (obj->line[obj->roll] == '\'' && !(st & ISQUOTE))
+	else if (obj->line[obj->roll] == '\'' && !(st & (ISQUOTE | ESCCHAR)))
 		st |= SQUOTE;
-	else if (obj->line[obj->roll] == '"' && !(st & ISQUOTE))
+	else if (obj->line[obj->roll] == '"' && !(st & (ISQUOTE | ESCCHAR)))
 		st |= DQUOTE;
-	else if (((st & (SQUOTE | PARAMEXP)) == PARAMEXP) && (!ft_isalnum(obj->line[obj->roll]) 
-	|| obj->line[obj->roll] == '?'))
-		obj->roll = sh_env_linefix(obj, &st);
 	else if (obj->line[obj->roll] == '"' && ((st & (DQUOTE | ESCCHAR)) == DQUOTE))
 		st &= ~DQUOTE;
 	else if (obj->line[obj->roll] == '\'' && (st & SQUOTE))

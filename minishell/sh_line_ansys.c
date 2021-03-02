@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 14:43:43 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/28 19:25:43 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/02 22:06:53 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	sh_list_semicol_fix(t_shell *obj)
 	roll = obj->lst_start;
 	while (roll)
 	{
-		if (!ft_strncmp((char *)roll->content, "';'", 4))
+		if (!ft_strncmp((char *)roll->content, "\";\"", 4))
 		{
 			clean = (char *)roll->content;
 			roll->content = ft_strdup(";");

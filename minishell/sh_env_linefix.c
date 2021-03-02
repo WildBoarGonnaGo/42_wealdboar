@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:21:02 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/28 18:34:38 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/02 21:40:19 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 int	sh_env_linefix(t_shell *obj, int *st)
 {
-	char	*sh_clean[5];
+	char	*sh_clean[6];
 	int		i;
 
 	i = -1;
-	while (++i < 5)
+	while (++i < 6)
 		sh_clean[i] = 0x0;
 	if (obj->line[obj->roll - 1] == '$' && (obj->line[obj->roll] == ' ' 
 	|| obj->line[obj->roll] == '\0') && !ft_strncmp("", obj->recycle, 1))
@@ -34,6 +34,11 @@ int	sh_env_linefix(t_shell *obj, int *st)
 	ft_strlcpy(obj->argstr, obj->line + obj->readenv, obj->roll - obj->readenv + 1);
 	sh_clean[4] = sh_envp_search(obj->argstr, obj);
 	sh_parcer_envp_fix(&sh_clean[4], obj->is_export);
+	if ((*st & DQUOTE))
+	{
+		sh_clean[5] = sh_clean[4];
+		sh_clean[4] = sh_ignore_colon(sh_clean[4]);
+	}
 	obj->line = (obj->readenv - 2 >= 0) ? 
 	ft_substr(obj->line, 0, obj->readenv - 1) : ft_strdup("");
 	sh_clean[1] = obj->line;
@@ -53,8 +58,17 @@ int	sh_env_linefix(t_shell *obj, int *st)
 		sh_free_str(&sh_clean[i]);
 	*st &= ~PARAMEXP;
 	--obj->readenv; 
-	while (obj->line[obj->readenv] == ' ')
-		++obj->readenv;
 	*st |= ENVSPACE;
+	if (*st & DQUOTE)
+	{
+		while (obj->line[obj->readenv] != '\"')
+			--obj->readenv;
+	}
+	else if (obj->line[obj->readenv] == ' '
+	&& !ft_strncmp(obj->recycle, "", 1))
+	{
+		while (obj->line[obj->readenv] == ' ')
+			++obj->readenv;
+	}
 	return (obj->readenv);
 }
