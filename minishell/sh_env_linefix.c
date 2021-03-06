@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:21:02 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/02 21:40:19 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/05 21:13:35 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,12 @@ int	sh_env_linefix(t_shell *obj, int *st)
 	*st |= ENVSPACE;
 	if (*st & DQUOTE)
 	{
-		while (obj->line[obj->readenv] != '\"')
+		while (obj->line[obj->readenv - 1] == ' ')
 			--obj->readenv;
 	}
-	else if (obj->line[obj->readenv] == ' '
-	&& !ft_strncmp(obj->recycle, "", 1))
+	if (obj->line[obj->readenv] == ' '
+	&& !ft_strncmp(obj->recycle, "", 1) &&
+	!(*st & DQUOTE))
 	{
 		while (obj->line[obj->readenv] == ' ')
 			++obj->readenv;

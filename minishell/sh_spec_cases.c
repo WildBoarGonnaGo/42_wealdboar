@@ -6,21 +6,23 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 20:02:41 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/22 10:30:47 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/07 02:24:00 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		err_set_var(int err_case, t_shell *obj, char *str)
+int		err_set_var(t_shell *obj, char *src, char *templ, int err_case)
 {
 	int pos;
+	int len;
 
-	pos = ft_strnstr(obj->line, str, ft_strlen(obj->line)) - obj->line;
+	len = ft_strlen(src);
+	pos = ft_strnstr(src, templ, len) - src;
 	if (pos < obj->err_pos)
 	{
 		obj->err_fst = err_case;
-		obj->err_pos = ft_strnstr(obj->line, str, ft_strlen(obj->line)) - obj->line;
+		obj->err_pos = pos;
 	}
 	return (1);
 }
@@ -35,8 +37,8 @@ void		err_output(t_shell obj)
 		err_arrow_case(ft_strchr(ft_strchr(obj.line, '<'), '<'), 0, '<');
 	else if (obj.err_fst == 4)
 		err_arrow_case(ft_strchr(obj.line, '>'), 0, '>');
-	/*else if (obj.err_fst == 5)
-		ft_putstr_fd("minishell: export: `': not a valid identifier\n", 2);*/
+	else if (obj.err_fst == 5)
+		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
 	return ;
 }
 
@@ -62,7 +64,7 @@ void		err_arrow_case(char *str, int count, char c)
 		err_arrow_case(str, ++count, c);
 }
 
-int			err_analisys(t_shell *obj)
+/*int			err_analisys(t_shell *obj)
 {
 	int	err_fst;
 	int	err_status;
@@ -84,16 +86,8 @@ int			err_analisys(t_shell *obj)
 		err_status = err_set_var(3, obj, "<<<<");
 	if (ft_strnstr(obj->line, ">>>", obj->len) != NULL)
 		err_status = err_set_var(4, obj, ">>>");
-	/*if (ft_strnstr(obj->line, " \"\" ", obj->len) != NULL)
-	{
-		if (!obj->err_fst)
-		{
-			obj->err_fst = 5;
-			err_status = 2;
-		}
-	}*/
 	err_output(*obj);
 	return (err_status);
-}
+}*/
 
 

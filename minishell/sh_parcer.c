@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 16:12:18 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/03 00:12:02 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/06 01:15:00 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,8 @@ void		find_elem(t_shell *obj, int st)
 		if (obj->line[obj->roll] == 'n')
 			obj->recycle = addchar(obj->recycle, '\n');
 		else if (obj->line[obj->roll] == '$' || obj->line[obj->roll] == '\\' ||
-		obj->line[obj->roll] == '"' || obj->line[obj->roll] == ' ')
+		obj->line[obj->roll] == '"' || obj->line[obj->roll] == ' ' ||
+		obj->line[obj->roll] == '\'')
 			obj->recycle = addchar(obj->recycle, obj->line[obj->roll]);
 		else
 		{
@@ -160,7 +161,6 @@ void		find_elem(t_shell *obj, int st)
 		++obj->roll;
 	else
 		st &= ~ENVSPACE;
-	//++obj->roll;
 	find_elem(obj, st);
 }
 

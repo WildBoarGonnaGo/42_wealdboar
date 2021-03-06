@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/03/02 19:09:37 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/07 02:52:56 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,5 +136,10 @@ void				sh_free_str(char **str);
 void				sh_parcer_envp_fix(char **str, int st);
 char				**sh_pipe_block_fix(t_shell *obj);
 char				*sh_ignore_colon(char *str);
+int					err_set_var(t_shell *obj, char *src,
+					char *templ, int err_case);
+int					sh_err_analisys(char *str, t_shell *obj);
+void				err_output(t_shell obj);
+int					sh_line_err_parse(t_shell *obj);
 
 #endif

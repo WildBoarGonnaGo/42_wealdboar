@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:01:50 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/02/25 20:13:23 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/07 02:54:25 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int 	main(int argc, char **argv, char **envp)
 	obj.child = 1;
 	obj.if_child = 0;
 	sh_signal_proc(&obj, 0);	
-	//obj.lst_flag[1] = 0;
 	signal(SIGINT, signal_handle);
 	signal(SIGQUIT, signal_handle);
 	ft_putstr_fd("minishell$ ", 1);
@@ -88,7 +87,9 @@ int 	main(int argc, char **argv, char **envp)
 		obj.lst_flag[0] = 0;
 		obj.roll = -1;
 		obj.lst_start = NULL;
-		if ((obj.err_status = err_analisys(&obj)))
+		/*if ((obj.err_status = err_analisys(&obj)))
+			obj.status[0] = obj.err_status;*/
+		if (sh_line_err_parse(&obj))
 			obj.status[0] = obj.err_status;
 		else if (ft_strncmp("", obj.line, 1))
 			sh_line_ansys(&obj);

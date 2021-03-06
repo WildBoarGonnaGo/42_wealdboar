@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 20:02:20 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/02 21:32:56 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/03 22:24:10 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ char	*sh_ignore_colon(char *str)
 {
 	int		info[3];
 	char	*res;
-	//char	*clean;
 
 	info[0] = -1;
 	res = ft_strdup("");
