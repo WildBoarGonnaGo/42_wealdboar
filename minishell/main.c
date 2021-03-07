@@ -89,7 +89,7 @@ int 	main(int argc, char **argv, char **envp)
 		obj.lst_start = NULL;
 		/*if ((obj.err_status = err_analisys(&obj)))
 			obj.status[0] = obj.err_status;*/
-		if (sh_line_err_parse(&obj))
+		if (!sh_line_err_parse(&obj))
 			obj.status[0] = obj.err_status;
 		else if (ft_strncmp("", obj.line, 1))
 			sh_line_ansys(&obj);
