@@ -61,7 +61,8 @@ int	sh_line_err_parse(t_shell *obj)
 		!(info[1] & (ISQUOTE | PARAMEXP)))
 		{
 			--info[0];
-			lst_new = ft_lstnew(obj->recycle);
+			lst_new = ft_lstnew(NULL);
+			lst_new->content = ft_strdup(obj->recycle);
 			ft_lstadd_back(&lst_start, lst_new);
 			sh_free_str(&obj->recycle);
 			obj->recycle = ft_strdup("");
@@ -70,7 +71,8 @@ int	sh_line_err_parse(t_shell *obj)
 		!ft_strchr("><|;", obj->line[info[0]]))
 		{
 			--info[0];
-			lst_new = ft_lstnew(obj->recycle);
+			lst_new = ft_lstnew(NULL);
+			lst_new->content = ft_strdup(obj->recycle);
 			ft_lstadd_back(&lst_start, lst_new);
 			sh_free_str(&obj->recycle);
 			obj->recycle = ft_strdup("");
