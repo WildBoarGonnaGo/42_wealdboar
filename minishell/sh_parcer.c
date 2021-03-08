@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 16:12:18 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/06 01:15:00 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/08 07:40:32 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,66 +14,35 @@
 #include "srcs/libft/libft.h"
 #include <sys/fcntl.h>
 
-int			err_noarg_com(t_shell *obj)
-{
-	t_list	*grabber;
-	int		state[2];
-
-	grabber = obj->lst_start;
-	state[0] = (!(ft_strncmp(";", (char *)grabber->content, 2)) ||
-	!(ft_strncmp("|", (char *)grabber->content, 2)) ||
-	!(ft_strncmp(">", (char *)grabber->content, 2)) ||
-	!(ft_strncmp("<", (char *)grabber->content, 2)) ||
-	!(ft_strncmp(">>", (char *)grabber->content, 3)));
-	if (!grabber)
-		return (0);
-	while (grabber->next)
-	{
-		state[0] = (!(ft_strncmp(";", (char *)grabber->content, 2)) ||
-		!(ft_strncmp("|", (char *)grabber->content, 2)) ||
-		!(ft_strncmp(">", (char *)grabber->content, 2)) ||
-		!(ft_strncmp("<", (char *)grabber->content, 2)) ||
-		!(ft_strncmp(">>", (char *)grabber->content, 3)));
-		state[1] = (!(ft_strncmp(";", (char *)grabber->next->content, 2)) ||
-		!(ft_strncmp("|", (char *)grabber->next->content, 2)) ||
-		!(ft_strncmp(">", (char *)grabber->next->content, 2)) ||
-		!(ft_strncmp("<", (char *)grabber->next->content, 2)) ||
-		!(ft_strncmp(">>", (char *)grabber->next->content, 3)));
-		if (state[0] && state[1])
-		{
-			ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
-			ft_putstr_fd((char *)grabber->content, 2);
-			ft_putstr_fd("'\n", 2);
-			return (0);
-		}
-		grabber = grabber->next;
-	}
-	return (1);
-}
-
 int			sh_delims_override(t_shell *obj)
 {
 	int st;
 
 	st = 0;
 	obj->clean = obj->recycle;
-	if ((st = (!ft_strncmp(obj->line + obj->roll, "\";\"", 3) &&
-	(obj->line[obj->roll + 3] == ' ' || (obj->line[obj->roll + 3] == '\0')))))
+	if ((st = ((!ft_strncmp(obj->line + obj->roll, "\";\"", 3) || 
+	!ft_strncmp(obj->line + obj->roll, "';'", 3)) && (obj->line[obj->roll + 3] == ' ' 
+	|| (obj->line[obj->roll + 3] == '\0')))))
 		obj->recycle = ft_strjoin(obj->recycle, "\";\"");
-	else if ((st = (!ft_strncmp(obj->line + obj->roll, "\"|\"", 3) &&
-	(obj->line[obj->roll + 3] == ' ' || (obj->line[obj->roll + 3] == '\0')))))
+	else if ((st = ((!ft_strncmp(obj->line + obj->roll, "\"|\"", 3) ||
+	!ft_strncmp(obj->line + obj->roll, "'|'", 3)) && (obj->line[obj->roll + 3] == ' ' 
+	|| (obj->line[obj->roll + 3] == '\0')))))
 		obj->recycle = ft_strjoin(obj->recycle, "\"|\"");
-	else if ((st = (!ft_strncmp(obj->line + obj->roll, "\"<\"", 3) &&
-	(obj->line[obj->roll + 3] == ' ' || (obj->line[obj->roll + 3] == '\0')))))		
+	else if ((st = ((!ft_strncmp(obj->line + obj->roll, "\"<\"", 3) ||
+	!ft_strncmp(obj->line + obj->roll, "'<'", 3)) && (obj->line[obj->roll + 3] == ' '
+	|| (obj->line[obj->roll + 3] == '\0')))))		
 		obj->recycle = ft_strjoin(obj->recycle, "\"<\"");
-	else if ((st = (!ft_strncmp(obj->line + obj->roll, "\">\"", 3) &&
-	(obj->line[obj->roll + 3] == ' ' || (obj->line[obj->roll + 3] == '\0')))))
+	else if ((st = ((!ft_strncmp(obj->line + obj->roll, "\">\"", 3) || 
+	!ft_strncmp(obj->line + obj->roll, "'>'", 3)) && (obj->line[obj->roll + 3] == ' ' 
+	|| (obj->line[obj->roll + 3] == '\0')))))
 		obj->recycle = ft_strjoin(obj->recycle, "\">\"");
-	else if ((st = (!ft_strncmp(obj->line + obj->roll, "\">>\"", 4) &&
-	(obj->line[obj->roll + 4] == ' ' || (obj->line[obj->roll + 4] == '\0')))))
+	else if ((st = ((!ft_strncmp(obj->line + obj->roll, "\">>\"", 4) || 
+	!ft_strncmp(obj->line + obj->roll, "'>>'", 4)) && (obj->line[obj->roll + 4] == ' '
+	|| (obj->line[obj->roll + 4] == '\0')))))
 		obj->recycle = ft_strjoin(obj->recycle, "\">>\"");
-	obj->roll += 3 * (st != 0) + (!ft_strncmp(obj->line + obj->roll, "\">>\"", 4)
-	&& (obj->line[obj->roll + 4] == ' ' || (obj->line[obj->roll + 4] == '\0')));
+	obj->roll += 3 * (st != 0) + ((!ft_strncmp(obj->line + obj->roll, "\">>\"", 4)
+	|| !ft_strncmp(obj->line + obj->roll, "'>>'", 4)) && (obj->line[obj->roll + 4] == ' '
+	|| (obj->line[obj->roll + 4] == '\0')));
 	obj->clean = (st) ? obj->clean : 0x0;
 	sh_free_str((char **)&obj->clean);
 	return (st);
@@ -202,5 +171,5 @@ int			sh_parcer(t_shell *obj)
 				break ;
 		}
 	}
-	return (err_noarg_com(obj));
+	return (1);
 }

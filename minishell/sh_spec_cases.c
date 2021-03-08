@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 20:02:41 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/07 02:24:00 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/08 12:55:03 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void		err_output(t_shell obj)
 		err_arrow_case(ft_strchr(ft_strchr(obj.line, '<'), '<'), 0, '<');
 	else if (obj.err_fst == 4)
 		err_arrow_case(ft_strchr(obj.line, '>'), 0, '>');
-	else if (obj.err_fst == 5)
-		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
+	/*else if (obj.err_fst == 5)
+		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);*/
 	return ;
 }
 
@@ -63,31 +63,3 @@ void		err_arrow_case(char *str, int count, char c)
 	else if ((*str + count))
 		err_arrow_case(str, ++count, c);
 }
-
-/*int			err_analisys(t_shell *obj)
-{
-	int	err_fst;
-	int	err_status;
-
-	err_fst = 0;
-	obj->len = ft_strlen(obj->line);
-	err_status = 0;
-	obj->err_pos = SH_INT_MAX;
-	obj->err_fst = 0;
-	if (ft_strnstr(obj->line, ";;", obj->len) != NULL)
-		err_status = err_set_var(1, obj, ";;");
-	if (ft_strnstr(obj->line, "||", obj->len) != NULL)
-		err_status = err_set_var(2, obj, "||");
-	if (!ft_strncmp("<<<", obj->line, 4) || !ft_strncmp("<<", obj->line, 3) ||
-	!ft_strncmp(">>", obj->line, 3) || !ft_strncmp(">", obj->line, 2) || 
-	!ft_strncmp("<", obj->line, 2))
-		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 1);
-	if (ft_strnstr(obj->line, "<<<<", obj->len) != NULL)
-		err_status = err_set_var(3, obj, "<<<<");
-	if (ft_strnstr(obj->line, ">>>", obj->len) != NULL)
-		err_status = err_set_var(4, obj, ">>>");
-	err_output(*obj);
-	return (err_status);
-}*/
-
-
