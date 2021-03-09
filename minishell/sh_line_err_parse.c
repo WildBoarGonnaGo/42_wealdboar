@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 01:21:10 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/08 21:57:08 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/09 21:00:44 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	sh_line_err_parse(t_shell *obj)
 	lst_start = NULL;
 	obj->recycle = ft_strdup("");
 	obj->spec_char = 0;
+	obj->err_status = 0;
 	while (obj->line[++info[0]])
 	{
 		if (!obj->recycle)

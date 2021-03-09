@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 23:19:32 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/08 21:46:01 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/09 21:17:40 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int			sh_err_noarg_com(t_list *subj, t_shell *obj)
 	int		state[2];
 
 	grabber = subj;
-	obj->err_status = 0;
+	//obj->err_status = 0;
 	state[0] = (!(ft_strncmp(";", (char *)grabber->content, 2)) ||
 	!(ft_strncmp("|", (char *)grabber->content, 2)) ||
 	!(ft_strncmp(">", (char *)grabber->content, 2)) ||
@@ -65,6 +65,11 @@ int			sh_err_noarg_com(t_list *subj, t_shell *obj)
 		}
 		grabber = grabber->next;
 	}
+	state[0] = (!(ft_strncmp(";", (char *)grabber->content, 2)) ||
+	!(ft_strncmp("|", (char *)grabber->content, 2)) ||
+	!(ft_strncmp(">", (char *)grabber->content, 2)) ||
+	!(ft_strncmp("<", (char *)grabber->content, 2)) ||
+	!(ft_strncmp(">>", (char *)grabber->content, 3)));
 	if (state[0] && !grabber->next)
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token `", 2);

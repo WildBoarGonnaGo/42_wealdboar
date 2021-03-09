@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 00:57:09 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/08 21:49:46 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/09 20:54:44 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int			sh_err_analisys(char *str, t_shell *obj)
 	if (!ft_strncmp(str, ">>>", 3))
 		err_status = err_set_var(obj, str, ">>>", 4);
 	err_output(*obj);
+	obj->err_status = 2 * (err_status != 0);
 	return (err_status);
 }
 
