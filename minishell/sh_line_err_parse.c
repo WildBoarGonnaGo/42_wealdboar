@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 01:21:10 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/10 18:49:14 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/10 20:55:47 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	sh_line_err_parse(t_shell *obj)
 	}
 	info[1] = sh_err_noarg_com(lst_start, obj);
 	info[0] = (lst_new == NULL);
-	ft_lstclear(&lst_start, free);
+	ft_lstclear(&lst_start, null_lst_unit);
 	sh_free_str(&obj->recycle);
 	return (info[0] & info[1]);
 }

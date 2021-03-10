@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:01:50 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/03/10 18:40:01 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/10 21:28:25 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ int 	main(int argc, char **argv, char **envp)
 		obj.lst_flag[0] = 0;
 		obj.roll = -1;
 		obj.lst_start = NULL;
-		/*if ((obj.err_status = err_analisys(&obj)))
-			obj.status[0] = obj.err_status;*/
 		if (!sh_line_err_parse(&obj))
 			obj.status[0] = obj.err_status;
 		else if (ft_strncmp("", obj.line, 1))
@@ -108,5 +106,6 @@ int 	main(int argc, char **argv, char **envp)
 		obj.line = NULL;
 	}
 	obj.status[1] = obj.status[0];
+	alloc_free_2((void **)obj.envp);
 	exit(obj.status[1]);
 }

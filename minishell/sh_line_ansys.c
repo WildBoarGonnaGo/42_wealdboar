@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 14:43:43 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/10 18:42:18 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/10 20:55:22 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,5 +154,5 @@ void	sh_line_ansys(t_shell *obj)
 		obj->fd_redir[0] = 0;
 		obj->fd_redir[1] = 0;
 	}
-	ft_lstclear(&obj->lst_start, free);
+	ft_lstclear(&obj->lst_start, null_lst_unit);
 }

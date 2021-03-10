@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/03/10 18:33:11 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/10 21:33:26 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct		s_shell
 	char			**clean2;
 	char			**pipe_block;
 	char			**bin_args;
-	char			**envp_secure;
+	//char			**envp_secure;
 	char			*backup;
 	char			*bin_search;
 	char			*line;
@@ -142,5 +142,7 @@ int					sh_err_analisys(char *str, t_shell *obj);
 void				err_output(t_shell obj);
 int					sh_line_err_parse(t_shell *obj);
 int					sh_err_noarg_com(t_list *subj, t_shell *obj);
+void				null_lst_unit(void *content);
+void				sh_fork_mem_free(t_shell *obj);
 
 #endif

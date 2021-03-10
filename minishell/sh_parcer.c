@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 16:12:18 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/10 19:11:23 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/10 19:55:43 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,8 +161,7 @@ int			sh_parcer(t_shell *obj)
 			++obj->lst_flag[0];
 			info[3] = ft_strlen(obj->recycle) + 1;
 			obj->lst_head = ft_lstnew(NULL);
-			obj->lst_head->content = malloc(info[3]);
-			ft_strlcpy(obj->lst_head->content, obj->recycle, info[3]);
+			obj->lst_head->content = ft_strdup(obj->recycle);
 			ft_lstadd_back(&obj->lst_start, obj->lst_head);
 			if (!info[2])
 			{

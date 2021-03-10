@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 20:04:33 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/10 18:38:34 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/10 20:34:56 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	sh_exit(t_shell *obj)
 		ft_putstr_fd(tmp[0], 2);
 		ft_putstr_fd(": too many arguments\n", 2);
 		res = -1;
-		//obj->status[0] = 1;
 	}
 	else if (res)
 	{
@@ -47,15 +46,12 @@ void	sh_exit(t_shell *obj)
 		ft_putstr_fd(tmp[1], 2);
 		ft_putstr_fd(": numeric argument required\n", 2) ;
 		res = 255;
-		//obj->status[0] = 1;
 	}
 	else if (obj->len == 2 && !res)
 	{
 		res = ft_atoi(tmp[1]);
 		res = res % 256 + (res < 0) * 256;
-		//obj->status[0] = 1;
 	}
 	obj->status[0] = res;
 	obj->status[1] = (!obj->err_fst) * obj->status[0] - (obj->err_fst != 0);
-	//return (res);
 }

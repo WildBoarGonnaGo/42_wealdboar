@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 20:54:10 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/28 19:54:47 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/10 21:15:15 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int 	sh_user_bin(t_shell *obj)
 	st = 1;
 	obj->len = 1;
 	line = NULL;
+	obj->bin_args = NULL;
 	obj->bin_args = execve_args(obj);
-	//obj->tmp = obj->pipe_block;
 	if (*obj->bin_search != '.' && *obj->bin_search != '/' \
 	&& *obj->bin_search != '~')
 	{
@@ -71,6 +71,10 @@ int 	sh_user_bin(t_shell *obj)
 			ft_putstr_fd(obj->bin_search, 2);
 			ft_putstr_fd(": No such file or directory\n", 2);
 			obj->status[0] = 127;
+			sh_free_str(&line);
+			sh_free_str(&obj->bin_search);
+			alloc_free_2((void **)obj->bin_args);
+			alloc_free_2((void **)obj->bin);
 			return (obj->status[0]);
 		}
 	}
@@ -86,7 +90,6 @@ int 	sh_user_bin(t_shell *obj)
 	if (!(obj->child = fork()))
 	{
 		errno = 0;
-		//dup2(obj->fd_pipe[1], 1);
 		if (!obj->fd_redir[1])
 			dup2(obj->fd_pipe[1], 1);
 		else
@@ -132,6 +135,9 @@ int 	sh_user_bin(t_shell *obj)
 		obj->status[0] = WEXITSTATUS(obj->status[0]);
 		kill(obj->child, SIGTERM);
 	}
-	free(line);
+	sh_free_str(&line);
+	sh_free_str(&obj->bin_search);
+	alloc_free_2((void **)obj->bin_args);
+	alloc_free_2((void **)obj->bin);
 	return (obj->status[0]);
 }
