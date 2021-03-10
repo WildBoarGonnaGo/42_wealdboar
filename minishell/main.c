@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:01:50 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/03/07 02:54:25 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/10 18:40:01 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,10 @@ int 	main(int argc, char **argv, char **envp)
 			sh_line_ansys(&obj);
 		if (obj.status[1] >= 0 || !rage)
 		{
-			write(1, "exit\n", ft_strlen("exit\n"));
+			ft_putstr_fd("exit\n", 1);
 			break ;
 		}
-		write(1, "minishell$ ", ft_strlen("minishell$ "));
+		ft_putstr_fd("minishell$ ", 1);
 		free(obj.line);
 		obj.line = NULL;
 	}

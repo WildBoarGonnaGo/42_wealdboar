@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 14:43:43 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/08 17:58:22 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/10 18:42:18 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void	sh_line_ansys(t_shell *obj)
 		obj->err_fd[1] = 0;
 		obj->fd_redir[0] = 0;
 		obj->fd_redir[1] = 0;
+		obj->err_fst = 0;
 		while (obj->cmd_flag & HANPIPE)
 		{	
 			obj->pipe_block = set_arr2_strbound(obj->cmd, &j, "|", obj);
@@ -135,12 +136,13 @@ void	sh_line_ansys(t_shell *obj)
 			else if (!ft_strncmp("env", obj->pipe_block[0], obj->len))
 				ft_minishell_env(obj);
 			else if (!ft_strncmp("exit", obj->pipe_block[0], obj->len))
-				obj->status[1] = sh_exit(obj);
+				sh_exit(obj);
 			else if (!ft_strncmp("pwd", obj->pipe_block[0], obj->len))
 				ft_minishell_pwd(obj);
 			else
 				sh_user_bin(obj);
 			alloc_free_2((void **)obj->pipe_block);
+			obj->err_fst = ((obj->cmd_flag & HANPIPE) != 0);
 		}
 		if (obj->fd_redir[1])
 			close(obj->fd_redir[1]);

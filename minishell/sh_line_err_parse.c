@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_line_err_parce.c                                :+:      :+:    :+:   */
+/*   sh_line_err_parse.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 01:21:10 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/09 21:00:44 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/10 18:49:14 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	sh_line_err_parse(t_shell *obj)
 		}
 		else
 			obj->recycle = addchar(obj->recycle, obj->line[info[0]]);
+		info[0] += (obj->line[info[0]] == '\\');
 	}
 	if (obj->recycle)
 	{

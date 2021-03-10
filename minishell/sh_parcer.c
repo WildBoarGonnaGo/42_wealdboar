@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 16:12:18 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/08 07:40:32 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/10 19:11:23 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void		find_elem(t_shell *obj, int st)
 	|| obj->line[obj->roll] == '?'))
 		obj->roll = sh_env_linefix(obj, &st);
 	else if (ft_strchr(";|<>", obj->line[obj->roll]) && !ft_strncmp("", obj->recycle, 1)
-	&& obj->line[obj->roll])
+	&& obj->line[obj->roll] && !(st & (ESCCHAR | SQUOTE)))
 	{
 		obj->recycle = addchar(obj->recycle, obj->line[obj->roll]);
 		st |= COMCHAR;
@@ -79,8 +79,14 @@ void		find_elem(t_shell *obj, int st)
 			obj->recycle = addchar(obj->recycle, '\n');
 		else if (obj->line[obj->roll] == '$' || obj->line[obj->roll] == '\\' ||
 		obj->line[obj->roll] == '"' || obj->line[obj->roll] == ' ' ||
-		obj->line[obj->roll] == '\'')
+		obj->line[obj->roll] == '\'' )
 			obj->recycle = addchar(obj->recycle, obj->line[obj->roll]);
+		else if (ft_strchr("<>|;", obj->line[obj->roll]))
+		{
+			obj->recycle = addchar(obj->recycle, '"');
+			obj->recycle = addchar(obj->recycle, obj->line[obj->roll]);
+			obj->recycle = addchar(obj->recycle, '"');
+		}
 		else
 		{
 			obj->recycle = addchar(obj->recycle, obj->line[obj->roll - 1]);
