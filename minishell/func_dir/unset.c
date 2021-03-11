@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 10:59:47 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/03/09 21:41:23 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/11 18:09:25 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void 	rm_envp_var(t_shell *obj)
 				{
 					obj->clean2 = obj->envp;
 					obj->envp = arr_redef(obj->envp, pos[1]);
- 					alloc_free_2((void **)obj->clean2);
+ 					alloc_free_2((void ***)&obj->clean2);
 					break ;
 				}
 			}

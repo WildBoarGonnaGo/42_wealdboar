@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 20:54:10 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/10 21:15:15 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/11 18:06:36 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ int 	sh_user_bin(t_shell *obj)
 			obj->status[0] = 127;
 			sh_free_str(&line);
 			sh_free_str(&obj->bin_search);
-			alloc_free_2((void **)obj->bin_args);
-			alloc_free_2((void **)obj->bin);
+			alloc_free_2((void ***)&obj->bin_args);
+			alloc_free_2((void ***)&obj->bin);
 			return (obj->status[0]);
 		}
 	}
@@ -82,7 +82,7 @@ int 	sh_user_bin(t_shell *obj)
 	{
 		if (!line)
 			line = ft_strdup(obj->pipe_block[0]);
-		alloc_free_2((void **)obj->bin);
+		alloc_free_2((void ***)&obj->bin);
 	}
 	else 		
 		line = ft_strdup(obj->pipe_block[0]);
@@ -137,7 +137,7 @@ int 	sh_user_bin(t_shell *obj)
 	}
 	sh_free_str(&line);
 	sh_free_str(&obj->bin_search);
-	alloc_free_2((void **)obj->bin_args);
-	alloc_free_2((void **)obj->bin);
+	alloc_free_2((void ***)&obj->bin_args);
+	alloc_free_2((void ***)&obj->bin);
 	return (obj->status[0]);
 }

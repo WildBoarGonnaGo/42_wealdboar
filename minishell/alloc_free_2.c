@@ -6,27 +6,26 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 19:05:39 by lchantel          #+#    #+#             */
-/*   Updated: 2021/01/23 16:31:45 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/11 18:16:27 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
-void alloc_free_2(void **mem)
+void alloc_free_2(void ***mem)
 {
 	int i;
 
 	i = -1;
-
-	if (mem)
+	if (*mem)
 	{
-		while (mem[++i])
+		while (*(*mem + ++i))
 		{
-			free(mem[i]);
-			mem[i] = NULL;
+			free(*(*mem + i));
+			*(*mem + i) = NULL;
 		}	
-		free(mem);
-		mem = NULL;
+		free(*mem);
+		*mem = NULL;
 	}
 }
 

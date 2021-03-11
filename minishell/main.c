@@ -6,106 +6,61 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:01:50 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/03/10 21:28:25 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/11 18:56:28 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
-#include "srcs/libft/libft.h"
-#include <signal.h>
 
-char 	**envp_dupl(t_shell obj)
+void	sh_minishell_init(t_shell *obj, int argc,
+		char **envp, char **argv)
 {
-	int		size;
-	char	**res;
-
-	size = -1;
-	while (obj.envp[++size])
-		;
-	res = (char **)malloc(sizeof(char *) * size + 1);
-	size = -1;
-	while (obj.envp[++size])
-		res[size] = ft_strdup(obj.envp[size]);
-	res[size] = NULL;
-	return (res);
+	ft_memset(obj, 0, sizeof(*obj));
+	obj->envp = envp;
+	obj->argv = argv;
+	obj->argc = argc;
+	envp = sh_envp_dupl(*obj);
+	obj->envp = envp;
+	obj->status[1] = -1;
+	obj->child = 1;
+	ft_putstr_fd("minishell$ ", 1);
 }
 
-void	sh_signal_proc(t_shell *obj, int sig)
+int		sh_minishell_body(t_shell *obj, int byte)
 {
-	static t_shell *magic;
-	
-	if (!magic)
-		magic = obj;
-	else if (sig == SIGQUIT && !magic->if_child)
-		write(1, "\b\b  \b\b", 6);
-	else if (sig == SIGQUIT && magic->if_child)
+	obj->lst_flag[0] = 0;
+	obj->roll = -1;
+	obj->lst_start = NULL;
+	if (!sh_line_err_parse(obj))
+		obj->status[0] = obj->err_status;
+	else if (ft_strncmp("", obj->line, 1))
+		sh_line_ansys(obj);
+	if (obj->status[1] >= 0 || !byte)
 	{
-		write(2, "Quit: 3\n", ft_strlen("Quit: 3\n"));
-		magic->status[2] = 128 + sig;
+		ft_putstr_fd("exit\n", 1);
+		return (0);
 	}
-	else if (sig == SIGINT && !magic->if_child)
-	{
-		write(1, "\b\b  \nminishell$ ", ft_strlen("\b\b  \nminishell$ ") + 1);
-		magic->status[2] = 1;
-	}
-	else if (sig == SIGINT && magic->if_child)
-	{
-		write(1, "\n", 1);
-		magic->status[2] = 128 + sig;
-	}
+	ft_putstr_fd("minishell$ ", 1);
+	sh_free_str(&obj->line);
+	return (1);
 }
-
-void	signal_handle(int sig)
-{
-	sh_signal_proc(0x0, sig);
-}
-
 
 int 	main(int argc, char **argv, char **envp)
 {
-	int	rage;
-	t_shell obj;
+	int		byte;
+	t_shell	obj;
 
-	obj.envp = envp;
-	obj.argc = argc;
-	obj.argv = argv;
-	obj.line = NULL;
-	envp = envp_dupl(obj);
-	obj.envp = envp;
-	obj.status[1] = -1;
-	obj.status[0] = 0;
-	obj.status[2] = 0;
-	sig_state = 0;
-	obj.child = 1;
-	obj.if_child = 0;
-	sh_signal_proc(&obj, 0);	
+	sh_minishell_init(&obj, argc, envp, argv);
+	sh_signal_proc(&obj, 0);
 	signal(SIGINT, signal_handle);
 	signal(SIGQUIT, signal_handle);
-	ft_putstr_fd("minishell$ ", 1);
-	while ((rage = sh_gnl(0, &obj.line)) > 0)
+	while ((byte = sh_gnl(0, &obj.line)) > 0)
 	{
-		obj.lst_flag[0] = 0;
-		obj.roll = -1;
-		obj.lst_start = NULL;
-		if (!sh_line_err_parse(&obj))
-			obj.status[0] = obj.err_status;
-		else if (ft_strncmp("", obj.line, 1))
-			sh_line_ansys(&obj);
-		if (obj.status[1] >= 0 || !rage)
-		{
-			ft_putstr_fd("exit\n", 1);
+		if (!sh_minishell_body(&obj, byte))
 			break ;
-		}
-		ft_putstr_fd("minishell$ ", 1);
-		free(obj.line);
-		obj.line = NULL;
 	}
-	if (obj.line)
-	{
-		free(obj.line);
-		obj.line = NULL;
-	}
+	sh_free_str(&obj.line);
 	obj.status[1] = obj.status[0];
-	alloc_free_2((void **)obj.envp);
+	alloc_free_2((void ***)&obj.envp);
 	exit(obj.status[1]);
 }

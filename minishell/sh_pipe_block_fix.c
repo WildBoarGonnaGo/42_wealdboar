@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 13:55:58 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/02 22:07:32 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/11 18:05:42 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ char	**sh_pipe_block_fix(t_shell *obj)
 			res[pos] = ft_strdup(obj->pipe_block[pos]);
 	}
 	res[pos] = 0x0;
-	alloc_free_2((void **)obj->clean2);
+	alloc_free_2((void ***)&obj->clean2);
 	return (res);
 }

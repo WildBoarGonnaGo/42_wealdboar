@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/03/10 21:33:26 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/11 20:40:57 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,14 @@ typedef struct		s_gnl
 
 typedef struct		s_shell
 {
-	char			**argv;	// пока не применил
-	char			**envp; // переменные окружения 
-	char			**cmd; // команды
-	char			**tmp; // временное хранилище
+	char			**argv;
+	char			**envp;  
+	char			**cmd; 
+	char			**tmp; 
 	char 			**bin; 
 	char			**clean2;
 	char			**pipe_block;
 	char			**bin_args;
-	//char			**envp_secure;
 	char			*backup;
 	char			*bin_search;
 	char			*line;
@@ -107,7 +106,7 @@ typedef struct		s_shell
 int					sh_gnl(int fd, char **line);
 int					ft_minishell_pwd(t_shell *obj);
 void				sh_line_ansys(t_shell *obj);
-void 				alloc_free_2(void **mem);
+void 				alloc_free_2(void ***mem);
 void				ft_minishell_echo(t_shell *obj);
 char				*sh_envp_search(const char *str, t_shell *obj);
 void				ft_minishell_env(t_shell *obj);
@@ -144,5 +143,14 @@ int					sh_line_err_parse(t_shell *obj);
 int					sh_err_noarg_com(t_list *subj, t_shell *obj);
 void				null_lst_unit(void *content);
 void				sh_fork_mem_free(t_shell *obj);
+char 				**sh_envp_dupl(t_shell obj);
+void				signal_handle(int sig);
+void				sh_signal_proc(t_shell *obj, int sig);
+int					sh_token_status(char *str);
+int					sh_ambiguous_token(t_list *grabber);
+char				**lst_to_arr2(t_list *list, int start, int size);
+char				**set_arr2_strbound(char **arr, int *pos, 
+					char *str, t_shell *obj);
+void				sh_list_semicol_fix(t_shell *obj);
 
 #endif

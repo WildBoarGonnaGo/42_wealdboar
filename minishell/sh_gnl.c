@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:02:14 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/02/13 15:40:09 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/11 20:26:57 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,24 @@ char	*sh_strchr(const char *s, int c, size_t size)
 	return (NULL);
 }
 
+int		sh_gnl_body(t_gnl *obj, char **line)
+{
+	if ((!obj->buf[obj->i - 1] && check_line(*line)
+	&& !obj->byte))
+	{
+		write(1, "  \b\b", 4);
+		return (1);
+	}
+	if (obj->buf[obj->i] == '\n')
+	{
+		obj->st = 10;
+		obj->buf[obj->i] = 0;
+	}
+	*line = addchar(*line, obj->buf[obj->i]);
+	obj->len = ft_strlen(*line);
+	return (obj->buf[obj->i]);
+}
+
 int 	sh_gnl(int fd, char **line)
 {
 	t_gnl obj;
@@ -48,25 +66,11 @@ int 	sh_gnl(int fd, char **line)
 	if (!*line)
 		*line = ft_strdup("");
 	while ((obj.byte = read(fd, &obj.buf[obj.i], 1)) > 0 || obj.len)
-	{
-		if ((!obj.buf[obj.i - 1] && check_line(*line) && !obj.byte))
-		{
-			write(1, "  \b\b", 4);
-			continue ;
-		}
-		if (obj.buf[obj.i] == '\n')
-		{
-			obj.st = 10;
-			obj.buf[obj.i] = 0;
-		}
-		*line = addchar(*line, obj.buf[obj.i]);
-		obj.len = ft_strlen(*line);
-		if (!obj.buf[obj.i])
+		if (!sh_gnl_body(&obj, line))
 			break ;
-	}
 	if (obj.byte < 0)
 		return (-1);
 	if (!obj.st)
-		write(1, "exit\n", ft_strlen("exit\n"));
+		ft_putstr_fd("exit\n", 1);
 	return (obj.st);
 }

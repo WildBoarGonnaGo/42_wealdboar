@@ -6,13 +6,38 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 01:21:10 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/10 20:55:47 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/11 22:01:39 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
-int	sh_line_err_parse(t_shell *obj)
+void	sh_bitwise_or_stat(int *info, t_shell *obj, int ctrl_bit)
+{
+	info[1] |= ctrl_bit;
+	obj->err_status *= 1;
+}
+
+void	sh_bitwise_and_stat(int *info, t_shell *obj, int ctrl_bit)
+{
+	info[1] &= ctrl_bit;
+	obj->err_status *= 1;
+}
+
+void	sh_bitwise_or_stat_spec(int *info, t_shell *obj, int ctrl_bit)
+{
+	info[1] |= ctrl_bit;
+	obj->spec_char = obj->line[info[0]];
+}
+
+void	sh_spec_char_handle(t_shell *obj, int ctrl_bit, 
+		int *info, void (*func)(int *, t_shell *, int ctrl_bit))
+{
+	func(info, obj, ctrl_bit);
+	obj->recycle = addchar(obj->recycle, obj->line[info[0]]);
+}
+
+int		sh_line_err_parse(t_shell *obj)
 {
 	t_list	*lst_start;
 	t_list	*lst_new;
@@ -30,31 +55,36 @@ int	sh_line_err_parse(t_shell *obj)
 			obj->recycle = ft_strdup("");
 		if (ft_strchr("><;|", obj->line[info[0]]) &&
 		!(info[1] & (ISQUOTE | PARAMEXP)) && !ft_strncmp(obj->recycle, "", 1))
-		{
+		/*{
 			info[1] |= PARAMEXP;
 			obj->recycle = addchar(obj->recycle, obj->line[info[0]]);
 			obj->spec_char = obj->line[info[0]];
-		}
+		}*/
+			sh_spec_char_handle(obj, PARAMEXP, info, sh_bitwise_or_stat_spec);
 		else if (obj->line[info[0]] == '\'' && !(info[1] & ISQUOTE))
-		{
+		/*{
 			info[1] |= SQUOTE;
 			obj->recycle = addchar(obj->recycle, '\'');
-		}
+		}*/
+			sh_spec_char_handle(obj, SQUOTE, info, sh_bitwise_or_stat);
 		else if (obj->line[info[0]] == '\'' && ((info[1] & ISQUOTE) == SQUOTE))
-		{
+		/*{
 			info[1] &= ~SQUOTE;
 			obj->recycle = addchar(obj->recycle, '\'');
-		}
+		}*/
+			sh_spec_char_handle(obj, ~SQUOTE, info, sh_bitwise_and_stat);
 		else if (obj->line[info[0]] == '"' && !(info[1] & ISQUOTE))
-		{
+		/*{
 			info[1] |= DQUOTE;
 			obj->recycle = addchar(obj->recycle, '"');
-		}
+		}*/
+			sh_spec_char_handle(obj, DQUOTE, info, sh_bitwise_or_stat);
 		else if (obj->line[info[0]] == '"' && ((info[1] & ISQUOTE) == DQUOTE))
-		{
+		/*{
 			info[1] &= ~DQUOTE;
 			obj->recycle = addchar(obj->recycle, '"');
-		}
+		}*/
+			sh_spec_char_handle(obj, ~DQUOTE, info, sh_bitwise_and_stat);
 		else if ((obj->line[info[0]] == ' ' && !info[1]))
 		{
 			lst_new = ft_lstnew(NULL);

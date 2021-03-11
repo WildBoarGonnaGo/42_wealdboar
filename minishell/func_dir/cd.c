@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 18:16:06 by lchantel          #+#    #+#             */
-/*   Updated: 2021/02/24 21:13:29 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/11 18:07:46 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ int 	change_dir(t_shell *obj)
 		bzero(buf, BUFFER_SIZE);
 		obj->envp = change_pwd(obj, "PWD", obj->argstr);
 		if (cd_clean_2)
-			alloc_free_2((void **)cd_clean_2);
+			alloc_free_2((void ***)&cd_clean_2);
 		if (!getcwd(buf, BUFFER_SIZE))
 		{
 			ft_putstr_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n", 2);
@@ -158,7 +158,7 @@ int 	change_dir(t_shell *obj)
 			obj->backup = ft_strjoin(obj->backup, obj->argstr);
 			obj->envp = change_pwd(obj, "PWD", obj->backup);
 			if (cd_clean_2)
-				alloc_free_2((void **)cd_clean_2);
+				alloc_free_2((void ***)&cd_clean_2);
 			if (obj->clean)
 			{
 				free(obj->clean);
@@ -170,11 +170,11 @@ int 	change_dir(t_shell *obj)
 			cd_clean_2 = obj->envp;
 			obj->envp = change_pwd(obj, "PWD", buf);
 			if (cd_clean_2)
-				alloc_free_2((void **)cd_clean_2);
+				alloc_free_2((void ***)&cd_clean_2);
 			cd_clean_2 = obj->envp;
 			obj->envp = change_pwd(obj, "OLDPWD", obj->backup);
 			if (cd_clean_2)
-				alloc_free_2((void **)cd_clean_2);
+				alloc_free_2((void ***)&cd_clean_2);
 		}
 	}
 	i = -1;
