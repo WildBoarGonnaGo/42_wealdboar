@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/03/11 20:40:57 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/12 20:43:23 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,5 +152,17 @@ char				**lst_to_arr2(t_list *list, int start, int size);
 char				**set_arr2_strbound(char **arr, int *pos, 
 					char *str, t_shell *obj);
 void				sh_list_semicol_fix(t_shell *obj);
+void				sh_create_new_lst(t_list **src_lst, t_shell *obj,
+					int *info, void (*func)(t_shell *, int *));
+void				sh_index_decr(t_shell *obj, int *info);
+void				sh_index_paramexp(t_shell *obj, int *info);
+void				sh_index_empty(t_shell *obj, int *info);
+void				sh_bitwise_or_stat(int *info, t_shell *obj, int ctrl_bit);
+void				sh_bitwise_and_stat(int *info, t_shell *obj, int ctrl_bit);
+void				sh_bitwise_or_stat_spec(int *info, t_shell *obj, int ctrl_bit);
+void				sh_spec_char_handle(t_shell *obj, int ctrl_bit, 
+					int *info, void (*func)(int *, t_shell *, int ctrl_bit));
+int					sh_delims_override(t_shell *obj);
+
 
 #endif
