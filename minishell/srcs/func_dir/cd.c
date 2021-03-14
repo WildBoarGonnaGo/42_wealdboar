@@ -6,11 +6,11 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 18:16:06 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/14 04:48:30 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/14 05:01:08 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 char	*cd_no_args(t_shell *obj)
 {

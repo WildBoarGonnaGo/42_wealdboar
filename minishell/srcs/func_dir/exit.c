@@ -6,20 +6,22 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 20:04:33 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/14 04:51:43 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/14 05:44:55 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 void	cat_sh_exit1(char **tmp, int *res, int i)
 {
-	while (tmp[1][++i])
+	while (tmp[1][i])
 	{
 		if (!i && tmp[1][i] == '-')
 			continue ;
 		*res += (!(ft_isdigit(tmp[1][i])));
+		++i;
 	}
+	i = 0;
 }
 
 void	cat_sh_exit2(char **tmp, int *res)
@@ -46,7 +48,7 @@ void	sh_exit(t_shell *obj)
 	int		res;
 	int		i;
 
-	i = -1;
+	i = 0;
 	obj->len = 0;
 	res = 0;
 	tmp = obj->pipe_block;
@@ -62,7 +64,9 @@ void	sh_exit(t_shell *obj)
 	{
 		res = ft_atoi(tmp[1]);
 		res = res % 256 + (res < 0) * 256;
+		i = 1;
 	}
-	obj->status[0] = res;
+	if (i)
+		obj->status[0] = res;
 	obj->status[1] = (!obj->err_fst) * obj->status[0] - (obj->err_fst != 0);
 }

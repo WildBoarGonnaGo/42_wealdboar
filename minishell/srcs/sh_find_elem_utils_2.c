@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 14:45:38 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/14 03:23:09 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/14 04:58:39 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,3 @@ int		sh_return_meet_space(int st, t_shell *obj)
 	&& !(st & 0b11) && !(st & PARAMEXP))
 	|| !obj->line[obj->roll]);
 }
-

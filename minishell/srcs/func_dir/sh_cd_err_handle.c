@@ -6,11 +6,11 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 04:26:35 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/14 04:27:50 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/14 05:51:46 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 void	change_dir_err_output(t_shell *obj, int i)
 {
@@ -38,9 +38,5 @@ void	sh_cd_nonvalid_dir(t_shell *obj, char ***cd_clean_2)
 	obj->envp = change_pwd(obj, "PWD", obj->backup);
 	if (*cd_clean_2)
 		alloc_free_2((void ***)cd_clean_2);
-	if (obj->clean)
-	{
-		free(obj->clean);
-		obj->clean = NULL;
-	}
+	sh_free_str((char **)&obj->clean);
 }

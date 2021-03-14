@@ -6,11 +6,11 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:55:02 by lcreola           #+#    #+#             */
-/*   Updated: 2021/03/14 03:41:07 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/14 05:01:39 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 void		export_no_arg_format(char *str)
 {

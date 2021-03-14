@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 20:36:32 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/14 03:26:27 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/14 04:59:42 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,3 @@ char	**set_arr2_strbound(char **arr, int *pos,
 	res[++info[2]] = 0x0;
 	return (res);
 }
-

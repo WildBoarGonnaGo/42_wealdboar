@@ -6,11 +6,11 @@
 /*   By: dalonso <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 02:58:08 by dalonso           #+#    #+#             */
-/*   Updated: 2021/03/14 02:58:16 by dalonso          ###   ########.fr       */
+/*   Updated: 2021/03/14 05:01:50 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 void	cat_ft_m_export_check(int *pos, char *eq_char, t_shell *obj)
 {

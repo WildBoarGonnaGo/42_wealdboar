@@ -6,11 +6,11 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 04:41:43 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/14 04:54:27 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/14 05:02:19 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 void	sh_change_pwd_appr(t_shell *obj, char *buf,
 		char ***cd_clean_2)

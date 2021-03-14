@@ -6,11 +6,11 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 10:59:47 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/03/14 03:45:58 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/14 05:02:39 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 char		**arr_redef(char **mem, int indx)
 {

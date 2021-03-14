@@ -6,11 +6,11 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 21:00:49 by lcreola           #+#    #+#             */
-/*   Updated: 2021/03/14 04:53:22 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/14 05:01:57 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 void	err_identifier_output(char *str, char *cmd)
 {
