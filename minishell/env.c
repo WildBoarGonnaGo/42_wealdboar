@@ -6,13 +6,35 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:53:12 by lcreola           #+#    #+#             */
-/*   Updated: 2021/03/14 04:49:36 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/02/22 16:30:04 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../minishell.h"
 
-void	sh_minishell_core_body(t_shell *obj, int i)
+void	ft_minishell_env(t_shell *obj)
+{
+	int	i;
+
+	i = -1;
+	pipe(obj->fd_pipe);
+	if (!(obj->child = fork()))
+		cat_ft_minishel_env(obj, i);
+	else
+	{
+		dup2(obj->fd_pipe[0], 0);
+		close(obj->fd_pipe[0]);
+		close(obj->fd_pipe[1]);
+		wait(&obj->status[0]);
+	}
+	if (WIFEXITED(obj->status[0]))
+	{
+		obj->status[0] = (WEXITSTATUS(obj->status[0]) > 0);
+		kill(obj->child, SIGTERM);
+	}
+}
+
+void	cat_ft_minishel_env(t_shell *obj, int i)
 {
 	dup2(obj->fd_pipe[1], 1);
 	close(obj->fd_pipe[0]);
@@ -28,18 +50,4 @@ void	sh_minishell_core_body(t_shell *obj, int i)
 		}
 	}
 	exit(0);
-}
-
-void	ft_minishell_env(t_shell *obj)
-{
-	int	i;
-
-	i = -1;
-	pipe(obj->fd_pipe);
-	if (!(obj->child = fork()))
-		sh_minishell_core_body(obj, i);
-	else
-		sh_close_pipes_common(obj);
-	if (WIFEXITED(obj->status[0]))
-		sh_kill_proc(obj);
 }

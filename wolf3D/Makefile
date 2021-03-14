@@ -6,12 +6,14 @@
 #    By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/24 04:55:09 by wealdboar         #+#    #+#              #
-#    Updated: 2020/10/23 16:16:46 by lchantel         ###   ########.fr        #
+#    Updated: 2021/03/14 03:38:34 by lchantel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 LIB = ./libc/libmaze3d.a
 EXEC_FILE = cub3d
+
+# ./func_dir/cd.c => ./srcs/func_dir/cd.c
 
 SRC =	./src/check_cub.c					\
 	 	./src/check_data.c					\

@@ -6,13 +6,13 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:50:06 by lcreola           #+#    #+#             */
-/*   Updated: 2021/03/10 21:20:32 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/14 03:31:43 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../include/minishell.h"
 
-int		echo_nownl_check(char *str, int count)
+int			echo_nownl_check(char *str, int count)
 {
 	if (str[count] == '-' && !count)
 		return (echo_nownl_check(str, ++count));
@@ -23,9 +23,9 @@ int		echo_nownl_check(char *str, int count)
 	return (0);
 }
 
-int		spec_case(char **str, t_shell *obj, int word)
+int			spec_case(char **str, t_shell *obj, int word)
 {
-	if (echo_nownl_check(*str, 0) && !word) 
+	if (echo_nownl_check(*str, 0) && !word)
 	{
 		if (ft_strncmp(*str, "", 1))
 		{
@@ -43,46 +43,44 @@ int		spec_case(char **str, t_shell *obj, int word)
 	return (1);
 }
 
-void	ft_minishell_echo(t_shell *obj)
+void		cat_ft_minishell_echo(t_shell *obj, int word, int i)
+{
+	if (!obj->fd_redir[1])
+		dup2(obj->fd_pipe[1], 1);
+	else
+		dup2(1, obj->fd_pipe[1]);
+	close(obj->fd_pipe[0]);
+	close(obj->fd_pipe[1]);
+	if (!(obj->cmd_flag & HANPIPE) && !obj->fd_redir[1])
+		dup2(obj->fd_recover[1], 1);
+	while (obj->pipe_block[++i])
+	{
+		if (word)
+			write(1, " ", 1);
+		if (!spec_case(&obj->pipe_block[i], obj, word) &&
+		ft_strncmp(obj->pipe_block[i], "", 1))
+			continue ;
+		ft_putstr_fd(obj->pipe_block[i], 1);
+		++word;
+	}
+	write(1, &obj->eol, 1);
+	exit(0);
+}
+
+void		ft_minishell_echo(t_shell *obj)
 {
 	int		i;
 	int		word;
 	int		st;
-	
+
 	i = 0;
 	word = 0;
 	obj->eol = '\n';
 	pipe(obj->fd_pipe);
 	if (!(obj->child = fork()))
-	{
-		if (!obj->fd_redir[1])
-			dup2(obj->fd_pipe[1], 1);
-		else
-			dup2(1, obj->fd_pipe[1]);
-		close(obj->fd_pipe[0]);
-		close(obj->fd_pipe[1]);
-		if (!(obj->cmd_flag & HANPIPE) && !obj->fd_redir[1]) 
-				dup2(obj->fd_recover[1], 1);
-		while (obj->pipe_block[++i])
-		{
-			if (word)
-				write(1, " ", 1);
-			if (!spec_case(&obj->pipe_block[i], obj, word) && 
-			ft_strncmp(obj->pipe_block[i], "", 1))
-				continue ;
-			ft_putstr_fd(obj->pipe_block[i], 1);
-			++word;
-		}
-		write(1, &obj->eol, 1);
-		exit (0);
-	}
+		cat_ft_minishell_echo(obj, word, i);
 	else
-	{
-		dup2(obj->fd_pipe[0], 0);
-		close(obj->fd_pipe[0]);
-		close(obj->fd_pipe[1]);
-		wait(&obj->status[0]);
-	}
+		sh_close_pipes_common(obj);
 	if (WIFEXITED(obj->status[0]))
 	{
 		st = (WEXITSTATUS(obj->status[0]) > 0);

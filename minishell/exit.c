@@ -6,39 +6,11 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 20:04:33 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/14 04:51:43 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/10 20:34:56 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
-
-void	cat_sh_exit1(char **tmp, int *res, int i)
-{
-	while (tmp[1][++i])
-	{
-		if (!i && tmp[1][i] == '-')
-			continue ;
-		*res += (!(ft_isdigit(tmp[1][i])));
-	}
-}
-
-void	cat_sh_exit2(char **tmp, int *res)
-{
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(tmp[0], 2);
-	ft_putstr_fd(": too many arguments\n", 2);
-	*res = -1;
-}
-
-void	cat_sh_exit3(char **tmp, int *res)
-{
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(tmp[0], 2);
-	write(2, ": ", 2);
-	ft_putstr_fd(tmp[1], 2);
-	ft_putstr_fd(": numeric argument required\n", 2);
-	*res = 255;
-}
+#include "../minishell.h"
 
 void	sh_exit(t_shell *obj)
 {
@@ -53,11 +25,11 @@ void	sh_exit(t_shell *obj)
 	while (tmp[++obj->len])
 		;
 	if (obj->len >= 2)
-		cat_sh_exit1(tmp, &res, i);
+		cat_sh_exit1(tmp, res, i);
 	if (obj->len > 2)
-		cat_sh_exit2(tmp, &res);
+		cat_sh_exit2(tmp, res);
 	else if (res)
-		cat_sh_exit3(tmp, &res);
+		cat_sh_exit3(tmp, res);
 	else if (obj->len == 2 && !res)
 	{
 		res = ft_atoi(tmp[1]);
@@ -65,4 +37,32 @@ void	sh_exit(t_shell *obj)
 	}
 	obj->status[0] = res;
 	obj->status[1] = (!obj->err_fst) * obj->status[0] - (obj->err_fst != 0);
+}
+
+void	cat_sh_exit1(char **tmp, int res, int i)
+{
+	while (tmp[1][++i])
+	{
+		if (!i && tmp[1][i] == '-')
+			continue ;
+		res += (!(ft_isdigit(tmp[1][i])));
+	}
+}
+
+void	cat_sh_exit2(char **tmp, int res)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(tmp[0], 2);
+	ft_putstr_fd(": too many arguments\n", 2);
+	res = -1;
+}
+
+void	cat_sh_exit3(char **tmp, int res)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(tmp[0], 2);
+	write(2, ": ", 2);
+	ft_putstr_fd(tmp[1], 2);
+	ft_putstr_fd(": numeric argument required\n", 2);
+	res = 255;
 }

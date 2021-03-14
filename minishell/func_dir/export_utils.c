@@ -6,17 +6,17 @@
 /*   By: lcreola <lcreola@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 21:00:49 by lcreola           #+#    #+#             */
-/*   Updated: 2021/03/09 21:54:17 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/14 04:53:22 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../include/minishell.h"
 
 void	err_identifier_output(char *str, char *cmd)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd(": `",2);
+	ft_putstr_fd(": `", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd("': not a valid identifier\n", 2);
 }
@@ -44,7 +44,7 @@ int		check_export_input(char *str, int count, char *cmd, int bit_eq)
 	{
 		if (*(str + count) == '=')
 			++bit_eq;
-		return (check_export_input(str, ++count, cmd, bit_eq));	
+		return (check_export_input(str, ++count, cmd, bit_eq));
 	}
 	return (1);
 }
