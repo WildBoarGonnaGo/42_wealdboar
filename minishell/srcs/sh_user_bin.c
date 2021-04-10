@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 20:54:10 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/14 03:27:13 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/16 20:39:47 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,8 @@ int		sh_user_bin(t_shell *obj)
 		while (obj->envp[++i])
 			if (!(ft_strncmp(obj->envp[i], "PATH", 4)))
 				break ;
-		obj->bin = ft_split(obj->envp[i] + 5, ':');
 		if (obj->envp[i])
-			sh_search_bin(obj, -1, &line);
+			sh_search_bin(obj, -1, &line, i);
 		else
 			return (sh_no_bin_found(obj, &line));
 	}

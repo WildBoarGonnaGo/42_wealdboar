@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 18:38:27 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/14 03:26:35 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/16 20:20:22 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ void	sh_signal_proc(t_shell *obj, int sig)
 	else if (sig == SIGQUIT && magic->if_child)
 	{
 		write(2, "Quit: 3\n", ft_strlen("Quit: 3\n"));
-		magic->status[2] = 128 + sig;
+		magic->status[0] = 128 + sig;
 	}
 	else if (sig == SIGINT && !magic->if_child)
 	{
 		write(1, "\b\b  \nminishell$ ", ft_strlen("\b\b  \nminishell$ ") + 1);
-		magic->status[2] = 1;
+		magic->status[0] = 1;
 	}
 	else if (sig == SIGINT && magic->if_child)
 	{
 		write(1, "\n", 1);
-		magic->status[2] = 128 + sig;
+		magic->status[0] = 128 + sig;
 	}
 }
 

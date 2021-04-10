@@ -6,7 +6,7 @@
 /*   By: lchantel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 18:17:37 by lchantel          #+#    #+#             */
-/*   Updated: 2021/03/14 03:21:16 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/16 20:41:20 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,10 @@ int		sh_no_bin_found(t_shell *obj, char **line)
 	return (obj->status[0]);
 }
 
-void	sh_search_bin(t_shell *obj, int i, char **line)
+void	sh_search_bin(t_shell *obj, int i, char **line,
+		int pos)
 {
+	obj->bin = ft_split(obj->envp[pos] + 5, ':');
 	while (obj->bin[++i])
 	{
 		if (!(obj->sh_dir = opendir(obj->bin[i])))

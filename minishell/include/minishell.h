@@ -6,7 +6,7 @@
 /*   By: wildboarg <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:54:05 by wildboarg         #+#    #+#             */
-/*   Updated: 2021/03/14 04:44:46 by lchantel         ###   ########.fr       */
+/*   Updated: 2021/03/16 20:43:07 by lchantel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,8 @@ void				find_elem(t_shell *obj, int st);
 void				sh_close_pipes_general(t_shell *obj);
 void				sh_kill_proc(t_shell *obj);
 int					sh_no_bin_found(t_shell *obj, char **line);
-void				sh_search_bin(t_shell *obj, int i, char **line);
+void				sh_search_bin(t_shell *obj, int i, char **line,
+					int pos);
 void				sh_cmd_err_output(t_shell *obj);
 void				sh_bin_line_check(t_shell *obj, char **line, int st);
 char				*cd_two_args(t_shell *obj, char **cd_args);
@@ -191,7 +192,8 @@ void				sh_change_dir_push(t_shell *obj, char ***cd_clean_2,
 					char *buf);
 void				sh_change_dir_data_init(t_shell *obj, int *i, int *st);
 void				sh_close_pipes_common(t_shell *obj);
-void				cat_ft_m_export_check(int *pos, char *eq_char, t_shell *obj);
+void				cat_ft_m_export_check(int *pos, char *eq_char,
+					t_shell *obj);
 char				**change_pwd(t_shell *obj, char *envpwd, char *dir);
 char				*cd_two_args(t_shell *obj, char **cd_args);
 int					cd_two_args_body(t_shell *obj);

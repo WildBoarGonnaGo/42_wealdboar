@@ -6,7 +6,7 @@
 #    By: wealdboar <marvin@42.fr>                   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/24 04:55:09 by wealdboar         #+#    #+#              #
-#    Updated: 2021/03/15 21:06:40 by lchantel         ###   ########.fr        #
+#    Updated: 2021/03/16 19:59:43 by lchantel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,9 @@ CC = clang
 WARNS = -Wall -Wextra -Werror -g
 OBJ = $(SRC:.c=.o)
 
-$(LIB): $(OBJ)	
+$(LIB): $(OBJ)
+	@echo "Creating directory libc directory ..."
+	@if [ ! -d ./libc ]; then mkdir ./libc; fi
 	@echo "Every funtion is compile proved ..."
 	@echo "Building libft static library ..."
 	@make -C ./srcs/libft
@@ -76,22 +78,22 @@ $(LIB): $(OBJ)
 	@$(CC) $(WARNS) ./srcs/main.c -o $(EXEC_FILE) -L./libc -lsh -lft
 
 $(OBJ): %.o :%.c
-	@echo "check $< to be right"
+	@echo "Check $< to be right ..."
 	@$(CC) $(WARNS) -o $@ -c $<
 
 all: $(LIB)
 
 clean:
-	@echo "removing all binaries ..."
+	@echo "Removing all binaries ..."
 	@rm -rf $(OBJ)
-	@echo "removing all libft binaries"
+	@echo "Removing all libft binaries"
 	@make clean -C ./srcs/libft/
 
 fclean: clean
-	@echo "removing static library ..."
+	@echo "Removing static library ..."
 	@rm -rf $(LIB)
 	@rm -rf $(EXEC_FILE)
-	@echo "removing libft static library ..."
+	@echo "Removing libft static library ..."
 	@make fclean -C ./srcs/libft/
 
 re: fclean all
