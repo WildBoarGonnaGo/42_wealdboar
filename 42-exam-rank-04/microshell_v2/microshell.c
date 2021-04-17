@@ -1,6 +1,8 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 int 	ft_strlen(char *s)
 {
@@ -48,7 +50,7 @@ void	ft_cd(char **line)
 		;
 	if (i != 2)
 		cd_badargs_err_msg();
-	if (chdir(line[1]));
+	if (chdir(line[1]))
 		cd_chdir_err_msg(line[1]);
 }
 
@@ -95,14 +97,14 @@ int 	main(int argc, char *argv[], char *envp[])
 			if (is_pipe)
 			{
 				if (pipe(fd))
-					exit_fatal();
+					err_fatal_msg();
 				save[1] = dup(1);
 				dup2(fd[1], 1);
 				close(fd[1]);
 			}
 			pid = fork();
 			if (pid < 0)
-				exit_fatal();
+				err_fatal_msg();
 			else if (!pid)
 			{
 				if (execve(line[0], line, envp))
