@@ -1,4 +1,6 @@
 {
+    "window.zoomLevel": 0,
+    
     "files.associations": {
         "types.h": "c",
         "iosfwd": "cpp",
