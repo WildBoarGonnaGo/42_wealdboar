@@ -40,3 +40,6 @@
 + САПР - численные методы
 + Разработка программ для финансов и логистики - следование операций
 + НА 
+
+## For GameDev
++ [Step for learning gamedev](https://www.haroldserrano.com/blog/how-to-become-a-game-engine-developer)
