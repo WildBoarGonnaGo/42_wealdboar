@@ -44,7 +44,7 @@ namespace wildsigcpp {
     void ErrMsg(const string &msg, ostream &s);
     void PrintSig(const sigset_t *set, ostream &s, const string &msg);
     void PrintBlockingSigSet(sigset_t *set, ostream &s, const string &msg);
-    void PringPendingSigSet(sigset_t *set, ostream &s, const string &msg);
+    void PrintPendingSigSet(sigset_t *set, ostream &s, const string &msg);
 }
 
 #endif

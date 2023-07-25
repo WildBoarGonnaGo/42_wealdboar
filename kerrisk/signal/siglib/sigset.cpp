@@ -28,7 +28,7 @@ void wildsigcpp::PrintBlockingSigSet(sigset_t *set, ostream &s, const string &ms
     PrintSig(set, s, msg);
 }
 
-void wildsigcpp::PringPendingSigSet(sigset_t *set, ostream &s, const string &msg) {
+void wildsigcpp::PrintPendingSigSet(sigset_t *set, ostream &s, const string &msg) {
     if (sigpending(set))
         ErrMsgTermination("can't get blocked signal set: ", cerr);
     

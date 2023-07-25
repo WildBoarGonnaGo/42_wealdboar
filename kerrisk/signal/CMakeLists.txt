@@ -13,4 +13,4 @@ link_libraries(-lsiglib)
 # Signal sender
 add_executable(${SIG_SENDER} sig_sndr.cpp)
 # Signal recevier   
-
+add_executable(${SIG_RECEIVER} sig_recv.cpp)
