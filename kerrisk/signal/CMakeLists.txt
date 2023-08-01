@@ -6,7 +6,7 @@ set(SIG_SENDER "sig_sndr")
 set(SIG_RECEIVER "sig_recv")
 
 include_directories(siglib)
-link_directories(PUBLIC "build/siglib/")
+link_directories("build/siglib/")
 add_subdirectory(siglib)
 link_libraries(-lsiglib)
 

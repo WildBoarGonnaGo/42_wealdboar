@@ -15,9 +15,9 @@ void wildsigcpp::PrintSig(const sigset_t *set, ostream &s, const string &msg) {
         exit(EXIT_FAILURE);
     }
     
-    for (uint8_t i = 0; i < NSIG; ++i) {
+    for (uint16_t i = 1; i < NSIG; ++i) {
         if (sigismember(set, i))
-            s << "signal " << sigCodeToStrMap.at(i) << ' ' << strsignal(i) << ": " << msg << endl;
+            s << msg << sigCodeToStrMap.at(i) << ' ' << strsignal(i) << endl;
     }
 }
 
